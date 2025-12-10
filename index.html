@@ -3,1371 +3,778 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sedimentary Geochemistry - Exam Simulation: Permo-Triassic Boundary</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Sedimentary Geochemistry | MSc Course | FAU Erlangen-Nürnberg</title>
     <style>
-        * { box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         
         body {
-            font-family: 'Georgia', serif;
-            line-height: 1.6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
             color: #333;
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f7f9fc;
+            background: #f8f9fa;
         }
-
-        /* Password Overlay */
-        .password-overlay {
+        
+        /* Login Overlay */
+        .login-overlay {
             position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: linear-gradient(135deg, #1a5276, #16a085);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a5a4a, #16a085, #1abc9c);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 10000;
         }
-        .password-overlay.hidden { display: none; }
-
-        .password-box {
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-            text-align: center;
-            max-width: 450px;
-        }
-        .password-box h2 { color: #16a085; margin-bottom: 10px; }
-        .password-box p { color: #666; margin-bottom: 20px; }
-        .password-box input {
-            width: 100%;
-            padding: 12px;
-            font-size: 1.1em;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            margin-bottom: 15px;
-        }
-        .password-box input:focus { outline: none; border-color: #16a085; }
-        .password-box button {
-            width: 100%;
-            padding: 12px;
-            font-size: 1.1em;
-            background: linear-gradient(135deg, #16a085, #27ae60);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-        .password-box button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(22, 160, 133, 0.4);
-        }
-        .error-message { color: #e74c3c; margin-top: 10px; font-weight: bold; }
-
-        /* Timer Bar */
-        .timer-bar {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%;
-            background: linear-gradient(135deg, #2c3e50, #34495e);
-            color: white;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-        .timer-bar.hidden { display: none; }
-        .timer-display {
-            font-size: 1.5em;
-            font-weight: bold;
-            font-family: 'Courier New', monospace;
-        }
-        .timer-display.warning { color: #f39c12; animation: pulse 1s infinite; }
-        .timer-display.critical { color: #e74c3c; animation: pulse 0.5s infinite; }
-        .timer-display.grace { color: #9b59b6; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-        .timer-status { font-size: 0.9em; opacity: 0.9; }
-        .submit-timer-btn {
-            background: #27ae60;
-            color: white;
-            border: none;
-            padding: 10px 25px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        /* Main Content */
-        .main-content { display: none; margin-top: 80px; }
-        .main-content.visible { display: block; }
-
-        /* Header */
-        .header {
-            background: linear-gradient(135deg, #16a085, #27ae60);
-            color: white;
-            padding: 30px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .header h1 { margin: 0; font-size: 2em; font-weight: 300; }
-        .header .subtitle { margin-top: 10px; opacity: 0.9; font-size: 1.2em; }
-        .header .exam-info {
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid rgba(255,255,255,0.3);
-            font-size: 0.95em;
-        }
-
-        /* Reference Bar */
-        .reference-bar {
-            background: #ecf0f1;
-            padding: 15px 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            border-left: 4px solid #16a085;
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .reference-bar span { color: #555; }
-
-        /* Student Info */
-        .student-info {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            margin-bottom: 25px;
-            border-left: 4px solid #9b59b6;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-        .student-info h3 { color: #8e44ad; margin-top: 0; margin-bottom: 20px; }
-        .info-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-        .info-field label { display: block; font-weight: bold; margin-bottom: 5px; color: #555; }
-        .info-field input {
-            width: 100%;
-            padding: 10px;
-            border: 2px solid #ddd;
-            border-radius: 5px;
-            font-size: 1em;
-        }
-        .info-field input:focus { outline: none; border-color: #9b59b6; }
-
-        /* Sections */
-        .section {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            margin-bottom: 25px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-        .section-title {
-            background: linear-gradient(135deg, #16a085, #27ae60);
-            color: white;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-size: 1.2em;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-        .background-section { background: #eaf2f8; border-left: 4px solid #3498db; }
-        .background-section .section-title { background: linear-gradient(135deg, #3498db, #2980b9); }
-
-        /* Questions */
-        .question-block {
-            margin: 20px 0;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            border-left: 4px solid #16a085;
-        }
-        .question-title { font-weight: bold; color: #16a085; margin-bottom: 15px; font-size: 1.1em; }
-        .sub-question {
-            margin: 15px 0;
-            padding: 15px;
-            background: white;
-            border-radius: 5px;
-            border: 1px solid #e0e0e0;
-        }
-        .sub-question-title { font-weight: bold; color: #2c3e50; margin-bottom: 10px; }
-
-        /* Data Tables */
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .data-table th {
-            background: #16a085;
-            color: white;
-            padding: 12px;
-            text-align: center;
-        }
-        .data-table td { padding: 10px; text-align: center; border: 1px solid #ddd; }
-        .data-table tr:nth-child(even) { background: #f8f9fa; }
-        .data-table tr:hover { background: #e8f8f5; }
-
-        /* Boxes */
-        .equation-box {
-            background: #e8f8f5;
-            border: 2px solid #16a085;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 15px 0;
-            font-family: 'Courier New', monospace;
-        }
-        .equation-title { font-weight: bold; color: #16a085; margin-bottom: 10px; font-family: 'Georgia', serif; }
-        .info-note {
-            background: #fff9e6;
-            border-left: 4px solid #f39c12;
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 0 8px 8px 0;
-        }
-        .concept-box {
-            background: #eaf2f8;
-            border-left: 4px solid #3498db;
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 0 8px 8px 0;
-        }
-
-        /* Answer Areas */
-        .calculation-label { font-weight: bold; color: #16a085; margin: 15px 0 8px 0; }
-        .calculation-area, .answer-area {
-            width: 100%;
-            min-height: 150px;
-            padding: 15px;
-            border: 2px solid #d5d8dc;
-            border-radius: 8px;
-            font-size: 0.95em;
-            resize: vertical;
-        }
-        .calculation-area { font-family: 'Courier New', monospace; }
-        .answer-area { font-family: 'Georgia', serif; min-height: 120px; }
-        .calculation-area:focus, .answer-area:focus {
-            outline: none;
-            border-color: #16a085;
-            box-shadow: 0 0 5px rgba(22, 160, 133, 0.3);
-        }
-
-        /* Calculator */
-        .calculator-container { position: fixed; bottom: 20px; right: 20px; z-index: 500; }
-        .calculator-toggle {
-            background: linear-gradient(135deg, #9b59b6, #8e44ad);
-            color: white;
-            border: none;
-            padding: 15px 20px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 1em;
-            box-shadow: 0 4px 15px rgba(155, 89, 182, 0.4);
-        }
-        .calculator-panel {
+        
+        .login-overlay.hidden {
             display: none;
-            position: fixed;
-            bottom: 80px;
-            right: 20px;
-            width: 380px;
+        }
+        
+        .login-box {
             background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-            overflow: hidden;
-            max-height: 80vh;
-            overflow-y: auto;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
         }
-        .calculator-panel.active { display: block; }
-        .calc-header {
-            background: linear-gradient(135deg, #9b59b6, #8e44ad);
-            color: white;
-            padding: 15px;
-            font-weight: bold;
+        
+        .login-logo {
+            font-size: 3em;
+            margin-bottom: 10px;
         }
-        .calc-body { padding: 15px; }
-        .calc-display {
-            width: 100%;
-            padding: 15px;
-            font-size: 1.3em;
-            font-family: 'Courier New', monospace;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            text-align: right;
+        
+        .login-box h2 {
+            color: #16a085;
+            margin-bottom: 10px;
+            font-size: 1.8em;
         }
-        .calc-tabs { display: flex; gap: 5px; margin-bottom: 15px; }
-        .calc-tab {
-            flex: 1;
-            padding: 8px;
-            background: #f0f0f0;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            font-size: 0.85em;
+        
+        .login-box .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 0.95em;
         }
-        .calc-tab.active { background: #9b59b6; color: white; }
-        .calc-buttons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-        .calc-btn {
-            padding: 12px;
-            font-size: 1em;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            background: #f0f0f0;
-        }
-        .calc-btn:hover { background: #e0e0e0; }
-        .calc-btn.operator { background: #16a085; color: white; }
-        .calc-btn.equals { background: #27ae60; color: white; grid-column: span 2; }
-        .calc-btn.function { background: #3498db; color: white; font-size: 0.85em; }
-        .calc-btn.clear { background: #e74c3c; color: white; }
-        .isotope-functions { display: none; margin-top: 10px; }
-        .isotope-functions.active { display: block; }
-        .isotope-func-btn {
-            width: 100%;
-            padding: 10px;
-            margin: 5px 0;
-            background: linear-gradient(135deg, #16a085, #27ae60);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 0.9em;
+        
+        .login-field {
+            margin-bottom: 20px;
             text-align: left;
         }
-        .calc-input-group {
-            display: none;
-            margin-top: 15px;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 8px;
+        
+        .login-field label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
         }
-        .calc-input-group.active { display: block; }
-        .calc-input-group label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.9em; }
-        .calc-input-group input, .calc-input-group select {
+        
+        .login-field input {
             width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        .calc-result {
-            margin-top: 10px;
-            padding: 10px;
-            background: #e8f8f5;
-            border-radius: 5px;
-            font-family: 'Courier New', monospace;
-        }
-
-        /* Chart */
-        .chart-container { margin: 20px 0; padding: 20px; background: #f8f9fa; border-radius: 8px; }
-        .chart-container h4 { color: #16a085; margin-bottom: 15px; }
-        .chart-data-input { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
-        .chart-data-input textarea {
-            width: 100%;
-            height: 100px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9em;
-        }
-        .chart-canvas-container { background: white; padding: 15px; border-radius: 8px; margin-top: 15px; }
-
-        /* Export */
-        .export-section {
-            background: white;
-            padding: 25px;
+            padding: 14px 18px;
+            border: 2px solid #e0e0e0;
             border-radius: 10px;
-            margin-top: 30px;
-            text-align: center;
-        }
-        .export-buttons { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
-        .export-btn {
-            padding: 12px 25px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
             font-size: 1em;
-            font-weight: bold;
-            color: white;
-            transition: all 0.3s ease;
+            transition: border-color 0.3s, box-shadow 0.3s;
         }
-        .export-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
-        .export-btn.submit { background: linear-gradient(135deg, #27ae60, #2ecc71); }
-        .export-btn.word { background: linear-gradient(135deg, #3498db, #2980b9); }
-        .export-btn.copy { background: linear-gradient(135deg, #9b59b6, #8e44ad); }
-        .export-btn.text { background: linear-gradient(135deg, #7f8c8d, #95a5a6); }
-
-        /* Loading */
-        .loading-overlay {
+        
+        .login-field input:focus {
+            outline: none;
+            border-color: #16a085;
+            box-shadow: 0 0 0 3px rgba(22, 160, 133, 0.1);
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #16a085, #1abc9c);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 10px;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(22, 160, 133, 0.4);
+        }
+        
+        .login-error {
+            color: #e74c3c;
+            margin-top: 15px;
+            font-size: 0.95em;
             display: none;
+        }
+        
+        .login-error.show {
+            display: block;
+        }
+        
+        .institution-info {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            color: #888;
+            font-size: 0.85em;
+        }
+        
+        /* Expired Overlay */
+        .expired-overlay {
             position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.7);
-            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #c0392b, #e74c3c);
+            display: flex;
             justify-content: center;
             align-items: center;
+            z-index: 10001;
         }
-        .loading-overlay.active { display: flex; }
-        .loading-box { background: white; padding: 30px 50px; border-radius: 10px; text-align: center; }
-        .spinner {
-            width: 50px; height: 50px;
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid #16a085;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 15px;
+        
+        .expired-overlay.hidden {
+            display: none;
         }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-        /* Watermark */
-        .watermark {
-            position: fixed;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%) rotate(-45deg);
-            font-size: 72px;
-            color: rgba(22, 160, 133, 0.06);
-            font-weight: bold;
-            pointer-events: none;
+        
+        .expired-box {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+        
+        .expired-box h2 {
+            color: #e74c3c;
+            margin-bottom: 20px;
+        }
+        
+        .expired-box p {
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        /* Main Content */
+        .main-content {
+            display: none;
+        }
+        
+        .main-content.visible {
+            display: block;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #16a085, #1abc9c, #27ae60);
+            color: white;
+            padding: 50px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        
+        .header-content {
+            position: relative;
             z-index: 1;
-            white-space: nowrap;
-            user-select: none;
+            max-width: 900px;
+            margin: 0 auto;
         }
-        .watermark.hidden { display: none; }
-
-        @media (max-width: 768px) {
-            .info-grid { grid-template-columns: 1fr; }
-            .timer-bar { flex-direction: column; gap: 10px; text-align: center; }
-            .calculator-panel { width: 95%; right: 2.5%; }
+        
+        .welcome-msg {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 20px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+        
+        header h1 {
+            font-size: 2.8em;
+            font-weight: 300;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        header .subtitle {
+            font-size: 1.3em;
+            opacity: 0.95;
+            margin-bottom: 20px;
+        }
+        
+        .course-meta {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        
+        .course-meta span {
+            background: rgba(255,255,255,0.15);
+            padding: 6px 16px;
+            border-radius: 15px;
+            font-size: 0.9em;
+        }
+        
+        .logout-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background 0.3s;
+        }
+        
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        
+        /* Container */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 50px 20px;
+        }
+        
+        /* Section Title */
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .section-title h2 {
+            font-size: 2em;
+            color: #16a085;
+            margin-bottom: 10px;
+        }
+        
+        .section-title p {
+            color: #666;
+            font-size: 1.1em;
+        }
+        
+        /* Module Grid */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+        
+        .module-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
+        .module-card.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        
+        .module-card.coming-soon {
+            opacity: 0.7;
+        }
+        
+        .module-card.coming-soon:hover {
+            transform: none;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            cursor: not-allowed;
+        }
+        
+        .module-header {
+            padding: 25px;
+            color: white;
+            position: relative;
+        }
+        
+        .module-intro .module-header { background: linear-gradient(135deg, #27ae60, #2ecc71); }
+        .module-co .module-header { background: linear-gradient(135deg, #1e5799, #207cca); }
+        .module-clumped .module-header { background: linear-gradient(135deg, #8e44ad, #9b59b6); }
+        .module-boron .module-header { background: linear-gradient(135deg, #d35400, #e67e22); }
+        .module-strontium .module-header { background: linear-gradient(135deg, #16a085, #1abc9c); }
+        .module-exam .module-header { background: linear-gradient(135deg, #c0392b, #e74c3c); }
+        
+        .module-number {
+            font-size: 0.85em;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+        
+        .module-header h3 {
+            font-size: 1.4em;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .module-header .duration {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        .module-body {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .module-body p {
+            color: #666;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+        
+        .module-topics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .topic-tag {
+            background: #f0f0f0;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            color: #555;
+        }
+        
+        .coming-soon-badge {
+            background: #f39c12;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        footer h4 {
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        footer p {
+            opacity: 0.8;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+        
+        footer a {
+            color: #1abc9c;
+            text-decoration: none;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .footer-copy {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.85em;
+            opacity: 0.6;
+        }
+        
+        /* Responsive */
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 2em;
+            }
+            
+            .login-box {
+                padding: 30px;
+            }
+            
+            .modules-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Password Overlay -->
-    <div class="password-overlay" id="passwordOverlay">
-        <div class="password-box">
-            <h2>🔬 Exam Simulation</h2>
-            <h3>Sedimentary Geochemistry</h3>
-            <p>Permo-Triassic Boundary Case Study</p>
-            <p style="font-size: 0.9em; color: #888;">Enter the password provided by your instructor</p>
-            <input type="password" id="passwordInput" placeholder="Enter password..." onkeypress="if(event.key==='Enter')checkPassword()">
-            <button onclick="checkPassword()">Start Exam</button>
-            <div class="error-message" id="errorMessage"></div>
+
+    <!-- Login Overlay -->
+    <div class="login-overlay" id="loginOverlay">
+        <div class="login-box">
+            <div class="login-logo">🌍</div>
+            <h2>Sedimentary Geochemistry</h2>
+            <p class="subtitle">MSc Course — FAU Erlangen-Nürnberg</p>
+            
+            <div class="login-field">
+                <label for="loginEmail">FAU Email Address</label>
+                <input type="email" id="loginEmail" placeholder="your.id@fauad.fau.de" autocomplete="email">
+            </div>
+            
+            <div class="login-field">
+                <label for="loginName">Full Name</label>
+                <input type="text" id="loginName" placeholder="Enter your full name" autocomplete="name">
+            </div>
+            
+            <button class="login-btn" onclick="attemptLogin()">Access Course Materials</button>
+            
+            <p class="login-error" id="loginError"></p>
+            
+            <div class="institution-info">
+                <strong>GeoZentrum Nordbayern</strong><br>
+                Friedrich-Alexander-Universität Erlangen-Nürnberg
+            </div>
         </div>
     </div>
-
-    <!-- Timer Bar -->
-    <div class="timer-bar hidden" id="timerBar">
-        <div>
-            <div class="timer-status" id="timerStatus">Exam in Progress</div>
-            <div class="timer-display" id="timerDisplay">01:45:00</div>
+    
+    <!-- Expired Overlay -->
+    <div class="expired-overlay hidden" id="expiredOverlay">
+        <div class="expired-box">
+            <div class="login-logo">⏰</div>
+            <h2>Access Expired</h2>
+            <p>Your access to course materials expired on <strong>February 5, 2026</strong>.</p>
+            <p>If you need continued access, please contact:</p>
+            <p><strong>PD Dr. Luca Caracciolo</strong></p>
+            <p><a href="mailto:luca.caracciolo@fau.de">luca.caracciolo@fau.de</a></p>
         </div>
-        <div style="text-align: center;">
-            <strong>PTB Exam Simulation</strong><br>
-            <span style="font-size: 0.85em;">Auto-save enabled</span>
-        </div>
-        <button class="submit-timer-btn" onclick="submitExam()">Submit Exam</button>
     </div>
-
-    <!-- Watermark -->
-    <div class="watermark hidden" id="watermark"></div>
 
     <!-- Main Content -->
     <div class="main-content" id="mainContent">
-        <!-- Header -->
-        <div class="header">
-            <h1>SEDIMENTARY GEOCHEMISTRY</h1>
-            <div class="subtitle">Exam Simulation: The Permo-Triassic Mass Extinction</div>
-            <div class="exam-info">
-                <strong>Total Points:</strong> 100 | <strong>Time:</strong> 1 hour 45 minutes (+5 min grace period)<br>
-                Winter Semester 2025-26 | Friedrich-Alexander-Universität Erlangen-Nürnberg
-            </div>
-        </div>
-
-        <!-- Reference Bar -->
-        <div class="reference-bar">
-            <span><strong>Course:</strong> Sedimentary Geochemistry (MSc)</span>
-            <span><strong>Instructor:</strong> PD Dr. Luca Caracciolo</span>
-            <span><strong>Contact:</strong> luca.caracciolo@fau.de</span>
-        </div>
-
-        <!-- Student Information -->
-        <div class="student-info">
-            <h3>📋 Student Information</h3>
-            <div class="info-grid">
-                <div class="info-field">
-                    <label>Full Name: *</label>
-                    <input type="text" id="studentName" placeholder="Enter your full name" oninput="updateWatermark()">
-                </div>
-                <div class="info-field">
-                    <label>Email: *</label>
-                    <input type="email" id="studentEmail" placeholder="your.email@fau.de">
-                </div>
-                <div class="info-field">
-                    <label>Student ID: *</label>
-                    <input type="text" id="studentId" placeholder="e.g., 12345678">
-                </div>
-                <div class="info-field">
-                    <label>Date:</label>
-                    <input type="date" id="submissionDate">
+        <header>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+            <div class="header-content">
+                <div class="welcome-msg">Welcome, <span id="userName">Student</span></div>
+                <h1>Sedimentary Geochemistry</h1>
+                <p class="subtitle">Interactive Learning Platform</p>
+                <div class="course-meta">
+                    <span>📚 MSc Level</span>
+                    <span>🏛️ GeoZentrum Nordbayern</span>
+                    <span>👨‍🏫 PD Dr. Luca Caracciolo</span>
                 </div>
             </div>
-        </div>
-
-        <!-- GEOLOGICAL BACKGROUND -->
-        <div class="section background-section">
-            <div class="section-title">GEOLOGICAL BACKGROUND: The Permo-Triassic Mass Extinction (Read: ~5 minutes)</div>
+        </header>
+        
+        <div class="container">
+            <div class="section-title">
+                <h2>Course Modules</h2>
+                <p>Master isotope geochemistry and paleoenvironmental reconstruction</p>
+            </div>
             
-            <p>The <strong>Permo-Triassic mass extinction (PTME)</strong> at ~252 Ma represents the largest biotic crisis in Earth history, eliminating approximately <strong>90% of marine species</strong> and <strong>70% of terrestrial vertebrate species</strong>. This event, often called the "Great Dying," far exceeds other major extinctions in magnitude.</p>
-
-            <div class="concept-box">
-                <strong>🌍 Paleogeographic Setting:</strong><br>
-                The PTB world consisted of a single supercontinent (<strong>Pangea</strong>) surrounded by the vast <strong>Panthalassa</strong> ocean, with the <strong>Paleo-Tethys</strong> and <strong>Neo-Tethys</strong> forming a giant gulf. The <strong>Siberian Traps Large Igneous Province</strong> erupted 2-7 million km³ of basalt in the northern hemisphere during this interval.
-            </div>
-
-            <p>The biological crisis resulted from cascading environmental changes triggered by volcanic emissions from the Siberian Traps, including:</p>
-            <ul>
-                <li><strong>Massive CO₂ release</strong> → Global warming (up to ~10°C increase)</li>
-                <li><strong>SO₂ emissions</strong> → Acid rain, vegetation die-off</li>
-                <li><strong>Thermogenic carbon release</strong> → Additional greenhouse forcing from contact metamorphism</li>
-                <li><strong>Ocean acidification</strong> → Carbonate dissolution, calcifier extinction</li>
-                <li><strong>Oceanic anoxia</strong> → Expansion of oxygen-depleted waters</li>
-            </ul>
-
-            <div class="info-note">
-                <strong>⚠️ CRITICAL FOR THIS EXAM:</strong><br>
-                The Permo-Triassic was an <strong>ICE-FREE ("greenhouse") world</strong>. Unlike Quaternary climate reconstructions, there were <strong>NO significant continental ice sheets</strong>. This has important implications for how you interpret oxygen isotope data — do NOT apply ice volume corrections!
-            </div>
-
-            <p>The stratigraphic record at the Global Stratotype Section and Point (GSSP) at <strong>Meishan, South China</strong> reveals <strong>two distinct extinction pulses</strong>:</p>
-            <ul>
-                <li><strong>1st pulse:</strong> ~251.94 Ma (latest Permian, C. meishanensis Zone)</li>
-                <li><strong>2nd pulse:</strong> ~251.88 Ma (earliest Triassic, I. isarcica Zone)</li>
-            </ul>
-
-            <p>Geochemical proxies provide independent evidence for environmental changes during this interval. In this exam, you will analyze proxy records to reconstruct the environmental conditions during Earth's greatest mass extinction.</p>
-        </div>
-
-        <!-- PART 1: CARBON ISOTOPES -->
-        <div class="section">
-            <div class="section-title">PART 1: CARBON ISOTOPES (25 points) — Estimated time: 25 minutes</div>
-
-            <div class="question-block">
-                <div class="question-title">Question 1.1: The Carbon Isotope Excursion (15 points)</div>
+            <div class="modules-grid">
                 
-                <p>The δ¹³C record across the PTB shows a pronounced <strong>negative carbon isotope excursion (CIE)</strong>. Using the data from the Meishan section provided below, answer the following questions.</p>
-
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Sample</th>
-                            <th>Age (Ma)</th>
-                            <th>Conodont Zone</th>
-                            <th>δ¹³C_carb (‰ VPDB)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>MS-1</td><td>252.10</td><td>C. yini</td><td>+3.8</td></tr>
-                        <tr><td>MS-2</td><td>252.00</td><td>C. yini</td><td>+3.2</td></tr>
-                        <tr><td>MS-3</td><td>251.95</td><td>C. meishanensis</td><td>+1.5</td></tr>
-                        <tr><td>MS-4</td><td>251.92</td><td>H. changxingensis</td><td>-0.8</td></tr>
-                        <tr><td>MS-5</td><td>251.90</td><td>H. parvus (PTB)</td><td>-2.8</td></tr>
-                        <tr><td>MS-6</td><td>251.88</td><td>I. staeschei</td><td>-1.5</td></tr>
-                        <tr><td>MS-7</td><td>251.85</td><td>I. isarcica</td><td>+0.2</td></tr>
-                    </tbody>
-                </table>
-
-                <div class="sub-question">
-                    <div class="sub-question-title">Part A (5 points): Calculate the magnitude of the CIE</div>
-                    <p>Calculate the total magnitude of the negative carbon isotope excursion (Δδ¹³C) from the pre-excursion baseline to the minimum value.</p>
-                    <div class="calculation-label">💻 CALCULATION:</div>
-                    <textarea class="calculation-area" id="p1_1a_calc" placeholder="Show your calculation:
-- Pre-excursion baseline δ¹³C = ...
-- Minimum δ¹³C = ...
-- Δδ¹³C = ..."></textarea>
-                </div>
-
-                <div class="sub-question">
-                    <div class="sub-question-title">Part B (10 points): Interpretation of the CIE</div>
-                    <p>The negative CIE requires addition of isotopically <strong>light carbon</strong> (low δ¹³C). Several sources have been proposed:</p>
-                    <ul>
-                        <li><strong>Volcanic CO₂:</strong> δ¹³C ≈ -5‰</li>
-                        <li><strong>Thermogenic methane/CO₂:</strong> δ¹³C ≈ -25‰ to -40‰</li>
-                        <li><strong>Methane hydrate dissociation:</strong> δ¹³C ≈ -60‰</li>
-                        <li><strong>Terrestrial biomass oxidation:</strong> δ¹³C ≈ -25‰</li>
-                    </ul>
-                    <p>Given the magnitude of the CIE, explain which carbon source(s) are most consistent with the observed excursion.</p>
-                    <div class="calculation-label">📝 YOUR INTERPRETATION:</div>
-                    <textarea class="answer-area" id="p1_1b" placeholder="Write your interpretation here (150-200 words)..."></textarea>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question-title">Question 1.2: δ¹³C_carbonate vs δ¹³C_organic (10 points)</div>
-                <p>At some PTB sections, the δ¹³C_carbonate and δ¹³C_TOC records show <strong>non-parallel trends</strong>. Explain <strong>two mechanisms</strong> that could cause these proxies to show different patterns across the same stratigraphic interval.</p>
-                <div class="calculation-label">📝 YOUR ANSWER:</div>
-                <textarea class="answer-area" id="p1_2" placeholder="Mechanism 1: ...
-
-Mechanism 2: ..."></textarea>
-            </div>
-        </div>
-
-        <!-- PART 2: OXYGEN ISOTOPES -->
-        <div class="section">
-            <div class="section-title">PART 2: OXYGEN ISOTOPES & TEMPERATURE (30 points) — Estimated time: 30 minutes</div>
-
-            <div class="question-block">
-                <div class="question-title">Question 2.1: Paleotemperature Calculations (20 points)</div>
-                
-                <p>The table below shows δ¹⁸O values measured from <strong>conodont apatite</strong> across the PTB interval.</p>
-
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Sample</th>
-                            <th>Age (Ma)</th>
-                            <th>Conodont Zone</th>
-                            <th>δ¹⁸O_apatite (‰ VSMOW)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>CON-1</td><td>252.00</td><td>C. yini</td><td>20.8</td></tr>
-                        <tr><td>CON-2</td><td>251.95</td><td>C. meishanensis</td><td>19.5</td></tr>
-                        <tr><td>CON-3</td><td>251.92</td><td>H. changxingensis</td><td>18.2</td></tr>
-                        <tr><td>CON-4</td><td>251.90</td><td>H. parvus (PTB)</td><td>17.5</td></tr>
-                        <tr><td>CON-5</td><td>251.85</td><td>I. isarcica</td><td>17.8</td></tr>
-                    </tbody>
-                </table>
-
-                <div class="equation-box">
-                    <div class="equation-title">Phosphate-Water Oxygen Isotope Thermometer (Lécuyer et al., 2013):</div>
-                    T(°C) = 117.4 - 4.50 × (δ¹⁸O_phosphate - δ¹⁸O_water)<br><br>
-                    <em>Where δ¹⁸O_phosphate and δ¹⁸O_water are both in ‰ VSMOW</em>
-                </div>
-
-                <div class="info-note">
-                    <strong>⚠️ IMPORTANT - Seawater δ¹⁸O Assumption:</strong><br>
-                    For an <strong>ice-free world</strong> like the Permo-Triassic, assume δ¹⁸O_seawater = <strong>-1.0‰ VSMOW</strong>.
-                </div>
-
-                <div class="sub-question">
-                    <div class="sub-question-title">Part A (12 points): Calculate paleotemperatures</div>
-                    <p>Calculate the sea surface temperature for <strong>each sample</strong>. Show your work for at least TWO samples, then tabulate all results.</p>
-                    <div class="calculation-label">💻 CALCULATIONS:</div>
-                    <textarea class="calculation-area" id="p2_1a_calc" placeholder="Sample CON-1:
-δ¹⁸O_phosphate = 20.8‰ VSMOW
-δ¹⁸O_water = -1.0‰ VSMOW (ice-free world)
-T = 117.4 - 4.50 × (20.8 - (-1.0))
-T = ...
-
-RESULTS TABLE:
-Sample | Age (Ma) | T (°C)
-CON-1  | 252.00   | ..."></textarea>
-                </div>
-
-                <div class="sub-question">
-                    <div class="sub-question-title">Part B (8 points): Temperature interpretation</div>
-                    <p>Based on your calculated temperatures: (1) What is the magnitude of warming? (2) How do these compare to modern tropical SST (~27-29°C)? (3) What are the implications for marine life?</p>
-                    <div class="calculation-label">📝 YOUR INTERPRETATION:</div>
-                    <textarea class="answer-area" id="p2_1b" placeholder="1. Magnitude of warming: ...
-2. Comparison to modern tropics: ...
-3. Implications for marine life: ..."></textarea>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question-title">Question 2.2: The Ice Volume Trap (10 points)</div>
-                
-                <p>A fellow student applies the following reasoning:</p>
-                
-                <div class="concept-box" style="background: #fdf2f2; border-color: #e74c3c;">
-                    <em>"I know that during the Last Glacial Maximum, seawater δ¹⁸O was about +1.0‰ higher due to ice sheet storage. To be safe, I'll apply a +1.0‰ ice volume correction to my PTB seawater value, changing it from -1.0‰ to 0.0‰ VSMOW."</em>
-                </div>
-
-                <div class="sub-question">
-                    <div class="sub-question-title">Part A (5 points): Error identification</div>
-                    <p>Explain why this reasoning is <strong>incorrect</strong> for the Permo-Triassic interval.</p>
-                    <div class="calculation-label">📝 YOUR ANSWER:</div>
-                    <textarea class="answer-area" id="p2_2a" placeholder="Explain why the ice volume correction is inappropriate for the PTB..."></textarea>
-                </div>
-
-                <div class="sub-question">
-                    <div class="sub-question-title">Part B (5 points): Quantify the error</div>
-                    <p>Using sample CON-4 (δ¹⁸O = 17.5‰), calculate the temperature using both assumptions and determine the error introduced.</p>
-                    <div class="calculation-label">💻 CALCULATION:</div>
-                    <textarea class="calculation-area" id="p2_2b_calc" placeholder="CORRECT (δ¹⁸O_sw = -1.0‰):
-T = ...
-
-INCORRECT (δ¹⁸O_sw = 0.0‰):
-T = ...
-
-Error = ... °C"></textarea>
-                </div>
-            </div>
-        </div>
-
-        <!-- PART 3: ADVANCED PROXIES -->
-        <div class="section">
-            <div class="section-title">PART 3: OCEAN CHEMISTRY PROXIES (20 points) — Estimated time: 20 minutes</div>
-
-            <div class="question-block">
-                <div class="question-title">Question 3.1: Boron Isotopes and Ocean Acidification (10 points)</div>
-                
-                <p>The δ¹¹B record from brachiopod calcite shows a decline from ~13.5‰ to ~11.2‰ across the marine extinction interval. Boron isotopes are used as a proxy for seawater pH.</p>
-
-                <div class="equation-box">
-                    <div class="equation-title">Key Relationships:</div>
-                    • Boron in seawater exists as B(OH)₃ (boric acid) and B(OH)₄⁻ (borate ion)<br>
-                    • The ratio B(OH)₄⁻/B(OH)₃ is controlled by seawater pH<br>
-                    • Carbonates preferentially incorporate B(OH)₄⁻<br>
-                    • B(OH)₄⁻ is depleted in ¹¹B relative to B(OH)₃ by ~27‰<br>
-                    • Lower pH → more B(OH)₃ → lower δ¹¹B in carbonates
-                </div>
-
-                <p>Based on the δ¹¹B decline: (1) Explain the chemical mechanism linking lower pH to lower δ¹¹B. (2) What caused PTB ocean acidification, and how does it link to the carbon isotope evidence?</p>
-                <div class="calculation-label">📝 YOUR ANSWER:</div>
-                <textarea class="answer-area" id="p3_1" placeholder="1. Chemical mechanism:
-...
-
-2. Cause of acidification and link to carbon isotopes:
-..."></textarea>
-            </div>
-
-            <div class="question-block">
-                <div class="question-title">Question 3.2: Strontium Isotopes — Weathering vs Provenance (10 points)</div>
-                
-                <p>⁸⁷Sr/⁸⁶Sr increases across the PTB, traditionally interpreted as <strong>enhanced continental weathering</strong>. However, an alternative hypothesis suggests <strong>provenance change</strong> (different source rocks with higher ⁸⁷Sr/⁸⁶Sr).</p>
-
-                <p>Propose <strong>ONE additional proxy or dataset</strong> that could distinguish between these hypotheses. Explain expected results under each hypothesis.</p>
-                <div class="calculation-label">📝 YOUR ANSWER:</div>
-                <textarea class="answer-area" id="p3_2" placeholder="Proposed additional proxy: ...
-
-Expected results under Hypothesis A (enhanced weathering):
-...
-
-Expected results under Hypothesis B (provenance change):
-..."></textarea>
-            </div>
-        </div>
-
-        <!-- PART 4: DATA VISUALIZATION -->
-        <div class="section">
-            <div class="section-title">PART 4: DATA VISUALIZATION (5 points) — Estimated time: 10 minutes</div>
-
-            <div class="question-block">
-                <div class="question-title">Question 4.1: Plot Your Temperature Results</div>
-                
-                <p>Using the chart tool below, create a plot of your calculated paleotemperatures against geological age.</p>
-
-                <div class="chart-container">
-                    <h4>📊 Temperature vs Age Plot Generator</h4>
-                    
-                    <div class="chart-data-input">
-                        <div>
-                            <label><strong>X-axis (Age in Ma):</strong></label>
-                            <textarea id="chartXData">252.00
-251.95
-251.92
-251.90
-251.85</textarea>
-                        </div>
-                        <div>
-                            <label><strong>Y-axis (Temperature in °C):</strong></label>
-                            <textarea id="chartYData" placeholder="Enter your calculated temperatures, one per line"></textarea>
+                <!-- Introduction to Isotopes -->
+                <a href="module1_introduction_isotopes.html" class="module-card module-intro">
+                    <div class="module-header">
+                        <div class="module-number">Module 1</div>
+                        <h3>Introduction to Isotopes</h3>
+                        <div class="duration">⏱️ 20-25 minutes</div>
+                    </div>
+                    <div class="module-body">
+                        <p>Foundation concepts: isotope notation, fractionation, standards, and delta notation used throughout geochemistry.</p>
+                        <div class="module-topics">
+                            <span class="topic-tag">δ notation</span>
+                            <span class="topic-tag">Fractionation</span>
+                            <span class="topic-tag">VPDB/VSMOW</span>
+                            <span class="topic-tag">Quiz</span>
                         </div>
                     </div>
-                    
-                    <button onclick="generateChart()" style="padding: 10px 25px; background: linear-gradient(135deg, #16a085, #27ae60); color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Generate Plot</button>
-                    
-                    <div class="chart-canvas-container">
-                        <canvas id="tempChart" width="600" height="300"></canvas>
-                    </div>
-                </div>
-
-                <div class="sub-question">
-                    <div class="sub-question-title">Describe your plot (5 points)</div>
-                    <p>In 2-3 sentences, describe the pattern and identify when the most rapid warming occurred.</p>
-                    <div class="calculation-label">📝 YOUR DESCRIPTION:</div>
-                    <textarea class="answer-area" id="p4_1" placeholder="Describe the pattern in your temperature plot..."></textarea>
-                </div>
-            </div>
-        </div>
-
-        <!-- PART 5: SYNTHESIS -->
-        <div class="section">
-            <div class="section-title">PART 5: MULTI-PROXY SYNTHESIS (20 points) — Estimated time: 20 minutes</div>
-
-            <div class="question-block">
-                <div class="question-title">Question 5.1: Integrated Environmental Reconstruction</div>
+                </a>
                 
-                <p>Using ALL the proxy evidence (δ¹³C, δ¹⁸O/temperature, δ¹¹B, ⁸⁷Sr/⁸⁶Sr), write a <strong>synthesis paragraph (300-400 words)</strong> reconstructing the environmental changes during the Permo-Triassic mass extinction.</p>
-
-                <div class="info-note">
-                    <strong>Your synthesis MUST address:</strong><br>
-                    1. The sequence and timing of environmental changes relative to the two extinction pulses<br>
-                    2. Evidence for the role of volcanism (Siberian Traps) in triggering the crisis<br>
-                    3. Ocean-atmosphere interactions (warming, acidification, carbon cycle perturbation)<br>
-                    4. At least ONE limitation, uncertainty, or alternative interpretation
-                </div>
-
-                <div class="calculation-label">📝 YOUR SYNTHESIS:</div>
-                <textarea class="answer-area" id="p5_1" style="min-height: 250px;" placeholder="Write your multi-proxy synthesis here (300-400 words)..."></textarea>
-                <p style="margin-top: 10px; font-size: 0.9em; color: #666;">Word count: <span id="wordCount">0</span> words</p>
-            </div>
-        </div>
-
-        <!-- Export Section -->
-        <div class="export-section">
-            <h3>📤 Submit Your Exam</h3>
-            <p>When complete, click "Submit Exam" to generate your submission file.</p>
-            
-            <div class="export-buttons">
-                <button class="export-btn submit" onclick="submitExam()">✓ Submit Exam</button>
-                <button class="export-btn copy" onclick="copyToClipboard()">📋 Copy to Clipboard</button>
-                <button class="export-btn text" onclick="downloadText()">💾 Download Text</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Calculator -->
-    <div class="calculator-container">
-        <div class="calculator-panel" id="calculatorPanel">
-            <div class="calc-header">🧮 Isotope Calculator</div>
-            <div class="calc-body">
-                <input type="text" class="calc-display" id="calcDisplay" readonly placeholder="0">
+                <!-- Carbon & Oxygen Isotopes -->
+                <a href="module2_carbon_oxygen_isotopes.html" class="module-card module-co">
+                    <div class="module-header">
+                        <div class="module-number">Module 2</div>
+                        <h3>Carbon & Oxygen Isotopes</h3>
+                        <div class="duration">⏱️ 30-35 minutes</div>
+                    </div>
+                    <div class="module-body">
+                        <p>Marine carbon cycle, paleothermometry equations, ice volume effects, and diagenetic screening methods.</p>
+                        <div class="module-topics">
+                            <span class="topic-tag">δ¹³C excursions</span>
+                            <span class="topic-tag">Paleothermometry</span>
+                            <span class="topic-tag">Ice volume</span>
+                            <span class="topic-tag">Diagenesis</span>
+                        </div>
+                    </div>
+                </a>
                 
-                <div class="calc-tabs">
-                    <button class="calc-tab active" onclick="switchCalcTab('basic', this)">Basic</button>
-                    <button class="calc-tab" onclick="switchCalcTab('isotope', this)">Isotope Functions</button>
-                </div>
-
-                <div id="basicCalc">
-                    <div class="calc-buttons">
-                        <button class="calc-btn clear" onclick="clearCalc()">C</button>
-                        <button class="calc-btn" onclick="appendCalc('(')">(</button>
-                        <button class="calc-btn" onclick="appendCalc(')')">)</button>
-                        <button class="calc-btn operator" onclick="appendCalc('/')">÷</button>
-                        <button class="calc-btn" onclick="appendCalc('7')">7</button>
-                        <button class="calc-btn" onclick="appendCalc('8')">8</button>
-                        <button class="calc-btn" onclick="appendCalc('9')">9</button>
-                        <button class="calc-btn operator" onclick="appendCalc('*')">×</button>
-                        <button class="calc-btn" onclick="appendCalc('4')">4</button>
-                        <button class="calc-btn" onclick="appendCalc('5')">5</button>
-                        <button class="calc-btn" onclick="appendCalc('6')">6</button>
-                        <button class="calc-btn operator" onclick="appendCalc('-')">−</button>
-                        <button class="calc-btn" onclick="appendCalc('1')">1</button>
-                        <button class="calc-btn" onclick="appendCalc('2')">2</button>
-                        <button class="calc-btn" onclick="appendCalc('3')">3</button>
-                        <button class="calc-btn operator" onclick="appendCalc('+')">+</button>
-                        <button class="calc-btn" onclick="appendCalc('0')">0</button>
-                        <button class="calc-btn" onclick="appendCalc('.')">.</button>
-                        <button class="calc-btn equals" onclick="calculate()">=</button>
+                <!-- Clumped Isotopes -->
+                <a href="module3_clumped_isotopes.html" class="module-card module-clumped">
+                    <div class="module-header">
+                        <div class="module-number">Module 3</div>
+                        <h3>Clumped Isotopes (Δ₄₇)</h3>
+                        <div class="duration">⏱️ 25-30 minutes</div>
                     </div>
-                    <div style="margin-top: 10px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px;">
-                        <button class="calc-btn function" onclick="appendCalc('Math.log(')">ln</button>
-                        <button class="calc-btn function" onclick="appendCalc('Math.sqrt(')">√</button>
-                        <button class="calc-btn function" onclick="appendCalc('**')">x^y</button>
+                    <div class="module-body">
+                        <p>Temperature reconstruction independent of water composition using multiply-substituted isotopologues.</p>
+                        <div class="module-topics">
+                            <span class="topic-tag">Δ₄₇</span>
+                            <span class="topic-tag">Thermometry</span>
+                            <span class="topic-tag">Calibrations</span>
+                            <span class="topic-tag">Quiz</span>
+                        </div>
                     </div>
-                </div>
-
-                <div id="isotopeCalc" class="isotope-functions">
-                    <button class="isotope-func-btn" onclick="showIsotopeFunc('temp_phosphate')">🌡️ Phosphate Temperature (Lécuyer et al.)</button>
-                    <button class="isotope-func-btn" onclick="showIsotopeFunc('temp_anderson')">🌡️ Carbonate Temperature (Anderson & Arthur)</button>
-                    <button class="isotope-func-btn" onclick="showIsotopeFunc('convert_vpdb')">🔄 Convert VPDB ↔ VSMOW</button>
-                    <button class="isotope-func-btn" onclick="showIsotopeFunc('alpha')">α Alpha from Delta Values</button>
-                    
-                    <!-- Phosphate Temperature -->
-                    <div class="calc-input-group" id="func_temp_phosphate">
-                        <h4 style="margin-top: 0;">Phosphate Temperature (Lécuyer et al., 2013)</h4>
-                        <p style="font-size: 0.85em; color: #666;">T(°C) = 117.4 - 4.50 × (δ¹⁸O_phos - δ¹⁸O_water)</p>
-                        <label>δ¹⁸O_phosphate (‰ VSMOW):</label>
-                        <input type="number" id="phos_d18O" step="0.1" placeholder="e.g., 20.8">
-                        <label>δ¹⁸O_water (‰ VSMOW):</label>
-                        <input type="number" id="phos_water" step="0.1" value="-1.0">
-                        <button onclick="calcPhosphateTemp()" style="width: 100%; padding: 10px; background: #16a085; color: white; border: none; border-radius: 5px; cursor: pointer;">Calculate</button>
-                        <div class="calc-result" id="result_temp_phosphate"></div>
+                </a>
+                
+                <!-- Boron Isotopes -->
+                <a href="module4_boron_isotopes.html" class="module-card module-boron">
+                    <div class="module-header">
+                        <div class="module-number">Module 4</div>
+                        <h3>Boron Isotopes (δ¹¹B)</h3>
+                        <div class="duration">⏱️ 25-30 minutes</div>
                     </div>
-
-                    <!-- Anderson & Arthur Temperature (FIXED) -->
-                    <div class="calc-input-group" id="func_temp_anderson">
-                        <h4 style="margin-top: 0;">Carbonate Temperature (Anderson & Arthur, 1983)</h4>
-                        <p style="font-size: 0.85em; color: #666;">T(°C) = 16.0 - 4.14(δc - δw) + 0.13(δc - δw)²</p>
-                        <p style="font-size: 0.8em; color: #e74c3c;"><strong>Note:</strong> Both values in VPDB scale, or enter water in VSMOW and it will be converted.</p>
-                        <label>δ¹⁸O_carbonate (‰ VPDB):</label>
-                        <input type="number" id="aa_d18O_carb" step="0.1" placeholder="e.g., -3.2">
-                        <label>δ¹⁸O_water (‰ VSMOW):</label>
-                        <input type="number" id="aa_water" step="0.1" value="-1.0">
-                        <button onclick="calcAndersonTemp()" style="width: 100%; padding: 10px; background: #16a085; color: white; border: none; border-radius: 5px; cursor: pointer;">Calculate</button>
-                        <div class="calc-result" id="result_temp_anderson"></div>
+                    <div class="module-body">
+                        <p>Paleo-pH reconstruction and atmospheric CO₂ estimation using boron isotope systematics in marine carbonates.</p>
+                        <div class="module-topics">
+                            <span class="topic-tag">Paleo-pH</span>
+                            <span class="topic-tag">pCO₂</span>
+                            <span class="topic-tag">Borate/Boric acid</span>
+                            <span class="topic-tag">Quiz</span>
+                        </div>
                     </div>
-
-                    <!-- VPDB-VSMOW Conversion -->
-                    <div class="calc-input-group" id="func_convert_vpdb">
-                        <h4 style="margin-top: 0;">Convert VPDB ↔ VSMOW</h4>
-                        <p style="font-size: 0.85em; color: #666;">δ¹⁸O_VSMOW = 1.03091 × δ¹⁸O_VPDB + 30.91</p>
-                        <label>Input value (‰):</label>
-                        <input type="number" id="convert_value" step="0.1" placeholder="e.g., -3.2">
-                        <label>Convert from:</label>
-                        <select id="convert_from">
-                            <option value="vpdb">VPDB → VSMOW</option>
-                            <option value="vsmow">VSMOW → VPDB</option>
-                        </select>
-                        <button onclick="convertStandard()" style="width: 100%; padding: 10px; background: #16a085; color: white; border: none; border-radius: 5px; cursor: pointer;">Convert</button>
-                        <div class="calc-result" id="result_convert_vpdb"></div>
+                </a>
+                
+                <!-- Strontium Isotopes -->
+                <a href="module5_strontium_isotopes.html" class="module-card module-strontium">
+                    <div class="module-header">
+                        <div class="module-number">Module 5</div>
+                        <h3>Strontium Isotopes (⁸⁷Sr/⁸⁶Sr)</h3>
+                        <div class="duration">⏱️ 25-30 minutes</div>
                     </div>
-
-                    <!-- Alpha Calculation -->
-                    <div class="calc-input-group" id="func_alpha">
-                        <h4 style="margin-top: 0;">Calculate α (Fractionation Factor)</h4>
-                        <p style="font-size: 0.85em; color: #666;">α = (1000 + δA) / (1000 + δB)</p>
-                        <label>δ_A (phase A, ‰):</label>
-                        <input type="number" id="alpha_a" step="0.1" placeholder="e.g., carbonate value">
-                        <label>δ_B (phase B, ‰):</label>
-                        <input type="number" id="alpha_b" step="0.1" placeholder="e.g., water value">
-                        <button onclick="calcAlpha()" style="width: 100%; padding: 10px; background: #16a085; color: white; border: none; border-radius: 5px; cursor: pointer;">Calculate α</button>
-                        <div class="calc-result" id="result_alpha"></div>
+                    <div class="module-body">
+                        <p>Seawater Sr evolution, continental weathering signals, and stratigraphic dating applications.</p>
+                        <div class="module-topics">
+                            <span class="topic-tag">Weathering</span>
+                            <span class="topic-tag">Stratigraphy</span>
+                            <span class="topic-tag">LOWESS curve</span>
+                            <span class="topic-tag">Quiz</span>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Exam Simulation -->
+                <div class="module-card module-exam coming-soon">
+                    <div class="module-header">
+                        <div class="module-number">Assessment</div>
+                        <h3>Exam Simulation</h3>
+                        <div class="duration">⏱️ Available on Exam Day</div>
+                    </div>
+                    <div class="module-body">
+                        <p>Practice exam covering all course modules. Timed assessment with detailed feedback and explanations.</p>
+                        <div class="module-topics">
+                            <span class="topic-tag">All topics</span>
+                            <span class="topic-tag">Timed</span>
+                            <span class="topic-tag">Feedback</span>
+                        </div>
+                        <span class="coming-soon-badge">🔒 Locked Until Exam</span>
                     </div>
                 </div>
+                
             </div>
         </div>
-        <button class="calculator-toggle" onclick="toggleCalculator()">🧮 Calculator</button>
-    </div>
-
-    <!-- Loading Overlay -->
-    <div class="loading-overlay" id="loadingOverlay">
-        <div class="loading-box">
-            <div class="spinner"></div>
-            <div id="loadingText">Processing...</div>
-        </div>
+        
+        <footer>
+            <div class="footer-content">
+                <h4>GeoZentrum Nordbayern</h4>
+                <p>Friedrich-Alexander-Universität Erlangen-Nürnberg</p>
+                <p>Course Instructor: <a href="mailto:luca.caracciolo@fau.de">PD Dr. Luca Caracciolo</a></p>
+                <p>Scientific Advisor: <a href="mailto:michael.joachimski@fau.de">Prof. Dr. Michael Joachimski</a></p>
+                
+                <div class="footer-copy">
+                    © 2025 Sedimentary Geochemistry Course | All rights reserved
+                </div>
+            </div>
+        </footer>
     </div>
 
     <script>
-        // ========================================
+        // ============================================
         // CONFIGURATION
-        // ========================================
-        const CORRECT_PASSWORD = "GeoZentrum2026!";
-        const EXAM_TIME_MINUTES = 105;
-        const GRACE_PERIOD_MINUTES = 5;
-        const INSTRUCTOR_EMAIL = "luca.caracciolo@fau.de";
-
-        // ========================================
-        // STATE
-        // ========================================
-        let timerInterval = null;
-        let remainingSeconds = EXAM_TIME_MINUTES * 60;
-        let inGracePeriod = false;
-        let examSubmitted = false;
-        let chartInstance = null;
-
-        // ========================================
-        // PASSWORD & INIT
-        // ========================================
-        function checkPassword() {
-            const input = document.getElementById('passwordInput').value;
-            if (input === CORRECT_PASSWORD) {
-                document.getElementById('passwordOverlay').classList.add('hidden');
+        // ============================================
+        
+        // Student email list (access expires Feb 5, 2026)
+        const STUDENT_EMAILS = [
+            'lo20pupo@fauad.fau.de',
+            'ji66ciip@fauad.fau.de',
+            'du28zapa@fauad.fau.de',
+            'qy58homy@fauad.fau.de',
+            'ge21fybi@fauad.fau.de',
+            'bi48dagu@fauad.fau.de',
+            'ad07ifuk@fauad.fau.de',
+            'up27isil@fauad.fau.de',
+            'cy29woro@fauad.fau.de',
+            'yp57ijiv@fauad.fau.de',
+            'je93kiqo@fauad.fau.de',
+            'ku07wazu@fauad.fau.de',
+            'pa76zafa@fauad.fau.de',
+            'ih69acyq@fauad.fau.de',
+            'em74ofeq@fauad.fau.de',
+            'oz56uwam@fauad.fau.de',
+            'ne57maze@fauad.fau.de'
+        ];
+        
+        // Instructor emails (unlimited access)
+        const INSTRUCTOR_EMAILS = [
+            'luca.caracciolo@fau.de',
+            'michael.joachimski@fau.de'
+        ];
+        
+        // Student access expiration date
+        const EXPIRATION_DATE = new Date('2026-02-05T23:59:59');
+        
+        // ============================================
+        // LOGIN FUNCTIONS
+        // ============================================
+        
+        function attemptLogin() {
+            const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+            const name = document.getElementById('loginName').value.trim();
+            const errorEl = document.getElementById('loginError');
+            
+            // Validate inputs
+            if (!email || !name) {
+                errorEl.textContent = 'Please enter both your email and name.';
+                errorEl.classList.add('show');
+                return;
+            }
+            
+            if (name.length < 3) {
+                errorEl.textContent = 'Please enter your full name.';
+                errorEl.classList.add('show');
+                return;
+            }
+            
+            // Check if instructor (unlimited access)
+            if (INSTRUCTOR_EMAILS.includes(email)) {
+                grantAccess(name, email, true);
+                return;
+            }
+            
+            // Check if student
+            if (STUDENT_EMAILS.includes(email)) {
+                // Check expiration
+                if (new Date() > EXPIRATION_DATE) {
+                    document.getElementById('loginOverlay').classList.add('hidden');
+                    document.getElementById('expiredOverlay').classList.remove('hidden');
+                    return;
+                }
+                grantAccess(name, email, false);
+                return;
+            }
+            
+            // Email not in list
+            errorEl.textContent = 'Email not recognized. Please use your registered FAU email address.';
+            errorEl.classList.add('show');
+        }
+        
+        function grantAccess(name, email, isInstructor) {
+            // Store in localStorage
+            localStorage.setItem('sedgeo_user', JSON.stringify({
+                name: name,
+                email: email,
+                isInstructor: isInstructor,
+                loginTime: new Date().toISOString()
+            }));
+            
+            // Show main content
+            document.getElementById('loginOverlay').classList.add('hidden');
+            document.getElementById('mainContent').classList.add('visible');
+            document.getElementById('userName').textContent = name;
+        }
+        
+        function logout() {
+            localStorage.removeItem('sedgeo_user');
+            location.reload();
+        }
+        
+        function checkSession() {
+            const userData = localStorage.getItem('sedgeo_user');
+            
+            if (userData) {
+                const user = JSON.parse(userData);
+                
+                // Check if student access expired
+                if (!user.isInstructor && new Date() > EXPIRATION_DATE) {
+                    localStorage.removeItem('sedgeo_user');
+                    document.getElementById('loginOverlay').classList.add('hidden');
+                    document.getElementById('expiredOverlay').classList.remove('hidden');
+                    return;
+                }
+                
+                // Grant access
+                document.getElementById('loginOverlay').classList.add('hidden');
                 document.getElementById('mainContent').classList.add('visible');
-                document.getElementById('timerBar').classList.remove('hidden');
-                initExam();
-            } else {
-                document.getElementById('errorMessage').textContent = 'Incorrect password. Please try again.';
+                document.getElementById('userName').textContent = user.name;
             }
         }
-
-        function initExam() {
-            document.getElementById('submissionDate').value = new Date().toISOString().split('T')[0];
-            loadSavedData();
-            startTimer();
-            setupAutoSave();
-            setupWordCounter();
-        }
-
-        // ========================================
-        // TIMER
-        // ========================================
-        function startTimer() {
-            const savedTime = localStorage.getItem('ptb_exam_remaining_time');
-            if (savedTime) remainingSeconds = parseInt(savedTime);
-
-            timerInterval = setInterval(() => {
-                if (examSubmitted) { clearInterval(timerInterval); return; }
-                remainingSeconds--;
-                localStorage.setItem('ptb_exam_remaining_time', remainingSeconds);
-                updateTimerDisplay();
-
-                if (remainingSeconds <= 0 && !inGracePeriod) {
-                    inGracePeriod = true;
-                    remainingSeconds = GRACE_PERIOD_MINUTES * 60;
-                    document.getElementById('timerStatus').textContent = '⚠️ GRACE PERIOD';
-                    alert('Time is up! You have 5 minutes for final checks.');
-                } else if (remainingSeconds <= 0 && inGracePeriod) {
-                    clearInterval(timerInterval);
-                    alert('Grace period ended. Submitting automatically.');
-                    submitExam();
-                }
-            }, 1000);
-        }
-
-        function updateTimerDisplay() {
-            const h = Math.floor(remainingSeconds / 3600);
-            const m = Math.floor((remainingSeconds % 3600) / 60);
-            const s = remainingSeconds % 60;
-            const display = document.getElementById('timerDisplay');
-            display.textContent = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-            display.classList.remove('warning', 'critical', 'grace');
-            if (inGracePeriod) display.classList.add('grace');
-            else if (remainingSeconds <= 300) display.classList.add('critical');
-            else if (remainingSeconds <= 900) display.classList.add('warning');
-        }
-
-        // ========================================
-        // AUTO-SAVE
-        // ========================================
-        function setupAutoSave() {
-            document.querySelectorAll('input, textarea').forEach(el => {
-                el.addEventListener('input', () => localStorage.setItem(`ptb_exam_${el.id}`, el.value));
-            });
-        }
-
-        function loadSavedData() {
-            document.querySelectorAll('input, textarea').forEach(el => {
-                const saved = localStorage.getItem(`ptb_exam_${el.id}`);
-                if (saved) el.value = saved;
-            });
-            updateWatermark();
-        }
-
-        // ========================================
-        // WATERMARK
-        // ========================================
-        function updateWatermark() {
-            const name = document.getElementById('studentName').value;
-            const wm = document.getElementById('watermark');
-            if (name && name.length > 2) { wm.textContent = name; wm.classList.remove('hidden'); }
-            else wm.classList.add('hidden');
-        }
-
-        // ========================================
-        // WORD COUNTER
-        // ========================================
-        function setupWordCounter() {
-            const area = document.getElementById('p5_1');
-            area.addEventListener('input', () => {
-                const words = area.value.trim().split(/\s+/).filter(w => w.length > 0);
-                document.getElementById('wordCount').textContent = words.length;
-            });
-        }
-
-        // ========================================
-        // CALCULATOR
-        // ========================================
-        function toggleCalculator() {
-            document.getElementById('calculatorPanel').classList.toggle('active');
-        }
-
-        function switchCalcTab(tab, btn) {
-            document.querySelectorAll('.calc-tab').forEach(t => t.classList.remove('active'));
-            btn.classList.add('active');
-            document.getElementById('basicCalc').style.display = tab === 'basic' ? 'block' : 'none';
-            document.getElementById('isotopeCalc').classList.toggle('active', tab === 'isotope');
-            document.querySelectorAll('.calc-input-group').forEach(g => g.classList.remove('active'));
-        }
-
-        function appendCalc(val) {
-            const d = document.getElementById('calcDisplay');
-            d.value = (d.value === '0' || d.value === 'Error') ? val : d.value + val;
-        }
-
-        function clearCalc() { document.getElementById('calcDisplay').value = '0'; }
-
-        function calculate() {
-            const d = document.getElementById('calcDisplay');
-            try { d.value = eval(d.value).toFixed(4); }
-            catch { d.value = 'Error'; }
-        }
-
-        function showIsotopeFunc(name) {
-            document.querySelectorAll('.calc-input-group').forEach(g => g.classList.remove('active'));
-            document.getElementById(`func_${name}`).classList.add('active');
-        }
-
-        // Phosphate Temperature
-        function calcPhosphateTemp() {
-            const d18O_phos = parseFloat(document.getElementById('phos_d18O').value);
-            const d18O_water = parseFloat(document.getElementById('phos_water').value);
-            if (isNaN(d18O_phos) || isNaN(d18O_water)) {
-                document.getElementById('result_temp_phosphate').innerHTML = '<span style="color:red">Enter valid numbers</span>';
-                return;
-            }
-            const T = 117.4 - 4.50 * (d18O_phos - d18O_water);
-            document.getElementById('result_temp_phosphate').innerHTML = `
-                <strong>Temperature = ${T.toFixed(1)} °C</strong><br>
-                <small>T = 117.4 - 4.50 × (${d18O_phos} - (${d18O_water})) = ${T.toFixed(2)}</small>
-            `;
-        }
-
-        // Anderson & Arthur Temperature (FIXED)
-        function calcAndersonTemp() {
-            const d18O_carb = parseFloat(document.getElementById('aa_d18O_carb').value);
-            const d18O_water_vsmow = parseFloat(document.getElementById('aa_water').value);
-            if (isNaN(d18O_carb) || isNaN(d18O_water_vsmow)) {
-                document.getElementById('result_temp_anderson').innerHTML = '<span style="color:red">Enter valid numbers</span>';
-                return;
-            }
-            // The Anderson & Arthur equation expects δc in VPDB and δw also effectively referenced to the same scale
-            // The simplest approach: use the approximation that δw(VSMOW) ≈ δw(VPDB) + 30.91 / 1.03091
-            // But the original equation was calibrated with δw as SMOW-like values
-            // Most commonly: (δc - δw) where δc is VPDB and δw is SMOW, but the difference is taken directly
-            // Correct application: δc (VPDB) and δw (VSMOW converted to VPDB-like scale would be wrong)
-            // Actually, the equation is commonly applied with δc in VPDB and δw in SMOW directly
-            // Let me use the direct approach: the equation was calibrated this way
+        
+        // Handle Enter key in login form
+        document.addEventListener('DOMContentLoaded', function() {
+            checkSession();
             
-            const diff = d18O_carb - d18O_water_vsmow;
-            const T = 16.0 - 4.14 * diff + 0.13 * Math.pow(diff, 2);
-            
-            document.getElementById('result_temp_anderson').innerHTML = `
-                <strong>Temperature = ${T.toFixed(1)} °C</strong><br>
-                <small>δc (VPDB) = ${d18O_carb}‰</small><br>
-                <small>δw (VSMOW) = ${d18O_water_vsmow}‰</small><br>
-                <small>(δc - δw) = ${diff.toFixed(2)}</small><br>
-                <small>T = 16.0 - 4.14(${diff.toFixed(2)}) + 0.13(${diff.toFixed(2)})² = ${T.toFixed(1)}</small>
-            `;
-        }
-
-        // VPDB-VSMOW Conversion
-        function convertStandard() {
-            const value = parseFloat(document.getElementById('convert_value').value);
-            const from = document.getElementById('convert_from').value;
-            if (isNaN(value)) {
-                document.getElementById('result_convert_vpdb').innerHTML = '<span style="color:red">Enter a valid number</span>';
-                return;
-            }
-            let result, formula;
-            if (from === 'vpdb') {
-                result = 1.03091 * value + 30.91;
-                formula = `${value}‰ VPDB → ${result.toFixed(2)}‰ VSMOW`;
-            } else {
-                result = (value - 30.91) / 1.03091;
-                formula = `${value}‰ VSMOW → ${result.toFixed(2)}‰ VPDB`;
-            }
-            document.getElementById('result_convert_vpdb').innerHTML = `<strong>${formula}</strong>`;
-        }
-
-        // Alpha Calculation
-        function calcAlpha() {
-            const a = parseFloat(document.getElementById('alpha_a').value);
-            const b = parseFloat(document.getElementById('alpha_b').value);
-            if (isNaN(a) || isNaN(b)) {
-                document.getElementById('result_alpha').innerHTML = '<span style="color:red">Enter valid numbers</span>';
-                return;
-            }
-            const alpha = (1000 + a) / (1000 + b);
-            const lnAlpha1000 = 1000 * Math.log(alpha);
-            document.getElementById('result_alpha').innerHTML = `
-                <strong>α = ${alpha.toFixed(5)}</strong><br>
-                <small>1000 ln α = ${lnAlpha1000.toFixed(2)}</small>
-            `;
-        }
-
-        // ========================================
-        // CHART
-        // ========================================
-        function generateChart() {
-            const xData = document.getElementById('chartXData').value.trim().split('\n').map(v => parseFloat(v.trim())).filter(v => !isNaN(v));
-            const yData = document.getElementById('chartYData').value.trim().split('\n').map(v => parseFloat(v.trim())).filter(v => !isNaN(v));
-            
-            if (xData.length === 0 || yData.length === 0) { alert('Enter valid data for both axes'); return; }
-            if (xData.length !== yData.length) { alert('X and Y must have same number of values'); return; }
-            
-            const ctx = document.getElementById('tempChart').getContext('2d');
-            if (chartInstance) chartInstance.destroy();
-            
-            const combined = xData.map((x, i) => ({ x, y: yData[i] })).sort((a, b) => b.x - a.x);
-            
-            chartInstance = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: combined.map(d => d.x.toFixed(2)),
-                    datasets: [{
-                        label: 'Temperature (°C)',
-                        data: combined.map(d => d.y),
-                        borderColor: '#e74c3c',
-                        backgroundColor: 'rgba(231, 76, 60, 0.1)',
-                        borderWidth: 2,
-                        pointRadius: 6,
-                        pointBackgroundColor: '#e74c3c',
-                        fill: true,
-                        tension: 0.1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        title: { display: true, text: 'Sea Surface Temperature Across the PTB', font: { size: 14 } },
-                        legend: { display: true, position: 'top' }
-                    },
-                    scales: {
-                        x: { title: { display: true, text: 'Age (Ma)' } },
-                        y: { title: { display: true, text: 'Temperature (°C)' } }
-                    }
+            document.getElementById('loginEmail').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    document.getElementById('loginName').focus();
                 }
             });
-        }
-
-        // ========================================
-        // DATA COLLECTION
-        // ========================================
-        function collectData() {
-            return {
-                studentInfo: {
-                    name: document.getElementById('studentName').value,
-                    email: document.getElementById('studentEmail').value,
-                    studentId: document.getElementById('studentId').value,
-                    date: document.getElementById('submissionDate').value
-                },
-                part1: {
-                    q1_1a: document.getElementById('p1_1a_calc').value,
-                    q1_1b: document.getElementById('p1_1b').value,
-                    q1_2: document.getElementById('p1_2').value
-                },
-                part2: {
-                    q2_1a: document.getElementById('p2_1a_calc').value,
-                    q2_1b: document.getElementById('p2_1b').value,
-                    q2_2a: document.getElementById('p2_2a').value,
-                    q2_2b: document.getElementById('p2_2b_calc').value
-                },
-                part3: {
-                    q3_1: document.getElementById('p3_1').value,
-                    q3_2: document.getElementById('p3_2').value
-                },
-                part4: { q4_1: document.getElementById('p4_1').value },
-                part5: { q5_1: document.getElementById('p5_1').value },
-                metadata: {
-                    submissionTime: new Date().toISOString(),
-                    timeRemaining: remainingSeconds,
-                    inGracePeriod: inGracePeriod
+            
+            document.getElementById('loginName').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    attemptLogin();
                 }
-            };
-        }
-
-        function validateFields() {
-            const required = ['studentName', 'studentEmail', 'studentId'];
-            for (const id of required) {
-                if (!document.getElementById(id).value.trim()) {
-                    alert('Please fill in all required student information fields.');
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        // ========================================
-        // EXPORT FUNCTIONS
-        // ========================================
-        function formatText(data) {
-            let t = `SEDIMENTARY GEOCHEMISTRY - EXAM SIMULATION\n`;
-            t += `Permo-Triassic Boundary Case Study\n`;
-            t += `${'='.repeat(60)}\n\n`;
-            t += `STUDENT INFORMATION\n`;
-            t += `${'='.repeat(60)}\n`;
-            t += `Name: ${data.studentInfo.name}\n`;
-            t += `Email: ${data.studentInfo.email}\n`;
-            t += `ID: ${data.studentInfo.studentId}\n`;
-            t += `Date: ${data.studentInfo.date}\n`;
-            t += `Submitted: ${data.metadata.submissionTime}\n\n`;
-            
-            t += `${'='.repeat(60)}\n`;
-            t += `PART 1: CARBON ISOTOPES (25 points)\n`;
-            t += `${'='.repeat(60)}\n\n`;
-            t += `Q1.1a - CIE Calculation:\n${data.part1.q1_1a || 'Not completed'}\n\n`;
-            t += `Q1.1b - CIE Interpretation:\n${data.part1.q1_1b || 'Not completed'}\n\n`;
-            t += `Q1.2 - δ13C_carb vs δ13C_org:\n${data.part1.q1_2 || 'Not completed'}\n\n`;
-            
-            t += `${'='.repeat(60)}\n`;
-            t += `PART 2: OXYGEN ISOTOPES & TEMPERATURE (30 points)\n`;
-            t += `${'='.repeat(60)}\n\n`;
-            t += `Q2.1a - Temperature Calculations:\n${data.part2.q2_1a || 'Not completed'}\n\n`;
-            t += `Q2.1b - Temperature Interpretation:\n${data.part2.q2_1b || 'Not completed'}\n\n`;
-            t += `Q2.2a - Ice Volume Error ID:\n${data.part2.q2_2a || 'Not completed'}\n\n`;
-            t += `Q2.2b - Ice Volume Error Calc:\n${data.part2.q2_2b || 'Not completed'}\n\n`;
-            
-            t += `${'='.repeat(60)}\n`;
-            t += `PART 3: OCEAN CHEMISTRY PROXIES (20 points)\n`;
-            t += `${'='.repeat(60)}\n\n`;
-            t += `Q3.1 - Boron Isotopes:\n${data.part3.q3_1 || 'Not completed'}\n\n`;
-            t += `Q3.2 - Strontium Isotopes:\n${data.part3.q3_2 || 'Not completed'}\n\n`;
-            
-            t += `${'='.repeat(60)}\n`;
-            t += `PART 4: DATA VISUALIZATION (5 points)\n`;
-            t += `${'='.repeat(60)}\n\n`;
-            t += `Q4.1 - Plot Description:\n${data.part4.q4_1 || 'Not completed'}\n\n`;
-            
-            t += `${'='.repeat(60)}\n`;
-            t += `PART 5: MULTI-PROXY SYNTHESIS (20 points)\n`;
-            t += `${'='.repeat(60)}\n\n`;
-            t += `Q5.1 - Synthesis:\n${data.part5.q5_1 || 'Not completed'}\n`;
-            
-            return t;
-        }
-
-        function submitExam() {
-            if (!validateFields()) return;
-            if (examSubmitted) { alert('Already submitted.'); return; }
-            if (!confirm('Are you sure you want to submit? You cannot change answers after submission.')) return;
-            
-            examSubmitted = true;
-            clearInterval(timerInterval);
-            downloadText();
-            localStorage.removeItem('ptb_exam_remaining_time');
-            alert('Exam submitted! Please save the downloaded file and upload to Teams or email to ' + INSTRUCTOR_EMAIL);
-        }
-
-        async function copyToClipboard() {
-            if (!validateFields()) return;
-            const text = formatText(collectData());
-            try {
-                await navigator.clipboard.writeText(text);
-                alert('Copied to clipboard!');
-            } catch {
-                const ta = document.createElement('textarea');
-                ta.value = text;
-                document.body.appendChild(ta);
-                ta.select();
-                document.execCommand('copy');
-                document.body.removeChild(ta);
-                alert('Copied to clipboard!');
-            }
-        }
-
-        function downloadText() {
-            if (!validateFields()) return;
-            const data = collectData();
-            const text = formatText(data);
-            const blob = new Blob([text], { type: 'text/plain' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `PTB_Exam_${data.studentInfo.name.replace(/\s+/g, '_')}.txt`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        }
-
-        function showLoading(msg) {
-            document.getElementById('loadingText').textContent = msg;
-            document.getElementById('loadingOverlay').classList.add('active');
-        }
-
-        function hideLoading() {
-            document.getElementById('loadingOverlay').classList.remove('active');
-        }
+            });
+        });
     </script>
+
 </body>
 </html>
