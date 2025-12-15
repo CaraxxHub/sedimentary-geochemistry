@@ -775,4 +775,17 @@
             
             document.getElementById('loginEmail').addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
-                 
+                    document.getElementById('loginName').focus();
+                }
+            });
+            
+            document.getElementById('loginName').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    attemptLogin();
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
