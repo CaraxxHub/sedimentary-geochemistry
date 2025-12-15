@@ -389,6 +389,17 @@
             margin-top: 10px;
         }
         
+        .exam-badge {
+            background: linear-gradient(135deg, #8e44ad, #9b59b6);
+            color: white;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        
         /* Footer */
         footer {
             background: #2c3e50;
@@ -484,7 +495,7 @@
             <p>Your access to course materials expired on <strong>February 5, 2026</strong>.</p>
             <p>If you need continued access, please contact:</p>
             <p><strong>PD Dr. Luca Caracciolo</strong></p>
-            <p><a href="mailto:luca.caracciolo@fau.de">luca.caracciolo@fau.de</a></p>
+            <p><a href="/cdn-cgi/l/email-protection#9df1e8fefcb3fefceffcfefef4f2f1f2ddfbfce8b3f9f8"><span class="__cf_email__" data-cfemail="3b574e585a15585a495a5858525457547b5d5a4e155f5e">[email&#160;protected]</span></a></p>
         </div>
     </div>
 
@@ -603,22 +614,22 @@
                 </a>
                 
                 <!-- Exam Simulation -->
-                <div class="module-card module-exam coming-soon">
+                <a href="PTB_Exam_Simulation.html" class="module-card module-exam">
                     <div class="module-header">
                         <div class="module-number">Assessment</div>
                         <h3>Exam Simulation</h3>
-                        <div class="duration">⏱️ Available on Exam Day</div>
+                        <div class="duration">⏱️ 1 hour 45 minutes</div>
                     </div>
                     <div class="module-body">
-                        <p>Practice exam covering all course modules. Timed assessment with detailed feedback and explanations.</p>
+                        <p>Permo-Triassic Boundary case study. Timed exam with multi-proxy interpretation and synthesis questions.</p>
                         <div class="module-topics">
                             <span class="topic-tag">All topics</span>
                             <span class="topic-tag">Timed</span>
-                            <span class="topic-tag">Feedback</span>
+                            <span class="topic-tag">105 min</span>
                         </div>
-                        <span class="coming-soon-badge">🔒 Locked Until Exam</span>
+                        <span class="exam-badge">📅 Opens Dec 16, 16:15</span>
                     </div>
-                </div>
+                </a>
                 
             </div>
         </div>
@@ -627,8 +638,8 @@
             <div class="footer-content">
                 <h4>GeoZentrum Nordbayern</h4>
                 <p>Friedrich-Alexander-Universität Erlangen-Nürnberg</p>
-                <p>Course Instructor: <a href="mailto:luca.caracciolo@fau.de">PD Dr. Luca Caracciolo</a></p>
-                <p>Scientific Advisor: <a href="mailto:michael.joachimski@fau.de">Prof. Dr. Michael Joachimski</a></p>
+                <p>Course Instructor: <a href="/cdn-cgi/l/email-protection#e08c958381ce838192818383898f8c8fa0868195ce8485">PD Dr. Luca Caracciolo</a></p>
+                <p>Scientific Advisor: <a href="/cdn-cgi/l/email-protection#9df0f4fef5fcf8f1b3f7f2fcfef5f4f0eef6f4ddfbfce8b3f9f8">Prof. Dr. Michael Joachimski</a></p>
                 
                 <div class="footer-copy">
                     © 2025 Sedimentary Geochemistry Course | All rights reserved
@@ -637,7 +648,7 @@
         </footer>
     </div>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // ============================================
         // CONFIGURATION
         // ============================================
@@ -764,17 +775,4 @@
             
             document.getElementById('loginEmail').addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
-                    document.getElementById('loginName').focus();
-                }
-            });
-            
-            document.getElementById('loginName').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    attemptLogin();
-                }
-            });
-        });
-    </script>
-
-</body>
-</html>
+                 
