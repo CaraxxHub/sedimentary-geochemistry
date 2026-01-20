@@ -1704,7 +1704,7 @@
             }
 
             // Log guest access to Google Sheets via GET
-            const params = new URLSearchParams({ name, email, affiliation, purpose });
+            const params = new URLSearchParams({ name, email, affiliation, purpose, course: 'Sedimentary Geochemistry' });
             const beacon = new Image();
             beacon.src = `${GUEST_LOG_URL}?${params.toString()}`;
 
