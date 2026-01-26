@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 6: Nd Isotopes | Sedimentary Geochemistry</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Georgia', serif; line-height: 1.7; color: #333; background: #f5f7fa; }
+        .nav-bar { background: linear-gradient(135deg, #1E40AF, #3B82F6); padding: 15px 30px; position: fixed; top: 0; width: 100%; z-index: 1000; display: flex; justify-content: space-between; align-items: center; }
+        .nav-bar a { color: white; text-decoration: none; margin: 0 15px; font-size: 0.95em; }
+        .nav-bar a:hover { text-decoration: underline; }
+        .nav-brand { font-weight: bold; font-size: 1.1em; color: white; }
+        .nav-links { display: flex; align-items: center; }
+        .hero { background: linear-gradient(135deg, #1E40AF, #3B82F6); color: white; padding: 120px 30px 60px; text-align: center; }
+        .hero h1 { font-size: 2.5em; font-weight: 300; margin-bottom: 15px; }
+        .hero .subtitle { font-size: 1.3em; opacity: 0.95; }
+        .hero .module-tag { display: inline-block; background: rgba(255,255,255,0.2); padding: 8px 20px; border-radius: 20px; margin-top: 20px; font-size: 0.9em; }
+        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+        .objectives { background: white; border-radius: 12px; padding: 30px; margin-bottom: 30px; box-shadow: 0 3px 15px rgba(0,0,0,0.08); border-left: 5px solid #3B82F6; }
+        .objectives h2 { color: #1E40AF; margin-bottom: 20px; font-size: 1.4em; }
+        .objectives ul { list-style: none; }
+        .objectives li { padding: 10px 0; padding-left: 30px; position: relative; }
+        .objectives li::before { content: "✓"; position: absolute; left: 0; color: #3B82F6; font-weight: bold; }
+        .section { background: white; border-radius: 12px; padding: 35px; margin-bottom: 30px; box-shadow: 0 3px 15px rgba(0,0,0,0.08); }
+        .section h2 { color: #1E40AF; font-size: 1.5em; margin-bottom: 25px; padding-bottom: 10px; border-bottom: 2px solid #eee; }
+        .section h3 { color: #3B82F6; font-size: 1.2em; margin: 25px 0 15px; }
+        .section p { margin-bottom: 15px; }
+        .concept-box { background: #EFF6FF; border-left: 4px solid #3B82F6; padding: 20px; margin: 20px 0; border-radius: 0 8px 8px 0; }
+        .concept-box.warning { background: #fef9e7; border-left-color: #f39c12; }
+        .concept-box.important { background: #ebf5fb; border-left-color: #3498db; }
+        .concept-box.success { background: #d5f5e3; border-left-color: #27ae60; }
+        .concept-box h4 { color: #1E40AF; margin-bottom: 10px; font-size: 1.05em; }
+        .concept-box.warning h4 { color: #f39c12; }
+        .concept-box.important h4 { color: #3498db; }
+        .concept-box.success h4 { color: #27ae60; }
+        .equation-box { background: #1E40AF; color: white; padding: 25px; border-radius: 10px; margin: 25px 0; text-align: center; font-family: 'Courier New', monospace; font-size: 1.1em; }
+        .equation-box .equation-name { font-family: 'Georgia', serif; font-size: 0.85em; opacity: 0.8; margin-bottom: 10px; }
+        .equation-box .equation-note { font-family: 'Georgia', serif; font-size: 0.8em; opacity: 0.7; margin-top: 15px; }
+        .data-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95em; }
+        .data-table th { background: #1E40AF; color: white; padding: 12px; text-align: left; }
+        .data-table td { padding: 12px; border-bottom: 1px solid #eee; }
+        .data-table tr:hover { background: #f8f9fa; }
+        .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0; }
+        .endmember-box { background: #f8f9fa; border-radius: 10px; padding: 20px; text-align: center; border-top: 4px solid; }
+        .endmember-box.mantle { border-top-color: #10B981; }
+        .endmember-box.crust { border-top-color: #8b4513; }
+        .endmember-box h4 { margin-bottom: 10px; }
+        .endmember-box .value { font-size: 1.5em; font-family: 'Courier New', monospace; font-weight: bold; margin: 10px 0; }
+        .figure-box { background: #f8f9fa; border-radius: 12px; padding: 20px; margin: 25px 0; text-align: center; }
+        .figure-box img { max-width: 100%; height: auto; border-radius: 8px; margin-bottom: 15px; }
+        .figure-box .caption { font-size: 0.9em; color: #666; font-style: italic; }
+        .key-points { background: #EFF6FF; border-radius: 12px; padding: 30px; margin: 30px 0; }
+        .key-points h3 { color: #1E40AF; margin-bottom: 20px; }
+        .key-points ul { list-style: none; }
+        .key-points li { padding: 8px 0; padding-left: 25px; position: relative; }
+        .key-points li::before { content: "★"; position: absolute; left: 0; color: #3B82F6; }
+        .quiz-section { background: linear-gradient(135deg, #1E40AF, #1E3A8A); border-radius: 12px; padding: 35px; margin: 40px 0; color: white; }
+        .quiz-section h2 { color: white; border-bottom-color: rgba(255,255,255,0.3); margin-bottom: 30px; }
+        .quiz-progress { background: rgba(255,255,255,0.2); border-radius: 10px; height: 8px; margin-bottom: 30px; overflow: hidden; }
+        .quiz-progress-bar { background: white; height: 100%; width: 0%; transition: width 0.3s ease; }
+        .question-container { background: rgba(255,255,255,0.1); border-radius: 10px; padding: 25px; margin-bottom: 20px; }
+        .question-container.hidden { display: none; }
+        .question-text { font-size: 1.1em; margin-bottom: 20px; font-weight: 500; }
+        .question-number { font-size: 0.85em; opacity: 0.8; margin-bottom: 10px; }
+        .options { list-style: none; }
+        .options li { background: rgba(255,255,255,0.15); padding: 15px 20px; margin: 10px 0; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; border: 2px solid transparent; }
+        .options li:hover { background: rgba(255,255,255,0.25); }
+        .options li.selected { border-color: white; background: rgba(255,255,255,0.3); }
+        .options li.correct { background: rgba(39, 174, 96, 0.6); border-color: #27ae60; }
+        .options li.incorrect { background: rgba(231, 76, 60, 0.6); border-color: #e74c3c; }
+        .feedback { margin-top: 15px; padding: 15px; border-radius: 8px; display: none; }
+        .feedback.correct { background: rgba(39, 174, 96, 0.3); display: block; }
+        .feedback.incorrect { background: rgba(231, 76, 60, 0.3); display: block; }
+        .quiz-nav { display: flex; justify-content: space-between; margin-top: 20px; }
+        .quiz-btn { background: white; color: #1E40AF; border: none; padding: 12px 30px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 1em; }
+        .quiz-btn:hover { transform: translateY(-2px); }
+        .quiz-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .quiz-results { text-align: center; padding: 40px; }
+        .quiz-results h3 { font-size: 1.8em; margin-bottom: 20px; }
+        .score-circle { width: 150px; height: 150px; border-radius: 50%; background: white; color: #1E40AF; display: flex; align-items: center; justify-content: center; margin: 30px auto; font-size: 2.5em; font-weight: bold; }
+        .references { background: #f8f9fa; padding: 25px; border-radius: 10px; margin-top: 30px; }
+        .references h3 { color: #666; margin-bottom: 15px; font-size: 1.1em; }
+        .references ul { list-style: none; font-size: 0.9em; color: #666; }
+        .references li { padding: 5px 0; }
+        .footer { text-align: center; padding: 40px; color: #666; font-size: 0.9em; }
+        .module-nav { display: flex; justify-content: space-between; margin-top: 40px; padding-top: 30px; border-top: 2px solid #eee; }
+        .module-nav a { display: flex; align-items: center; text-decoration: none; color: #1E40AF; font-weight: 500; }
+        .module-nav a:hover { color: #1E3A8A; }
+        @media (max-width: 768px) { .hero h1 { font-size: 1.8em; } .nav-links { display: none; } .equation-box { font-size: 0.95em; padding: 15px; } .two-column { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <nav class="nav-bar">
+        <a href="index.html" class="nav-brand">🔬 Sedimentary Geochemistry</a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="module1_introduction_isotopes.html">Module 1</a>
+            <a href="module2_carbon_oxygen_isotopes.html">Module 2</a>
+            <a href="module3_clumped_isotopes.html">Module 3</a>
+            <a href="module4_boron_isotopes.html">Module 4</a>
+            <a href="module5_strontium_isotopes.html">Module 5</a>
+            <a href="module6_nd_isotopes.html" style="font-weight: bold;">Module 6</a>
+            <a href="module7_uranium_trace_elements.html">Module 7</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <h1>Neodymium Isotopes (εNd)</h1>
+        <p class="subtitle">Tracing ocean circulation and crustal provenance</p>
+        <span class="module-tag">📖 Module 6 of 7 • Estimated time: 35 minutes</span>
+    </header>
+
+    <main class="container">
+        <div class="objectives">
+            <h2>🎯 Learning Objectives</h2>
+            <ul>
+                <li>Explain the Sm→Nd decay system and why εNd notation is used</li>
+                <li>Differentiate radiogenic (high εNd, mantle) vs. non-radiogenic (low εNd, crustal) signatures</li>
+                <li>Describe Sm/Nd fractionation during magma formation creating crustal vs. mantle reservoirs</li>
+                <li>Identify main Nd sources (weathering, riverine) and sinks (Fe-Mn nodules, fish teeth)</li>
+                <li>Interpret εNd variations in modern water masses (NADW, AAIW, Pacific deep water)</li>
+                <li>Apply εNd as a paleoceanographic tracer to reconstruct past ocean circulation</li>
+            </ul>
+        </div>
+
+        <section class="section">
+            <h2>1. The Sm-Nd Decay System</h2>
+
+            <h3>Radiogenic Isotope Systems</h3>
+            <p>Neodymium (Nd) belongs to a family of radiogenic isotope systems used in geochemistry:</p>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Decay</th>
+                        <th>Ratio Measured</th>
+                        <th>Half-life</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>⁸⁷Rb → ⁸⁷Sr</td>
+                        <td>⁸⁷Sr/⁸⁶Sr</td>
+                        <td>48.8 × 10⁹ years</td>
+                    </tr>
+                    <tr style="background: #EFF6FF; font-weight: bold;">
+                        <td>¹⁴⁷Sm → ¹⁴³Nd</td>
+                        <td>¹⁴³Nd/¹⁴⁴Nd</td>
+                        <td>106 × 10⁹ years</td>
+                    </tr>
+                    <tr>
+                        <td>¹⁷⁶Lu → ¹⁷⁶Hf</td>
+                        <td>¹⁷⁶Hf/¹⁷⁷Hf</td>
+                        <td>37.3 × 10⁹ years</td>
+                    </tr>
+                    <tr>
+                        <td>²³⁸U → ²⁰⁶Pb</td>
+                        <td>²⁰⁶Pb/²⁰⁴Pb</td>
+                        <td>4.47 × 10⁹ years</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="concept-box">
+                <h4>🔑 Key Principle</h4>
+                <p>Isotope ratios of trace elements (Nd, Sr, Hf, Pb) dissolved in seawater are <strong>not dependent on fractionation processes</strong> in the ocean due to the very long half-life times.</p>
+                <p style="margin-top: 10px;">Changes in isotope ratios → <strong>input from another reservoir</strong> (e.g., continental crust vs. mantle)</p>
+            </div>
+
+            <div class="figure-box">
+                <img src="images/lectures/nd_sm_nd_decay_system.jpg" alt="Samarium-Neodymium decay system diagram">
+                <div class="caption">Figure: The Sm-Nd isotope system showing radioactive decay relationships. ¹⁴⁷Sm decays to ¹⁴³Nd with a half-life of 106 Ga. The ratio ¹⁴³Nd/¹⁴⁴Nd reflects both initial composition and subsequent radiogenic growth.</div>
+            </div>
+
+            <h3>Residence Time Concept</h3>
+            <p>The key to using Nd as a water mass tracer is its <strong>short residence time</strong>:</p>
+
+            <div class="figure-box">
+                <img src="images/lectures/nd_residence_time_bathtub.jpg" alt="Bathtub analogy for residence time">
+                <div class="caption">Figure: The "bathtub" analogy for understanding residence time (τ). At steady state, τ = Volume / Flow Rate. For the ocean, this equals approximately 4,000 years for water molecules, but Nd has a much shorter residence time of 600-1000 years due to active scavenging.</div>
+            </div>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Isotope System</th>
+                        <th>Residence Time</th>
+                        <th>Utility</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: #EFF6FF; font-weight: bold;">
+                        <td>¹⁴³Nd/¹⁴⁴Nd</td>
+                        <td>600 – 1,000 years</td>
+                        <td>Excellent water mass tracer</td>
+                    </tr>
+                    <tr>
+                        <td>¹⁷⁶Hf/¹⁷⁷Hf</td>
+                        <td>~2,000 years</td>
+                        <td>Good water mass tracer</td>
+                    </tr>
+                    <tr>
+                        <td>²⁰⁶Pb/²⁰⁴Pb</td>
+                        <td>50 – 400 years</td>
+                        <td>Very short, local tracer</td>
+                    </tr>
+                    <tr>
+                        <td>⁸⁷Sr/⁸⁶Sr</td>
+                        <td>~2 million years</td>
+                        <td>Global average (homogeneous)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="concept-box success">
+                <h4>✓ Why Nd Works as a Tracer</h4>
+                <p>Nd residence time (600-1000 years) is <strong>shorter than ocean mixing time (~1,500 years)</strong>.</p>
+                <p style="margin-top: 10px;">This means different water masses can maintain <strong>distinct εNd signatures</strong> before they mix!</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>2. The εNd Notation</h2>
+
+            <p>Because ¹⁴⁷Sm has an extremely long half-life, variations in ¹⁴³Nd/¹⁴⁴Nd are very small (4th or 5th decimal place). We use the <strong>epsilon notation</strong> for convenience:</p>
+
+            <div class="equation-box">
+                <div class="equation-name">Epsilon Nd Definition</div>
+                εNd = [(¹⁴³Nd/¹⁴⁴Nd)sample / (¹⁴³Nd/¹⁴⁴Nd)CHUR - 1] × 10,000
+                <div class="equation-note">CHUR = Chondritic Uniform Reservoir (bulk Earth reference)<br>¹⁴³Nd/¹⁴⁴Nd of CHUR = 0.512638</div>
+            </div>
+
+            <div class="concept-box important">
+                <h4>📊 Interpreting εNd Values</h4>
+                <ul style="margin-top: 10px;">
+                    <li><strong>εNd = 0:</strong> Same as bulk Earth (chondrite)</li>
+                    <li><strong>εNd > 0 (positive):</strong> More radiogenic than bulk Earth → <strong>mantle-derived</strong></li>
+                    <li><strong>εNd < 0 (negative):</strong> Less radiogenic than bulk Earth → <strong>continental crust</strong></li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>3. Crustal vs. Mantle Reservoirs</h2>
+
+            <p>The key to understanding εNd is the <strong>fractionation of Sm and Nd during partial melting</strong>.</p>
+
+            <div class="figure-box">
+                <img src="images/lectures/nd_partial_melting.jpg" alt="Partial melting and Sm/Nd fractionation">
+                <div class="caption">Figure: During partial melting, Nd preferentially enters the melt while Sm stays in the residue. This creates different Sm/Nd ratios between crust and mantle.</div>
+            </div>
+
+            <div class="figure-box">
+                <img src="images/lectures/nd_ocean_circulation_concept.jpg" alt="εNd tracing ocean circulation concept">
+                <div class="caption">Figure: εNd as a tracer of ocean circulation through deep time. Continental margins with old crust contribute negative (non-radiogenic) εNd values, while volcanic arcs contribute positive (radiogenic) values, allowing water mass tracking across ocean basins.</div>
+            </div>
+
+            <h3>REE Behavior During Melting</h3>
+            <p>Samarium (Sm) and Neodymium (Nd) are both <strong>Rare Earth Elements (REE)</strong>:</p>
+            <ul style="margin-left: 20px;">
+                <li>All REE have 3+ charge</li>
+                <li>Ionic radii decrease with increasing atomic number</li>
+                <li>All REE are "incompatible" (prefer the melt)</li>
+                <li><strong>Light REE (including Nd) are MORE incompatible than heavy REE</strong></li>
+            </ul>
+
+            <div class="concept-box">
+                <h4>🔑 The Critical Insight</h4>
+                <p>Nd is <strong>less compatible</strong> in the mantle than Sm. During melting:</p>
+                <ul style="margin-top: 10px;">
+                    <li>Melts become enriched in Nd → <strong>Low Sm/Nd</strong></li>
+                    <li>Mantle residue retains more Sm → <strong>High Sm/Nd</strong></li>
+                </ul>
+                <p style="margin-top: 10px;">Over billions of years, the high Sm/Nd mantle produces more ¹⁴³Nd from ¹⁴⁷Sm decay → <strong>higher εNd</strong></p>
+            </div>
+
+            <div class="two-column">
+                <div class="endmember-box crust">
+                    <h4>🏔️ Continental Crust</h4>
+                    <div class="value">εNd: -10 to -40</div>
+                    <p><strong>Non-radiogenic</strong></p>
+                    <ul style="text-align: left; font-size: 0.9em; margin-top: 10px;">
+                        <li>Old, low Sm/Nd rocks</li>
+                        <li>Granites, sediments</li>
+                        <li>Accumulated since ~4 Ga</li>
+                        <li>North Atlantic rivers: ~-12</li>
+                    </ul>
+                </div>
+                <div class="endmember-box mantle">
+                    <h4>🌋 Depleted Mantle</h4>
+                    <div class="value">εNd: +8 to +12</div>
+                    <p><strong>Radiogenic</strong></p>
+                    <ul style="text-align: left; font-size: 0.9em; margin-top: 10px;">
+                        <li>High Sm/Nd residue</li>
+                        <li>MORB basalts</li>
+                        <li>Continuing ¹⁴³Nd production</li>
+                        <li>Pacific volcanic arcs: ~+8</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>4. Nd in the Modern Ocean</h2>
+
+            <h3>Sources and Sinks</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Sources</th>
+                        <th>Sinks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>River runoff (dissolved + particulate)</td>
+                        <td>Fe-Mn nodules and crusts</td>
+                    </tr>
+                    <tr>
+                        <td>Dust dissolution</td>
+                        <td>Fish teeth and bones (bioapatite)</td>
+                    </tr>
+                    <tr>
+                        <td>Submarine groundwater discharge</td>
+                        <td>Authigenic minerals in sediments</td>
+                    </tr>
+                    <tr>
+                        <td>Hydrothermal input</td>
+                        <td>Foraminiferal coatings</td>
+                    </tr>
+                    <tr>
+                        <td>Boundary exchange with sediments</td>
+                        <td>Scavenging by particles</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="figure-box">
+                <img src="images/lectures/nd_ichthyolith_uptake.jpg" alt="Nd uptake by fish teeth and bones">
+                <div class="caption">Figure: Fish teeth (ichthyoliths) and bone fragments serve as excellent archives for seawater εNd. During early diagenesis, Nd³⁺ ions from seawater/porewater substitute for Ca in bioapatite, preserving the bottom water isotope signature.</div>
+            </div>
+
+            <h3>Modern Water Mass Signatures</h3>
+            <p>Different ocean basins have distinct εNd values reflecting their source regions:</p>
+
+            <div class="figure-box">
+                <img src="images/lectures/nd_epsilon_pacific_map.jpg" alt="εNd distribution in the Pacific region">
+                <div class="caption">Figure: Modern seawater εNd values in the Indo-Pacific region showing the gradient from negative values (older continental sources) to more radiogenic values near young volcanic arcs. White arrows indicate major ocean current directions.</div>
+            </div>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Water Mass</th>
+                        <th>εNd</th>
+                        <th>Source Region</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>North Atlantic Deep Water (NADW)</td>
+                        <td>-13 to -14</td>
+                        <td>Old continental margins</td>
+                    </tr>
+                    <tr>
+                        <td>Antarctic Bottom Water (AABW)</td>
+                        <td>-8 to -9</td>
+                        <td>Mixed sources</td>
+                    </tr>
+                    <tr>
+                        <td>Antarctic Intermediate Water (AAIW)</td>
+                        <td>-7 to -8</td>
+                        <td>Southern Ocean</td>
+                    </tr>
+                    <tr>
+                        <td>Pacific Deep Water</td>
+                        <td>-3 to -5</td>
+                        <td>Young volcanic arcs</td>
+                    </tr>
+                    <tr>
+                        <td>Indian Ocean Deep Water</td>
+                        <td>-7 to -9</td>
+                        <td>Mixed NADW + Pacific</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="concept-box success">
+                <h4>✓ The Atlantic-Pacific Gradient</h4>
+                <p>The most striking feature is the <strong>gradient from Atlantic (εNd ≈ -13) to Pacific (εNd ≈ -4)</strong>.</p>
+                <p style="margin-top: 10px;">This reflects:</p>
+                <ul style="margin-top: 5px;">
+                    <li>Atlantic margins: old cratons → unradiogenic input</li>
+                    <li>Pacific margins: young volcanic arcs → radiogenic input</li>
+                    <li>Progressive mixing along thermohaline circulation</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>5. Paleoceanographic Applications</h2>
+
+            <h3>Archives for Past Seawater εNd</h3>
+            <p>Several materials can record the εNd of past seawater:</p>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Archive</th>
+                        <th>Advantages</th>
+                        <th>Considerations</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Fish teeth/bones</td>
+                        <td>Direct seawater recorder</td>
+                        <td>Rare in some settings</td>
+                    </tr>
+                    <tr>
+                        <td>Fe-Mn crusts</td>
+                        <td>Long continuous records</td>
+                        <td>Low resolution</td>
+                    </tr>
+                    <tr>
+                        <td>Foraminiferal coatings</td>
+                        <td>High resolution possible</td>
+                        <td>Need careful cleaning</td>
+                    </tr>
+                    <tr>
+                        <td>Authigenic phases</td>
+                        <td>Widely available</td>
+                        <td>Verify bottom water signal</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Case Study: Tectonic Gateway Changes</h3>
+
+            <div class="figure-box">
+                <img src="images/lectures/nd_drake_passage_evolution.jpg" alt="Opening of Drake Passage traced by εNd">
+                <div class="caption">Figure: εNd evolution during the opening of Drake Passage (Eocene). The increase in εNd values in the Atlantic sector of the Southern Ocean indicates increasing Pacific water mass influence, marking the establishment of the Antarctic Circumpolar Current (ACC). After Scher & Martin (2006).</div>
+            </div>
+
+            <div class="concept-box important">
+                <h4>🌊 Panama Closure (~3 Ma)</h4>
+                <p>The closure of the Central American Seaway fundamentally changed Atlantic circulation:</p>
+                <ul style="margin-top: 10px;">
+                    <li><strong>Before closure:</strong> Pacific water mixed into Caribbean → higher εNd</li>
+                    <li><strong>After closure:</strong> Atlantic isolated → εNd became more negative</li>
+                    <li>Enhanced thermohaline circulation → Gulf Stream intensification</li>
+                    <li>Contributed to Northern Hemisphere glaciation</li>
+                </ul>
+            </div>
+
+            <div class="concept-box">
+                <h4>🧊 Glacial-Interglacial Changes</h4>
+                <p>εNd records show circulation changes during ice ages:</p>
+                <ul style="margin-top: 10px;">
+                    <li><strong>Glacial periods:</strong> Reduced NADW production → less negative εNd in deep Atlantic</li>
+                    <li><strong>Interglacials:</strong> Strong NADW → more negative εNd</li>
+                    <li>This reflects changing dominance of northern vs. southern water masses</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>6. Provenance Tracing in Sediments</h2>
+
+            <p>Beyond water mass tracing, εNd is powerful for identifying <strong>sediment sources</strong>:</p>
+
+            <div class="figure-box">
+                <img src="images/lectures/nd_morocco_basin_map.jpg" alt="εNd mapping in Devonian Morocco basins">
+                <div class="caption">Figure: εNd(t) values in Famennian carbonates of the Anti-Atlas, Morocco. Spatial variations in εNd help identify local input sources and paleoceanographic conditions in the Mader and Tafilalt basins during the Late Devonian.</div>
+            </div>
+
+            <div class="concept-box">
+                <h4>📍 Applications</h4>
+                <ul style="margin-top: 10px;">
+                    <li><strong>Dust provenance:</strong> Track Saharan dust across Atlantic</li>
+                    <li><strong>River sediments:</strong> Identify drainage basin sources</li>
+                    <li><strong>Turbidites:</strong> Trace submarine flows to source regions</li>
+                    <li><strong>Ice-rafted debris:</strong> Track iceberg calving sources</li>
+                </ul>
+            </div>
+
+            <div class="concept-box success">
+                <h4>✓ Combined with Sr Isotopes</h4>
+                <p>εNd and ⁸⁷Sr/⁸⁶Sr together provide powerful discrimination:</p>
+                <ul style="margin-top: 10px;">
+                    <li><strong>Sr:</strong> Weathering intensity signal (Rb/Sr depends on mineralogy)</li>
+                    <li><strong>Nd:</strong> Crustal age signal (Sm/Nd depends on extraction history)</li>
+                    <li>Different sediment sources plot in distinct fields on εNd vs. ⁸⁷Sr/⁸⁶Sr diagrams</li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="key-points">
+            <h3>📝 Key Points Summary</h3>
+            <ul>
+                <li>εNd notation expresses ¹⁴³Nd/¹⁴⁴Nd relative to bulk Earth (CHUR)</li>
+                <li>Positive εNd = mantle-derived (radiogenic); Negative εNd = continental crust (non-radiogenic)</li>
+                <li>Nd residence time (~600-1000 yrs) < ocean mixing time → water mass tracer</li>
+                <li>Atlantic deep water is unradiogenic (εNd ≈ -13), Pacific is more radiogenic (εNd ≈ -4)</li>
+                <li>Archives: fish teeth, Fe-Mn crusts, foraminiferal coatings, authigenic phases</li>
+                <li>Records tectonic gateway changes and glacial-interglacial circulation shifts</li>
+            </ul>
+        </div>
+
+        <!-- Quiz Section -->
+        <section class="quiz-section">
+            <h2>📝 Self-Assessment Quiz</h2>
+            <div class="quiz-progress">
+                <div class="quiz-progress-bar" id="quizProgress"></div>
+            </div>
+
+            <div id="quizContainer">
+                <!-- Question 1 -->
+                <div class="question-container" data-question="1">
+                    <div class="question-number">Question 1 of 5</div>
+                    <div class="question-text">A rock has εNd = +8. What does this indicate about its origin?</div>
+                    <ul class="options">
+                        <li data-correct="false">Old continental crust</li>
+                        <li data-correct="true">Mantle-derived (depleted mantle)</li>
+                        <li data-correct="false">Identical to bulk Earth</li>
+                        <li data-correct="false">Seawater contamination</li>
+                    </ul>
+                    <div class="feedback correct">✓ Correct! Positive εNd values indicate the rock has more radiogenic Nd than bulk Earth, characteristic of mantle-derived materials with high Sm/Nd ratios.</div>
+                    <div class="feedback incorrect">✗ Incorrect. Positive εNd indicates mantle derivation. Continental crust has negative εNd values.</div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="question-container hidden" data-question="2">
+                    <div class="question-number">Question 2 of 5</div>
+                    <div class="question-text">Why does Nd work as a water mass tracer while Sr does not?</div>
+                    <ul class="options">
+                        <li data-correct="false">Sr is not radiogenic</li>
+                        <li data-correct="true">Nd residence time (~700 yrs) is shorter than ocean mixing time, while Sr (~2 Myr) is much longer</li>
+                        <li data-correct="false">Nd has more isotopes than Sr</li>
+                        <li data-correct="false">Sr is biologically cycled</li>
+                    </ul>
+                    <div class="feedback correct">✓ Correct! Nd's short residence time allows different water masses to maintain distinct signatures before mixing homogenizes them. Sr's long residence time means the ocean is homogeneous.</div>
+                    <div class="feedback incorrect">✗ Incorrect. The key is residence time relative to ocean mixing time (~1500 years).</div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="question-container hidden" data-question="3">
+                    <div class="question-number">Question 3 of 5</div>
+                    <div class="question-text">Why does continental crust have lower Sm/Nd than the mantle?</div>
+                    <ul class="options">
+                        <li data-correct="false">Sm decays faster in the crust</li>
+                        <li data-correct="false">Nd is more soluble in seawater</li>
+                        <li data-correct="true">During partial melting, Nd preferentially enters the melt while Sm stays in the residue</li>
+                        <li data-correct="false">Continental weathering removes Sm</li>
+                    </ul>
+                    <div class="feedback correct">✓ Correct! Nd is more incompatible than Sm during melting, so melts (which form continental crust) have lower Sm/Nd than the mantle residue.</div>
+                    <div class="feedback incorrect">✗ Incorrect. The fractionation occurs during magma formation, where Nd preferentially enters the melt.</div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="question-container hidden" data-question="4">
+                    <div class="question-number">Question 4 of 5</div>
+                    <div class="question-text">NADW has εNd ≈ -13, while Pacific Deep Water has εNd ≈ -4. What explains this difference?</div>
+                    <ul class="options">
+                        <li data-correct="false">Pacific has more biological productivity</li>
+                        <li data-correct="false">NADW is colder</li>
+                        <li data-correct="true">Atlantic margins have old continental crust; Pacific margins have young volcanic arcs</li>
+                        <li data-correct="false">The Pacific is larger</li>
+                    </ul>
+                    <div class="feedback correct">✓ Correct! The Atlantic is bordered by old cratons (unradiogenic Nd), while the Pacific is surrounded by young volcanic margins (more radiogenic Nd).</div>
+                    <div class="feedback incorrect">✗ Incorrect. The εNd of water masses reflects the age and type of continental crust around each basin.</div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="question-container hidden" data-question="5">
+                    <div class="question-number">Question 5 of 5</div>
+                    <div class="question-text">Which material is commonly used to reconstruct past seawater εNd?</div>
+                    <ul class="options">
+                        <li data-correct="false">Coral aragonite</li>
+                        <li data-correct="true">Fish teeth and Fe-Mn crusts</li>
+                        <li data-correct="false">Planktonic foraminiferal calcite (cleaned)</li>
+                        <li data-correct="false">Diatom silica</li>
+                    </ul>
+                    <div class="feedback correct">✓ Correct! Fish teeth (bioapatite) and Fe-Mn crusts/nodules directly record seawater Nd concentrations and isotope ratios.</div>
+                    <div class="feedback incorrect">✗ Incorrect. Fish teeth and Fe-Mn crusts are the primary archives for seawater εNd.</div>
+                </div>
+            </div>
+
+            <div class="quiz-nav">
+                <button class="quiz-btn" id="prevBtn" disabled>← Previous</button>
+                <button class="quiz-btn" id="nextBtn">Next →</button>
+            </div>
+
+            <div class="quiz-results hidden" id="quizResults">
+                <h3>Quiz Complete!</h3>
+                <div class="score-circle" id="scoreCircle">0/5</div>
+                <p id="resultMessage"></p>
+                <button class="quiz-btn" onclick="restartQuiz()">Retry Quiz</button>
+            </div>
+        </section>
+
+        <div class="references">
+            <h3>📚 Key References</h3>
+            <ul>
+                <li>DePaolo, D.J. & Wasserburg, G.J. (1976) Nd isotopic variations and petrogenetic models. <em>Geophysical Research Letters</em> 3, 249-252.</li>
+                <li>Goldstein, S.L. & Hemming, S.R. (2003) Long-lived isotopic tracers in oceanography, paleoceanography, and ice-sheet dynamics. <em>Treatise on Geochemistry</em> 6, 453-489.</li>
+                <li>Frank, M. (2002) Radiogenic isotopes: tracers of past ocean circulation and erosional input. <em>Reviews of Geophysics</em> 40, 1001.</li>
+                <li>Tachikawa, K. et al. (2017) The large-scale evolution of neodymium isotopic composition in the global modern and Holocene ocean. <em>Global Biogeochemical Cycles</em> 31, 73-95.</li>
+            </ul>
+        </div>
+
+        <nav class="module-nav">
+            <a href="module5_strontium_isotopes.html">← Module 5: Strontium Isotopes</a>
+            <a href="module7_uranium_trace_elements.html">Module 7: Uranium & Trace Elements →</a>
+        </nav>
+    </main>
+
+    <footer class="footer">
+        <p>Sedimentary Geochemistry · GeoZentrum Nordbayern · FAU Erlangen-Nürnberg</p>
+        <p style="margin-top: 10px;">Content: Prof. Dr. Michael Joachimski & PD Dr. Luca Caracciolo</p>
+    </footer>
+
+    <script>
+        // Quiz functionality
+        let currentQuestion = 1;
+        const totalQuestions = 5;
+        let score = 0;
+        let answered = new Array(totalQuestions).fill(false);
+
+        function updateProgress() {
+            const progress = (currentQuestion / totalQuestions) * 100;
+            document.getElementById('quizProgress').style.width = progress + '%';
+        }
+
+        function showQuestion(num) {
+            document.querySelectorAll('.question-container').forEach(q => q.classList.add('hidden'));
+            document.querySelector(`[data-question="${num}"]`).classList.remove('hidden');
+            document.getElementById('prevBtn').disabled = num === 1;
+            document.getElementById('nextBtn').textContent = num === totalQuestions ? 'Finish' : 'Next →';
+            updateProgress();
+        }
+
+        document.querySelectorAll('.options li').forEach(option => {
+            option.addEventListener('click', function() {
+                if (answered[currentQuestion - 1]) return;
+
+                const container = this.closest('.question-container');
+                container.querySelectorAll('.options li').forEach(opt => {
+                    opt.classList.remove('selected', 'correct', 'incorrect');
+                });
+
+                this.classList.add('selected');
+                const isCorrect = this.dataset.correct === 'true';
+
+                this.classList.add(isCorrect ? 'correct' : 'incorrect');
+                if (!isCorrect) {
+                    container.querySelector('[data-correct="true"]').classList.add('correct');
+                }
+
+                container.querySelector(`.feedback.${isCorrect ? 'correct' : 'incorrect'}`).style.display = 'block';
+
+                if (isCorrect && !answered[currentQuestion - 1]) {
+                    score++;
+                }
+                answered[currentQuestion - 1] = true;
+            });
+        });
+
+        document.getElementById('nextBtn').addEventListener('click', function() {
+            if (currentQuestion < totalQuestions) {
+                currentQuestion++;
+                showQuestion(currentQuestion);
+            } else {
+                showResults();
+            }
+        });
+
+        document.getElementById('prevBtn').addEventListener('click', function() {
+            if (currentQuestion > 1) {
+                currentQuestion--;
+                showQuestion(currentQuestion);
+            }
+        });
+
+        function showResults() {
+            document.getElementById('quizContainer').classList.add('hidden');
+            document.querySelector('.quiz-nav').classList.add('hidden');
+            document.getElementById('quizResults').classList.remove('hidden');
+            document.getElementById('scoreCircle').textContent = score + '/' + totalQuestions;
+
+            let message = '';
+            if (score === totalQuestions) {
+                message = "Perfect! You've mastered Nd isotope geochemistry!";
+            } else if (score >= 4) {
+                message = "Excellent work! You have a strong understanding of εNd applications.";
+            } else if (score >= 3) {
+                message = "Good job! Review the sections on water mass signatures and crustal evolution.";
+            } else {
+                message = "Keep studying! Focus on the relationship between Sm/Nd fractionation and εNd values.";
+            }
+            document.getElementById('resultMessage').textContent = message;
+        }
+
+        function restartQuiz() {
+            currentQuestion = 1;
+            score = 0;
+            answered = new Array(totalQuestions).fill(false);
+
+            document.querySelectorAll('.options li').forEach(opt => {
+                opt.classList.remove('selected', 'correct', 'incorrect');
+            });
+            document.querySelectorAll('.feedback').forEach(f => f.style.display = 'none');
+
+            document.getElementById('quizContainer').classList.remove('hidden');
+            document.querySelector('.quiz-nav').classList.remove('hidden');
+            document.getElementById('quizResults').classList.add('hidden');
+
+            showQuestion(1);
+        }
+
+        showQuestion(1);
+    </script>
+</body>
+</html>
