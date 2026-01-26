@@ -1,0 +1,1673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sedimentary Geochemistry - Exam: Late Devonian</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/7.8.2/docx.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Professional Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* FAU Color Palette */
+            --fau-blue: #04316A;
+            --fau-blue-dark: #002147;
+            --fau-blue-light: #0056AD;
+            --nat-green: #43B02A;
+            --accent-gold: #C99700;
+
+            /* Neutral palette */
+            --gray-50: #F8FAFC;
+            --gray-100: #F1F5F9;
+            --gray-200: #E2E8F0;
+            --gray-300: #CBD5E1;
+            --gray-400: #94A3B8;
+            --gray-500: #64748B;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gray-800: #1E293B;
+            --gray-900: #0F172A;
+
+            /* Semantic */
+            --success: #059669;
+            --warning: #D97706;
+            --error: #DC2626;
+
+            /* Typography */
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-serif: 'Merriweather', Georgia, serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            color: var(--gray-800);
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: var(--gray-50);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Password Overlay - FAU styled */
+        .password-overlay {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, var(--fau-blue-dark) 0%, var(--fau-blue) 50%, var(--fau-blue-light) 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+        .password-overlay.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        .password-box {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            text-align: center;
+            max-width: 480px;
+            width: 100%;
+        }
+        .password-box h2 {
+            font-family: var(--font-serif);
+            color: var(--fau-blue);
+            margin-bottom: 8px;
+            font-size: 1.5rem;
+        }
+        .password-box h3 {
+            font-family: var(--font-serif);
+            color: var(--gray-700);
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+        .password-box p { color: var(--gray-500); margin-bottom: 20px; font-size: 0.9rem; }
+        .password-box input {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 1rem;
+            border: 1.5px solid var(--gray-200);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-family: var(--font-sans);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .password-box input:focus {
+            outline: none;
+            border-color: var(--fau-blue);
+            box-shadow: 0 0 0 3px rgba(4, 49, 106, 0.1);
+        }
+        .password-box button {
+            width: 100%;
+            padding: 14px 24px;
+            font-size: 1rem;
+            background: var(--fau-blue);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: var(--font-sans);
+            font-weight: 600;
+            transition: background 0.2s, transform 0.1s;
+        }
+        .password-box button:hover { background: var(--fau-blue-dark); }
+        .password-box button:active { transform: scale(0.98); }
+        .error-message { color: var(--error); margin-top: 10px; font-weight: 600; font-size: 0.9rem; }
+
+        /* Timer Bar - FAU styled */
+        .timer-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(135deg, var(--fau-blue-dark), var(--fau-blue));
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .timer-bar.hidden { display: none; }
+        .timer-display { font-size: 1.5em; font-weight: bold; font-family: 'SF Mono', 'Monaco', monospace; }
+        .timer-display.warning { color: var(--accent-gold); }
+        .timer-display.critical { color: var(--error); animation: pulse 0.5s infinite; }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+        .submit-timer-btn {
+            background: var(--nat-green);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-family: var(--font-sans);
+            transition: background 0.2s;
+        }
+        .submit-timer-btn:hover { background: #3a9924; }
+
+        .main-content { display: none; margin-top: 80px; }
+        .main-content.visible { display: block; }
+
+        /* Header - FAU styled */
+        .header {
+            background: linear-gradient(135deg, var(--fau-blue-dark), var(--fau-blue));
+            color: white;
+            padding: 32px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 1.75em;
+            font-family: var(--font-serif);
+            font-weight: 700;
+        }
+        .header .subtitle {
+            margin-top: 8px;
+            opacity: 0.95;
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+        .header .exam-info {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            font-size: 0.9rem;
+        }
+
+        .reference-bar {
+            background: white;
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            border-left: 4px solid var(--fau-blue);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            font-size: 0.9rem;
+        }
+
+        .student-info {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            border-left: 4px solid var(--accent-gold);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .student-info h3 {
+            color: var(--gray-800);
+            margin-top: 0;
+            margin-bottom: 16px;
+            font-family: var(--font-serif);
+            font-size: 1.1rem;
+        }
+        .info-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+        .info-field label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 6px;
+            color: var(--gray-700);
+            font-size: 0.875rem;
+        }
+        .info-field input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1.5px solid var(--gray-200);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: var(--font-sans);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .info-field input:focus {
+            outline: none;
+            border-color: var(--fau-blue);
+            box-shadow: 0 0 0 3px rgba(4, 49, 106, 0.1);
+        }
+
+        /* Sections - FAU styled */
+        .section {
+            background: white;
+            padding: 28px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .section-title {
+            background: var(--fau-blue);
+            color: white;
+            padding: 14px 20px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 24px;
+            font-family: var(--font-sans);
+        }
+        .background-section {
+            background: var(--gray-50);
+            border-left: 4px solid var(--fau-blue-light);
+        }
+        .background-section .section-title {
+            background: var(--fau-blue-light);
+        }
+        .bonus-section {
+            background: linear-gradient(135deg, #FEF9E7, #FDF6E3);
+            border-left: 4px solid var(--accent-gold);
+        }
+        .bonus-section .section-title {
+            background: linear-gradient(135deg, var(--accent-gold), #B8860B);
+        }
+
+        .question-block {
+            margin: 24px 0;
+            padding: 20px;
+            background: var(--gray-50);
+            border-radius: 8px;
+            border-left: 4px solid var(--fau-blue);
+        }
+        .question-title {
+            font-weight: 600;
+            color: var(--fau-blue);
+            margin-bottom: 16px;
+            font-size: 1.05em;
+        }
+        .sub-question {
+            margin: 16px 0;
+            padding: 16px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid var(--gray-200);
+        }
+        .sub-question-title {
+            font-weight: 600;
+            color: var(--gray-800);
+            margin-bottom: 12px;
+        }
+
+        /* Data Tables - FAU styled */
+        .data-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.9rem; }
+        .data-table th {
+            background: var(--fau-blue);
+            color: white;
+            padding: 12px;
+            text-align: center;
+            font-weight: 600;
+        }
+        .data-table td { padding: 10px; text-align: center; border: 1px solid var(--gray-200); }
+        .data-table tr:nth-child(even) { background: var(--gray-50); }
+        .data-table tr:hover { background: rgba(4, 49, 106, 0.05); }
+
+        .equation-box {
+            background: linear-gradient(135deg, #EBF4FF, #E0ECFF);
+            border: 2px solid var(--fau-blue);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 16px 0;
+            font-family: 'SF Mono', 'Monaco', monospace;
+        }
+        .equation-title {
+            font-weight: 600;
+            color: var(--fau-blue);
+            margin-bottom: 10px;
+            font-family: var(--font-sans);
+        }
+
+        .info-note {
+            background: #FEF9E7;
+            border-left: 4px solid var(--warning);
+            padding: 16px;
+            margin: 16px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .concept-box {
+            background: #EBF4FF;
+            border-left: 4px solid var(--fau-blue-light);
+            padding: 16px;
+            margin: 16px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .key-difference {
+            background: #ECFDF5;
+            border-left: 4px solid var(--success);
+            padding: 16px;
+            margin: 16px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .calculation-label {
+            font-weight: 600;
+            color: var(--fau-blue);
+            margin: 16px 0 8px 0;
+        }
+        .calculation-area {
+            width: 100%;
+            min-height: 150px;
+            padding: 16px;
+            border: 1.5px solid var(--gray-200);
+            border-radius: 8px;
+            font-family: 'SF Mono', 'Monaco', monospace;
+            font-size: 0.9em;
+            resize: vertical;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .calculation-area:focus {
+            outline: none;
+            border-color: var(--fau-blue);
+            box-shadow: 0 0 0 3px rgba(4, 49, 106, 0.1);
+        }
+        .answer-area {
+            width: 100%;
+            min-height: 120px;
+            padding: 16px;
+            border: 1.5px solid var(--gray-200);
+            border-radius: 8px;
+            font-family: var(--font-sans);
+            font-size: 1em;
+            resize: vertical;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .answer-area:focus {
+            outline: none;
+            border-color: var(--fau-blue);
+            box-shadow: 0 0 0 3px rgba(4, 49, 106, 0.1);
+        }
+
+        /* FIGURE BOX STYLES - Learning Platform Style */
+        .figure-box {
+            background: white;
+            border: 1px solid var(--gray-200);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 24px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .figure-box img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            display: block;
+            margin-bottom: 12px;
+        }
+        .figure-box .figure-caption {
+            font-size: 0.9rem;
+            color: var(--gray-600);
+            text-align: center;
+            line-height: 1.5;
+        }
+        .figure-box .figure-caption strong {
+            color: var(--fau-blue);
+            display: block;
+            margin-bottom: 4px;
+        }
+        .figure-box .figure-source {
+            font-size: 0.8rem;
+            color: var(--gray-500);
+            font-style: italic;
+            margin-top: 8px;
+        }
+        
+        /* Calculator - FAU styled */
+        .calculator-container { position: fixed; bottom: 20px; right: 20px; z-index: 500; }
+        .calculator-toggle {
+            background: var(--fau-blue);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1em;
+            font-family: var(--font-sans);
+            font-weight: 600;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: background 0.2s, transform 0.1s;
+        }
+        .calculator-toggle:hover { background: var(--fau-blue-dark); transform: translateY(-2px); }
+        .calculator-panel {
+            display: none;
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 350px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+        }
+        .calculator-panel.active { display: block; }
+        .calc-header {
+            background: var(--fau-blue);
+            color: white;
+            padding: 16px;
+            font-weight: 600;
+            font-family: var(--font-sans);
+        }
+        .calc-body { padding: 16px; }
+        .calc-display {
+            width: 100%;
+            padding: 14px;
+            font-size: 1.2em;
+            font-family: 'SF Mono', 'Monaco', monospace;
+            border: 1.5px solid var(--gray-200);
+            border-radius: 8px;
+            margin-bottom: 16px;
+            text-align: right;
+        }
+        .calc-buttons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+        .calc-btn {
+            padding: 12px;
+            font-size: 1em;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            background: var(--gray-100);
+            font-family: var(--font-sans);
+            transition: background 0.2s;
+        }
+        .calc-btn:hover { background: var(--gray-200); }
+        .calc-btn.operator { background: var(--fau-blue); color: white; }
+        .calc-btn.operator:hover { background: var(--fau-blue-dark); }
+        .calc-btn.equals { background: var(--nat-green); color: white; grid-column: span 2; }
+        .calc-btn.equals:hover { background: #3a9924; }
+        .calc-btn.clear { background: var(--error); color: white; }
+        .calc-btn.clear:hover { background: #b91c1c; }
+        .calc-tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+        .calc-tab {
+            flex: 1;
+            padding: 10px;
+            background: var(--gray-100);
+            border: none;
+            cursor: pointer;
+            border-radius: 6px;
+            font-family: var(--font-sans);
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .calc-tab.active { background: var(--fau-blue); color: white; }
+        .isotope-functions { display: none; }
+        .isotope-functions.active { display: block; }
+        .isotope-func-btn {
+            width: 100%;
+            padding: 12px;
+            margin: 6px 0;
+            background: var(--fau-blue);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: left;
+            font-family: var(--font-sans);
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+        .isotope-func-btn:hover { background: var(--fau-blue-dark); }
+        .calc-input-group {
+            display: none;
+            margin-top: 16px;
+            padding: 16px;
+            background: var(--gray-50);
+            border-radius: 8px;
+        }
+        .calc-input-group.active { display: block; }
+        .calc-input-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        .calc-input-group input, .calc-input-group select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 12px;
+            border: 1.5px solid var(--gray-200);
+            border-radius: 6px;
+            font-family: var(--font-sans);
+        }
+        .calc-result {
+            margin-top: 12px;
+            padding: 12px;
+            background: #EBF4FF;
+            border-radius: 6px;
+            font-family: 'SF Mono', 'Monaco', monospace;
+            border-left: 3px solid var(--fau-blue);
+        }
+
+        /* Chart and Export - FAU styled */
+        .chart-container {
+            margin: 24px 0;
+            padding: 20px;
+            background: var(--gray-50);
+            border-radius: 8px;
+        }
+        .chart-data-input { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+        .chart-data-input textarea {
+            width: 100%;
+            height: 100px;
+            padding: 12px;
+            border: 1.5px solid var(--gray-200);
+            border-radius: 6px;
+            font-family: 'SF Mono', 'Monaco', monospace;
+        }
+
+        .export-section {
+            background: white;
+            padding: 28px;
+            border-radius: 12px;
+            margin-top: 32px;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .export-section h3 {
+            font-family: var(--font-serif);
+            color: var(--gray-800);
+            margin-bottom: 12px;
+        }
+        .export-buttons { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
+        .export-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            color: white;
+            font-family: var(--font-sans);
+            transition: transform 0.1s, box-shadow 0.2s;
+        }
+        .export-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        .export-btn.submit { background: var(--nat-green); }
+        .export-btn.word { background: var(--fau-blue); }
+        .export-btn.copy { background: var(--accent-gold); }
+
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(4px);
+        }
+        .loading-overlay.active { display: flex; }
+        .loading-box {
+            background: white;
+            padding: 32px 48px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid var(--gray-200);
+            border-top: 4px solid var(--fau-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+        @keyframes spin { 0%{transform:rotate(0deg)} 100%{transform:rotate(360deg)} }
+
+        .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 72px;
+            color: rgba(4, 49, 106, 0.04);
+            font-weight: bold;
+            pointer-events: none;
+            z-index: 1;
+            white-space: nowrap;
+            font-family: var(--font-serif);
+        }
+        .watermark.hidden { display: none; }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .info-grid { grid-template-columns: 1fr; }
+            .reference-bar { flex-direction: column; }
+            .chart-data-input { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="password-overlay" id="passwordOverlay">
+        <div class="password-box">
+            <div style="display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--gray-200);">
+                <img src="images/FAU_NatFak_H_black.png" alt="FAU NatFak" style="height: 45px; width: auto;">
+            </div>
+            <h2>Exam Simulation</h2>
+            <h3>Sedimentary Geochemistry</h3>
+            <p style="color: var(--fau-blue); font-weight: 500;">Late Devonian Mass Extinction</p>
+            <p style="font-size: 0.8em; color: var(--gray-500); margin-top: 8px;">Authorized: ji66ciip@fauad.fau.de</p>
+            <input type="password" id="passwordInput" placeholder="Enter exam password..." onkeypress="if(event.key==='Enter')checkPassword()">
+            <button onclick="checkPassword()">Start Exam</button>
+            <div class="error-message" id="errorMessage"></div>
+        </div>
+    </div>
+
+    <div class="timer-bar hidden" id="timerBar">
+        <div>
+            <div style="font-size: 0.9em; opacity: 0.9;">Exam in Progress</div>
+            <div class="timer-display" id="timerDisplay">02:00:00</div>
+        </div>
+        <div style="text-align: center;"><strong>Late Devonian Exam</strong><br><span style="font-size: 0.85em;">Auto-save enabled</span></div>
+        <button class="submit-timer-btn" onclick="submitExam()">Submit Exam</button>
+    </div>
+
+    <div class="watermark hidden" id="watermark"></div>
+
+    <div class="main-content" id="mainContent">
+        <div class="header">
+            <h1>SEDIMENTARY GEOCHEMISTRY</h1>
+            <div class="subtitle">Exam Simulation: The Late Devonian Mass Extinction</div>
+            <div class="exam-info"><strong>Total Points:</strong> 100 + 10 Bonus | <strong>Time:</strong> 2 hours (+5 min grace)<br>Winter Semester 2025-26 | FAU Erlangen-Nürnberg</div>
+        </div>
+
+        <div class="reference-bar">
+            <span><strong>Course:</strong> Sedimentary Geochemistry (MSc)</span>
+            <span><strong>Instructor:</strong> PD Dr. Luca Caracciolo</span>
+            <span><strong>Contact:</strong> luca.caracciolo@fau.de</span>
+        </div>
+
+        <div class="student-info">
+            <h3>📋 Student Information</h3>
+            <div class="info-grid">
+                <div class="info-field"><label>Full Name: *</label><input type="text" id="studentName" placeholder="Enter your full name" oninput="updateWatermark()"></div>
+                <div class="info-field"><label>Email: *</label><input type="email" id="studentEmail" value="ji66ciip@fauad.fau.de" readonly style="background:#f0f0f0;"></div>
+                <div class="info-field"><label>Student ID: *</label><input type="text" id="studentId" placeholder="e.g., 12345678"></div>
+                <div class="info-field"><label>Date:</label><input type="date" id="submissionDate"></div>
+            </div>
+        </div>
+
+        <!-- BACKGROUND SECTION -->
+        <div class="section background-section">
+            <div class="section-title">GEOLOGICAL BACKGROUND: Late Devonian Mass Extinction (Read: ~5 min)</div>
+            
+            <p>The <strong>Late Devonian mass extinction</strong>, centered on the Frasnian-Famennian (F-F) boundary at ~372 Ma, eliminated ~70-80% of marine species, with devastating losses among reef ecosystems, brachiopods, and trilobites.</p>
+
+            <div class="key-difference">
+                <strong>🌡️ KEY DISTINCTION FROM PTB:</strong> Unlike the Permo-Triassic (extreme warming from volcanism), the Late Devonian was characterized by <strong>global cooling</strong> driven by enhanced continental weathering from expanding land plant ecosystems. The geochemical signatures are fundamentally opposite.
+            </div>
+
+            <!-- FIGURE 1: Oxygen and Carbon Isotope Stratigraphy -->
+            <div class="figure-box">
+                <img src="images/exam_figures/fig1_joachimski2002_d18O_d13C_stratigraphy.jpg" alt="δ¹⁸O and δ¹³C stratigraphy across F-F boundary">
+                <div class="figure-caption">
+                    <strong>Figure 1: Oxygen and Carbon Isotope Stratigraphy</strong>
+                    Oxygen isotope composition of conodont apatite and carbon isotope composition of carbonates for Frasnian-Famennian boundary sections (Behringhäuser Tunnel and Vogelsberg Quarry, Germany). Note the positive δ¹³C excursions and increasing δ¹⁸O (cooling) toward the F-F boundary.
+                    <div class="figure-source">Source: Joachimski & Buggisch (2002), Figure 1</div>
+                </div>
+            </div>
+
+            <div class="concept-box">
+                <strong>🌍 Paleogeographic Setting:</strong><br>
+                Laurussia in the north, Gondwana in the south. The Middle-Late Devonian saw the first forests with <em>Archaeopteris</em> trees reaching 30+ meters — a biological revolution that transformed Earth's surface processes.
+            </div>
+
+            <table class="data-table">
+                <thead><tr><th>Event</th><th>Timing</th><th>Characteristics</th><th>Biotic Impact</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>Lower Kellwasser (LKE)</strong></td><td>Late Frasnian (~374 Ma)</td><td>Black shale, positive δ¹³C</td><td>Major reef decline</td></tr>
+                    <tr><td><strong>Upper Kellwasser (UKE)</strong></td><td>F-F boundary (~372 Ma)</td><td>Maximum anoxia, largest δ¹³C shift</td><td>Mass extinction peak</td></tr>
+                </tbody>
+            </table>
+
+            <!-- FIGURE 2: Multi-proxy synthesis -->
+            <div class="figure-box">
+                <img src="images/exam_figures/fig2_joachimski2002_synthesis_cooling.jpg" alt="Multi-proxy synthesis across F-F boundary">
+                <div class="figure-caption">
+                    <strong>Figure 2: Sea-Level, δ¹³C, Temperature & Biotic Events Across F-F Boundary</strong>
+                    Comparison of sea-level changes, δ¹³C record, sea-surface temperature (SST) estimates, and biotic events across the Frasnian-Famennian boundary. The Kellwasser horizons (KW) correlate with positive δ¹³C excursions, cooling episodes, and mass extinction pulses.
+                    <div class="figure-source">Source: Joachimski & Buggisch (2002), Figure 2</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PART 1: CARBON ISOTOPES -->
+        <div class="section">
+            <div class="section-title">PART 1: CARBON ISOTOPES (25 points)</div>
+            
+            <div class="question-block">
+                <div class="question-title">Question 1.1: The Positive Carbon Isotope Excursion (15 points)</div>
+                
+                <p>The δ¹³C record across the F-F boundary shows a pronounced <strong>positive</strong> carbon isotope excursion—the <em>opposite</em> of what is observed at the Permo-Triassic boundary!</p>
+
+                <!-- FIGURE 3: Carbon isotope stratigraphy detail -->
+                <div class="figure-box">
+                    <img src="images/exam_figures/fig3_joachimski2002_d13C_excursion.jpg" alt="δ¹³C stratigraphy detail">
+                    <div class="figure-caption">
+                        <strong>Figure 3: δ¹³C Profile with Kellwasser Events</strong>
+                        Detailed carbon isotope stratigraphy showing the positive δ¹³C excursions during the Lower Kellwasser Event (LKE) and Upper Kellwasser Event (UKE). The baseline δ¹³C values around +1.2‰ shift to peak values of +3.5 to +4.8‰ during the extinction intervals.
+                        <div class="figure-source">Source: Joachimski & Buggisch (2002), Figure 1</div>
+                    </div>
+                </div>
+
+                <table class="data-table">
+                    <thead><tr><th>Sample</th><th>Position</th><th>Conodont Zone</th><th>δ¹³C<sub>carb</sub> (‰ VPDB)</th></tr></thead>
+                    <tbody>
+                        <tr><td>DEV-1</td><td>Pre-LKE baseline</td><td>Early rhenana</td><td>+1.2</td></tr>
+                        <tr><td>DEV-2</td><td>LKE onset</td><td>Late rhenana</td><td>+2.8</td></tr>
+                        <tr><td>DEV-3</td><td>LKE peak</td><td>Late rhenana</td><td>+3.5</td></tr>
+                        <tr><td>DEV-4</td><td>Inter-Kellwasser</td><td>linguiformis</td><td>+2.0</td></tr>
+                        <tr><td>DEV-5</td><td>UKE onset</td><td>Latest linguiformis</td><td>+3.2</td></tr>
+                        <tr><td>DEV-6</td><td>UKE peak (F-F boundary)</td><td>F-F boundary</td><td>+4.8</td></tr>
+                        <tr><td>DEV-7</td><td>Early Famennian</td><td>triangularis</td><td>+2.5</td></tr>
+                    </tbody>
+                </table>
+
+                <div class="sub-question">
+                    <div class="sub-question-title">Part A (5 points): Calculate the CIE magnitude</div>
+                    <p>Calculate the total magnitude of the <strong>positive</strong> δ¹³C excursion from pre-excursion baseline to maximum.</p>
+                    <div class="calculation-label">💻 CALCULATION:</div>
+                    <textarea class="calculation-area" id="p1_1a_calc" placeholder="Pre-excursion baseline δ¹³C = ...
+Maximum δ¹³C = ...
+Δδ¹³C = ..."></textarea>
+                </div>
+
+                <div class="sub-question">
+                    <div class="sub-question-title">Part B (10 points): Interpretation of the Positive CIE</div>
+                    
+                    <div class="info-note">
+                        <strong>⚠️ Critical Contrast with PTB:</strong><br>
+                        • <strong>PTB:</strong> Negative δ¹³C excursion → Carbon <em>added</em> to ocean-atmosphere (volcanic/thermogenic)<br>
+                        • <strong>Late Devonian:</strong> Positive δ¹³C excursion → Carbon <em>removed</em> from ocean-atmosphere (organic burial)
+                    </div>
+                    
+                    <p>Explain the mechanism linking: <strong>land plant expansion → enhanced weathering → nutrient delivery → ocean productivity → organic carbon burial → positive CIE</strong>. Why would this process lead to global cooling?</p>
+                    
+                    <div class="calculation-label">📝 YOUR INTERPRETATION:</div>
+                    <textarea class="answer-area" id="p1_1b" placeholder="Write 150-200 words addressing:
+- How do land plants enhance chemical weathering?
+- How does weathering deliver nutrients (P, N) to the ocean?
+- What happens to ocean productivity with more nutrients?
+- Why does increased organic burial shift δ¹³C positive?
+- How does this relate to CO₂ drawdown and cooling?"></textarea>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">Question 1.2: δ¹³C Stratigraphy as a Correlation Tool (10 points)</div>
+                
+                <p>The Kellwasser positive δ¹³C excursions have been recognized globally—from Germany, Poland, Morocco, Australia, Canada, and China.</p>
+
+                <div class="sub-question">
+                    <div class="sub-question-title">Full Question (10 points)</div>
+                    <p>Explain why <strong>positive</strong> δ¹³C excursions are particularly useful for global stratigraphic correlation. Address:</p>
+                    <ol>
+                        <li>What makes the δ¹³C signal global rather than local?</li>
+                        <li>Why might positive excursions (from organic burial) be easier to use for correlation than negative excursions (from carbon release)?</li>
+                    </ol>
+                    <div class="calculation-label">📝 YOUR ANSWER:</div>
+                    <textarea class="answer-area" id="p1_2" placeholder="Consider:
+- The residence time of DIC in the ocean (~100 kyr)
+- How organic burial creates a global signal
+- Potential local overprints on negative vs. positive excursions
+- Diagenetic considerations"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- PART 2: OXYGEN ISOTOPES & TEMPERATURE -->
+        <div class="section">
+            <div class="section-title">PART 2: OXYGEN ISOTOPES & PALEOCLIMATE (30 points)</div>
+            
+            <div class="question-block">
+                <div class="question-title">Question 2.1: Paleotemperature from Conodont Apatite (20 points)</div>
+                
+                <!-- FIGURE 4: Oxygen isotope and temperature data -->
+                <div class="figure-box">
+                    <img src="images/exam_figures/fig4_joachimski2012_d18O_temperature.jpg" alt="Conodont δ¹⁸O and paleotemperature">
+                    <div class="figure-caption">
+                        <strong>Figure 4: Conodont δ¹⁸O and Paleotemperature Reconstruction</strong>
+                        Oxygen isotopes of conodont apatite (VSMOW) and carbon isotopes (VPDB) across a mass extinction boundary. Temperature estimates from the phosphate-water oxygen isotope thermometer show progressive cooling. Note: This figure is from the PTB study but demonstrates the same methodology applied to the Late Devonian.
+                        <div class="figure-source">Source: Joachimski et al. (2012), Figure 1</div>
+                    </div>
+                </div>
+
+                <table class="data-table">
+                    <thead><tr><th>Sample</th><th>Position</th><th>Conodont Zone</th><th>δ¹⁸O<sub>apatite</sub> (‰ VSMOW)</th><th>CAI</th></tr></thead>
+                    <tbody>
+                        <tr><td>CON-1</td><td>Pre-LKE</td><td>Early rhenana</td><td>18.5</td><td>1.5</td></tr>
+                        <tr><td>CON-2</td><td>LKE peak</td><td>Late rhenana</td><td>19.8</td><td>1.5</td></tr>
+                        <tr><td>CON-3</td><td>Inter-Kellwasser</td><td>linguiformis</td><td>19.2</td><td>2.0</td></tr>
+                        <tr><td>CON-4</td><td>UKE peak</td><td>F-F boundary</td><td>20.5</td><td>1.5</td></tr>
+                        <tr><td>CON-5</td><td>Early Famennian</td><td>triangularis</td><td>19.5</td><td>2.0</td></tr>
+                    </tbody>
+                </table>
+
+                <div class="equation-box">
+                    <div class="equation-title">Phosphate-Water Oxygen Isotope Thermometer (Lécuyer et al., 2013):</div>
+                    T(°C) = 117.4 - 4.50 × (δ¹⁸O<sub>phosphate</sub> - δ¹⁸O<sub>water</sub>)
+                    <br><br>
+                    <em>Where both values are in ‰ VSMOW</em>
+                </div>
+
+                <div class="info-note">
+                    <strong>⚠️ Seawater Assumption:</strong> For a Late Devonian ice-free world, assume δ¹⁸O<sub>seawater</sub> = <strong>-1.0‰ VSMOW</strong>.<br>
+                    CAI (Color Alteration Index) values &lt;3 indicate minimal thermal alteration — these conodonts preserve primary signals.
+                </div>
+
+                <div class="sub-question">
+                    <div class="sub-question-title">Part A (10 points): Calculate temperatures for all samples</div>
+                    <p>Calculate paleotemperature for each conodont sample. Show your work for the first calculation, then tabulate all results.</p>
+                    <div class="calculation-label">💻 CALCULATIONS:</div>
+                    <textarea class="calculation-area" id="p2_1a_calc" placeholder="Example for CON-1:
+T = 117.4 - 4.50 × (18.5 - (-1.0))
+T = 117.4 - 4.50 × 19.5
+T = 117.4 - 87.75
+T = 29.65°C ≈ 30°C
+
+Complete table:
+Sample | δ¹⁸O_apatite | T (°C)
+-------|--------------|-------
+CON-1  | 18.5         | ~30
+CON-2  | 19.8         | 
+CON-3  | 19.2         | 
+CON-4  | 20.5         | 
+CON-5  | 19.5         | "></textarea>
+                </div>
+
+                <div class="sub-question">
+                    <div class="sub-question-title">Part B (10 points): Temperature Interpretation — The Cooling Signal</div>
+                    <p>Based on your calculations, describe the temperature trend. Address:</p>
+                    <ol>
+                        <li>Direction and magnitude of temperature change across the F-F interval</li>
+                        <li>Explain why <strong>increasing δ¹⁸O</strong> indicates <strong>cooling</strong> (this confuses many students!)</li>
+                        <li>Compare this Late Devonian cooling to the warming observed at the PTB</li>
+                    </ol>
+                    <div class="calculation-label">📝 YOUR INTERPRETATION:</div>
+                    <textarea class="answer-area" id="p2_1b" placeholder="Address all three points:
+
+1. Temperature change (direction, magnitude, timing):
+
+2. Why increasing δ¹⁸O = cooling (explain the fractionation relationship):
+
+3. Comparison to PTB (opposite trend, opposite driver):"></textarea>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">Question 2.2: Gondwana Glaciation Evidence (10 points)</div>
+                
+                <p>Some researchers have proposed brief glaciation on Gondwana during the F-F interval, based on possible glacial deposits in South America and rapid sea-level fluctuations.</p>
+
+                <div class="sub-question">
+                    <div class="sub-question-title">Full Question (10 points)</div>
+                    <p>If significant ice sheets existed during the F-F interval:</p>
+                    <ol>
+                        <li>Would your calculated temperatures be <strong>too high</strong> or <strong>too low</strong>? Explain using the isotope mass balance principle.</li>
+                        <li>Quantify the error: Calculate temperature for CON-4 if δ¹⁸O<sub>sw</sub> = -0.5‰ instead of -1.0‰ (ice sheet storage of ¹⁶O).</li>
+                    </ol>
+                    <div class="calculation-label">💻 YOUR ANSWER AND CALCULATION:</div>
+                    <textarea class="calculation-area" id="p2_2_calc" placeholder="1. Direction of temperature error and explanation:
+(Consider: ice sheets preferentially store ¹⁶O, making seawater heavier...)
+
+2. Calculation for CON-4:
+Original (δ¹⁸O_sw = -1.0‰):
+T = 117.4 - 4.50 × (20.5 - (-1.0)) = 
+
+With ice sheets (δ¹⁸O_sw = -0.5‰):
+T = 117.4 - 4.50 × (20.5 - (-0.5)) = 
+
+Temperature difference = ...°C"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- PART 3: WEATHERING & REDOX PROXIES -->
+        <div class="section">
+            <div class="section-title">PART 3: WEATHERING & REDOX PROXIES (25 points)</div>
+            
+            <div class="question-block">
+                <div class="question-title">Question 3.1: Strontium Isotopes — The Biological Weathering Pump (15 points)</div>
+                
+                <!-- FIGURE 5: Multi-proxy context including Sr discussion -->
+                <div class="figure-box">
+                    <img src="images/exam_figures/fig5_phanerozoic_sr_curve.jpg" alt="Multi-proxy synthesis with Sr isotope context">
+                    <div class="figure-caption">
+                        <strong>Figure 5: Environmental Synthesis Across F-F Boundary</strong>
+                        Multi-proxy compilation showing the relationship between sea-level changes, carbon isotope excursions, temperature variations, and biotic events. The ⁸⁷Sr/⁸⁶Sr seawater curve shows a dramatic increase during the Late Devonian (0.7078 → 0.7084), reflecting enhanced continental weathering driven by land plant expansion.
+                        <div class="figure-source">Source: Joachimski & Buggisch (2002), Figure 2</div>
+                    </div>
+                </div>
+
+                <p>The Late Devonian ⁸⁷Sr/⁸⁶Sr seawater curve shows a <strong>dramatic increase</strong>—one of the most rapid in the Phanerozoic:</p>
+
+                <table class="data-table">
+                    <thead><tr><th>Time Interval</th><th>⁸⁷Sr/⁸⁶Sr</th><th>Trend</th></tr></thead>
+                    <tbody>
+                        <tr><td>Early Frasnian</td><td>0.7078</td><td>Baseline</td></tr>
+                        <tr><td>Middle Frasnian</td><td>0.7079</td><td>Gradual rise</td></tr>
+                        <tr><td>Late Frasnian (LKE)</td><td>0.7081</td><td>Accelerating</td></tr>
+                        <tr><td>F-F boundary (UKE)</td><td>0.7084</td><td>Peak</td></tr>
+                        <tr><td>Early Famennian</td><td>0.7083</td><td>Plateau</td></tr>
+                    </tbody>
+                </table>
+
+                <div class="sub-question">
+                    <div class="sub-question-title">Part A (8 points): The Biological Weathering Pump Mechanism</div>
+                    <p>The expansion of vascular land plants has been proposed as a driver of enhanced continental weathering. Explain how plant evolution could have caused the observed ⁸⁷Sr/⁸⁶Sr increase through the "biological weathering pump."</p>
+                    <div class="calculation-label">📝 YOUR ANSWER:</div>
+                    <textarea class="answer-area" id="p3_1a" placeholder="Consider:
+- How do plant root systems affect physical weathering?
+- How do organic acids from plants affect chemical weathering?
+- Why does continental crust (⁸⁷Sr/⁸⁶Sr ~0.710-0.720) weathering increase seawater ⁸⁷Sr/⁸⁶Sr?
+- What's the alternative Sr flux (mantle/hydrothermal) and its isotopic composition?"></textarea>
+                </div>
+
+                <div class="sub-question">
+                    <div class="sub-question-title">Part B (7 points): Alternative Interpretation — Provenance Change</div>
+                    <p>An alternative hypothesis: the ⁸⁷Sr/⁸⁶Sr increase could reflect a <strong>change in the source rocks being weathered</strong> (provenance) rather than an increase in weathering intensity.</p>
+                    <p>Propose <strong>ONE additional geochemical proxy</strong> that could distinguish between enhanced weathering intensity vs. provenance change. Explain expected results under each hypothesis.</p>
+                    <div class="calculation-label">📝 YOUR ANSWER:</div>
+                    <textarea class="answer-area" id="p3_1b" placeholder="Proposed additional proxy:
+(e.g., Os isotopes, Li isotopes, weathering indices, sediment flux estimates...)
+
+Expected results if ENHANCED WEATHERING INTENSITY:
+
+Expected results if PROVENANCE CHANGE:
+
+How this distinguishes the hypotheses:"></textarea>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">Question 3.2: Redox Evidence — Sulfur Isotopes and Biomarkers (10 points)</div>
+                
+                <!-- FIGURE 6: Redox and anoxia context -->
+                <div class="figure-box">
+                    <img src="images/exam_figures/fig6_joachimski2002_redox_anoxia.jpg" alt="Redox proxy synthesis for Kellwasser events">
+                    <div class="figure-caption">
+                        <strong>Figure 6: Redox Context and Anoxia During Kellwasser Events</strong>
+                        The Kellwasser black shales indicate widespread ocean anoxia and euxinia. Positive δ¹³C excursions correlate with enhanced organic carbon burial, linking productivity increases to oxygen depletion. The presence of isorenieratane biomarkers indicates photic zone euxinia—H₂S penetrating into surface waters.
+                        <div class="figure-source">Source: Joachimski & Buggisch (2002), Figure 2</div>
+                    </div>
+                </div>
+
+                <p>The Kellwasser black shales contain multiple lines of evidence for ocean anoxia and euxinia (sulfidic conditions):</p>
+
+                <table class="data-table">
+                    <thead><tr><th>Proxy</th><th>Kellwasser Signal</th><th>Interpretation</th></tr></thead>
+                    <tbody>
+                        <tr><td>Pyrite δ³⁴S</td><td>-30 to -40‰</td><td>Bacterial sulfate reduction</td></tr>
+                        <tr><td>CAS δ³⁴S</td><td>+5 to +10‰ excursion</td><td>Enhanced pyrite burial</td></tr>
+                        <tr><td>Mo enrichment</td><td>10-100× above crustal</td><td>Euxinic bottom waters</td></tr>
+                        <tr><td>Isorenieratane</td><td>Present</td><td>Photic zone euxinia</td></tr>
+                    </tbody>
+                </table>
+
+                <div class="sub-question">
+                    <div class="sub-question-title">Full Question (10 points)</div>
+                    <p>The biomarker <strong>isorenieratane</strong> is derived from green sulfur bacteria (Chlorobiaceae), which require <em>both</em> H₂S <em>and</em> light for photosynthesis.</p>
+                    <ol>
+                        <li>What does the presence of isorenieratane specifically indicate about ocean structure during the Kellwasser events? (5 points)</li>
+                        <li>How might this "photic zone euxinia" have contributed to the marine mass extinction? (5 points)</li>
+                    </ol>
+                    <div class="calculation-label">📝 YOUR ANSWER:</div>
+                    <textarea class="answer-area" id="p3_2" placeholder="1. What isorenieratane indicates about ocean structure:
+(Consider: Where must the chemocline have been located? What does this mean for the depth of H₂S penetration?)
+
+2. How photic zone euxinia contributed to extinction:
+(Consider: What organisms live in the photic zone? What is the toxicity of H₂S? How does this differ from simple bottom-water anoxia?)"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- PART 4: MULTI-PROXY SYNTHESIS -->
+        <div class="section">
+            <div class="section-title">PART 4: MULTI-PROXY SYNTHESIS (20 points)</div>
+            
+            <div class="question-block">
+                <div class="question-title">Question 4.1: Data Visualization (5 points)</div>
+                
+                <p>Using the chart tool below, plot your calculated paleotemperatures to visualize the cooling trend.</p>
+
+                <div class="chart-container">
+                    <h4>📊 Temperature vs Stratigraphic Position</h4>
+                    <div class="chart-data-input">
+                        <div>
+                            <label><strong>X-axis (Position 1-5):</strong></label>
+                            <textarea id="chartXData">1
+2
+3
+4
+5</textarea>
+                        </div>
+                        <div>
+                            <label><strong>Y-axis (Your calculated T in °C):</strong></label>
+                            <textarea id="chartYData" placeholder="Enter your temperatures from Q2.1"></textarea>
+                        </div>
+                    </div>
+                    <button onclick="generateChart()" style="padding: 10px 25px; background: linear-gradient(135deg, #1a5276, #2980b9); color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Generate Plot</button>
+                    <div style="background: white; padding: 15px; border-radius: 8px; margin-top: 15px;">
+                        <canvas id="tempChart" width="600" height="300"></canvas>
+                    </div>
+                    <p style="margin-top: 10px; font-size: 0.9em; color: #666;"><em>Position 1 = Pre-LKE, Position 4 = UKE peak. Your plot should show cooling toward the extinction horizon.</em></p>
+                </div>
+
+                <div class="sub-question">
+                    <div class="sub-question-title">Describe your plot (5 points)</div>
+                    <p>In 2-3 sentences, describe the temperature pattern and identify when maximum cooling occurred.</p>
+                    <div class="calculation-label">📝 YOUR DESCRIPTION:</div>
+                    <textarea class="answer-area" id="p4_1" placeholder="Describe the cooling trend visible in your plot..."></textarea>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title">Question 4.2: Integrated Environmental Reconstruction (15 points)</div>
+                
+                <div class="info-note">
+                    <strong>Your synthesis MUST address:</strong><br>
+                    1. The causal sequence: weathering → nutrient delivery → productivity → anoxia → cooling<br>
+                    2. How the <strong>positive</strong> δ¹³C excursion relates to cooling (opposite to PTB)<br>
+                    3. The role of land plant expansion as the ultimate driver<br>
+                    4. At least ONE limitation or uncertainty in the proxy interpretation
+                </div>
+
+                <div class="sub-question">
+                    <div class="sub-question-title">Full Synthesis (15 points)</div>
+                    <p>Using ALL proxy evidence (δ¹³C, δ¹⁸O/temperature, ⁸⁷Sr/⁸⁶Sr, redox), write a <strong>synthesis paragraph (250-350 words)</strong> reconstructing the environmental changes.</p>
+                    <div class="calculation-label">📝 YOUR SYNTHESIS:</div>
+                    <textarea class="answer-area" id="p4_2" style="min-height: 280px;" placeholder="Structure suggestion:
+
+OPENING: State the main environmental story (biological weathering pump → cooling extinction)
+
+BODY: Integrate evidence from each proxy system:
+- δ¹³C: positive excursion indicates...
+- δ¹⁸O: cooling trend shows...
+- ⁸⁷Sr/⁸⁶Sr: weathering intensification suggests...
+- Redox: photic zone euxinia indicates...
+
+CAUSATION: Connect land plants → weathering → nutrients → productivity → burial/anoxia → cooling
+
+CONTRAST: How this differs fundamentally from volcanism-driven extinctions (PTB)
+
+LIMITATIONS: Acknowledge at least one uncertainty"></textarea>
+                    <p style="margin-top: 10px; font-size: 0.9em; color: #666;">Word count target: 250-350 words. Current count: <span id="wordCount">0</span></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- BONUS SECTION -->
+        <div class="section bonus-section">
+            <div class="section-title">⭐ BONUS QUESTION: Late Devonian vs Permo-Triassic Comparison (10 points)</div>
+            
+            <div class="question-block">
+                <div class="question-title">Comparative Analysis: Two Fundamentally Different Mass Extinctions</div>
+                
+                <p>The Late Devonian and Permo-Triassic boundary represent <strong>opposite modes of environmental catastrophe</strong>:</p>
+
+                <table class="data-table">
+                    <thead><tr><th>Parameter</th><th>Late Devonian (F-F)</th><th>Permo-Triassic Boundary</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>δ¹³C signal</strong></td><td>Positive (+3 to +4‰)</td><td>Negative (-3 to -7‰)</td></tr>
+                        <tr><td><strong>Temperature</strong></td><td>Cooling (4-8°C decrease)</td><td>Warming (8-10°C increase)</td></tr>
+                        <tr><td><strong>Duration</strong></td><td>Multi-pulsed, ~3 Myr</td><td>Rapid, ~60 kyr main pulse</td></tr>
+                        <tr><td><strong>Primary driver</strong></td><td>Biological weathering pump</td><td>Siberian Traps volcanism</td></tr>
+                        <tr><td><strong>Carbon cycle</strong></td><td>Carbon burial (removal)</td><td>Carbon release (addition)</td></tr>
+                        <tr><td><strong>⁸⁷Sr/⁸⁶Sr</strong></td><td>Increase (enhanced weathering)</td><td>Minimum, then increase</td></tr>
+                    </tbody>
+                </table>
+
+                <div class="sub-question">
+                    <div class="sub-question-title">Bonus Question (10 points)</div>
+                    <p>Despite opposite geochemical signatures, both events caused mass extinction. Write a <strong>critical comparison (200-300 words)</strong> addressing:</p>
+                    <ol>
+                        <li>Why opposite temperature trends (cooling vs. warming) could both cause mass extinction</li>
+                        <li>What the contrasting δ¹³C signals reveal about fundamentally different carbon cycle perturbations</li>
+                        <li>Which extinction mechanism you consider more "dangerous" for modern biodiversity and why</li>
+                    </ol>
+                    <div class="calculation-label">📝 YOUR COMPARISON:</div>
+                    <textarea class="answer-area" id="bonus" style="min-height: 220px;" placeholder="Consider:
+
+1. TEMPERATURE STRESS:
+- What kills organisms in cooling scenarios?
+- What kills organisms in warming scenarios?
+- Is rate of change or absolute magnitude more important?
+
+2. CARBON CYCLE CONTRASTS:
+- What does carbon burial (positive δ¹³C) do to atmospheric CO₂?
+- What does carbon release (negative δ¹³C) do to atmospheric CO₂?
+- Which has faster feedbacks?
+
+3. MODERN RELEVANCE:
+- Which scenario more closely resembles anthropogenic climate change?
+- Rate considerations: 3 Myr vs 60 kyr vs 150 years
+- Which is more dangerous and why?"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXPORT SECTION -->
+        <div class="export-section">
+            <h3>📤 Submit Your Exam</h3>
+            <p style="color: #e74c3c;"><strong>Warning:</strong> You can only submit once. Ensure all answers are complete.</p>
+            <div class="export-buttons">
+                <button class="export-btn submit" onclick="submitExam()">✓ Submit Exam</button>
+                <button class="export-btn word" onclick="exportToWord()">📘 Export to Word</button>
+                <button class="export-btn copy" onclick="copyToClipboard()">📋 Copy to Clipboard</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Calculator -->
+    <div class="calculator-container">
+        <div class="calculator-panel" id="calculatorPanel">
+            <div class="calc-header">🧮 Isotope Calculator</div>
+            <div class="calc-body">
+                <input type="text" class="calc-display" id="calcDisplay" readonly placeholder="0">
+                <div class="calc-tabs">
+                    <button class="calc-tab active" onclick="switchCalcTab('basic')">Basic</button>
+                    <button class="calc-tab" onclick="switchCalcTab('isotope')">Isotope</button>
+                </div>
+                <div id="basicCalc">
+                    <div class="calc-buttons">
+                        <button class="calc-btn clear" onclick="clearCalc()">C</button>
+                        <button class="calc-btn" onclick="appendCalc('(')">(</button>
+                        <button class="calc-btn" onclick="appendCalc(')')">)</button>
+                        <button class="calc-btn operator" onclick="appendCalc('/')">÷</button>
+                        <button class="calc-btn" onclick="appendCalc('7')">7</button>
+                        <button class="calc-btn" onclick="appendCalc('8')">8</button>
+                        <button class="calc-btn" onclick="appendCalc('9')">9</button>
+                        <button class="calc-btn operator" onclick="appendCalc('*')">×</button>
+                        <button class="calc-btn" onclick="appendCalc('4')">4</button>
+                        <button class="calc-btn" onclick="appendCalc('5')">5</button>
+                        <button class="calc-btn" onclick="appendCalc('6')">6</button>
+                        <button class="calc-btn operator" onclick="appendCalc('-')">−</button>
+                        <button class="calc-btn" onclick="appendCalc('1')">1</button>
+                        <button class="calc-btn" onclick="appendCalc('2')">2</button>
+                        <button class="calc-btn" onclick="appendCalc('3')">3</button>
+                        <button class="calc-btn operator" onclick="appendCalc('+')">+</button>
+                        <button class="calc-btn" onclick="appendCalc('0')">0</button>
+                        <button class="calc-btn" onclick="appendCalc('.')">.</button>
+                        <button class="calc-btn equals" onclick="calculate()">=</button>
+                    </div>
+                </div>
+                <div id="isotopeCalc" class="isotope-functions">
+                    <button class="isotope-func-btn" onclick="showFunc('phosphate')">🌡️ Phosphate Temperature (Lécuyer)</button>
+                    <button class="isotope-func-btn" onclick="showFunc('convert')">🔄 VPDB ↔ VSMOW Conversion</button>
+                    <button class="isotope-func-btn" onclick="showFunc('delta')">Δ Delta Calculation</button>
+                    
+                    <div class="calc-input-group" id="func_phosphate">
+                        <h4 style="margin:0 0 10px 0;">T(°C) = 117.4 - 4.50 × (δ¹⁸O<sub>phos</sub> - δ¹⁸O<sub>water</sub>)</h4>
+                        <label>δ¹⁸O<sub>phosphate</sub> (‰ VSMOW):</label>
+                        <input type="number" id="phos_d18O" step="0.1" placeholder="e.g., 20.5">
+                        <label>δ¹⁸O<sub>water</sub> (‰ VSMOW):</label>
+                        <input type="number" id="phos_water" step="0.1" value="-1.0">
+                        <button onclick="calcPhosTemp()" style="width:100%; padding:10px; background:#1a5276; color:white; border:none; border-radius:5px; cursor:pointer;">Calculate Temperature</button>
+                        <div class="calc-result" id="result_phosphate"></div>
+                    </div>
+                    
+                    <div class="calc-input-group" id="func_convert">
+                        <h4 style="margin:0 0 10px 0;">δ¹⁸O<sub>VSMOW</sub> = 1.03091 × δ¹⁸O<sub>VPDB</sub> + 30.91</h4>
+                        <label>Value (‰):</label>
+                        <input type="number" id="convert_value" step="0.1">
+                        <label>Convert from:</label>
+                        <select id="convert_from">
+                            <option value="vpdb">VPDB → VSMOW</option>
+                            <option value="vsmow">VSMOW → VPDB</option>
+                        </select>
+                        <button onclick="convertScale()" style="width:100%; padding:10px; background:#1a5276; color:white; border:none; border-radius:5px; cursor:pointer;">Convert</button>
+                        <div class="calc-result" id="result_convert"></div>
+                    </div>
+                    
+                    <div class="calc-input-group" id="func_delta">
+                        <h4 style="margin:0 0 10px 0;">Δδ = Final - Initial</h4>
+                        <label>Initial δ (‰):</label>
+                        <input type="number" id="delta_initial" step="0.1">
+                        <label>Final δ (‰):</label>
+                        <input type="number" id="delta_final" step="0.1">
+                        <button onclick="calcDelta()" style="width:100%; padding:10px; background:#1a5276; color:white; border:none; border-radius:5px; cursor:pointer;">Calculate Δδ</button>
+                        <div class="calc-result" id="result_delta"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="calculator-toggle" onclick="toggleCalculator()">🧮 Calculator</button>
+    </div>
+
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-box">
+            <div class="spinner"></div>
+            <p id="loadingText">Processing...</p>
+        </div>
+    </div>
+
+    <script>
+        // ========================================
+        // CONFIGURATION
+        // ========================================
+        const CORRECT_PASSWORD = "Kellwasser2026!";
+        const EXAM_MINUTES = 120;  // 2 hours
+        const GRACE_MINUTES = 5;
+        const INSTRUCTOR_EMAIL = "luca.caracciolo@fau.de";
+        const STUDENT_EMAIL = "ji66ciip@fauad.fau.de";
+
+        // State variables
+        let timerInterval = null;
+        let remainingSeconds = EXAM_MINUTES * 60;
+        let graceActive = false;
+        let examSubmitted = false;
+        let tempChart = null;
+
+        // ========================================
+        // PASSWORD & INITIALIZATION
+        // ========================================
+        function checkPassword() {
+            if (document.getElementById('passwordInput').value === CORRECT_PASSWORD) {
+                document.getElementById('passwordOverlay').classList.add('hidden');
+                document.getElementById('mainContent').classList.add('visible');
+                document.getElementById('timerBar').classList.remove('hidden');
+                document.getElementById('submissionDate').value = new Date().toISOString().split('T')[0];
+                initAutoSave();
+                startTimer();
+            } else {
+                document.getElementById('errorMessage').textContent = 'Incorrect password. Please try again.';
+            }
+        }
+
+        // ========================================
+        // TIMER
+        // ========================================
+        function startTimer() {
+            const saved = localStorage.getItem('devonian_exam_time_v2');
+            if (saved) remainingSeconds = parseInt(saved);
+            timerInterval = setInterval(updateTimer, 1000);
+            updateTimer();
+        }
+
+        function updateTimer() {
+            if (remainingSeconds > 0) {
+                remainingSeconds--;
+                localStorage.setItem('devonian_exam_time_v2', remainingSeconds);
+            } else if (!graceActive) {
+                graceActive = true;
+                remainingSeconds = GRACE_MINUTES * 60;
+                document.querySelector('.timer-bar div:first-child div:first-child').textContent = '⚠️ GRACE PERIOD';
+            } else {
+                clearInterval(timerInterval);
+                alert('Time is up! Submitting automatically...');
+                submitExam();
+                return;
+            }
+            
+            const h = Math.floor(remainingSeconds / 3600);
+            const m = Math.floor((remainingSeconds % 3600) / 60);
+            const s = remainingSeconds % 60;
+            const display = document.getElementById('timerDisplay');
+            display.textContent = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+            
+            display.classList.remove('warning', 'critical');
+            display.style.color = '';
+            if (graceActive) {
+                display.style.color = '#9b59b6';
+            } else if (remainingSeconds < 300) {
+                display.classList.add('critical');
+            } else if (remainingSeconds < 900) {
+                display.classList.add('warning');
+            }
+        }
+
+        // ========================================
+        // WATERMARK & AUTO-SAVE
+        // ========================================
+        function updateWatermark() {
+            const name = document.getElementById('studentName').value;
+            const wm = document.getElementById('watermark');
+            if (name && name.length > 2) {
+                wm.textContent = name;
+                wm.classList.remove('hidden');
+            } else {
+                wm.classList.add('hidden');
+            }
+        }
+
+        function initAutoSave() {
+            document.querySelectorAll('input[type="text"], input[type="email"]:not([readonly]), textarea').forEach(el => {
+                const saved = localStorage.getItem('dev_exam_v2_' + el.id);
+                if (saved) el.value = saved;
+                el.addEventListener('input', () => {
+                    localStorage.setItem('dev_exam_v2_' + el.id, el.value);
+                    if (el.id === 'studentName') updateWatermark();
+                });
+            });
+            
+            // Word counter for synthesis
+            const synth = document.getElementById('p4_2');
+            if (synth) {
+                synth.addEventListener('input', () => {
+                    const words = synth.value.trim().split(/\s+/).filter(w => w.length > 0);
+                    document.getElementById('wordCount').textContent = words.length;
+                });
+            }
+        }
+
+        // ========================================
+        // CALCULATOR
+        // ========================================
+        function toggleCalculator() {
+            document.getElementById('calculatorPanel').classList.toggle('active');
+        }
+
+        function switchCalcTab(tab) {
+            document.querySelectorAll('.calc-tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('basicCalc').style.display = tab === 'basic' ? 'block' : 'none';
+            document.getElementById('isotopeCalc').classList.toggle('active', tab === 'isotope');
+        }
+
+        function appendCalc(v) {
+            const d = document.getElementById('calcDisplay');
+            d.value = (d.value === '0' || d.value === 'Error') ? v : d.value + v;
+        }
+
+        function clearCalc() {
+            document.getElementById('calcDisplay').value = '';
+        }
+
+        function calculate() {
+            try {
+                document.getElementById('calcDisplay').value = parseFloat(eval(document.getElementById('calcDisplay').value).toFixed(6));
+            } catch(e) {
+                document.getElementById('calcDisplay').value = 'Error';
+            }
+        }
+
+        function showFunc(id) {
+            document.querySelectorAll('.calc-input-group').forEach(g => g.classList.remove('active'));
+            document.getElementById('func_' + id).classList.add('active');
+        }
+
+        function calcPhosTemp() {
+            const p = parseFloat(document.getElementById('phos_d18O').value);
+            const w = parseFloat(document.getElementById('phos_water').value);
+            if (isNaN(p)) {
+                document.getElementById('result_phosphate').innerHTML = '<span style="color:red">Please enter δ¹⁸O value</span>';
+                return;
+            }
+            const T = 117.4 - 4.50 * (p - w);
+            document.getElementById('result_phosphate').innerHTML = `<strong>Temperature = ${T.toFixed(1)}°C</strong><br><small>T = 117.4 - 4.50 × (${p} - (${w})) = ${T.toFixed(1)}°C</small>`;
+        }
+
+        function convertScale() {
+            const v = parseFloat(document.getElementById('convert_value').value);
+            const from = document.getElementById('convert_from').value;
+            if (isNaN(v)) {
+                document.getElementById('result_convert').innerHTML = '<span style="color:red">Please enter a value</span>';
+                return;
+            }
+            const r = from === 'vpdb' ? 1.03091 * v + 30.91 : (v - 30.91) / 1.03091;
+            const toScale = from === 'vpdb' ? 'VSMOW' : 'VPDB';
+            document.getElementById('result_convert').innerHTML = `<strong>${r.toFixed(2)}‰ ${toScale}</strong>`;
+        }
+
+        function calcDelta() {
+            const i = parseFloat(document.getElementById('delta_initial').value);
+            const f = parseFloat(document.getElementById('delta_final').value);
+            if (isNaN(i) || isNaN(f)) {
+                document.getElementById('result_delta').innerHTML = '<span style="color:red">Enter both values</span>';
+                return;
+            }
+            const d = f - i;
+            document.getElementById('result_delta').innerHTML = `<strong>Δδ = ${d.toFixed(2)}‰</strong> (${d > 0 ? 'positive' : 'negative'} excursion)`;
+        }
+
+        // ========================================
+        // CHART
+        // ========================================
+        function generateChart() {
+            const x = document.getElementById('chartXData').value.trim().split('\n').map(Number);
+            const y = document.getElementById('chartYData').value.trim().split('\n').map(Number);
+            
+            if (y.some(isNaN) || y.length < 3) {
+                alert('Please enter valid temperatures for all samples');
+                return;
+            }
+            
+            const ctx = document.getElementById('tempChart').getContext('2d');
+            if (tempChart) tempChart.destroy();
+            
+            tempChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Pre-LKE', 'LKE peak', 'Inter-KW', 'UKE peak', 'E. Famennian'],
+                    datasets: [{
+                        label: 'Temperature (°C)',
+                        data: y,
+                        borderColor: '#1a5276',
+                        backgroundColor: 'rgba(26, 82, 118, 0.1)',
+                        borderWidth: 3,
+                        pointBackgroundColor: '#1a5276',
+                        pointRadius: 6,
+                        tension: 0.2,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: { display: true, text: 'Late Devonian Paleotemperature from Conodont δ¹⁸O', font: { size: 16 } }
+                    },
+                    scales: {
+                        y: { title: { display: true, text: 'Temperature (°C)' } },
+                        x: { title: { display: true, text: 'Stratigraphic Position' } }
+                    }
+                }
+            });
+        }
+
+        // ========================================
+        // DATA COLLECTION & EXPORT
+        // ========================================
+        function collectData() {
+            return {
+                studentInfo: {
+                    name: document.getElementById('studentName').value,
+                    email: document.getElementById('studentEmail').value,
+                    studentId: document.getElementById('studentId').value,
+                    date: document.getElementById('submissionDate').value
+                },
+                part1: {
+                    q1_1a: document.getElementById('p1_1a_calc').value,
+                    q1_1b: document.getElementById('p1_1b').value,
+                    q1_2: document.getElementById('p1_2').value
+                },
+                part2: {
+                    q2_1a: document.getElementById('p2_1a_calc').value,
+                    q2_1b: document.getElementById('p2_1b').value,
+                    q2_2: document.getElementById('p2_2_calc').value
+                },
+                part3: {
+                    q3_1a: document.getElementById('p3_1a').value,
+                    q3_1b: document.getElementById('p3_1b').value,
+                    q3_2: document.getElementById('p3_2').value
+                },
+                part4: {
+                    q4_1: document.getElementById('p4_1').value,
+                    q4_2: document.getElementById('p4_2').value
+                },
+                bonus: document.getElementById('bonus').value,
+                submissionTime: new Date().toISOString()
+            };
+        }
+
+        function validateFields() {
+            if (!document.getElementById('studentName').value || !document.getElementById('studentId').value) {
+                alert('Please fill in your name and student ID');
+                return false;
+            }
+            return true;
+        }
+
+        function submitExam() {
+            if (examSubmitted) {
+                alert('You have already submitted this exam.');
+                return;
+            }
+            if (!confirm('Are you sure you want to submit? You cannot change answers after submission.')) {
+                return;
+            }
+            examSubmitted = true;
+            clearInterval(timerInterval);
+            exportToWord();
+            localStorage.removeItem('devonian_exam_time_v2');
+            alert('Exam submitted! Please save the Word document and upload to Teams or email to ' + INSTRUCTOR_EMAIL);
+        }
+
+        async function exportToWord() {
+            if (!validateFields()) return;
+            
+            document.getElementById('loadingText').textContent = 'Generating Word document...';
+            document.getElementById('loadingOverlay').classList.add('active');
+            
+            try {
+                const { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType } = window.docx;
+                const d = collectData();
+                
+                const doc = new Document({
+                    sections: [{
+                        children: [
+                            new Paragraph({ text: "SEDIMENTARY GEOCHEMISTRY - EXAM", heading: HeadingLevel.HEADING_1, alignment: AlignmentType.CENTER }),
+                            new Paragraph({ text: "Late Devonian Mass Extinction", alignment: AlignmentType.CENTER }),
+                            new Paragraph({ text: "" }),
+                            new Paragraph({ text: "STUDENT INFORMATION", heading: HeadingLevel.HEADING_2 }),
+                            new Paragraph({ text: `Name: ${d.studentInfo.name}` }),
+                            new Paragraph({ text: `Email: ${d.studentInfo.email}` }),
+                            new Paragraph({ text: `Student ID: ${d.studentInfo.studentId}` }),
+                            new Paragraph({ text: `Date: ${d.studentInfo.date}` }),
+                            new Paragraph({ text: `Submission Time: ${d.submissionTime}` }),
+                            new Paragraph({ text: "" }),
+                            
+                            new Paragraph({ text: "PART 1: CARBON ISOTOPES (25 points)", heading: HeadingLevel.HEADING_2 }),
+                            new Paragraph({ text: "" }),
+                            new Paragraph({ children: [new TextRun({ text: "Q1.1a - CIE Magnitude Calculation:", bold: true })] }),
+                            new Paragraph({ text: d.part1.q1_1a || 'Not completed' }),
+                            new Paragraph({ text: "" }),
+                            new Paragraph({ children: [new TextRun({ text: "Q1.1b - Positive CIE Interpretation:", bold: true })] }),
+                            new Paragraph({ text: d.part1.q1_1b || 'Not completed' }),
+                            new Paragraph({ text: "" }),
+                            new Paragraph({ children: [new TextRun({ text: "Q1.2 - δ13C as Correlation Tool:", bold: true })] }),
+                            new Paragraph({ text: d.part1.q1_2 || 'Not completed' }),
+                            new Paragraph({ text: "" }),
+                            
+                            new Paragraph({ text: "PART 2: OXYGEN ISOTOPES & PALEOCLIMATE (30 points)", heading: HeadingLevel.HEADING_2 }),
+                            new Paragraph({ text: "" }),
+                            new Paragraph({ children: [new TextRun({ text: "Q2.1a - Temperature Calculations:", bold: true })] }),
+                            new Paragraph({ text: d.part2.q2_1a || 'Not completed' }),
+                            new Paragraph({ text: "" }),
+                            new Paragraph({ children: [new TextRun({ text: "Q2.1b - Cooling Interpretation:", bold: true })] }),
+                            new Paragraph({ text: d.part2.q2_1b || 'Not completed' }),
+                            new Paragraph({ text: "" }),
+                            new Paragraph({ children: [new TextRun({ text: "Q2.2 - Gondwana Glaciation:", bold: true })] }),
+                            new Paragraph({ text: d.part2.q2_2 || 'Not completed' }),
+                            new Paragraph({ text: "" }),
+                            
+                            new Paragraph({ text: "PART 3: WEATHERING & REDOX PROXIES (25 points)", heading: HeadingLevel.HEADING_2 }),
+                            new Paragraph({ text: "" }),
+                            new Paragraph({ children: [new TextRun({ text: "Q3.1a - Biological Weathering Pump:", bold: true })] }),
+                            new Paragraph({ text: d.part3.q3_1a || 'Not completed' }),
+                            new Paragraph({ text: "" }),
+                            new Paragraph({ children: [new TextRun({ text: "Q3.1b - Alternative Interpretation:", bold: true })] }),
+                            new Paragraph({ text: d.part3.q3_1b || 'Not completed' }),
+                            new Paragraph({ text: "" }),
+                            new Paragraph({ children: [new TextRun({ text: "Q3.2 - Redox & Isorenieratane:", bold: true })] }),
+                            new Paragraph({ text: d.part3.q3_2 || 'Not completed' }),
+                            new Paragraph({ text: "" }),
+                            
+                            new Paragraph({ text: "PART 4: MULTI-PROXY SYNTHESIS (20 points)", heading: HeadingLevel.HEADING_2 }),
+                            new Paragraph({ text: "" }),
+                            new Paragraph({ children: [new TextRun({ text: "Q4.1 - Plot Description:", bold: true })] }),
+                            new Paragraph({ text: d.part4.q4_1 || 'Not completed' }),
+                            new Paragraph({ text: "" }),
+                            new Paragraph({ children: [new TextRun({ text: "Q4.2 - Integrated Synthesis:", bold: true })] }),
+                            new Paragraph({ text: d.part4.q4_2 || 'Not completed' }),
+                            new Paragraph({ text: "" }),
+                            
+                            new Paragraph({ text: "BONUS: LATE DEVONIAN vs PTB COMPARISON (10 points)", heading: HeadingLevel.HEADING_2 }),
+                            new Paragraph({ text: "" }),
+                            new Paragraph({ children: [new TextRun({ text: "Comparative Analysis:", bold: true })] }),
+                            new Paragraph({ text: d.bonus || 'Not completed' }),
+                        ]
+                    }]
+                });
+                
+                const blob = await Packer.toBlob(doc);
+                saveAs(blob, `Devonian_Exam_${d.studentInfo.name.replace(/\s+/g, '_')}.docx`);
+                
+            } catch(e) {
+                console.error(e);
+                alert('Error generating document. Please try Copy to Clipboard instead.');
+            }
+            
+            document.getElementById('loadingOverlay').classList.remove('active');
+        }
+
+        async function copyToClipboard() {
+            if (!validateFields()) return;
+            const d = collectData();
+            
+            let text = `SEDIMENTARY GEOCHEMISTRY EXAM - LATE DEVONIAN MASS EXTINCTION\n`;
+            text += `${'='.repeat(60)}\n\n`;
+            text += `STUDENT INFORMATION\n`;
+            text += `Name: ${d.studentInfo.name}\n`;
+            text += `Email: ${d.studentInfo.email}\n`;
+            text += `Student ID: ${d.studentInfo.studentId}\n`;
+            text += `Date: ${d.studentInfo.date}\n`;
+            text += `Submitted: ${d.submissionTime}\n\n`;
+            
+            text += `${'='.repeat(60)}\n`;
+            text += `PART 1: CARBON ISOTOPES (25 points)\n`;
+            text += `${'='.repeat(60)}\n\n`;
+            text += `Q1.1a - CIE Calculation:\n${d.part1.q1_1a || 'Not completed'}\n\n`;
+            text += `Q1.1b - Interpretation:\n${d.part1.q1_1b || 'Not completed'}\n\n`;
+            text += `Q1.2 - Correlation Tool:\n${d.part1.q1_2 || 'Not completed'}\n\n`;
+            
+            text += `${'='.repeat(60)}\n`;
+            text += `PART 2: OXYGEN ISOTOPES (30 points)\n`;
+            text += `${'='.repeat(60)}\n\n`;
+            text += `Q2.1a - Temperature Calculations:\n${d.part2.q2_1a || 'Not completed'}\n\n`;
+            text += `Q2.1b - Cooling Interpretation:\n${d.part2.q2_1b || 'Not completed'}\n\n`;
+            text += `Q2.2 - Gondwana Glaciation:\n${d.part2.q2_2 || 'Not completed'}\n\n`;
+            
+            text += `${'='.repeat(60)}\n`;
+            text += `PART 3: WEATHERING & REDOX (25 points)\n`;
+            text += `${'='.repeat(60)}\n\n`;
+            text += `Q3.1a - Biological Weathering Pump:\n${d.part3.q3_1a || 'Not completed'}\n\n`;
+            text += `Q3.1b - Alternative Interpretation:\n${d.part3.q3_1b || 'Not completed'}\n\n`;
+            text += `Q3.2 - Redox & Isorenieratane:\n${d.part3.q3_2 || 'Not completed'}\n\n`;
+            
+            text += `${'='.repeat(60)}\n`;
+            text += `PART 4: SYNTHESIS (20 points)\n`;
+            text += `${'='.repeat(60)}\n\n`;
+            text += `Q4.1 - Plot Description:\n${d.part4.q4_1 || 'Not completed'}\n\n`;
+            text += `Q4.2 - Synthesis:\n${d.part4.q4_2 || 'Not completed'}\n\n`;
+            
+            text += `${'='.repeat(60)}\n`;
+            text += `BONUS (10 points)\n`;
+            text += `${'='.repeat(60)}\n\n`;
+            text += `Comparison:\n${d.bonus || 'Not completed'}\n`;
+            
+            try {
+                await navigator.clipboard.writeText(text);
+                alert('Exam copied to clipboard!');
+            } catch(e) {
+                alert('Copy failed. Please try Word export.');
+            }
+        }
+    </script>
+</body>
+</html>
