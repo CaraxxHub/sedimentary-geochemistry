@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mass Extinction Isotope Geochemistry — Presentation Feedback Assignment</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/7.8.2/docx.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f7f9fc;
+        }
+        
+        /* Password Overlay */
+        .password-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a5276, #16a085);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        
+        .password-overlay.hidden {
+            display: none;
+        }
+        
+        .password-box {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+        
+        .password-box h2 {
+            color: #16a085;
+            margin-bottom: 10px;
+        }
+        
+        .password-box p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .password-box input {
+            width: 100%;
+            padding: 12px;
+            font-size: 1em;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            margin-bottom: 15px;
+        }
+        
+        .password-box input:focus {
+            border-color: #16a085;
+            outline: none;
+        }
+        
+        .password-box button {
+            background: linear-gradient(135deg, #16a085, #27ae60);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1em;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .password-box button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(22, 160, 133, 0.4);
+        }
+        
+        .error-message {
+            color: #e74c3c;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+        
+        /* Main Content */
+        .main-content {
+            display: none;
+        }
+        
+        .main-content.visible {
+            display: block;
+        }
+        
+        /* Watermark */
+        .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 72px;
+            color: rgba(22, 160, 133, 0.06);
+            font-weight: bold;
+            pointer-events: none;
+            z-index: 1;
+            white-space: nowrap;
+            user-select: none;
+        }
+        
+        .watermark.hidden {
+            display: none;
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #16a085, #27ae60);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            margin: 0 0 10px 0;
+            font-size: 1.8em;
+            font-weight: 400;
+        }
+        
+        .header .subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        /* Reference Bar */
+        .reference-bar {
+            background: #ecf0f1;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border-left: 4px solid #16a085;
+            font-size: 0.95em;
+        }
+        
+        /* Instructions */
+        .instructions {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border: 1px solid #ddd;
+        }
+        
+        .instructions h3 {
+            color: #16a085;
+            margin-top: 0;
+        }
+        
+        .instructions ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+        }
+        
+        /* Student Info */
+        .student-info {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+        
+        .student-info h3 {
+            margin-top: 0;
+            color: white;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .info-field label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .info-field input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1em;
+        }
+        
+        .info-field input:focus {
+            outline: 3px solid rgba(255,255,255,0.5);
+        }
+        
+        /* Event Sections */
+        .event-section {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .event-header {
+            padding: 20px;
+            color: white;
+            font-size: 1.3em;
+            font-weight: 500;
+        }
+        
+        .devonian-header { background: linear-gradient(135deg, #2980b9, #3498db); }
+        .ptb-header { background: linear-gradient(135deg, #c0392b, #e74c3c); }
+        .petm-header { background: linear-gradient(135deg, #d35400, #e67e22); }
+        .oae-header { background: linear-gradient(135deg, #27ae60, #2ecc71); }
+        
+        .event-content {
+            padding: 25px;
+        }
+        
+        /* Comment Box */
+        .comment-box {
+            background: #eaf2f8;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .comment-box h4 {
+            margin: 0 0 10px 0;
+            color: #2980b9;
+        }
+        
+        .team-name {
+            font-weight: bold;
+            color: #16a085;
+            margin-bottom: 10px;
+        }
+        
+        /* Questions */
+        .question-block {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #fafafa;
+            border-radius: 8px;
+            border-left: 4px solid #16a085;
+        }
+        
+        .question-number {
+            display: inline-block;
+            background: #16a085;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .question-text {
+            font-weight: 500;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+        
+        .answer-label {
+            display: block;
+            color: #16a085;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+        }
+        
+        .answer-area {
+            width: 100%;
+            min-height: 180px;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Georgia', serif;
+            font-size: 1em;
+            line-height: 1.6;
+            resize: vertical;
+            transition: border-color 0.3s;
+        }
+        
+        .answer-area:focus {
+            border-color: #16a085;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(22, 160, 133, 0.1);
+        }
+        
+        /* Points indicator */
+        .points {
+            float: right;
+            background: #f39c12;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+        
+        /* Export Buttons */
+        .export-section {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .export-section h3 {
+            color: #16a085;
+            margin-top: 0;
+        }
+        
+        .export-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .export-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            color: white;
+        }
+        
+        .export-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .btn-email { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+        .btn-word { background: linear-gradient(135deg, #3498db, #2980b9); }
+        .btn-copy { background: linear-gradient(135deg, #9b59b6, #8e44ad); }
+        .btn-text { background: linear-gradient(135deg, #95a5a6, #7f8c8d); }
+        
+        /* Loading Overlay */
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .loading-overlay.active {
+            display: flex;
+        }
+        
+        .loading-box {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #16a085;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 600px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .export-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .export-btn {
+                width: 100%;
+                max-width: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Password Overlay -->
+    <div class="password-overlay" id="passwordOverlay">
+        <div class="password-box">
+            <h2>🔐 Protected Assignment</h2>
+            <p>Enter the password provided by your instructor</p>
+            <input type="password" id="passwordInput" placeholder="Enter password..." onkeypress="if(event.key==='Enter')checkPassword()">
+            <button onclick="checkPassword()">Unlock Assignment</button>
+            <div class="error-message" id="errorMessage"></div>
+        </div>
+    </div>
+    
+    <!-- Watermark -->
+    <div class="watermark hidden" id="watermark"></div>
+    
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-box">
+            <div class="spinner"></div>
+            <div id="loadingText">Generating document...</div>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <!-- Header -->
+        <div class="header">
+            <h1>Mass Extinction Isotope Geochemistry</h1>
+            <div class="subtitle">Presentation Feedback Assignment</div>
+        </div>
+        
+        <!-- Reference Bar -->
+        <div class="reference-bar">
+            <strong>Course:</strong> Sedimentary Geochemistry | 
+            <strong>Instructor:</strong> PD Dr. Luca Caracciolo | 
+            <strong>Contact:</strong> luca.caracciolo@fau.de
+        </div>
+        
+        <!-- Instructions -->
+        <div class="instructions">
+            <h3>📋 Instructions</h3>
+            <ul>
+                <li>Answer the questions based on the presentation feedback and your understanding of isotope geochemistry</li>
+                <li>Focus on <strong>proxy mechanisms</strong>, <strong>interpretations</strong>, and <strong>comparisons between events</strong></li>
+                <li>Your work is automatically saved in your browser</li>
+                <li>Export options: Email, Word document, Copy to clipboard, or Text file</li>
+                <li>Each section corresponds to one of the four student presentations</li>
+            </ul>
+        </div>
+        
+        <!-- Student Information -->
+        <div class="student-info">
+            <h3>👤 Student Information</h3>
+            <div class="info-grid">
+                <div class="info-field">
+                    <label>Full Name *</label>
+                    <input type="text" id="studentName" placeholder="Enter your full name" oninput="updateWatermark()">
+                </div>
+                <div class="info-field">
+                    <label>Email *</label>
+                    <input type="email" id="studentEmail" placeholder="your.email@fau.de">
+                </div>
+                <div class="info-field">
+                    <label>Student ID *</label>
+                    <input type="text" id="studentId" placeholder="e.g., 12345678">
+                </div>
+                <div class="info-field">
+                    <label>Submission Date</label>
+                    <input type="text" id="submissionDate" readonly>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ==================== LATE DEVONIAN ==================== -->
+        <div class="event-section">
+            <div class="event-header devonian-header">
+                SECTION 1: Late Devonian Mass Extinction
+            </div>
+            <div class="event-content">
+                <div class="comment-box">
+                    <h4>💬 Instructor Feedback</h4>
+                    <div class="team-name">Team: Cristian, Elena, Sebastian, Jakob</div>
+                    <p>Excellent work — the strongest presentation. You correctly identified that the Devonian is a COOLING crisis driven by the biological weathering pump, with POSITIVE δ¹³C (opposite to PTB). The causal chain (land plants → weathering → nutrients → productivity → burial → CO₂ drawdown → cooling) is well articulated. Strong critical evaluation of diagenesis, stratigraphic resolution, and the Sr provenance debate. Minor issue: clarify δ³⁴S — you mention both positive CAS excursion and "negative S excursion" for euxinia, which could confuse readers.</p>
+                </div>
+                
+                <!-- Question 1.1 -->
+                <div class="question-block">
+                    <span class="question-number">Question 1.1</span>
+                    <span class="points">10 pts</span>
+                    <div class="question-text">
+                        The Devonian shows a +3.6‰ δ¹³C excursion while the PTB shows -4 to -7‰. What do these opposite signals tell us about the carbon cycle perturbation in each event?
+                    </div>
+                    <label class="answer-label">✍️ YOUR ANSWER:</label>
+                    <textarea class="answer-area" id="dev_q1" placeholder="Explain the mechanistic difference between positive and negative CIEs, and what each tells us about carbon cycling..."></textarea>
+                </div>
+                
+                <!-- Question 1.2 -->
+                <div class="question-block">
+                    <span class="question-number">Question 1.2</span>
+                    <span class="points">10 pts</span>
+                    <div class="question-text">
+                        The presentation correctly notes that the ⁸⁷Sr/⁸⁶Sr increase could reflect enhanced weathering intensity OR provenance change. How would you distinguish these hypotheses using additional proxies? Predict the expected results under each scenario.
+                    </div>
+                    <label class="answer-label">✍️ YOUR ANSWER:</label>
+                    <textarea class="answer-area" id="dev_q2" placeholder="Identify proxies that could discriminate between weathering intensity and provenance change, and explain what results you would expect..."></textarea>
+                </div>
+                
+                <!-- Question 1.3 -->
+                <div class="question-block">
+                    <span class="question-number">Question 1.3</span>
+                    <span class="points">10 pts</span>
+                    <div class="question-text">
+                        Both the Late Devonian (cooling) and PTB (warming) caused mass extinction. How can opposite climate trends produce similar biotic outcomes? Which mode is more relevant to modern climate change?
+                    </div>
+                    <label class="answer-label">✍️ YOUR ANSWER:</label>
+                    <textarea class="answer-area" id="dev_q3" placeholder="Discuss the kill mechanisms of both cooling and warming, and compare to modern climate trajectories..."></textarea>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ==================== PTB ==================== -->
+        <div class="event-section">
+            <div class="event-header ptb-header">
+                SECTION 2: Permo-Triassic Boundary Extinction
+            </div>
+            <div class="event-content">
+                <div class="comment-box">
+                    <h4>💬 Instructor Feedback</h4>
+                    <div class="team-name">Team: (please add names to title slide)</div>
+                    <p>Good presentation with effective timeline structure showing the environmental cascade. Proxy coverage is appropriate (δ¹³C, δ¹⁸O, δ¹¹B, Hg, δ²³⁸U, Sr). The distinction between volcanic and biomass-derived Hg is sophisticated. The limitations section is well-organized. Weaknesses: no team names visible, the boron isotope mechanism is mentioned but not clearly explained, and the comparison with other events is brief. The 5 Myr recovery is mentioned but not mechanistically explained.</p>
+                </div>
+                
+                <!-- Question 2.1 -->
+                <div class="question-block">
+                    <span class="question-number">Question 2.1</span>
+                    <span class="points">10 pts</span>
+                    <div class="question-text">
+                        The presentation reports a pH drop of 0.6 units based on δ¹¹B. Explain mechanistically WHY lower ocean pH produces lower δ¹¹B values in carbonate archives — what's happening at the molecular level with borate vs. boric acid?
+                    </div>
+                    <label class="answer-label">✍️ YOUR ANSWER:</label>
+                    <textarea class="answer-area" id="ptb_q1" placeholder="Explain the boron speciation equilibrium, isotopic fractionation, and why only borate incorporates into carbonates..."></textarea>
+                </div>
+                
+                <!-- Question 2.2 -->
+                <div class="question-block">
+                    <span class="question-number">Question 2.2</span>
+                    <span class="points">10 pts</span>
+                    <div class="question-text">
+                        The δ²³⁸U shift from -0.37‰ to -0.65‰ indicates expanded anoxia. Explain the mechanism (why does anoxic seafloor cause seawater δ²³⁸U to become MORE NEGATIVE?) and what percentage of seafloor this shift implies was anoxic.
+                    </div>
+                    <label class="answer-label">✍️ YOUR ANSWER:</label>
+                    <textarea class="answer-area" id="ptb_q2" placeholder="Describe the uranium redox chemistry, isotope fractionation during reduction, and quantify the extent of anoxia..."></textarea>
+                </div>
+                
+                <!-- Question 2.3 -->
+                <div class="question-block">
+                    <span class="question-number">Question 2.3</span>
+                    <span class="points">10 pts</span>
+                    <div class="question-text">
+                        PTB recovery was extraordinarily slow (~5 Myr) compared to PETM (~200 kyr). Propose TWO mechanistic hypotheses for why recovery was so slow, and what proxy evidence would test each hypothesis.
+                    </div>
+                    <label class="answer-label">✍️ YOUR ANSWER:</label>
+                    <textarea class="answer-area" id="ptb_q3" placeholder="Propose two testable hypotheses for slow recovery (e.g., persistent temperatures, carbon instability, ecological cascade) with specific proxy tests..."></textarea>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ==================== PETM ==================== -->
+        <div class="event-section">
+            <div class="event-header petm-header">
+                SECTION 3: Paleocene-Eocene Thermal Maximum
+            </div>
+            <div class="event-content">
+                <div class="comment-box">
+                    <h4>💬 Instructor Feedback</h4>
+                    <div class="team-name">Team: Aisha, Antony, Hannes, Maria</div>
+                    <p>Adequate presentation with a strong multi-proxy synthesis figure (Slide 10) — plotting δ¹³C, δ¹⁸O, δ¹¹B, and element ratios together is exactly the right approach. Kill mechanisms correctly identified. However, speaker notes are sparse on several slides, the carbon mass uncertainty (3,000-10,000 Pg) is stated but not explained, and the benthic foraminifera extinction (30-50% loss) deserves more attention than mammalian dwarfing. The comparison table with PTB and anthropogenic change is useful but could be expanded.</p>
+                </div>
+                
+                <!-- Question 3.1 -->
+                <div class="question-block">
+                    <span class="question-number">Question 3.1</span>
+                    <span class="points">10 pts</span>
+                    <div class="question-text">
+                        The presentation cites 3,000-10,000 Pg C released — an enormous range. Explain what controls this uncertainty and how the isotopic composition of different sources (volcanic CO₂ vs. methane) constrains the estimates.
+                    </div>
+                    <label class="answer-label">✍️ YOUR ANSWER:</label>
+                    <textarea class="answer-area" id="petm_q1" placeholder="Discuss how source δ¹³C affects mass estimates, why different archives record different CIE magnitudes, and what recent isotope data suggest..."></textarea>
+                </div>
+                
+                <!-- Question 3.2 -->
+                <div class="question-block">
+                    <span class="question-number">Question 3.2</span>
+                    <span class="points">10 pts</span>
+                    <div class="question-text">
+                        The CCD rose from ~4500m to ~3000m during the PETM. Explain the mechanism linking CO₂ release to CCD shoaling, and what this means for interpreting the PETM sedimentary record.
+                    </div>
+                    <label class="answer-label">✍️ YOUR ANSWER:</label>
+                    <textarea class="answer-area" id="petm_q2" placeholder="Explain the carbonate chemistry, why CCD rises with acidification, and implications for the sediment record (dissolution, clay layers, missing data)..."></textarea>
+                </div>
+                
+                <!-- Question 3.3 -->
+                <div class="question-block">
+                    <span class="question-number">Question 3.3</span>
+                    <span class="points">10 pts</span>
+                    <div class="question-text">
+                        PETM recovery (~200 kyr) was much faster than PTB (~5 Myr). Give TWO mechanistic reasons why the PETM system was more "resilient."
+                    </div>
+                    <label class="answer-label">✍️ YOUR ANSWER:</label>
+                    <textarea class="answer-area" id="petm_q3" placeholder="Compare temperature magnitudes, weathering feedbacks, ocean chemistry, ecological damage, and carbon source exhaustion between the two events..."></textarea>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ==================== MESOZOIC OAEs ==================== -->
+        <div class="event-section">
+            <div class="event-header oae-header">
+                SECTION 4: Mesozoic Ocean Anoxic Events
+            </div>
+            <div class="event-content">
+                <div class="comment-box">
+                    <h4>💬 Instructor Feedback</h4>
+                    <div class="team-name">Team: Dominik, Nyamkhishig, Johannes</div>
+                    <p>Ambitious and comprehensive — covering three OAEs (Toarcian, Selli, Bonarelli) with detailed proxy discussion. The volcanic forcing model is excellent and the proxy limitations are thoroughly addressed. The comparison with PETM is insightful. Main issue: 62 slides is too many (condense to 25-30). The unresolved questions section is well-structured.</p>
+                </div>
+                
+                <!-- Question 4.1 -->
+                <div class="question-block">
+                    <span class="question-number">Question 4.1</span>
+                    <span class="points">10 pts</span>
+                    <div class="question-text">
+                        OAE-2 shows a POSITIVE δ¹³C excursion (+2-3‰) while the Toarcian shows NEGATIVE (-3-7‰). Both are "Ocean Anoxic Events" with organic carbon burial. Explain this apparent paradox.
+                    </div>
+                    <label class="answer-label">✍️ YOUR ANSWER:</label>
+                    <textarea class="answer-area" id="oae_q1" placeholder="Explain why the sign of the CIE depends on the balance between carbon input and burial, and what dominated each event..."></textarea>
+                </div>
+                
+                <!-- Question 4.2 -->
+                <div class="question-block">
+                    <span class="question-number">Question 4.2</span>
+                    <span class="points">10 pts</span>
+                    <div class="question-text">
+                        For OAE-2, was enhanced organic burial driven by increased productivity or better preservation under anoxia? Why does this distinction matter for understanding kill mechanisms and modern implications?
+                    </div>
+                    <label class="answer-label">✍️ YOUR ANSWER:</label>
+                    <textarea class="answer-area" id="oae_q2" placeholder="Discuss the productivity vs. preservation debate, what evidence supports each, and implications for modern eutrophication vs. warming scenarios..."></textarea>
+                </div>
+                
+                <!-- Question 4.3 -->
+                <div class="question-block">
+                    <span class="question-number">Question 4.3</span>
+                    <span class="points">10 pts</span>
+                    <div class="question-text">
+                        Both OAE-2 and PETM were triggered by LIP volcanism. Why did they produce opposite δ¹³C signals and different recovery timescales? What does this tell us about the importance of context in interpreting geochemical signals?
+                    </div>
+                    <label class="answer-label">✍️ YOUR ANSWER:</label>
+                    <textarea class="answer-area" id="oae_q3" placeholder="Compare the dominant processes (carbon release vs. burial), dominant stressors, and explain why the same trigger can produce different outcomes..."></textarea>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Export Section -->
+        <div class="export-section">
+            <h3>📤 Submit Your Assignment</h3>
+            <p>Choose your preferred export method:</p>
+            <div class="export-buttons">
+                <button class="export-btn btn-email" onclick="exportEmail()">📧 Email to Instructor</button>
+                <button class="export-btn btn-word" onclick="exportWord()">📘 Download Word</button>
+                <button class="export-btn btn-copy" onclick="exportClipboard()">📋 Copy to Clipboard</button>
+                <button class="export-btn btn-text" onclick="exportText()">💾 Download Text</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // ========================================
+        // CONFIGURATION
+        // ========================================
+        const CORRECT_PASSWORD = "Extinction2026!";
+        const INSTRUCTOR_EMAIL = "luca.caracciolo@fau.de";
+        
+        // ========================================
+        // PASSWORD PROTECTION
+        // ========================================
+        function checkPassword() {
+            const input = document.getElementById('passwordInput').value;
+            if (input === CORRECT_PASSWORD) {
+                document.getElementById('passwordOverlay').classList.add('hidden');
+                document.getElementById('mainContent').classList.add('visible');
+                initAutoSave();
+                setCurrentDate();
+            } else {
+                document.getElementById('errorMessage').textContent = 'Incorrect password. Please try again.';
+            }
+        }
+        
+        // ========================================
+        // WATERMARK
+        // ========================================
+        function updateWatermark() {
+            const name = document.getElementById('studentName').value;
+            const watermark = document.getElementById('watermark');
+            if (name && name.length > 2) {
+                watermark.textContent = name;
+                watermark.classList.remove('hidden');
+            } else {
+                watermark.classList.add('hidden');
+            }
+        }
+        
+        // ========================================
+        // AUTO-SAVE
+        // ========================================
+        function initAutoSave() {
+            const inputs = document.querySelectorAll('input, textarea');
+            inputs.forEach(input => {
+                const savedValue = localStorage.getItem('feedback_' + input.id);
+                if (savedValue && !input.readOnly) {
+                    input.value = savedValue;
+                }
+                input.addEventListener('input', function() {
+                    localStorage.setItem('feedback_' + this.id, this.value);
+                });
+            });
+            updateWatermark();
+        }
+        
+        function setCurrentDate() {
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('en-GB', { 
+                day: '2-digit', 
+                month: 'long', 
+                year: 'numeric' 
+            });
+            document.getElementById('submissionDate').value = dateStr;
+        }
+        
+        // ========================================
+        // LOADING OVERLAY
+        // ========================================
+        function showLoading(text) {
+            document.getElementById('loadingText').textContent = text;
+            document.getElementById('loadingOverlay').classList.add('active');
+        }
+        
+        function hideLoading() {
+            document.getElementById('loadingOverlay').classList.remove('active');
+        }
+        
+        // ========================================
+        // EXPORT FUNCTIONS
+        // ========================================
+        function getStudentInfo() {
+            return {
+                name: document.getElementById('studentName').value || 'Not provided',
+                email: document.getElementById('studentEmail').value || 'Not provided',
+                id: document.getElementById('studentId').value || 'Not provided',
+                date: document.getElementById('submissionDate').value || 'Not provided'
+            };
+        }
+        
+        function validateForm() {
+            const name = document.getElementById('studentName').value;
+            const email = document.getElementById('studentEmail').value;
+            const id = document.getElementById('studentId').value;
+            if (!name || !email || !id) {
+                alert('Please fill in all student information fields before exporting.');
+                return false;
+            }
+            return true;
+        }
+        
+        function exportEmail() {
+            if (!validateForm()) return;
+            const info = getStudentInfo();
+            const subject = encodeURIComponent(`Presentation Feedback Assignment - ${info.name}`);
+            const body = encodeURIComponent(`Student: ${info.name}\nEmail: ${info.email}\nID: ${info.id}\nDate: ${info.date}\n\nPlease find my completed assignment attached.`);
+            window.open(`mailto:${INSTRUCTOR_EMAIL}?subject=${subject}&body=${body}`);
+        }
+        
+        function exportWord() {
+            if (!validateForm()) return;
+            showLoading('Generating Word document...');
+            
+            try {
+                const info = getStudentInfo();
+                const { Document, Packer, Paragraph, TextRun, HeadingLevel } = docx;
+                
+                const answerIds = [
+                    { id: 'dev_q1', title: 'Section 1 - Q1.1: Positive vs. Negative CIE' },
+                    { id: 'dev_q2', title: 'Section 1 - Q1.2: Sr Isotopes - Weathering vs. Provenance' },
+                    { id: 'dev_q3', title: 'Section 1 - Q1.3: Cooling vs. Warming Extinctions' },
+                    { id: 'ptb_q1', title: 'Section 2 - Q2.1: Boron Isotopes and Ocean Acidification' },
+                    { id: 'ptb_q2', title: 'Section 2 - Q2.2: Uranium Isotopes and Anoxia Extent' },
+                    { id: 'ptb_q3', title: 'Section 2 - Q2.3: Slow Recovery Hypotheses' },
+                    { id: 'petm_q1', title: 'Section 3 - Q3.1: Carbon Source Uncertainty' },
+                    { id: 'petm_q2', title: 'Section 3 - Q3.2: CCD Shoaling Mechanism' },
+                    { id: 'petm_q3', title: 'Section 3 - Q3.3: Faster Recovery Than PTB' },
+                    { id: 'oae_q1', title: 'Section 4 - Q4.1: Positive vs. Negative CIE in OAEs' },
+                    { id: 'oae_q2', title: 'Section 4 - Q4.2: Productivity vs. Preservation' },
+                    { id: 'oae_q3', title: 'Section 4 - Q4.3: OAE-2 vs. PETM Comparison' }
+                ];
+                
+                const children = [
+                    new Paragraph({
+                        text: "Mass Extinction Isotope Geochemistry",
+                        heading: HeadingLevel.HEADING_1
+                    }),
+                    new Paragraph({
+                        text: "Presentation Feedback Assignment",
+                        heading: HeadingLevel.HEADING_2
+                    }),
+                    new Paragraph({ text: "" }),
+                    new Paragraph({ children: [new TextRun({ text: "Student: ", bold: true }), new TextRun(info.name)] }),
+                    new Paragraph({ children: [new TextRun({ text: "Email: ", bold: true }), new TextRun(info.email)] }),
+                    new Paragraph({ children: [new TextRun({ text: "Student ID: ", bold: true }), new TextRun(info.id)] }),
+                    new Paragraph({ children: [new TextRun({ text: "Date: ", bold: true }), new TextRun(info.date)] }),
+                    new Paragraph({ text: "" })
+                ];
+                
+                answerIds.forEach(item => {
+                    const element = document.getElementById(item.id);
+                    children.push(
+                        new Paragraph({ text: "" }),
+                        new Paragraph({ text: item.title, heading: HeadingLevel.HEADING_3 }),
+                        new Paragraph({ text: element ? element.value : '' })
+                    );
+                });
+                
+                const doc = new Document({
+                    sections: [{ children: children }]
+                });
+                
+                Packer.toBlob(doc).then(blob => {
+                    const filename = `PresentationFeedback_${info.name.replace(/\s+/g, '_')}.docx`;
+                    saveAs(blob, filename);
+                    hideLoading();
+                });
+                
+            } catch (error) {
+                hideLoading();
+                alert('Error generating document: ' + error.message);
+            }
+        }
+        
+        function exportClipboard() {
+            if (!validateForm()) return;
+            const info = getStudentInfo();
+            
+            let text = `MASS EXTINCTION ISOTOPE GEOCHEMISTRY\n`;
+            text += `Presentation Feedback Assignment\n`;
+            text += `${'='.repeat(60)}\n\n`;
+            text += `Student: ${info.name}\n`;
+            text += `Email: ${info.email}\n`;
+            text += `ID: ${info.id}\n`;
+            text += `Date: ${info.date}\n\n`;
+            
+            const sections = [
+                { name: 'SECTION 1: LATE DEVONIAN', questions: [
+                    { id: 'dev_q1', title: 'Q1.1: Positive vs. Negative CIE' },
+                    { id: 'dev_q2', title: 'Q1.2: Sr Isotopes' },
+                    { id: 'dev_q3', title: 'Q1.3: Cooling vs. Warming' }
+                ]},
+                { name: 'SECTION 2: PERMO-TRIASSIC', questions: [
+                    { id: 'ptb_q1', title: 'Q2.1: Boron Isotopes' },
+                    { id: 'ptb_q2', title: 'Q2.2: Uranium Isotopes' },
+                    { id: 'ptb_q3', title: 'Q2.3: Slow Recovery' }
+                ]},
+                { name: 'SECTION 3: PETM', questions: [
+                    { id: 'petm_q1', title: 'Q3.1: Carbon Source' },
+                    { id: 'petm_q2', title: 'Q3.2: CCD Shoaling' },
+                    { id: 'petm_q3', title: 'Q3.3: Fast Recovery' }
+                ]},
+                { name: 'SECTION 4: MESOZOIC OAEs', questions: [
+                    { id: 'oae_q1', title: 'Q4.1: Positive vs. Negative CIE' },
+                    { id: 'oae_q2', title: 'Q4.2: Productivity vs. Preservation' },
+                    { id: 'oae_q3', title: 'Q4.3: OAE-2 vs. PETM' }
+                ]}
+            ];
+            
+            sections.forEach(section => {
+                text += `${'='.repeat(60)}\n`;
+                text += `${section.name}\n`;
+                text += `${'='.repeat(60)}\n\n`;
+                
+                section.questions.forEach(q => {
+                    const element = document.getElementById(q.id);
+                    text += `${q.title}\n`;
+                    text += `${'-'.repeat(40)}\n`;
+                    text += `${element ? element.value : ''}\n\n`;
+                });
+            });
+            
+            navigator.clipboard.writeText(text)
+                .then(() => alert('Copied to clipboard!'))
+                .catch(err => alert('Failed to copy: ' + err));
+        }
+        
+        function exportText() {
+            if (!validateForm()) return;
+            const info = getStudentInfo();
+            
+            let text = `MASS EXTINCTION ISOTOPE GEOCHEMISTRY\n`;
+            text += `Presentation Feedback Assignment\n`;
+            text += `${'='.repeat(60)}\n\n`;
+            text += `Student: ${info.name}\n`;
+            text += `Email: ${info.email}\n`;
+            text += `ID: ${info.id}\n`;
+            text += `Date: ${info.date}\n\n`;
+            
+            const answerIds = [
+                { id: 'dev_q1', title: 'Q1.1: Positive vs. Negative CIE' },
+                { id: 'dev_q2', title: 'Q1.2: Sr Isotopes' },
+                { id: 'dev_q3', title: 'Q1.3: Cooling vs. Warming' },
+                { id: 'ptb_q1', title: 'Q2.1: Boron Isotopes' },
+                { id: 'ptb_q2', title: 'Q2.2: Uranium Isotopes' },
+                { id: 'ptb_q3', title: 'Q2.3: Slow Recovery' },
+                { id: 'petm_q1', title: 'Q3.1: Carbon Source' },
+                { id: 'petm_q2', title: 'Q3.2: CCD Shoaling' },
+                { id: 'petm_q3', title: 'Q3.3: Fast Recovery' },
+                { id: 'oae_q1', title: 'Q4.1: Positive vs. Negative CIE' },
+                { id: 'oae_q2', title: 'Q4.2: Productivity vs. Preservation' },
+                { id: 'oae_q3', title: 'Q4.3: OAE-2 vs. PETM' }
+            ];
+            
+            answerIds.forEach(item => {
+                const element = document.getElementById(item.id);
+                text += `${'-'.repeat(60)}\n`;
+                text += `${item.title}\n`;
+                text += `${'-'.repeat(60)}\n`;
+                text += `${element ? element.value : ''}\n\n`;
+            });
+            
+            const blob = new Blob([text], { type: 'text/plain' });
+            const filename = `PresentationFeedback_${info.name.replace(/\s+/g, '_')}.txt`;
+            saveAs(blob, filename);
+        }
+    </script>
+</body>
+</html>
