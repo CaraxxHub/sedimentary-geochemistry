@@ -35,6 +35,27 @@
         .watermark{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-45deg);font-size:72px;color:rgba(4,49,106,.05);font-weight:700;pointer-events:none;z-index:1}.watermark.hidden{display:none}
         @media print{.access-overlay,.password-overlay,.timer-bar,.export-section{display:none!important}.main-content{display:block!important;margin-top:0!important}}
         @media(max-width:768px){.info-grid{grid-template-columns:1fr}.timer-bar{flex-direction:column;gap:10px}.reference-bar{flex-direction:column}}
+        /* Calculator */
+        .calculator-container{position:fixed;bottom:20px;right:20px;z-index:500}
+        .calculator-toggle{background:linear-gradient(135deg,#9b59b6,#8e44ad);color:#fff;border:none;padding:15px 20px;border-radius:50px;cursor:pointer;font-size:1em;box-shadow:0 4px 15px rgba(155,89,182,.4)}
+        .calculator-panel{display:none;position:fixed;bottom:80px;right:20px;width:380px;max-width:calc(100vw - 40px);background:#fff;border-radius:15px;box-shadow:0 10px 40px rgba(0,0,0,.2);max-height:70vh;overflow:hidden}
+        .calculator-panel.active{display:block}
+        .calculator-panel-inner{max-height:calc(70vh - 50px);overflow-y:auto;-webkit-overflow-scrolling:touch}
+        .calc-header{background:linear-gradient(135deg,#9b59b6,#8e44ad);color:#fff;padding:15px;font-weight:700}
+        .calc-body{padding:15px}
+        .calc-display{width:100%;padding:15px;font-size:1.3em;font-family:'Courier New',monospace;border:2px solid #ddd;border-radius:8px;margin-bottom:15px;text-align:right}
+        .calc-tabs{display:flex;margin-bottom:15px}.calc-tabs>*{margin-right:5px}.calc-tabs>*:last-child{margin-right:0}
+        .calc-tab{flex:1;padding:8px;background:#f0f0f0;border:none;cursor:pointer;border-radius:5px;font-size:.85em}.calc-tab.active{background:#9b59b6;color:#fff}
+        .calc-buttons{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+        .calc-btn{padding:12px;font-size:1em;border:none;border-radius:5px;cursor:pointer;background:#f0f0f0}.calc-btn:hover{background:#e0e0e0}
+        .calc-btn.operator{background:#16a085;color:#fff}.calc-btn.equals{background:#27ae60;color:#fff;grid-column:span 2}.calc-btn.function{background:#3498db;color:#fff;font-size:.85em}.calc-btn.clear{background:#e74c3c;color:#fff}
+        .isotope-functions{display:none;margin-top:10px}.isotope-functions.active{display:block}
+        .isotope-func-btn{width:100%;padding:10px;margin:5px 0;background:linear-gradient(135deg,#16a085,#27ae60);color:#fff;border:none;border-radius:5px;cursor:pointer;font-size:.9em;text-align:left}
+        .calc-input-group{display:none;margin-top:15px;padding:15px;background:#f8f9fa;border-radius:8px}.calc-input-group.active{display:block}
+        .calc-input-group label{display:block;margin-bottom:5px;font-weight:700;font-size:.9em}
+        .calc-input-group input,.calc-input-group select{width:100%;padding:8px;margin-bottom:10px;border:1px solid #ddd;border-radius:5px}
+        .calc-result{margin-top:10px;padding:10px;background:#e8f8f5;border-radius:5px;font-family:'Courier New',monospace}
+        @media(max-width:768px){.calculator-panel{width:95%;right:2.5%}}
     </style>
 </head>
 <body>
@@ -143,8 +164,110 @@
         </div>
         <div class="export-section"><h3>📤 Submit Your Exam</h3><div class="export-buttons"><button class="export-btn submit" onclick="submitExam()">✓ Submit & Download Word</button><button class="export-btn copy" onclick="copyToClipboard()">📋 Copy to Clipboard</button><button class="export-btn print" onclick="window.print()">🖨️ Print to PDF</button></div></div>
     </div>
+    <!-- Calculator -->
+    <div class="calculator-container">
+        <div class="calculator-panel" id="calculatorPanel">
+            <div class="calc-header">🧮 Isotope Calculator</div>
+            <div class="calculator-panel-inner">
+            <div class="calc-body">
+                <input type="text" class="calc-display" id="calcDisplay" readonly placeholder="0">
+                <div class="calc-tabs">
+                    <button class="calc-tab active" onclick="switchCalcTab('basic',this)">Basic</button>
+                    <button class="calc-tab" onclick="switchCalcTab('isotope',this)">Isotope Functions</button>
+                </div>
+                <div id="basicCalc">
+                    <div class="calc-buttons">
+                        <button class="calc-btn clear" onclick="clearCalc()">C</button>
+                        <button class="calc-btn" onclick="appendCalc('(')">(</button>
+                        <button class="calc-btn" onclick="appendCalc(')')">)</button>
+                        <button class="calc-btn operator" onclick="appendCalc('/')">÷</button>
+                        <button class="calc-btn" onclick="appendCalc('7')">7</button>
+                        <button class="calc-btn" onclick="appendCalc('8')">8</button>
+                        <button class="calc-btn" onclick="appendCalc('9')">9</button>
+                        <button class="calc-btn operator" onclick="appendCalc('*')">×</button>
+                        <button class="calc-btn" onclick="appendCalc('4')">4</button>
+                        <button class="calc-btn" onclick="appendCalc('5')">5</button>
+                        <button class="calc-btn" onclick="appendCalc('6')">6</button>
+                        <button class="calc-btn operator" onclick="appendCalc('-')">−</button>
+                        <button class="calc-btn" onclick="appendCalc('1')">1</button>
+                        <button class="calc-btn" onclick="appendCalc('2')">2</button>
+                        <button class="calc-btn" onclick="appendCalc('3')">3</button>
+                        <button class="calc-btn operator" onclick="appendCalc('+')">+</button>
+                        <button class="calc-btn" onclick="appendCalc('0')">0</button>
+                        <button class="calc-btn" onclick="appendCalc('.')">.</button>
+                        <button class="calc-btn equals" onclick="calculate()">=</button>
+                    </div>
+                    <div style="margin-top:10px;display:grid;grid-template-columns:repeat(3,1fr);gap:5px">
+                        <button class="calc-btn function" onclick="appendCalc('Math.log(')">ln</button>
+                        <button class="calc-btn function" onclick="appendCalc('Math.sqrt(')">√</button>
+                        <button class="calc-btn function" onclick="appendCalc('**')">x^y</button>
+                    </div>
+                </div>
+                <div id="isotopeCalc" class="isotope-functions">
+                    <button class="isotope-func-btn" onclick="showIsotopeFunc('temp_phosphate')">🌡️ Phosphate Temperature (Lécuyer et al.)</button>
+                    <button class="isotope-func-btn" onclick="showIsotopeFunc('temp_anderson')">🌡️ Carbonate Temperature (Anderson & Arthur)</button>
+                    <button class="isotope-func-btn" onclick="showIsotopeFunc('convert_vpdb')">🔄 Convert VPDB ↔ VSMOW</button>
+                    <button class="isotope-func-btn" onclick="showIsotopeFunc('alpha')">α Alpha from Delta Values</button>
+                    <div class="calc-input-group" id="func_temp_phosphate">
+                        <h4 style="margin-top:0">Phosphate Temperature (Lécuyer et al., 2013)</h4>
+                        <p style="font-size:.85em;color:#666">T(°C) = 117.4 - 4.50 × (δ¹⁸O_phos - δ¹⁸O_water)</p>
+                        <label>δ¹⁸O_phosphate (‰ VSMOW):</label>
+                        <input type="number" id="phos_d18O" step="0.1" placeholder="e.g., 20.8">
+                        <label>δ¹⁸O_water (‰ VSMOW):</label>
+                        <input type="number" id="phos_water" step="0.1" value="-1.0">
+                        <button onclick="calcPhosphateTemp()" style="width:100%;padding:10px;background:#16a085;color:#fff;border:none;border-radius:5px;cursor:pointer">Calculate</button>
+                        <div class="calc-result" id="result_temp_phosphate"></div>
+                    </div>
+                    <div class="calc-input-group" id="func_temp_anderson">
+                        <h4 style="margin-top:0">Carbonate Temperature (Anderson & Arthur, 1983)</h4>
+                        <p style="font-size:.85em;color:#666">T(°C) = 16.0 - 4.14(δc - δw) + 0.13(δc - δw)²</p>
+                        <p style="font-size:.8em;color:#e74c3c"><strong>Note:</strong> δc in VPDB, δw in VSMOW.</p>
+                        <label>δ¹⁸O_carbonate (‰ VPDB):</label>
+                        <input type="number" id="aa_d18O_carb" step="0.1" placeholder="e.g., -3.2">
+                        <label>δ¹⁸O_water (‰ VSMOW):</label>
+                        <input type="number" id="aa_water" step="0.1" value="-1.0">
+                        <button onclick="calcAndersonTemp()" style="width:100%;padding:10px;background:#16a085;color:#fff;border:none;border-radius:5px;cursor:pointer">Calculate</button>
+                        <div class="calc-result" id="result_temp_anderson"></div>
+                    </div>
+                    <div class="calc-input-group" id="func_convert_vpdb">
+                        <h4 style="margin-top:0">Convert VPDB ↔ VSMOW</h4>
+                        <p style="font-size:.85em;color:#666">δ¹⁸O_VSMOW = 1.03091 × δ¹⁸O_VPDB + 30.91</p>
+                        <label>Input value (‰):</label>
+                        <input type="number" id="convert_value" step="0.1" placeholder="e.g., -3.2">
+                        <label>Convert from:</label>
+                        <select id="convert_from"><option value="vpdb">VPDB → VSMOW</option><option value="vsmow">VSMOW → VPDB</option></select>
+                        <button onclick="convertStandard()" style="width:100%;padding:10px;background:#16a085;color:#fff;border:none;border-radius:5px;cursor:pointer">Convert</button>
+                        <div class="calc-result" id="result_convert_vpdb"></div>
+                    </div>
+                    <div class="calc-input-group" id="func_alpha">
+                        <h4 style="margin-top:0">Calculate α (Fractionation Factor)</h4>
+                        <p style="font-size:.85em;color:#666">α = (1000 + δA) / (1000 + δB)</p>
+                        <label>δ_A (phase A, ‰):</label>
+                        <input type="number" id="alpha_a" step="0.1" placeholder="e.g., carbonate value">
+                        <label>δ_B (phase B, ‰):</label>
+                        <input type="number" id="alpha_b" step="0.1" placeholder="e.g., water value">
+                        <button onclick="calcAlpha()" style="width:100%;padding:10px;background:#16a085;color:#fff;border:none;border-radius:5px;cursor:pointer">Calculate α</button>
+                        <div class="calc-result" id="result_alpha"></div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        <button class="calculator-toggle" onclick="toggleCalculator()">🧮 Calculator</button>
+    </div>
     <script>
         const CORRECT_PASSWORD="GeochemProxies2026@",INSTRUCTOR_PASSWORD="Instructor2026!",EXAM_DURATION_MINUTES=120,GRACE_PERIOD_MINUTES=5,EXAM_START_DATE=new Date("2026-02-11T16:00:00");let timerInterval,remainingSeconds=EXAM_DURATION_MINUTES*60,isGracePeriod=!1,isInstructorMode=!1;function checkAccessDate(){const e=new Date;isInstructorMode?(document.getElementById("accessOverlay").classList.add("hidden"),document.getElementById("passwordOverlay").classList.remove("hidden")):e<EXAM_START_DATE?(document.getElementById("accessOverlay").classList.remove("hidden"),document.getElementById("passwordOverlay").classList.add("hidden"),updateCountdown(),setInterval(updateCountdown,1e3)):(document.getElementById("accessOverlay").classList.add("hidden"),document.getElementById("passwordOverlay").classList.remove("hidden"))}function updateCountdown(){const e=EXAM_START_DATE-new Date;if(e<=0)return document.getElementById("accessOverlay").classList.add("hidden"),void document.getElementById("passwordOverlay").classList.remove("hidden");const t=Math.floor(e/864e5),n=Math.floor(e%864e5/36e5),a=Math.floor(e%36e5/6e4),i=Math.floor(e%6e4/1e3);document.getElementById("timeRemaining").textContent=`Time remaining: ${t}d ${n}h ${a}m ${i}s`}function checkInstructorEarlyAccess(){document.getElementById("instructorPasswordAccess").value===INSTRUCTOR_PASSWORD?(isInstructorMode=!0,document.getElementById("accessOverlay").classList.add("hidden"),document.getElementById("passwordOverlay").classList.remove("hidden")):document.getElementById("accessErrorMessage").textContent="Invalid instructor password"}function checkInstructorAccess(){document.getElementById("instructorPassword").value===INSTRUCTOR_PASSWORD?(isInstructorMode=!0,document.getElementById("accessOverlay").classList.add("hidden"),document.getElementById("passwordOverlay").classList.add("hidden"),startExam()):document.getElementById("errorMessage").textContent="Invalid instructor password"}function checkPassword(){document.getElementById("passwordInput").value===CORRECT_PASSWORD?(document.getElementById("passwordOverlay").classList.add("hidden"),startExam()):(document.getElementById("errorMessage").textContent="Incorrect password",document.getElementById("passwordInput").value="")}function startExam(){document.getElementById("timerBar").classList.remove("hidden"),document.getElementById("mainContent").classList.add("visible"),document.getElementById("submissionDate").value=(new Date).toLocaleDateString("en-GB",{day:"2-digit",month:"long",year:"numeric",hour:"2-digit",minute:"2-digit"}),initAutoSave(),startTimer()}function startTimer(){timerInterval=setInterval((function(){if(remainingSeconds--,remainingSeconds<=0&&!isGracePeriod&&(isGracePeriod=!0,remainingSeconds=300,document.getElementById("timerStatus").textContent="⚠️ GRACE PERIOD",document.getElementById("timerDisplay").classList.add("grace")),remainingSeconds<=0&&isGracePeriod)return clearInterval(timerInterval),void submitExam();updateTimerDisplay()}),1e3),updateTimerDisplay()}function updateTimerDisplay(){const e=Math.floor(remainingSeconds/3600),t=Math.floor(remainingSeconds%3600/60),n=remainingSeconds%60,a=document.getElementById("timerDisplay");a.textContent=`${String(e).padStart(2,"0")}:${String(t).padStart(2,"0")}:${String(n).padStart(2,"0")}`,isGracePeriod||(a.classList.toggle("critical",remainingSeconds<=300),a.classList.toggle("warning",remainingSeconds>300&&remainingSeconds<=900))}function updateWatermark(){const e=document.getElementById("studentName").value,t=document.getElementById("watermark");e&&e.length>2?(t.textContent=e,t.classList.remove("hidden")):t.classList.add("hidden")}function initAutoSave(){document.querySelectorAll("input:not([readonly]), textarea").forEach((e=>{const t=localStorage.getItem("petm_exam_"+e.id);t&&(e.value=t),e.addEventListener("input",(function(){localStorage.setItem("petm_exam_"+this.id,this.value)}))})),updateWatermark()}function submitExam(){const e=document.getElementById("studentName").value||"Unknown",t=document.getElementById("studentEmail").value||"N/A",n=document.getElementById("studentId").value||"N/A",a=document.getElementById("submissionDate").value||(new Date).toLocaleString();showLoading("Generating Word document...");try{const{Document:i,Packer:s,Paragraph:o,TextRun:d,HeadingLevel:r,AlignmentType:l}=docx,c=[new o({text:"SEDIMENTARY GEOCHEMISTRY - PETM FINAL EXAM",heading:r.HEADING_1,alignment:l.CENTER}),new o({}),new o({children:[new d({text:"Student: ",bold:!0}),new d(e)]}),new o({children:[new d({text:"Email: ",bold:!0}),new d(t)]}),new o({children:[new d({text:"ID: ",bold:!0}),new d(n)]}),new o({children:[new d({text:"Date: ",bold:!0}),new d(a)]}),new o({})];["p1_1","p1_2a","p1_2b","p1_3a","p1_3b","p1_3c","p2_1a","p2_1b","p2_1c","p2_2a","p2_2b","p2_2c","p3_1","p3_2","p4_1","p4_2"].forEach((e=>{const t=document.getElementById(e);c.push(new o({}),new o({text:e.toUpperCase(),heading:r.HEADING_3}),new o({text:t?t.value:""}))}));const u=new i({sections:[{children:c}]});s.toBlob(u).then((t=>{saveAs(t,`PETM_Exam_${e.replace(/\s+/g,"_")}.docx`),hideLoading(),alert("Submitted! Word document downloaded.")}))}catch(e){hideLoading(),alert("Error. Use Copy to Clipboard.")}}function copyToClipboard(){let e=`PETM FINAL EXAM\n${"=".repeat(50)}\nStudent: ${document.getElementById("studentName").value}\nEmail: ${document.getElementById("studentEmail").value}\nID: ${document.getElementById("studentId").value}\n\n`;["p1_1","p1_2a","p1_2b","p1_3a","p1_3b","p1_3c","p2_1a","p2_1b","p2_1c","p2_2a","p2_2b","p2_2c","p3_1","p3_2","p4_1","p4_2"].forEach((t=>{const n=document.getElementById(t);e+=`${"-".repeat(40)}\n${t.toUpperCase()}\n${n?n.value:""}\n\n`})),navigator.clipboard.writeText(e).then((()=>alert("Copied!"))).catch((e=>alert("Copy failed")))}function showLoading(e){document.getElementById("loadingText").textContent=e,document.getElementById("loadingOverlay").classList.add("active")}function hideLoading(){document.getElementById("loadingOverlay").classList.remove("active")}document.addEventListener("DOMContentLoaded",checkAccessDate);
+// Calculator functions
+function toggleCalculator(){document.getElementById("calculatorPanel").classList.toggle("active")}
+function switchCalcTab(e,t){document.querySelectorAll(".calc-tab").forEach(e=>e.classList.remove("active")),t.classList.add("active"),document.getElementById("basicCalc").style.display="basic"===e?"block":"none",document.getElementById("isotopeCalc").classList.toggle("active","isotope"===e),document.querySelectorAll(".calc-input-group").forEach(e=>e.classList.remove("active"))}
+function appendCalc(e){const t=document.getElementById("calcDisplay");t.value="0"===t.value||"Error"===t.value?e:t.value+e}
+function clearCalc(){document.getElementById("calcDisplay").value="0"}
+function calculate(){const e=document.getElementById("calcDisplay");try{e.value=eval(e.value).toFixed(4)}catch{e.value="Error"}}
+function showIsotopeFunc(e){document.querySelectorAll(".calc-input-group").forEach(e=>e.classList.remove("active")),document.getElementById("func_"+e).classList.add("active")}
+function calcPhosphateTemp(){const e=parseFloat(document.getElementById("phos_d18O").value),t=parseFloat(document.getElementById("phos_water").value);if(isNaN(e)||isNaN(t))return void(document.getElementById("result_temp_phosphate").innerHTML='<span style="color:red">Enter valid numbers</span>');const n=117.4-4.5*(e-t);document.getElementById("result_temp_phosphate").innerHTML=`<strong>Temperature = ${n.toFixed(1)} °C</strong><br><small>T = 117.4 - 4.50 × (${e} - (${t})) = ${n.toFixed(2)}</small>`}
+function calcAndersonTemp(){const e=parseFloat(document.getElementById("aa_d18O_carb").value),t=parseFloat(document.getElementById("aa_water").value);if(isNaN(e)||isNaN(t))return void(document.getElementById("result_temp_anderson").innerHTML='<span style="color:red">Enter valid numbers</span>');const n=e-t,a=16-4.14*n+.13*Math.pow(n,2);document.getElementById("result_temp_anderson").innerHTML=`<strong>Temperature = ${a.toFixed(1)} °C</strong><br><small>δc (VPDB) = ${e}‰</small><br><small>δw (VSMOW) = ${t}‰</small><br><small>(δc - δw) = ${n.toFixed(2)}</small><br><small>T = 16.0 - 4.14(${n.toFixed(2)}) + 0.13(${n.toFixed(2)})² = ${a.toFixed(1)}</small>`}
+function convertStandard(){const e=parseFloat(document.getElementById("convert_value").value),t=document.getElementById("convert_from").value;if(isNaN(e))return void(document.getElementById("result_convert_vpdb").innerHTML='<span style="color:red">Enter a valid number</span>');let n,a;"vpdb"===t?(n=1.03091*e+30.91,a=`${e}‰ VPDB → ${n.toFixed(2)}‰ VSMOW`):(n=(e-30.91)/1.03091,a=`${e}‰ VSMOW → ${n.toFixed(2)}‰ VPDB`),document.getElementById("result_convert_vpdb").innerHTML=`<strong>${a}</strong>`}
+function calcAlpha(){const e=parseFloat(document.getElementById("alpha_a").value),t=parseFloat(document.getElementById("alpha_b").value);if(isNaN(e)||isNaN(t))return void(document.getElementById("result_alpha").innerHTML='<span style="color:red">Enter valid numbers</span>');const n=(1e3+e)/(1e3+t),a=1e3*Math.log(n);document.getElementById("result_alpha").innerHTML=`<strong>α = ${n.toFixed(5)}</strong><br><small>1000 ln α = ${a.toFixed(2)}</small>`}
     </script>
 </body>
 </html>
