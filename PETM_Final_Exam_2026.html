@@ -33,7 +33,7 @@
         .export-section{background:#fff;padding:25px;border-radius:12px;margin-top:30px;text-align:center}.export-section h3{color:var(--fau-blue);margin-bottom:15px}.export-buttons{display:flex;justify-content:center;flex-wrap:wrap;gap:15px}.export-btn{padding:12px 25px;border:none;border-radius:8px;cursor:pointer;font-weight:600;color:#fff;transition:transform .2s}.export-btn:hover{transform:translateY(-2px)}.export-btn.submit{background:var(--nat-green)}.export-btn.copy{background:#8b5cf6}.export-btn.print{background:var(--gray-600)}
         .loading-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;justify-content:center;align-items:center}.loading-overlay.active{display:flex}.loading-box{background:#fff;padding:30px 50px;border-radius:12px;text-align:center}.spinner{width:50px;height:50px;border:4px solid var(--gray-200);border-top:4px solid var(--fau-blue);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 15px}@keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
         .watermark{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-45deg);font-size:72px;color:rgba(4,49,106,.05);font-weight:700;pointer-events:none;z-index:1}.watermark.hidden{display:none}
-        @media print{.access-overlay,.password-overlay,.timer-bar,.export-section{display:none!important}.main-content{display:block!important;margin-top:0!important}}
+        @media print{.access-overlay,.password-overlay,.timer-bar,.export-section,.calculator-container,.watermark{display:none!important}.main-content{display:block!important;margin-top:0!important}.question-block,.sub-question,.figure-box{page-break-inside:avoid;break-inside:avoid}.section{page-break-before:auto;page-break-inside:avoid}.calculation-area,.answer-area{page-break-inside:avoid;break-inside:avoid;min-height:auto!important;height:auto!important;overflow:visible!important}.data-table{page-break-inside:avoid}.equation-box,.info-note,.concept-box{page-break-inside:avoid}}
         @media(max-width:768px){.info-grid{grid-template-columns:1fr}.timer-bar{flex-direction:column;gap:10px}.reference-bar{flex-direction:column}}
         /* Calculator */
         .calculator-container{position:fixed;bottom:20px;right:20px;z-index:500}
@@ -204,10 +204,22 @@
                     </div>
                 </div>
                 <div id="isotopeCalc" class="isotope-functions">
+                    <button class="isotope-func-btn" onclick="showIsotopeFunc('temp_kim')">🌡️ Carbonate Temperature (Kim & O'Neil 1997)</button>
                     <button class="isotope-func-btn" onclick="showIsotopeFunc('temp_phosphate')">🌡️ Phosphate Temperature (Lécuyer et al.)</button>
                     <button class="isotope-func-btn" onclick="showIsotopeFunc('temp_anderson')">🌡️ Carbonate Temperature (Anderson & Arthur)</button>
                     <button class="isotope-func-btn" onclick="showIsotopeFunc('convert_vpdb')">🔄 Convert VPDB ↔ VSMOW</button>
                     <button class="isotope-func-btn" onclick="showIsotopeFunc('alpha')">α Alpha from Delta Values</button>
+                    <div class="calc-input-group" id="func_temp_kim">
+                        <h4 style="margin-top:0">Carbonate Temperature (Kim & O'Neil, 1997)</h4>
+                        <p style="font-size:.85em;color:#666">T(°C) = 16.1 - 4.64 × Δ¹⁸O + 0.09 × (Δ¹⁸O)²</p>
+                        <p style="font-size:.8em;color:#2980b9"><strong>Note:</strong> Δ¹⁸O = δ¹⁸O_calcite(VPDB) - δ¹⁸O_water(VSMOW)</p>
+                        <label>δ¹⁸O_calcite (‰ VPDB):</label>
+                        <input type="number" id="kim_d18O_carb" step="0.1" placeholder="e.g., -0.2">
+                        <label>δ¹⁸O_water (‰ VSMOW):</label>
+                        <input type="number" id="kim_water" step="0.1" value="-1.0">
+                        <button onclick="calcKimTemp()" style="width:100%;padding:10px;background:#16a085;color:#fff;border:none;border-radius:5px;cursor:pointer">Calculate</button>
+                        <div class="calc-result" id="result_temp_kim"></div>
+                    </div>
                     <div class="calc-input-group" id="func_temp_phosphate">
                         <h4 style="margin-top:0">Phosphate Temperature (Lécuyer et al., 2013)</h4>
                         <p style="font-size:.85em;color:#666">T(°C) = 117.4 - 4.50 × (δ¹⁸O_phos - δ¹⁸O_water)</p>
@@ -266,6 +278,7 @@ function calculate(){const e=document.getElementById("calcDisplay");try{e.value=
 function showIsotopeFunc(e){document.querySelectorAll(".calc-input-group").forEach(e=>e.classList.remove("active")),document.getElementById("func_"+e).classList.add("active")}
 function calcPhosphateTemp(){const e=parseFloat(document.getElementById("phos_d18O").value),t=parseFloat(document.getElementById("phos_water").value);if(isNaN(e)||isNaN(t))return void(document.getElementById("result_temp_phosphate").innerHTML='<span style="color:red">Enter valid numbers</span>');const n=117.4-4.5*(e-t);document.getElementById("result_temp_phosphate").innerHTML=`<strong>Temperature = ${n.toFixed(1)} °C</strong><br><small>T = 117.4 - 4.50 × (${e} - (${t})) = ${n.toFixed(2)}</small>`}
 function calcAndersonTemp(){const e=parseFloat(document.getElementById("aa_d18O_carb").value),t=parseFloat(document.getElementById("aa_water").value);if(isNaN(e)||isNaN(t))return void(document.getElementById("result_temp_anderson").innerHTML='<span style="color:red">Enter valid numbers</span>');const n=e-t,a=16-4.14*n+.13*Math.pow(n,2);document.getElementById("result_temp_anderson").innerHTML=`<strong>Temperature = ${a.toFixed(1)} °C</strong><br><small>δc (VPDB) = ${e}‰</small><br><small>δw (VSMOW) = ${t}‰</small><br><small>(δc - δw) = ${n.toFixed(2)}</small><br><small>T = 16.0 - 4.14(${n.toFixed(2)}) + 0.13(${n.toFixed(2)})² = ${a.toFixed(1)}</small>`}
+function calcKimTemp(){const e=parseFloat(document.getElementById("kim_d18O_carb").value),t=parseFloat(document.getElementById("kim_water").value);if(isNaN(e)||isNaN(t))return void(document.getElementById("result_temp_kim").innerHTML='<span style="color:red">Enter valid numbers</span>');const n=e-t,a=16.1-4.64*n+.09*Math.pow(n,2);document.getElementById("result_temp_kim").innerHTML=`<strong>Temperature = ${a.toFixed(1)} °C</strong><br><small>δ¹⁸O_calcite (VPDB) = ${e}‰</small><br><small>δ¹⁸O_water (VSMOW) = ${t}‰</small><br><small>Δ¹⁸O = ${n.toFixed(2)}‰</small><br><small>T = 16.1 - 4.64(${n.toFixed(2)}) + 0.09(${n.toFixed(2)})² = ${a.toFixed(1)} °C</small>`}
 function convertStandard(){const e=parseFloat(document.getElementById("convert_value").value),t=document.getElementById("convert_from").value;if(isNaN(e))return void(document.getElementById("result_convert_vpdb").innerHTML='<span style="color:red">Enter a valid number</span>');let n,a;"vpdb"===t?(n=1.03091*e+30.91,a=`${e}‰ VPDB → ${n.toFixed(2)}‰ VSMOW`):(n=(e-30.91)/1.03091,a=`${e}‰ VSMOW → ${n.toFixed(2)}‰ VPDB`),document.getElementById("result_convert_vpdb").innerHTML=`<strong>${a}</strong>`}
 function calcAlpha(){const e=parseFloat(document.getElementById("alpha_a").value),t=parseFloat(document.getElementById("alpha_b").value);if(isNaN(e)||isNaN(t))return void(document.getElementById("result_alpha").innerHTML='<span style="color:red">Enter valid numbers</span>');const n=(1e3+e)/(1e3+t),a=1e3*Math.log(n);document.getElementById("result_alpha").innerHTML=`<strong>α = ${n.toFixed(5)}</strong><br><small>1000 ln α = ${a.toFixed(2)}</small>`}
     </script>
