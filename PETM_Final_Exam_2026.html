@@ -13,6 +13,8 @@
     <style>
         :root{--fau-blue:#04316A;--fau-blue-dark:#002147;--fau-blue-light:#0056AD;--nat-green:#43B02A;--accent-gold:#C99700;--gray-50:#F8FAFC;--gray-100:#F1F5F9;--gray-200:#E2E8F0;--gray-500:#64748B;--gray-600:#475569;--gray-700:#334155;--gray-800:#1E293B;--error:#DC2626;--font-sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;--font-serif:'Merriweather',Georgia,serif}
         *{box-sizing:border-box;margin:0;padding:0}body{font-family:var(--font-sans);line-height:1.6;color:var(--gray-800);max-width:1000px;margin:0 auto;padding:20px;background:var(--gray-50);-webkit-font-smoothing:antialiased}
+        body.lang-de .en{display:none!important}body.lang-en .de{display:none!important}
+        .lang-switch{position:fixed;top:10px;right:20px;z-index:1001;display:flex;gap:5px}.lang-btn{padding:8px 12px;border:1px solid var(--gray-200);background:#fff;cursor:pointer;border-radius:5px;font-size:.85em;font-weight:600}.lang-btn.active{background:var(--fau-blue);color:#fff;border-color:var(--fau-blue)}
         .access-overlay{position:fixed;inset:0;background:linear-gradient(135deg,var(--fau-blue-dark),var(--fau-blue),var(--fau-blue-light));display:flex;justify-content:center;align-items:center;z-index:10001;transition:opacity .4s,visibility .4s}.access-overlay.hidden{opacity:0;visibility:hidden;pointer-events:none}
         .access-box{background:#fff;padding:40px;border-radius:16px;box-shadow:0 25px 50px -12px rgba(0,0,0,.25);text-align:center;max-width:500px;width:90%}.access-box img{height:60px;margin-bottom:20px}.access-box h2{font-family:var(--font-serif);color:var(--fau-blue);margin-bottom:8px}.access-box h3{font-family:var(--font-serif);color:var(--gray-700);margin-bottom:16px}.access-box p{color:var(--gray-500);margin-bottom:20px}.countdown-display{font-size:1.3rem;color:var(--fau-blue);font-weight:600;margin:20px 0}.access-icon{font-size:3rem;margin-bottom:15px}
         .password-overlay{position:fixed;inset:0;background:linear-gradient(135deg,var(--fau-blue-dark),var(--fau-blue),var(--fau-blue-light));display:flex;justify-content:center;align-items:center;z-index:10000;transition:opacity .4s,visibility .4s}.password-overlay.hidden{opacity:0;visibility:hidden;pointer-events:none}
@@ -33,9 +35,8 @@
         .export-section{background:#fff;padding:25px;border-radius:12px;margin-top:30px;text-align:center}.export-section h3{color:var(--fau-blue);margin-bottom:15px}.export-buttons{display:flex;justify-content:center;flex-wrap:wrap;gap:15px}.export-btn{padding:12px 25px;border:none;border-radius:8px;cursor:pointer;font-weight:600;color:#fff;transition:transform .2s}.export-btn:hover{transform:translateY(-2px)}.export-btn.submit{background:var(--nat-green)}.export-btn.copy{background:#8b5cf6}.export-btn.print{background:var(--gray-600)}
         .loading-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;justify-content:center;align-items:center}.loading-overlay.active{display:flex}.loading-box{background:#fff;padding:30px 50px;border-radius:12px;text-align:center}.spinner{width:50px;height:50px;border:4px solid var(--gray-200);border-top:4px solid var(--fau-blue);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 15px}@keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
         .watermark{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-45deg);font-size:72px;color:rgba(4,49,106,.05);font-weight:700;pointer-events:none;z-index:1}.watermark.hidden{display:none}
-        @media print{.access-overlay,.password-overlay,.timer-bar,.export-section,.calculator-container,.watermark{display:none!important}.main-content{display:block!important;margin-top:0!important}.question-block,.sub-question,.figure-box{page-break-inside:avoid;break-inside:avoid}.section{page-break-before:auto;page-break-inside:avoid}.calculation-area,.answer-area{page-break-inside:avoid;break-inside:avoid;min-height:auto!important;height:auto!important;overflow:visible!important}.data-table{page-break-inside:avoid}.equation-box,.info-note,.concept-box{page-break-inside:avoid}}
-        @media(max-width:768px){.info-grid{grid-template-columns:1fr}.timer-bar{flex-direction:column;gap:10px}.reference-bar{flex-direction:column}}
-        /* Calculator */
+        @media print{.access-overlay,.password-overlay,.timer-bar,.export-section,.calculator-container,.watermark,.lang-switch{display:none!important}.main-content{display:block!important;margin-top:0!important}.question-block,.sub-question,.figure-box{page-break-inside:avoid;break-inside:avoid}.section{page-break-before:auto;page-break-inside:avoid}.calculation-area,.answer-area{page-break-inside:avoid;break-inside:avoid;min-height:auto!important;height:auto!important;overflow:visible!important}.data-table{page-break-inside:avoid}.equation-box,.info-note,.concept-box{page-break-inside:avoid}}
+        @media(max-width:768px){.info-grid{grid-template-columns:1fr}.timer-bar{flex-direction:column;gap:10px}.reference-bar{flex-direction:column}.lang-switch{top:auto;bottom:10px;right:10px}}
         .calculator-container{position:fixed;bottom:20px;right:20px;z-index:500}
         .calculator-toggle{background:linear-gradient(135deg,#9b59b6,#8e44ad);color:#fff;border:none;padding:15px 20px;border-radius:50px;cursor:pointer;font-size:1em;box-shadow:0 4px 15px rgba(155,89,182,.4)}
         .calculator-panel{display:none;position:fixed;bottom:80px;right:20px;width:380px;max-width:calc(100vw - 40px);background:#fff;border-radius:15px;box-shadow:0 10px 40px rgba(0,0,0,.2);max-height:70vh;overflow:hidden}
@@ -58,122 +59,289 @@
         @media(max-width:768px){.calculator-panel{width:95%;right:2.5%}}
     </style>
 </head>
-<body>
+<body class="lang-en">
+    <!-- Language Switch -->
+    <div class="lang-switch">
+        <button class="lang-btn active" data-lang="en" onclick="setLanguage('en')">EN</button>
+        <button class="lang-btn" data-lang="de" onclick="setLanguage('de')">DE</button>
+    </div>
+
     <div class="access-overlay hidden" id="accessOverlay">
         <div class="access-box">
             <img src="images/FAU_NatFak_H_black.png" alt="FAU" onerror="this.style.display='none'">
             <div class="access-icon">🔒</div>
-            <h2>Exam Not Yet Available</h2>
-            <h3>Final Exam 2026</h3>
-            <p>This exam will be accessible on:</p>
-            <div class="countdown-display"><strong>Wednesday, 11 February 2026 at 16:00</strong></div>
+            <h2><span class="en">Exam Not Yet Available</span><span class="de">Prüfung noch nicht verfügbar</span></h2>
+            <h3><span class="en">Final Exam 2026</span><span class="de">Abschlussprüfung 2026</span></h3>
+            <p><span class="en">This exam will be accessible on:</span><span class="de">Diese Prüfung ist verfügbar ab:</span></p>
+            <div class="countdown-display"><strong><span class="en">Wednesday, 11 February 2026 at 16:00</span><span class="de">Mittwoch, 11. Februar 2026 um 16:00 Uhr</span></strong></div>
             <p id="timeRemaining"></p>
-            <div class="instructor-bypass" style="margin-top:25px;padding-top:20px;border-top:1px solid #e2e8f0;">
-                <p style="font-size:.85rem;color:#64748B;margin-bottom:10px;">Instructor Early Access</p>
-                <input type="password" id="instructorPasswordAccess" placeholder="Enter instructor password..." style="width:100%;padding:12px;border:1.5px solid #e2e8f0;border-radius:8px;margin-bottom:10px;font-size:1rem;" onkeypress="if(event.key==='Enter')checkInstructorEarlyAccess()">
-                <button onclick="checkInstructorEarlyAccess()" style="width:100%;padding:12px 24px;font-size:1rem;background:#43B02A;color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:600;">Instructor Login</button>
-                <div class="error-message" id="accessErrorMessage" style="color:#DC2626;margin-top:10px;font-weight:600;"></div>
-            </div>
         </div>
     </div>
+
     <div class="password-overlay hidden" id="passwordOverlay" style="display:none">
         <div class="password-box">
             <img src="images/FAU_NatFak_H_black.png" alt="FAU" onerror="this.style.display='none'">
-            <h2>🔬 Final Exam</h2>
-            <h3>Sedimentary Geochemistry</h3>
-            <p>Sedimentary Geochemistry</p>
-            <input type="password" id="passwordInput" placeholder="Enter exam password..." onkeypress="if(event.key==='Enter')checkPassword()">
-            <button onclick="checkPassword()">Start Exam</button>
-            <div class="error-message" id="errorMessage"></div>
-            <div class="instructor-bypass">
-                <p>Instructor Access</p>
-                <input type="password" id="instructorPassword" placeholder="Enter instructor password..." onkeypress="if(event.key==='Enter')checkInstructorAccess()">
-                <button onclick="checkInstructorAccess()">Instructor Login</button>
-            </div>
+            <h2>🔬 <span class="en">Final Exam</span><span class="de">Abschlussprüfung</span></h2>
+            <h3><span class="en">Sedimentary Geochemistry</span><span class="de">Sedimentäre Geochemie</span></h3>
         </div>
     </div>
+
     <div class="timer-bar hidden" id="timerBar">
-        <div><div id="timerStatus">Exam in Progress</div><div class="timer-display" id="timerDisplay">02:00:00</div></div>
-        <div style="text-align:center"><strong>Final Exam</strong><br><span style="font-size:.85em">Auto-save enabled</span></div>
-        <button class="submit-timer-btn" onclick="submitExam()">Submit Exam</button>
+        <div><div id="timerStatus"><span class="en">Exam in Progress</span><span class="de">Prüfung läuft</span></div><div class="timer-display" id="timerDisplay">02:00:00</div></div>
+        <div style="text-align:center"><strong><span class="en">Final Exam</span><span class="de">Abschlussprüfung</span></strong><br><span style="font-size:.85em"><span class="en">Auto-save enabled</span><span class="de">Automatische Speicherung aktiv</span></span></div>
+        <button class="submit-timer-btn" onclick="submitExam()"><span class="en">Submit Exam</span><span class="de">Prüfung abgeben</span></button>
     </div>
+
     <div class="watermark hidden" id="watermark"></div>
-    <div class="loading-overlay" id="loadingOverlay"><div class="loading-box"><div class="spinner"></div><div id="loadingText">Processing...</div></div></div>
+    <div class="loading-overlay" id="loadingOverlay"><div class="loading-box"><div class="spinner"></div><div id="loadingText"><span class="en">Processing...</span><span class="de">Verarbeitung...</span></div></div></div>
+
     <div class="main-content visible" id="mainContent">
         <div class="header">
-            <h1>SEDIMENTARY GEOCHEMISTRY</h1>
-            <div class="subtitle">Final Exam: The Paleocene-Eocene Thermal Maximum</div>
-            <div class="exam-info"><strong>Total Points:</strong> 80 | <strong>Time:</strong> 2 hours (+5 min grace)<br>Winter Semester 2025-26 | Friedrich-Alexander-Universität Erlangen-Nürnberg</div>
+            <h1><span class="en">SEDIMENTARY GEOCHEMISTRY</span><span class="de">SEDIMENTÄRE GEOCHEMIE</span></h1>
+            <div class="subtitle"><span class="en">Final Exam: The Paleocene-Eocene Thermal Maximum</span><span class="de">Abschlussprüfung: Das Paläozän-Eozän-Temperaturmaximum</span></div>
+            <div class="exam-info"><strong><span class="en">Total Points:</span><span class="de">Gesamtpunkte:</span></strong> 80 | <strong><span class="en">Time:</span><span class="de">Zeit:</span></strong> 2 <span class="en">hours</span><span class="de">Stunden</span> (+5 min <span class="en">grace</span><span class="de">Nachfrist</span>)<br><span class="en">Winter Semester 2025-26</span><span class="de">Wintersemester 2025-26</span> | Friedrich-Alexander-Universität Erlangen-Nürnberg</div>
         </div>
+
         <div class="reference-bar">
-            <span><strong>Course:</strong> MSc Sedimentary Geochemistry</span>
-            <span><strong>Instructor:</strong> PD Dr. Luca Caracciolo</span>
-            <span><strong>Date:</strong> 11 February 2026</span>
-            <span><strong>Contact:</strong> luca.caracciolo@fau.de</span>
+            <span><strong><span class="en">Course:</span><span class="de">Kurs:</span></strong> MSc <span class="en">Sedimentary Geochemistry</span><span class="de">Sedimentäre Geochemie</span></span>
+            <span><strong><span class="en">Instructor:</span><span class="de">Dozent:</span></strong> PD Dr. Luca Caracciolo</span>
+            <span><strong><span class="en">Date:</span><span class="de">Datum:</span></strong> 11 <span class="en">February</span><span class="de">Februar</span> 2026</span>
+            <span><strong><span class="en">Contact:</span><span class="de">Kontakt:</span></strong> luca.caracciolo@fau.de</span>
         </div>
+
         <div class="student-info">
-            <h3>📋 Student Information</h3>
+            <h3>📋 <span class="en">Student Information</span><span class="de">Studierenden-Informationen</span></h3>
             <div class="info-grid">
-                <div class="info-field"><label>Full Name *</label><input type="text" id="studentName" placeholder="Enter your full name" oninput="updateWatermark()"></div>
-                <div class="info-field"><label>Email Address *</label><input type="email" id="studentEmail" placeholder="your.email@fau.de"></div>
-                <div class="info-field"><label>Student ID *</label><input type="text" id="studentId" placeholder="e.g., 12345678"></div>
-                <div class="info-field"><label>Submission Date</label><input type="text" id="submissionDate" readonly></div>
+                <div class="info-field"><label><span class="en">Full Name *</span><span class="de">Vollständiger Name *</span></label><input type="text" id="studentName" placeholder="" oninput="updateWatermark()"></div>
+                <div class="info-field"><label><span class="en">Email Address *</span><span class="de">E-Mail-Adresse *</span></label><input type="email" id="studentEmail" placeholder="your.email@fau.de"></div>
+                <div class="info-field"><label><span class="en">Student ID *</span><span class="de">Matrikelnummer *</span></label><input type="text" id="studentId" placeholder="z.B. 12345678"></div>
+                <div class="info-field"><label><span class="en">Submission Date</span><span class="de">Abgabedatum</span></label><input type="text" id="submissionDate" readonly></div>
             </div>
         </div>
+
         <div class="section">
-            <div class="section-title">📖 EXAM INSTRUCTIONS</div>
-            <div class="concept-box"><p><strong>Read carefully:</strong></p><ul style="margin-left:20px;margin-top:10px"><li>4 parts totaling 80 points</li><li>2 hours + 5-minute grace period</li><li>All answers auto-save</li><li>Show all calculation steps for full credit</li></ul></div>
+            <div class="section-title">📖 <span class="en">EXAM INSTRUCTIONS</span><span class="de">PRÜFUNGSHINWEISE</span></div>
+            <div class="concept-box">
+                <p><strong><span class="en">Read carefully:</span><span class="de">Bitte sorgfältig lesen:</span></strong></p>
+                <ul style="margin-left:20px;margin-top:10px">
+                    <li><span class="en">4 parts totaling 80 points</span><span class="de">4 Teile mit insgesamt 80 Punkten</span></li>
+                    <li><span class="en">2 hours + 5-minute grace period</span><span class="de">2 Stunden + 5 Minuten Nachfrist</span></li>
+                    <li><span class="en">All answers auto-save</span><span class="de">Alle Antworten werden automatisch gespeichert</span></li>
+                    <li><span class="en">Show all calculation steps for full credit</span><span class="de">Zeigen Sie alle Rechenschritte für volle Punktzahl</span></li>
+                </ul>
+            </div>
         </div>
+
         <div class="section">
-            <div class="section-title">PART 1: CARBON ISOTOPE EXCURSION (25 points)</div>
-            <div class="concept-box"><p>The PETM (~56 Ma) is characterized by a pronounced <strong>negative carbon isotope excursion (CIE)</strong> recorded globally in marine and terrestrial sediments.</p></div>
-            <div class="figure-box"><img src="images/petm_exam_figures/fig1_zachos2001_cenozoic_record.png" alt="Global records"><div class="figure-caption"><strong>Figure 1:</strong> Global deep-sea δ¹⁸O and δ¹³C records (Zachos et al., 2001). The PETM is marked by sharp negative excursions at ~55 Ma.</div></div>
-            <table class="data-table"><thead><tr><th>Stratigraphic Interval</th><th>δ¹³C (‰ VPDB)</th><th>Description</th></tr></thead><tbody><tr><td>Pre-PETM (baseline)</td><td>+1.8</td><td>Late Paleocene stable values</td></tr><tr><td>CIE Onset</td><td>-1.5</td><td>Rapid negative shift</td></tr><tr><td>CIE Body</td><td>-1.2 to -0.8</td><td>Sustained negative values</td></tr><tr><td>Recovery</td><td>+0.5 to +1.0</td><td>Gradual return</td></tr></tbody></table>
-            <div class="figure-box"><img src="images/petm_exam_figures/fig9_mcinerney2011_cie_compilation.png" alt="CIE compilation"><div class="figure-caption"><strong>Figure 2:</strong> CIE compilation across archives (McInerney & Wing, 2011). Marine carbonates (blue) vs terrestrial records (green).</div></div>
-            <table class="data-table"><thead><tr><th>Carbon Source</th><th>δ¹³C (‰)</th><th>Source</th></tr></thead><tbody><tr><td>Volcanic CO₂</td><td>-6</td><td>Volcanic degassing, LIPs</td></tr><tr><td>Organic Carbon</td><td>-22</td><td>Marine organic matter</td></tr><tr><td>Methane Hydrates</td><td>-60</td><td>Biogenic methane</td></tr></tbody></table>
-            <div class="question-block"><div class="question-title">Question 1.1: CIE Magnitude (5 points)</div><div class="sub-question"><p>Calculate the CIE magnitude (Δδ¹³C) from pre-PETM baseline to CIE onset.</p><div class="calculation-label">💻 CALCULATION:</div><textarea class="calculation-area" id="p1_1" placeholder="Δδ¹³C = δ¹³C_onset - δ¹³C_baseline = ..."></textarea></div></div>
-            <div class="figure-box"><img src="images/petm_exam_figures/fig5_zeebe2016_isotope_records.png" alt="Isotope records"><div class="figure-caption"><strong>Figure 3:</strong> High-resolution stable isotope records across the PETM (Zeebe et al., 2016).</div></div>
-            <div class="question-block"><div class="question-title">Question 1.2: Carbon Source Identification (10 points)</div><div class="equation-box"><div class="equation-title">Mass Balance Equation:</div>M<sub>added</sub> = M<sub>ocean</sub> × (δ¹³C<sub>final</sub> - δ¹³C<sub>initial</sub>) / (δ¹³C<sub>source</sub> - δ¹³C<sub>final</sub>)<br><small>M<sub>ocean</sub> = ~38,000 Gt C</small></div><div class="sub-question"><div class="sub-question-title">Part A (5 pts): Volcanic CO₂</div><p>If CIE caused entirely by volcanic CO₂ (δ¹³C = -6‰), how much carbon? Use δ¹³C<sub>initial</sub> = +1.8‰, δ¹³C<sub>final</sub> = -1.5‰.</p><div class="calculation-label">💻 CALCULATION:</div><textarea class="calculation-area" id="p1_2a" placeholder="M_added = 38,000 × ((-1.5) - (+1.8)) / ((-6) - (-1.5)) = ..."></textarea></div><div class="sub-question"><div class="sub-question-title">Part B (5 pts): Methane Hydrates</div><p>If caused by methane hydrates (δ¹³C = -60‰), how much carbon? Explain why methane is more isotopically efficient.</p><div class="calculation-label">💻 CALCULATION:</div><textarea class="calculation-area" id="p1_2b" placeholder="M_added = 38,000 × ((-1.5) - (+1.8)) / ((-60) - (-1.5)) = ...&#10;&#10;Why more efficient?"></textarea></div></div>
-            <div class="figure-box"><img src="images/petm_exam_figures/fig6_zeebe2016_carbon_release.png" alt="Carbon rates"><div class="figure-caption"><strong>Figure 4:</strong> Carbon release model and rates (Zeebe et al., 2016). Modern ~10 Pg C/yr vs PETM ~0.6-1.1 Pg C/yr.</div></div>
-            <div class="question-block"><div class="question-title">Question 1.3: Modern vs PETM Rates (10 points)</div><div class="info-note"><strong>📊 Data:</strong> Modern emissions: ~10.1 Gt C/yr | PETM: ~3,500 Gt C over ~4,000 years</div><div class="sub-question"><div class="sub-question-title">Part A (3 pts): PETM rate</div><textarea class="calculation-area" id="p1_3a" placeholder="PETM rate = Total / Duration = ..." style="min-height:80px"></textarea></div><div class="sub-question"><div class="sub-question-title">Part B (3 pts): Rate ratio</div><textarea class="calculation-area" id="p1_3b" placeholder="Ratio = Modern / PETM = ..." style="min-height:80px"></textarea></div><div class="sub-question"><div class="sub-question-title">Part C (4 pts): No-Analogue Implications</div><p>Zeebe et al. (2016) described modern conditions as "no-analogue state." What are implications for feedbacks and adaptation?</p><textarea class="answer-area" id="p1_3c" placeholder="Discuss implications for climate feedbacks, ecosystem adaptation, predictive capability..."></textarea></div></div>
+            <div class="section-title"><span class="en">PART 1: CARBON ISOTOPE EXCURSION (25 points)</span><span class="de">TEIL 1: KOHLENSTOFFISOTOPEN-EXKURSION (25 Punkte)</span></div>
+            <div class="concept-box"><p><span class="en">The PETM (~56 Ma) is characterized by a pronounced <strong>negative carbon isotope excursion (CIE)</strong> recorded globally in marine and terrestrial sediments.</span><span class="de">Das PETM (~56 Ma) ist durch eine ausgeprägte <strong>negative Kohlenstoffisotopen-Exkursion (CIE)</strong> gekennzeichnet, die global in marinen und terrestrischen Sedimenten aufgezeichnet ist.</span></p></div>
+
+            <div class="figure-box"><img src="images/petm_exam_figures/fig1_zachos2001_cenozoic_record.png" alt="Global records"><div class="figure-caption"><strong><span class="en">Figure 1:</span><span class="de">Abbildung 1:</span></strong> <span class="en">Global deep-sea δ¹⁸O and δ¹³C records (Zachos et al., 2001). The PETM is marked by sharp negative excursions at ~55 Ma.</span><span class="de">Globale Tiefsee-δ¹⁸O- und δ¹³C-Kurven (Zachos et al., 2001). Das PETM ist durch scharfe negative Exkursionen bei ~55 Ma gekennzeichnet.</span></div></div>
+
+            <table class="data-table">
+                <thead><tr><th><span class="en">Stratigraphic Interval</span><span class="de">Stratigraphisches Intervall</span></th><th>δ¹³C (‰ VPDB)</th><th><span class="en">Description</span><span class="de">Beschreibung</span></th></tr></thead>
+                <tbody>
+                    <tr><td><span class="en">Pre-PETM (baseline)</span><span class="de">Prä-PETM (Ausgangswert)</span></td><td>+1.8</td><td><span class="en">Late Paleocene stable values</span><span class="de">Stabile Werte im späten Paläozän</span></td></tr>
+                    <tr><td><span class="en">CIE Onset</span><span class="de">CIE-Beginn</span></td><td>-1.5</td><td><span class="en">Rapid negative shift</span><span class="de">Schnelle negative Verschiebung</span></td></tr>
+                    <tr><td><span class="en">CIE Body</span><span class="de">CIE-Hauptphase</span></td><td>-1.2 to -0.8</td><td><span class="en">Sustained negative values</span><span class="de">Anhaltend negative Werte</span></td></tr>
+                    <tr><td><span class="en">Recovery</span><span class="de">Erholung</span></td><td>+0.5 to +1.0</td><td><span class="en">Gradual return</span><span class="de">Allmähliche Rückkehr</span></td></tr>
+                </tbody>
+            </table>
+
+            <div class="figure-box"><img src="images/petm_exam_figures/fig9_mcinerney2011_cie_compilation.png" alt="CIE compilation"><div class="figure-caption"><strong><span class="en">Figure 2:</span><span class="de">Abbildung 2:</span></strong> <span class="en">CIE compilation across archives (McInerney & Wing, 2011). Marine carbonates (blue) vs terrestrial records (green).</span><span class="de">CIE-Zusammenstellung aus verschiedenen Archiven (McInerney & Wing, 2011). Marine Karbonate (blau) vs. terrestrische Aufzeichnungen (grün).</span></div></div>
+
+            <table class="data-table">
+                <thead><tr><th><span class="en">Carbon Source</span><span class="de">Kohlenstoffquelle</span></th><th>δ¹³C (‰)</th><th><span class="en">Source</span><span class="de">Quelle</span></th></tr></thead>
+                <tbody>
+                    <tr><td><span class="en">Volcanic CO₂</span><span class="de">Vulkanisches CO₂</span></td><td>-6</td><td><span class="en">Volcanic degassing, LIPs</span><span class="de">Vulkanische Entgasung, LIPs</span></td></tr>
+                    <tr><td><span class="en">Organic Carbon</span><span class="de">Organischer Kohlenstoff</span></td><td>-22</td><td><span class="en">Marine organic matter</span><span class="de">Marines organisches Material</span></td></tr>
+                    <tr><td><span class="en">Methane Hydrates</span><span class="de">Methanhydrate</span></td><td>-60</td><td><span class="en">Biogenic methane</span><span class="de">Biogenes Methan</span></td></tr>
+                </tbody>
+            </table>
+
+            <div class="question-block">
+                <div class="question-title"><span class="en">Question 1.1: CIE Magnitude (5 points)</span><span class="de">Frage 1.1: CIE-Amplitude (5 Punkte)</span></div>
+                <div class="sub-question">
+                    <p><span class="en">Calculate the CIE magnitude (Δδ¹³C) from pre-PETM baseline to CIE onset.</span><span class="de">Berechnen Sie die CIE-Amplitude (Δδ¹³C) vom Prä-PETM-Ausgangswert bis zum CIE-Beginn.</span></p>
+                    <div class="calculation-label">💻 <span class="en">CALCULATION:</span><span class="de">BERECHNUNG:</span></div>
+                    <textarea class="calculation-area" id="p1_1" placeholder="Δδ¹³C = δ¹³C_onset - δ¹³C_baseline = ..."></textarea>
+                </div>
+            </div>
+
+            <div class="figure-box"><img src="images/petm_exam_figures/fig5_zeebe2016_isotope_records.png" alt="Isotope records"><div class="figure-caption"><strong><span class="en">Figure 3:</span><span class="de">Abbildung 3:</span></strong> <span class="en">High-resolution stable isotope records across the PETM (Zeebe et al., 2016).</span><span class="de">Hochaufgelöste stabile Isotopenkurven über das PETM (Zeebe et al., 2016).</span></div></div>
+
+            <div class="question-block">
+                <div class="question-title"><span class="en">Question 1.2: Carbon Source Identification (10 points)</span><span class="de">Frage 1.2: Identifikation der Kohlenstoffquelle (10 Punkte)</span></div>
+                <div class="equation-box">
+                    <div class="equation-title"><span class="en">Mass Balance Equation:</span><span class="de">Massenbilanzgleichung:</span></div>
+                    M<sub>added</sub> = M<sub>ocean</sub> × (δ¹³C<sub>final</sub> - δ¹³C<sub>initial</sub>) / (δ¹³C<sub>source</sub> - δ¹³C<sub>final</sub>)<br>
+                    <small>M<sub>ocean</sub> = ~38,000 Gt C</small>
+                </div>
+                <div class="sub-question">
+                    <div class="sub-question-title"><span class="en">Part A (5 pts): Volcanic CO₂</span><span class="de">Teil A (5 Pkt.): Vulkanisches CO₂</span></div>
+                    <p><span class="en">If CIE caused entirely by volcanic CO₂ (δ¹³C = -6‰), how much carbon? Use δ¹³C<sub>initial</sub> = +1.8‰, δ¹³C<sub>final</sub> = -1.5‰.</span><span class="de">Wenn die CIE vollständig durch vulkanisches CO₂ (δ¹³C = -6‰) verursacht wurde, wie viel Kohlenstoff? Verwenden Sie δ¹³C<sub>initial</sub> = +1,8‰, δ¹³C<sub>final</sub> = -1,5‰.</span></p>
+                    <div class="calculation-label">💻 <span class="en">CALCULATION:</span><span class="de">BERECHNUNG:</span></div>
+                    <textarea class="calculation-area" id="p1_2a" placeholder="M_added = 38,000 × ((-1.5) - (+1.8)) / ((-6) - (-1.5)) = ..."></textarea>
+                </div>
+                <div class="sub-question">
+                    <div class="sub-question-title"><span class="en">Part B (5 pts): Methane Hydrates</span><span class="de">Teil B (5 Pkt.): Methanhydrate</span></div>
+                    <p><span class="en">If caused by methane hydrates (δ¹³C = -60‰), how much carbon? Explain why methane is more isotopically efficient.</span><span class="de">Wenn durch Methanhydrate (δ¹³C = -60‰) verursacht, wie viel Kohlenstoff? Erklären Sie, warum Methan isotopisch effizienter ist.</span></p>
+                    <div class="calculation-label">💻 <span class="en">CALCULATION:</span><span class="de">BERECHNUNG:</span></div>
+                    <textarea class="calculation-area" id="p1_2b" placeholder="M_added = 38,000 × ((-1.5) - (+1.8)) / ((-60) - (-1.5)) = ..."></textarea>
+                </div>
+            </div>
+
+            <div class="figure-box"><img src="images/petm_exam_figures/fig6_zeebe2016_carbon_release.png" alt="Carbon rates"><div class="figure-caption"><strong><span class="en">Figure 4:</span><span class="de">Abbildung 4:</span></strong> <span class="en">Carbon release model and rates (Zeebe et al., 2016). Modern ~10 Pg C/yr vs PETM ~0.6-1.1 Pg C/yr.</span><span class="de">Kohlenstofffreisetzungsmodell und -raten (Zeebe et al., 2016). Modern ~10 Pg C/Jahr vs. PETM ~0,6-1,1 Pg C/Jahr.</span></div></div>
+
+            <div class="question-block">
+                <div class="question-title"><span class="en">Question 1.3: Modern vs PETM Rates (10 points)</span><span class="de">Frage 1.3: Moderne vs. PETM-Raten (10 Punkte)</span></div>
+                <div class="info-note"><strong>📊 <span class="en">Data:</span><span class="de">Daten:</span></strong> <span class="en">Modern emissions: ~10.1 Gt C/yr | PETM: ~3,500 Gt C over ~4,000 years</span><span class="de">Moderne Emissionen: ~10,1 Gt C/Jahr | PETM: ~3.500 Gt C über ~4.000 Jahre</span></div>
+                <div class="sub-question">
+                    <div class="sub-question-title"><span class="en">Part A (3 pts): PETM rate</span><span class="de">Teil A (3 Pkt.): PETM-Rate</span></div>
+                    <textarea class="calculation-area" id="p1_3a" placeholder="PETM rate = Total / Duration = ..." style="min-height:80px"></textarea>
+                </div>
+                <div class="sub-question">
+                    <div class="sub-question-title"><span class="en">Part B (3 pts): Rate ratio</span><span class="de">Teil B (3 Pkt.): Ratenverhältnis</span></div>
+                    <textarea class="calculation-area" id="p1_3b" placeholder="Ratio = Modern / PETM = ..." style="min-height:80px"></textarea>
+                </div>
+                <div class="sub-question">
+                    <div class="sub-question-title"><span class="en">Part C (4 pts): No-Analogue Implications</span><span class="de">Teil C (4 Pkt.): Implikationen eines Zustands ohne Analogie</span></div>
+                    <p><span class="en">Zeebe et al. (2016) described modern conditions as "no-analogue state." What are implications for feedbacks and adaptation?</span><span class="de">Zeebe et al. (2016) beschrieben die heutigen Bedingungen als "Zustand ohne Analogie". Welche Implikationen ergeben sich für Rückkopplungen und Anpassung?</span></p>
+                    <textarea class="answer-area" id="p1_3c" placeholder=""></textarea>
+                </div>
+            </div>
         </div>
+
         <div class="section">
-            <div class="section-title">PART 2: OXYGEN ISOTOPE PALEOTHERMOMETRY (30 points)</div>
-            <div class="concept-box"><p>Oxygen isotopes in benthic foraminifera constrain deep-ocean temperatures during the PETM.</p></div>
-            <div class="figure-box"><img src="images/petm_exam_figures/fig2_zachos2001_petm_detail.png" alt="PETM detail"><div class="figure-caption"><strong>Figure 5:</strong> PETM records from multiple ODP Sites (Zachos et al., 2001). Coupled δ¹³C and δ¹⁸O excursions.</div></div>
-            <div class="equation-box"><div class="equation-title">Kim & O'Neil (1997):</div>T(°C) = 16.1 - 4.64 × Δ¹⁸O + 0.09 × (Δ¹⁸O)²<br><small>Δ¹⁸O = δ¹⁸O<sub>calcite(VPDB)</sub> - δ¹⁸O<sub>water(VSMOW)</sub></small></div>
-            <div class="info-note"><strong>⚠️ ASSUMPTION:</strong> Ice-free Paleocene-Eocene: δ¹⁸O<sub>seawater</sub> = <strong>-1.0‰ VSMOW</strong></div>
-            <table class="data-table"><thead><tr><th>Interval</th><th>δ¹⁸O (‰ VPDB)</th><th>Site 690</th></tr></thead><tbody><tr><td>Pre-PETM</td><td>-0.2</td><td>Baseline</td></tr><tr><td>PETM Onset</td><td>-1.4</td><td>Peak warming</td></tr><tr><td>Recovery</td><td>-0.4 to -0.2</td><td>Cooling</td></tr></tbody></table>
-            <div class="question-block"><div class="question-title">Question 2.1: Temperature Calculations (15 points)</div><div class="sub-question"><div class="sub-question-title">Part A (5 pts): Pre-PETM Temperature</div><p>Calculate using δ¹⁸O<sub>calcite</sub> = -0.2‰, δ¹⁸O<sub>water</sub> = -1.0‰.</p><textarea class="calculation-area" id="p2_1a" placeholder="Δ¹⁸O = (-0.2) - (-1.0) = ...&#10;T = 16.1 - 4.64×(Δ¹⁸O) + 0.09×(Δ¹⁸O)² = ..."></textarea></div><div class="sub-question"><div class="sub-question-title">Part B (5 pts): PETM Onset Temperature</div><p>Calculate using δ¹⁸O<sub>calcite</sub> = -1.4‰.</p><textarea class="calculation-area" id="p2_1b" placeholder="Δ¹⁸O = (-1.4) - (-1.0) = ...&#10;T = ..."></textarea></div><div class="sub-question"><div class="sub-question-title">Part C (5 pts): Warming Magnitude</div><p>Calculate ΔT and compare to published +4-5°C estimates.</p><textarea class="calculation-area" id="p2_1c" placeholder="ΔT = T_onset - T_pre = ...&#10;Comparison:"></textarea></div></div>
-            <div class="question-block"><div class="question-title">Question 2.2: Ice Volume Effects (15 points)</div><div class="sub-question"><div class="sub-question-title">Part A (5 pts): Why no ice correction for PETM?</div><textarea class="answer-area" id="p2_2a" placeholder="Compare ice-free Paleocene-Eocene vs glaciated Pleistocene..."></textarea></div><div class="sub-question"><div class="sub-question-title">Part B (5 pts): Uncertainty Analysis</div><p>If δ¹⁸O<sub>water</sub> = -0.5‰ instead of -1.0‰, recalculate PETM temperature.</p><textarea class="calculation-area" id="p2_2b" placeholder="With δ¹⁸O_water = -0.5‰:&#10;Δ¹⁸O = (-1.4) - (-0.5) = ...&#10;T = ..."></textarea></div><div class="sub-question"><div class="sub-question-title">Part C (5 pts): Multi-proxy Validation</div><p>Why use multiple proxies (Mg/Ca, TEX86, clumped isotopes) with δ¹⁸O?</p><textarea class="answer-area" id="p2_2c" placeholder="Discuss strengths/weaknesses of each proxy..."></textarea></div></div>
+            <div class="section-title"><span class="en">PART 2: OXYGEN ISOTOPE PALEOTHERMOMETRY (30 points)</span><span class="de">TEIL 2: SAUERSTOFFISOTOPEN-PALÄOTHERMOMETRIE (30 Punkte)</span></div>
+            <div class="concept-box"><p><span class="en">Oxygen isotopes in benthic foraminifera constrain deep-ocean temperatures during the PETM.</span><span class="de">Sauerstoffisotope in benthischen Foraminiferen ermöglichen die Bestimmung von Tiefseewassertemperaturen während des PETM.</span></p></div>
+
+            <div class="figure-box"><img src="images/petm_exam_figures/fig2_zachos2001_petm_detail.png" alt="PETM detail"><div class="figure-caption"><strong><span class="en">Figure 5:</span><span class="de">Abbildung 5:</span></strong> <span class="en">PETM records from multiple ODP Sites (Zachos et al., 2001). Coupled δ¹³C and δ¹⁸O excursions.</span><span class="de">PETM-Aufzeichnungen von mehreren ODP-Bohrungen (Zachos et al., 2001). Gekoppelte δ¹³C- und δ¹⁸O-Exkursionen.</span></div></div>
+
+            <div class="equation-box">
+                <div class="equation-title">Kim & O'Neil (1997):</div>
+                T(°C) = 16.1 - 4.64 × Δ¹⁸O + 0.09 × (Δ¹⁸O)²<br>
+                <small>Δ¹⁸O = δ¹⁸O<sub>calcite(VPDB)</sub> - δ¹⁸O<sub>water(VSMOW)</sub></small>
+            </div>
+
+            <div class="info-note"><strong>⚠️ <span class="en">ASSUMPTION:</span><span class="de">ANNAHME:</span></strong> <span class="en">Ice-free Paleocene-Eocene:</span><span class="de">Eisfreies Paläozän-Eozän:</span> δ¹⁸O<sub>seawater</sub> = <strong>-1.0‰ VSMOW</strong></div>
+
+            <table class="data-table">
+                <thead><tr><th><span class="en">Interval</span><span class="de">Intervall</span></th><th>δ¹⁸O (‰ VPDB)</th><th>Site 690</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="en">Pre-PETM</span><span class="de">Prä-PETM</span></td><td>-0.2</td><td><span class="en">Baseline</span><span class="de">Ausgangswert</span></td></tr>
+                    <tr><td><span class="en">PETM Onset</span><span class="de">PETM-Beginn</span></td><td>-1.4</td><td><span class="en">Peak warming</span><span class="de">Maximale Erwärmung</span></td></tr>
+                    <tr><td><span class="en">Recovery</span><span class="de">Erholung</span></td><td>-0.4 to -0.2</td><td><span class="en">Cooling</span><span class="de">Abkühlung</span></td></tr>
+                </tbody>
+            </table>
+
+            <div class="question-block">
+                <div class="question-title"><span class="en">Question 2.1: Temperature Calculations (15 points)</span><span class="de">Frage 2.1: Temperaturberechnungen (15 Punkte)</span></div>
+                <div class="sub-question">
+                    <div class="sub-question-title"><span class="en">Part A (5 pts): Pre-PETM Temperature</span><span class="de">Teil A (5 Pkt.): Prä-PETM-Temperatur</span></div>
+                    <p><span class="en">Calculate using δ¹⁸O<sub>calcite</sub> = -0.2‰, δ¹⁸O<sub>water</sub> = -1.0‰.</span><span class="de">Berechnen Sie mit δ¹⁸O<sub>Calcit</sub> = -0,2‰, δ¹⁸O<sub>Wasser</sub> = -1,0‰.</span></p>
+                    <textarea class="calculation-area" id="p2_1a" placeholder="Δ¹⁸O = (-0.2) - (-1.0) = ...&#10;T = 16.1 - 4.64×(Δ¹⁸O) + 0.09×(Δ¹⁸O)² = ..."></textarea>
+                </div>
+                <div class="sub-question">
+                    <div class="sub-question-title"><span class="en">Part B (5 pts): PETM Onset Temperature</span><span class="de">Teil B (5 Pkt.): PETM-Beginn-Temperatur</span></div>
+                    <p><span class="en">Calculate using δ¹⁸O<sub>calcite</sub> = -1.4‰.</span><span class="de">Berechnen Sie mit δ¹⁸O<sub>Calcit</sub> = -1,4‰.</span></p>
+                    <textarea class="calculation-area" id="p2_1b" placeholder="Δ¹⁸O = (-1.4) - (-1.0) = ...&#10;T = ..."></textarea>
+                </div>
+                <div class="sub-question">
+                    <div class="sub-question-title"><span class="en">Part C (5 pts): Warming Magnitude</span><span class="de">Teil C (5 Pkt.): Erwärmungsausmaß</span></div>
+                    <p><span class="en">Calculate ΔT and compare to published +4-5°C estimates.</span><span class="de">Berechnen Sie ΔT und vergleichen Sie mit den publizierten Schätzungen von +4-5°C.</span></p>
+                    <textarea class="calculation-area" id="p2_1c" placeholder="ΔT = T_onset - T_pre = ..."></textarea>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title"><span class="en">Question 2.2: Ice Volume Effects (15 points)</span><span class="de">Frage 2.2: Eisvolumeneffekte (15 Punkte)</span></div>
+                <div class="sub-question">
+                    <div class="sub-question-title"><span class="en">Part A (5 pts): Why no ice correction for PETM?</span><span class="de">Teil A (5 Pkt.): Warum keine Eiskorrektur für das PETM?</span></div>
+                    <textarea class="answer-area" id="p2_2a" placeholder=""></textarea>
+                </div>
+                <div class="sub-question">
+                    <div class="sub-question-title"><span class="en">Part B (5 pts): Uncertainty Analysis</span><span class="de">Teil B (5 Pkt.): Unsicherheitsanalyse</span></div>
+                    <p><span class="en">If δ¹⁸O<sub>water</sub> = -0.5‰ instead of -1.0‰, recalculate PETM temperature.</span><span class="de">Wenn δ¹⁸O<sub>Wasser</sub> = -0,5‰ statt -1,0‰, berechnen Sie die PETM-Temperatur neu.</span></p>
+                    <textarea class="calculation-area" id="p2_2b" placeholder=""></textarea>
+                </div>
+                <div class="sub-question">
+                    <div class="sub-question-title"><span class="en">Part C (5 pts): Multi-proxy Validation</span><span class="de">Teil C (5 Pkt.): Multi-Proxy-Validierung</span></div>
+                    <p><span class="en">Why use multiple proxies (Mg/Ca, TEX86, clumped isotopes) with δ¹⁸O?</span><span class="de">Warum sollten mehrere Proxies (Mg/Ca, TEX86, Clumped Isotope) zusammen mit δ¹⁸O verwendet werden?</span></p>
+                    <textarea class="answer-area" id="p2_2c" placeholder=""></textarea>
+                </div>
+            </div>
         </div>
+
         <div class="section">
-            <div class="section-title">PART 3: OCEAN ACIDIFICATION (15 points)</div>
-            <div class="concept-box"><p>The PETM shows widespread ocean acidification and CCD shoaling. Boron isotopes (δ¹¹B) reconstruct past ocean pH.</p></div>
-            <div class="figure-box"><img src="images/petm_exam_figures/fig3_zachos2005_caco3_dissolution.png" alt="CaCO3 transect"><div class="figure-caption"><strong>Figure 6:</strong> CaCO₃ content across Walvis Ridge depth transect (Zachos et al., 2005). CCD shoaling evident.</div></div>
-            <div class="figure-box"><img src="images/petm_exam_figures/fig4_zachos2005_carbon_isotopes.png" alt="d13C CCD"><div class="figure-caption"><strong>Figure 7:</strong> δ¹³C records showing CIE-dissolution relationship across multiple sites (Zachos et al., 2005).</div></div>
-            <div class="question-block"><div class="question-title">Question 3.1: CCD Shoaling Mechanism (7 points)</div><div class="sub-question"><p>Explain how CO₂ release causes CCD shoaling. Include carbonate chemistry, why CCD rises, and sediment record implications.</p><textarea class="answer-area" id="p3_1" placeholder="CO₂ + H₂O ⇌ H₂CO₃ ⇌ ...&#10;Effect on [CO₃²⁻] and saturation...&#10;Why CCD rises...&#10;Sediment implications..." style="min-height:180px"></textarea></div></div>
-            <div class="figure-box"><img src="images/petm_exam_figures/fig7_gutjahr2017_ph_boron.png" alt="pH reconstruction"><div class="figure-caption"><strong>Figure 8:</strong> Boron isotope and stable isotope records (Gutjahr et al., 2017). pH drop ~0.3-0.4 units during PETM.</div></div>
-            <div class="question-block"><div class="question-title">Question 3.2: Boron Isotopes & pH (8 points)</div><div class="sub-question"><p>Explain mechanistically WHY lower pH produces lower δ¹¹B in carbonates. Address boron speciation, isotopic fractionation, and incorporation.</p><textarea class="answer-area" id="p3_2" placeholder="Borate [B(OH)₄⁻] vs boric acid [B(OH)₃]...&#10;pH-dependent speciation...&#10;Which incorporates into carbonates?&#10;Isotopic fractionation (~27‰)...&#10;Why lower pH = lower δ¹¹B..." style="min-height:180px"></textarea></div></div>
+            <div class="section-title"><span class="en">PART 3: OCEAN ACIDIFICATION (15 points)</span><span class="de">TEIL 3: OZEANVERSAUERUNG (15 Punkte)</span></div>
+            <div class="concept-box"><p><span class="en">The PETM shows widespread ocean acidification and CCD shoaling. Boron isotopes (δ¹¹B) reconstruct past ocean pH.</span><span class="de">Das PETM zeigt weitverbreitete Ozeanversauerung und CCD-Verflachung. Bor-Isotope (δ¹¹B) rekonstruieren den vergangenen Ozean-pH-Wert.</span></p></div>
+
+            <div class="figure-box"><img src="images/petm_exam_figures/fig3_zachos2005_caco3_dissolution.png" alt="CaCO3 transect"><div class="figure-caption"><strong><span class="en">Figure 6:</span><span class="de">Abbildung 6:</span></strong> <span class="en">CaCO₃ content across Walvis Ridge depth transect (Zachos et al., 2005). CCD shoaling evident.</span><span class="de">CaCO₃-Gehalt entlang des Walvis-Rücken-Tiefenprofils (Zachos et al., 2005). CCD-Verflachung erkennbar.</span></div></div>
+
+            <div class="figure-box"><img src="images/petm_exam_figures/fig4_zachos2005_carbon_isotopes.png" alt="d13C CCD"><div class="figure-caption"><strong><span class="en">Figure 7:</span><span class="de">Abbildung 7:</span></strong> <span class="en">δ¹³C records showing CIE-dissolution relationship across multiple sites (Zachos et al., 2005).</span><span class="de">δ¹³C-Kurven, die die CIE-Lösungs-Beziehung an mehreren Standorten zeigen (Zachos et al., 2005).</span></div></div>
+
+            <div class="question-block">
+                <div class="question-title"><span class="en">Question 3.1: CCD Shoaling Mechanism (7 points)</span><span class="de">Frage 3.1: Mechanismus der CCD-Verflachung (7 Punkte)</span></div>
+                <div class="sub-question">
+                    <p><span class="en">Explain how CO₂ release causes CCD shoaling. Include carbonate chemistry, why CCD rises, and sediment record implications.</span><span class="de">Erklären Sie, wie CO₂-Freisetzung zur CCD-Verflachung führt. Berücksichtigen Sie Karbonatchemie, warum die CCD ansteigt, und Auswirkungen auf den Sedimentbefund.</span></p>
+                    <textarea class="answer-area" id="p3_1" placeholder="CO₂ + H₂O ⇌ H₂CO₃ ⇌ ..." style="min-height:180px"></textarea>
+                </div>
+            </div>
+
+            <div class="figure-box"><img src="images/petm_exam_figures/fig7_gutjahr2017_ph_boron.png" alt="pH reconstruction"><div class="figure-caption"><strong><span class="en">Figure 8:</span><span class="de">Abbildung 8:</span></strong> <span class="en">Boron isotope and stable isotope records (Gutjahr et al., 2017). pH drop ~0.3-0.4 units during PETM.</span><span class="de">Bor-Isotopen- und stabile Isotopenkurven (Gutjahr et al., 2017). pH-Abfall ~0,3-0,4 Einheiten während des PETM.</span></div></div>
+
+            <div class="question-block">
+                <div class="question-title"><span class="en">Question 3.2: Boron Isotopes & pH (8 points)</span><span class="de">Frage 3.2: Bor-Isotope & pH (8 Punkte)</span></div>
+                <div class="sub-question">
+                    <p><span class="en">Explain mechanistically WHY lower pH produces lower δ¹¹B in carbonates. Address boron speciation, isotopic fractionation, and incorporation.</span><span class="de">Erklären Sie mechanistisch, WARUM niedrigerer pH-Wert zu niedrigerem δ¹¹B in Karbonaten führt. Berücksichtigen Sie Bor-Speziation, isotopische Fraktionierung und Einbau.</span></p>
+                    <textarea class="answer-area" id="p3_2" placeholder="Borate [B(OH)₄⁻] vs boric acid [B(OH)₃]..." style="min-height:180px"></textarea>
+                </div>
+            </div>
         </div>
+
         <div class="section">
-            <div class="section-title">PART 4: MULTI-PROXY SYNTHESIS (10 points)</div>
-            <div class="figure-box"><img src="images/petm_exam_figures/fig8_gutjahr2017_ph_reconstruction.png" alt="Earth system model"><div class="figure-caption"><strong>Figure 9:</strong> δ¹³C evolution and pH reconstruction from multiple sites (Gutjahr et al., 2017).</div></div>
-            <div class="question-block"><div class="question-title">Question 4.1: Integrated PETM Narrative (5 points)</div><div class="sub-question"><p>Construct a coherent PETM narrative: (1) trigger, (2) carbon cycle response, (3) climate response, (4) ocean chemistry, (5) recovery.</p><textarea class="answer-area" id="p4_1" placeholder="1. Trigger:&#10;2. Carbon cycle:&#10;3. Climate:&#10;4. Ocean chemistry:&#10;5. Recovery:" style="min-height:200px"></textarea></div></div>
-            <div class="question-block"><div class="question-title">Question 4.2: Modern Implications (5 points)</div><div class="sub-question"><p>Discuss: (a) what PETM tells us about climate sensitivity and feedbacks, (b) key differences limiting the modern analogy.</p><textarea class="answer-area" id="p4_2" placeholder="(a) Lessons from PETM:&#10;- Climate sensitivity&#10;- Feedback timescales&#10;- Recovery (~200 kyr)&#10;&#10;(b) Limitations:&#10;- Rate differences&#10;- Background state&#10;- Adaptation capacity" style="min-height:200px"></textarea></div></div>
+            <div class="section-title"><span class="en">PART 4: MULTI-PROXY SYNTHESIS (10 points)</span><span class="de">TEIL 4: MULTI-PROXY-SYNTHESE (10 Punkte)</span></div>
+
+            <div class="figure-box"><img src="images/petm_exam_figures/fig8_gutjahr2017_ph_reconstruction.png" alt="Earth system model"><div class="figure-caption"><strong><span class="en">Figure 9:</span><span class="de">Abbildung 9:</span></strong> <span class="en">δ¹³C evolution and pH reconstruction from multiple sites (Gutjahr et al., 2017).</span><span class="de">δ¹³C-Entwicklung und pH-Rekonstruktion von mehreren Standorten (Gutjahr et al., 2017).</span></div></div>
+
+            <div class="question-block">
+                <div class="question-title"><span class="en">Question 4.1: Integrated PETM Narrative (5 points)</span><span class="de">Frage 4.1: Integrierte PETM-Darstellung (5 Punkte)</span></div>
+                <div class="sub-question">
+                    <p><span class="en">Construct a coherent PETM narrative: (1) trigger, (2) carbon cycle response, (3) climate response, (4) ocean chemistry, (5) recovery.</span><span class="de">Erstellen Sie eine kohärente PETM-Darstellung: (1) Auslöser, (2) Kohlenstoffkreislauf-Reaktion, (3) Klimareaktion, (4) Ozeanchemie, (5) Erholung.</span></p>
+                    <textarea class="answer-area" id="p4_1" placeholder="" style="min-height:200px"></textarea>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-title"><span class="en">Question 4.2: Modern Implications (5 points)</span><span class="de">Frage 4.2: Moderne Implikationen (5 Punkte)</span></div>
+                <div class="sub-question">
+                    <p><span class="en">Discuss: (a) what PETM tells us about climate sensitivity and feedbacks, (b) key differences limiting the modern analogy.</span><span class="de">Diskutieren Sie: (a) was das PETM uns über Klimasensitivität und Rückkopplungen sagt, (b) wesentliche Unterschiede, die die moderne Analogie einschränken.</span></p>
+                    <textarea class="answer-area" id="p4_2" placeholder="" style="min-height:200px"></textarea>
+                </div>
+            </div>
         </div>
-        <div class="export-section"><h3>📤 Submit Your Exam</h3><div class="export-buttons"><button class="export-btn submit" onclick="submitExam()">✓ Submit & Download Word</button><button class="export-btn copy" onclick="copyToClipboard()">📋 Copy to Clipboard</button><button class="export-btn print" onclick="window.print()">🖨️ Print to PDF</button></div></div>
+
+        <div class="export-section">
+            <h3>📤 <span class="en">Submit Your Exam</span><span class="de">Prüfung abgeben</span></h3>
+            <div class="export-buttons">
+                <button class="export-btn submit" onclick="submitExam()">✓ <span class="en">Submit & Download Word</span><span class="de">Abgeben & Word herunterladen</span></button>
+                <button class="export-btn copy" onclick="copyToClipboard()">📋 <span class="en">Copy to Clipboard</span><span class="de">In Zwischenablage kopieren</span></button>
+                <button class="export-btn print" onclick="window.print()">🖨️ <span class="en">Print to PDF</span><span class="de">Als PDF drucken</span></button>
+            </div>
+        </div>
     </div>
+
     <!-- Calculator -->
     <div class="calculator-container">
         <div class="calculator-panel" id="calculatorPanel">
-            <div class="calc-header">🧮 Isotope Calculator</div>
+            <div class="calc-header">🧮 <span class="en">Isotope Calculator</span><span class="de">Isotopen-Rechner</span></div>
             <div class="calculator-panel-inner">
             <div class="calc-body">
                 <input type="text" class="calc-display" id="calcDisplay" readonly placeholder="0">
                 <div class="calc-tabs">
-                    <button class="calc-tab active" onclick="switchCalcTab('basic',this)">Basic</button>
-                    <button class="calc-tab" onclick="switchCalcTab('isotope',this)">Isotope Functions</button>
+                    <button class="calc-tab active" onclick="switchCalcTab('basic',this)"><span class="en">Basic</span><span class="de">Basis</span></button>
+                    <button class="calc-tab" onclick="switchCalcTab('isotope',this)"><span class="en">Isotope Functions</span><span class="de">Isotopen-Funktionen</span></button>
                 </div>
                 <div id="basicCalc">
                     <div class="calc-buttons">
@@ -204,83 +372,104 @@
                     </div>
                 </div>
                 <div id="isotopeCalc" class="isotope-functions">
-                    <button class="isotope-func-btn" onclick="showIsotopeFunc('temp_kim')">🌡️ Carbonate Temperature (Kim & O'Neil 1997)</button>
-                    <button class="isotope-func-btn" onclick="showIsotopeFunc('temp_phosphate')">🌡️ Phosphate Temperature (Lécuyer et al.)</button>
-                    <button class="isotope-func-btn" onclick="showIsotopeFunc('temp_anderson')">🌡️ Carbonate Temperature (Anderson & Arthur)</button>
-                    <button class="isotope-func-btn" onclick="showIsotopeFunc('convert_vpdb')">🔄 Convert VPDB ↔ VSMOW</button>
-                    <button class="isotope-func-btn" onclick="showIsotopeFunc('alpha')">α Alpha from Delta Values</button>
+                    <button class="isotope-func-btn" onclick="showIsotopeFunc('temp_kim')">🌡️ <span class="en">Carbonate Temperature (Kim & O'Neil 1997)</span><span class="de">Karbonat-Temperatur (Kim & O'Neil 1997)</span></button>
+                    <button class="isotope-func-btn" onclick="showIsotopeFunc('temp_phosphate')">🌡️ <span class="en">Phosphate Temperature (Lécuyer et al.)</span><span class="de">Phosphat-Temperatur (Lécuyer et al.)</span></button>
+                    <button class="isotope-func-btn" onclick="showIsotopeFunc('temp_anderson')">🌡️ <span class="en">Carbonate Temperature (Anderson & Arthur)</span><span class="de">Karbonat-Temperatur (Anderson & Arthur)</span></button>
+                    <button class="isotope-func-btn" onclick="showIsotopeFunc('convert_vpdb')">🔄 <span class="en">Convert VPDB ↔ VSMOW</span><span class="de">Umrechnung VPDB ↔ VSMOW</span></button>
+                    <button class="isotope-func-btn" onclick="showIsotopeFunc('alpha')">α <span class="en">Alpha from Delta Values</span><span class="de">Alpha aus Delta-Werten</span></button>
                     <div class="calc-input-group" id="func_temp_kim">
-                        <h4 style="margin-top:0">Carbonate Temperature (Kim & O'Neil, 1997)</h4>
+                        <h4 style="margin-top:0"><span class="en">Carbonate Temperature (Kim & O'Neil, 1997)</span><span class="de">Karbonat-Temperatur (Kim & O'Neil, 1997)</span></h4>
                         <p style="font-size:.85em;color:#666">T(°C) = 16.1 - 4.64 × Δ¹⁸O + 0.09 × (Δ¹⁸O)²</p>
-                        <p style="font-size:.8em;color:#2980b9"><strong>Note:</strong> Δ¹⁸O = δ¹⁸O_calcite(VPDB) - δ¹⁸O_water(VSMOW)</p>
-                        <label>δ¹⁸O_calcite (‰ VPDB):</label>
-                        <input type="number" id="kim_d18O_carb" step="0.1" placeholder="e.g., -0.2">
-                        <label>δ¹⁸O_water (‰ VSMOW):</label>
+                        <label>δ¹⁸O<sub>calcite</sub> (‰ VPDB):</label>
+                        <input type="number" id="kim_d18O_carb" step="0.1" placeholder="z.B. -0.2">
+                        <label>δ¹⁸O<sub>water</sub> (‰ VSMOW):</label>
                         <input type="number" id="kim_water" step="0.1" value="-1.0">
-                        <button onclick="calcKimTemp()" style="width:100%;padding:10px;background:#16a085;color:#fff;border:none;border-radius:5px;cursor:pointer">Calculate</button>
+                        <button onclick="calcKimTemp()" style="width:100%;padding:10px;background:#16a085;color:#fff;border:none;border-radius:5px;cursor:pointer"><span class="en">Calculate</span><span class="de">Berechnen</span></button>
                         <div class="calc-result" id="result_temp_kim"></div>
                     </div>
                     <div class="calc-input-group" id="func_temp_phosphate">
-                        <h4 style="margin-top:0">Phosphate Temperature (Lécuyer et al., 2013)</h4>
-                        <p style="font-size:.85em;color:#666">T(°C) = 117.4 - 4.50 × (δ¹⁸O_phos - δ¹⁸O_water)</p>
-                        <label>δ¹⁸O_phosphate (‰ VSMOW):</label>
-                        <input type="number" id="phos_d18O" step="0.1" placeholder="e.g., 20.8">
-                        <label>δ¹⁸O_water (‰ VSMOW):</label>
+                        <h4 style="margin-top:0"><span class="en">Phosphate Temperature (Lécuyer et al., 2013)</span><span class="de">Phosphat-Temperatur (Lécuyer et al., 2013)</span></h4>
+                        <p style="font-size:.85em;color:#666">T(°C) = 117.4 - 4.50 × (δ¹⁸O<sub>phos</sub> - δ¹⁸O<sub>water</sub>)</p>
+                        <label>δ¹⁸O<sub>phosphate</sub> (‰ VSMOW):</label>
+                        <input type="number" id="phos_d18O" step="0.1" placeholder="z.B. 20.8">
+                        <label>δ¹⁸O<sub>water</sub> (‰ VSMOW):</label>
                         <input type="number" id="phos_water" step="0.1" value="-1.0">
-                        <button onclick="calcPhosphateTemp()" style="width:100%;padding:10px;background:#16a085;color:#fff;border:none;border-radius:5px;cursor:pointer">Calculate</button>
+                        <button onclick="calcPhosphateTemp()" style="width:100%;padding:10px;background:#16a085;color:#fff;border:none;border-radius:5px;cursor:pointer"><span class="en">Calculate</span><span class="de">Berechnen</span></button>
                         <div class="calc-result" id="result_temp_phosphate"></div>
                     </div>
                     <div class="calc-input-group" id="func_temp_anderson">
-                        <h4 style="margin-top:0">Carbonate Temperature (Anderson & Arthur, 1983)</h4>
+                        <h4 style="margin-top:0"><span class="en">Carbonate Temperature (Anderson & Arthur, 1983)</span><span class="de">Karbonat-Temperatur (Anderson & Arthur, 1983)</span></h4>
                         <p style="font-size:.85em;color:#666">T(°C) = 16.0 - 4.14(δc - δw) + 0.13(δc - δw)²</p>
-                        <p style="font-size:.8em;color:#e74c3c"><strong>Note:</strong> δc in VPDB, δw in VSMOW.</p>
-                        <label>δ¹⁸O_carbonate (‰ VPDB):</label>
-                        <input type="number" id="aa_d18O_carb" step="0.1" placeholder="e.g., -3.2">
-                        <label>δ¹⁸O_water (‰ VSMOW):</label>
+                        <label>δ¹⁸O<sub>carbonate</sub> (‰ VPDB):</label>
+                        <input type="number" id="aa_d18O_carb" step="0.1" placeholder="z.B. -3.2">
+                        <label>δ¹⁸O<sub>water</sub> (‰ VSMOW):</label>
                         <input type="number" id="aa_water" step="0.1" value="-1.0">
-                        <button onclick="calcAndersonTemp()" style="width:100%;padding:10px;background:#16a085;color:#fff;border:none;border-radius:5px;cursor:pointer">Calculate</button>
+                        <button onclick="calcAndersonTemp()" style="width:100%;padding:10px;background:#16a085;color:#fff;border:none;border-radius:5px;cursor:pointer"><span class="en">Calculate</span><span class="de">Berechnen</span></button>
                         <div class="calc-result" id="result_temp_anderson"></div>
                     </div>
                     <div class="calc-input-group" id="func_convert_vpdb">
-                        <h4 style="margin-top:0">Convert VPDB ↔ VSMOW</h4>
-                        <p style="font-size:.85em;color:#666">δ¹⁸O_VSMOW = 1.03091 × δ¹⁸O_VPDB + 30.91</p>
-                        <label>Input value (‰):</label>
-                        <input type="number" id="convert_value" step="0.1" placeholder="e.g., -3.2">
-                        <label>Convert from:</label>
+                        <h4 style="margin-top:0"><span class="en">Convert VPDB ↔ VSMOW</span><span class="de">Umrechnung VPDB ↔ VSMOW</span></h4>
+                        <p style="font-size:.85em;color:#666">δ¹⁸O<sub>VSMOW</sub> = 1.03091 × δ¹⁸O<sub>VPDB</sub> + 30.91</p>
+                        <label><span class="en">Input value (‰):</span><span class="de">Eingabewert (‰):</span></label>
+                        <input type="number" id="convert_value" step="0.1" placeholder="z.B. -3.2">
+                        <label><span class="en">Convert from:</span><span class="de">Umrechnen von:</span></label>
                         <select id="convert_from"><option value="vpdb">VPDB → VSMOW</option><option value="vsmow">VSMOW → VPDB</option></select>
-                        <button onclick="convertStandard()" style="width:100%;padding:10px;background:#16a085;color:#fff;border:none;border-radius:5px;cursor:pointer">Convert</button>
+                        <button onclick="convertStandard()" style="width:100%;padding:10px;background:#16a085;color:#fff;border:none;border-radius:5px;cursor:pointer"><span class="en">Convert</span><span class="de">Umrechnen</span></button>
                         <div class="calc-result" id="result_convert_vpdb"></div>
                     </div>
                     <div class="calc-input-group" id="func_alpha">
-                        <h4 style="margin-top:0">Calculate α (Fractionation Factor)</h4>
+                        <h4 style="margin-top:0"><span class="en">Calculate α (Fractionation Factor)</span><span class="de">Berechne α (Fraktionierungsfaktor)</span></h4>
                         <p style="font-size:.85em;color:#666">α = (1000 + δA) / (1000 + δB)</p>
-                        <label>δ_A (phase A, ‰):</label>
-                        <input type="number" id="alpha_a" step="0.1" placeholder="e.g., carbonate value">
-                        <label>δ_B (phase B, ‰):</label>
-                        <input type="number" id="alpha_b" step="0.1" placeholder="e.g., water value">
-                        <button onclick="calcAlpha()" style="width:100%;padding:10px;background:#16a085;color:#fff;border:none;border-radius:5px;cursor:pointer">Calculate α</button>
+                        <label>δ<sub>A</sub> (<span class="en">phase A</span><span class="de">Phase A</span>, ‰):</label>
+                        <input type="number" id="alpha_a" step="0.1" placeholder="">
+                        <label>δ<sub>B</sub> (<span class="en">phase B</span><span class="de">Phase B</span>, ‰):</label>
+                        <input type="number" id="alpha_b" step="0.1" placeholder="">
+                        <button onclick="calcAlpha()" style="width:100%;padding:10px;background:#16a085;color:#fff;border:none;border-radius:5px;cursor:pointer"><span class="en">Calculate α</span><span class="de">Berechne α</span></button>
                         <div class="calc-result" id="result_alpha"></div>
                     </div>
                 </div>
             </div>
             </div>
         </div>
-        <button class="calculator-toggle" onclick="toggleCalculator()">🧮 Calculator</button>
+        <button class="calculator-toggle" onclick="toggleCalculator()">🧮 <span class="en">Calculator</span><span class="de">Rechner</span></button>
     </div>
+
     <script>
-        const CORRECT_PASSWORD="GeochemProxies2026@",INSTRUCTOR_PASSWORD="Instructor2026!",EXAM_DURATION_MINUTES=120,GRACE_PERIOD_MINUTES=5,EXAM_START_DATE=new Date("2026-02-11T16:00:00");let timerInterval,remainingSeconds=EXAM_DURATION_MINUTES*60,isGracePeriod=!1,isInstructorMode=!1;function checkAccessDate(){const e=new Date;isInstructorMode?(document.getElementById("accessOverlay").classList.add("hidden"),document.getElementById("passwordOverlay").classList.remove("hidden")):e<EXAM_START_DATE?(document.getElementById("accessOverlay").classList.remove("hidden"),document.getElementById("passwordOverlay").classList.add("hidden"),updateCountdown(),setInterval(updateCountdown,1e3)):(document.getElementById("accessOverlay").classList.add("hidden"),document.getElementById("passwordOverlay").classList.remove("hidden"))}function updateCountdown(){const e=EXAM_START_DATE-new Date;if(e<=0)return document.getElementById("accessOverlay").classList.add("hidden"),void document.getElementById("passwordOverlay").classList.remove("hidden");const t=Math.floor(e/864e5),n=Math.floor(e%864e5/36e5),a=Math.floor(e%36e5/6e4),i=Math.floor(e%6e4/1e3);document.getElementById("timeRemaining").textContent=`Time remaining: ${t}d ${n}h ${a}m ${i}s`}function checkInstructorEarlyAccess(){document.getElementById("instructorPasswordAccess").value===INSTRUCTOR_PASSWORD?(isInstructorMode=!0,document.getElementById("accessOverlay").classList.add("hidden"),document.getElementById("passwordOverlay").classList.remove("hidden")):document.getElementById("accessErrorMessage").textContent="Invalid instructor password"}function checkInstructorAccess(){document.getElementById("instructorPassword").value===INSTRUCTOR_PASSWORD?(isInstructorMode=!0,document.getElementById("accessOverlay").classList.add("hidden"),document.getElementById("passwordOverlay").classList.add("hidden"),startExam()):document.getElementById("errorMessage").textContent="Invalid instructor password"}function checkPassword(){document.getElementById("passwordInput").value===CORRECT_PASSWORD?(document.getElementById("passwordOverlay").classList.add("hidden"),startExam()):(document.getElementById("errorMessage").textContent="Incorrect password",document.getElementById("passwordInput").value="")}function startExam(){document.getElementById("timerBar").classList.remove("hidden"),document.getElementById("mainContent").classList.add("visible"),document.getElementById("submissionDate").value=(new Date).toLocaleDateString("en-GB",{day:"2-digit",month:"long",year:"numeric",hour:"2-digit",minute:"2-digit"}),initAutoSave(),startTimer()}function startTimer(){timerInterval=setInterval((function(){if(remainingSeconds--,remainingSeconds<=0&&!isGracePeriod&&(isGracePeriod=!0,remainingSeconds=300,document.getElementById("timerStatus").textContent="⚠️ GRACE PERIOD",document.getElementById("timerDisplay").classList.add("grace")),remainingSeconds<=0&&isGracePeriod)return clearInterval(timerInterval),void submitExam();updateTimerDisplay()}),1e3),updateTimerDisplay()}function updateTimerDisplay(){const e=Math.floor(remainingSeconds/3600),t=Math.floor(remainingSeconds%3600/60),n=remainingSeconds%60,a=document.getElementById("timerDisplay");a.textContent=`${String(e).padStart(2,"0")}:${String(t).padStart(2,"0")}:${String(n).padStart(2,"0")}`,isGracePeriod||(a.classList.toggle("critical",remainingSeconds<=300),a.classList.toggle("warning",remainingSeconds>300&&remainingSeconds<=900))}function updateWatermark(){const e=document.getElementById("studentName").value,t=document.getElementById("watermark");e&&e.length>2?(t.textContent=e,t.classList.remove("hidden")):t.classList.add("hidden")}function initAutoSave(){document.querySelectorAll("input:not([readonly]), textarea").forEach((e=>{const t=localStorage.getItem("petm_exam_"+e.id);t&&(e.value=t),e.addEventListener("input",(function(){localStorage.setItem("petm_exam_"+this.id,this.value)}))})),updateWatermark()}function submitExam(){const e=document.getElementById("studentName").value||"Unknown",t=document.getElementById("studentEmail").value||"N/A",n=document.getElementById("studentId").value||"N/A",a=document.getElementById("submissionDate").value||(new Date).toLocaleString();showLoading("Generating Word document...");try{const{Document:i,Packer:s,Paragraph:o,TextRun:d,HeadingLevel:r,AlignmentType:l}=docx,c=[new o({text:"SEDIMENTARY GEOCHEMISTRY - PETM FINAL EXAM",heading:r.HEADING_1,alignment:l.CENTER}),new o({}),new o({children:[new d({text:"Student: ",bold:!0}),new d(e)]}),new o({children:[new d({text:"Email: ",bold:!0}),new d(t)]}),new o({children:[new d({text:"ID: ",bold:!0}),new d(n)]}),new o({children:[new d({text:"Date: ",bold:!0}),new d(a)]}),new o({})];["p1_1","p1_2a","p1_2b","p1_3a","p1_3b","p1_3c","p2_1a","p2_1b","p2_1c","p2_2a","p2_2b","p2_2c","p3_1","p3_2","p4_1","p4_2"].forEach((e=>{const t=document.getElementById(e);c.push(new o({}),new o({text:e.toUpperCase(),heading:r.HEADING_3}),new o({text:t?t.value:""}))}));const u=new i({sections:[{children:c}]});s.toBlob(u).then((t=>{saveAs(t,`PETM_Exam_${e.replace(/\s+/g,"_")}.docx`),hideLoading(),alert("Submitted! Word document downloaded.")}))}catch(e){hideLoading(),alert("Error. Use Copy to Clipboard.")}}function copyToClipboard(){let e=`PETM FINAL EXAM\n${"=".repeat(50)}\nStudent: ${document.getElementById("studentName").value}\nEmail: ${document.getElementById("studentEmail").value}\nID: ${document.getElementById("studentId").value}\n\n`;["p1_1","p1_2a","p1_2b","p1_3a","p1_3b","p1_3c","p2_1a","p2_1b","p2_1c","p2_2a","p2_2b","p2_2c","p3_1","p3_2","p4_1","p4_2"].forEach((t=>{const n=document.getElementById(t);e+=`${"-".repeat(40)}\n${t.toUpperCase()}\n${n?n.value:""}\n\n`})),navigator.clipboard.writeText(e).then((()=>alert("Copied!"))).catch((e=>alert("Copy failed")))}function showLoading(e){document.getElementById("loadingText").textContent=e,document.getElementById("loadingOverlay").classList.add("active")}function hideLoading(){document.getElementById("loadingOverlay").classList.remove("active")}document.addEventListener("DOMContentLoaded",function(){document.getElementById("submissionDate").value=(new Date).toLocaleDateString("en-GB",{day:"2-digit",month:"long",year:"numeric",hour:"2-digit",minute:"2-digit"});initAutoSave();});
-// Calculator functions
-function toggleCalculator(){document.getElementById("calculatorPanel").classList.toggle("active")}
-function switchCalcTab(e,t){document.querySelectorAll(".calc-tab").forEach(e=>e.classList.remove("active")),t.classList.add("active"),document.getElementById("basicCalc").style.display="basic"===e?"block":"none",document.getElementById("isotopeCalc").classList.toggle("active","isotope"===e),document.querySelectorAll(".calc-input-group").forEach(e=>e.classList.remove("active"))}
-function appendCalc(e){const t=document.getElementById("calcDisplay");t.value="0"===t.value||"Error"===t.value?e:t.value+e}
-function clearCalc(){document.getElementById("calcDisplay").value="0"}
-function calculate(){const e=document.getElementById("calcDisplay");try{e.value=eval(e.value).toFixed(4)}catch{e.value="Error"}}
-function showIsotopeFunc(e){document.querySelectorAll(".calc-input-group").forEach(e=>e.classList.remove("active")),document.getElementById("func_"+e).classList.add("active")}
-function calcPhosphateTemp(){const e=parseFloat(document.getElementById("phos_d18O").value),t=parseFloat(document.getElementById("phos_water").value);if(isNaN(e)||isNaN(t))return void(document.getElementById("result_temp_phosphate").innerHTML='<span style="color:red">Enter valid numbers</span>');const n=117.4-4.5*(e-t);document.getElementById("result_temp_phosphate").innerHTML=`<strong>Temperature = ${n.toFixed(1)} °C</strong><br><small>T = 117.4 - 4.50 × (${e} - (${t})) = ${n.toFixed(2)}</small>`}
-function calcAndersonTemp(){const e=parseFloat(document.getElementById("aa_d18O_carb").value),t=parseFloat(document.getElementById("aa_water").value);if(isNaN(e)||isNaN(t))return void(document.getElementById("result_temp_anderson").innerHTML='<span style="color:red">Enter valid numbers</span>');const n=e-t,a=16-4.14*n+.13*Math.pow(n,2);document.getElementById("result_temp_anderson").innerHTML=`<strong>Temperature = ${a.toFixed(1)} °C</strong><br><small>δc (VPDB) = ${e}‰</small><br><small>δw (VSMOW) = ${t}‰</small><br><small>(δc - δw) = ${n.toFixed(2)}</small><br><small>T = 16.0 - 4.14(${n.toFixed(2)}) + 0.13(${n.toFixed(2)})² = ${a.toFixed(1)}</small>`}
-function calcKimTemp(){const e=parseFloat(document.getElementById("kim_d18O_carb").value),t=parseFloat(document.getElementById("kim_water").value);if(isNaN(e)||isNaN(t))return void(document.getElementById("result_temp_kim").innerHTML='<span style="color:red">Enter valid numbers</span>');const n=e-t,a=16.1-4.64*n+.09*Math.pow(n,2);document.getElementById("result_temp_kim").innerHTML=`<strong>Temperature = ${a.toFixed(1)} °C</strong><br><small>δ¹⁸O_calcite (VPDB) = ${e}‰</small><br><small>δ¹⁸O_water (VSMOW) = ${t}‰</small><br><small>Δ¹⁸O = ${n.toFixed(2)}‰</small><br><small>T = 16.1 - 4.64(${n.toFixed(2)}) + 0.09(${n.toFixed(2)})² = ${a.toFixed(1)} °C</small>`}
-function convertStandard(){const e=parseFloat(document.getElementById("convert_value").value),t=document.getElementById("convert_from").value;if(isNaN(e))return void(document.getElementById("result_convert_vpdb").innerHTML='<span style="color:red">Enter a valid number</span>');let n,a;"vpdb"===t?(n=1.03091*e+30.91,a=`${e}‰ VPDB → ${n.toFixed(2)}‰ VSMOW`):(n=(e-30.91)/1.03091,a=`${e}‰ VSMOW → ${n.toFixed(2)}‰ VPDB`),document.getElementById("result_convert_vpdb").innerHTML=`<strong>${a}</strong>`}
-function calcAlpha(){const e=parseFloat(document.getElementById("alpha_a").value),t=parseFloat(document.getElementById("alpha_b").value);if(isNaN(e)||isNaN(t))return void(document.getElementById("result_alpha").innerHTML='<span style="color:red">Enter valid numbers</span>');const n=(1e3+e)/(1e3+t),a=1e3*Math.log(n);document.getElementById("result_alpha").innerHTML=`<strong>α = ${n.toFixed(5)}</strong><br><small>1000 ln α = ${a.toFixed(2)}</small>`}
+        // Language switching
+        function setLanguage(lang) {
+            document.body.classList.remove('lang-en', 'lang-de');
+            document.body.classList.add('lang-' + lang);
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+            localStorage.setItem('sedgeo-exam-lang', lang);
+        }
+        const savedLang = localStorage.getItem('sedgeo-exam-lang');
+        if (savedLang) setLanguage(savedLang);
+
+        const CORRECT_PASSWORD="GeochemProxies2026@",INSTRUCTOR_PASSWORD="Instructor2026!",EXAM_DURATION_MINUTES=120,GRACE_PERIOD_MINUTES=5,EXAM_START_DATE=new Date("2026-02-11T16:00:00");
+        let timerInterval,remainingSeconds=EXAM_DURATION_MINUTES*60,isGracePeriod=!1,isInstructorMode=!1;
+
+        function updateWatermark(){const e=document.getElementById("studentName").value,t=document.getElementById("watermark");e&&e.length>2?(t.textContent=e,t.classList.remove("hidden")):t.classList.add("hidden")}
+        function initAutoSave(){document.querySelectorAll("input:not([readonly]), textarea").forEach((e=>{const t=localStorage.getItem("petm_exam_"+e.id);t&&(e.value=t),e.addEventListener("input",(function(){localStorage.setItem("petm_exam_"+this.id,this.value)}))})),updateWatermark()}
+        function submitExam(){const e=document.getElementById("studentName").value||"Unknown",t=document.getElementById("studentEmail").value||"N/A",n=document.getElementById("studentId").value||"N/A",a=document.getElementById("submissionDate").value||(new Date).toLocaleString();showLoading("Generating Word document...");try{const{Document:i,Packer:s,Paragraph:o,TextRun:d,HeadingLevel:r,AlignmentType:l}=docx,c=[new o({text:"SEDIMENTARY GEOCHEMISTRY - PETM FINAL EXAM",heading:r.HEADING_1,alignment:l.CENTER}),new o({}),new o({children:[new d({text:"Student: ",bold:!0}),new d(e)]}),new o({children:[new d({text:"Email: ",bold:!0}),new d(t)]}),new o({children:[new d({text:"ID: ",bold:!0}),new d(n)]}),new o({children:[new d({text:"Date: ",bold:!0}),new d(a)]}),new o({})];["p1_1","p1_2a","p1_2b","p1_3a","p1_3b","p1_3c","p2_1a","p2_1b","p2_1c","p2_2a","p2_2b","p2_2c","p3_1","p3_2","p4_1","p4_2"].forEach((e=>{const t=document.getElementById(e);c.push(new o({}),new o({text:e.toUpperCase(),heading:r.HEADING_3}),new o({text:t?t.value:""}))}));const u=new i({sections:[{children:c}]});s.toBlob(u).then((t=>{saveAs(t,`PETM_Exam_${e.replace(/\s+/g,"_")}.docx`),hideLoading(),alert("Submitted! Word document downloaded.")}))}catch(e){hideLoading(),alert("Error. Use Copy to Clipboard.")}}
+        function copyToClipboard(){let e=`PETM FINAL EXAM\n${"=".repeat(50)}\nStudent: ${document.getElementById("studentName").value}\nEmail: ${document.getElementById("studentEmail").value}\nID: ${document.getElementById("studentId").value}\n\n`;["p1_1","p1_2a","p1_2b","p1_3a","p1_3b","p1_3c","p2_1a","p2_1b","p2_1c","p2_2a","p2_2b","p2_2c","p3_1","p3_2","p4_1","p4_2"].forEach((t=>{const n=document.getElementById(t);e+=`${"-".repeat(40)}\n${t.toUpperCase()}\n${n?n.value:""}\n\n`})),navigator.clipboard.writeText(e).then((()=>alert("Copied!"))).catch((e=>alert("Copy failed")))}
+        function showLoading(e){document.getElementById("loadingText").textContent=e,document.getElementById("loadingOverlay").classList.add("active")}
+        function hideLoading(){document.getElementById("loadingOverlay").classList.remove("active")}
+        document.addEventListener("DOMContentLoaded",function(){document.getElementById("submissionDate").value=(new Date).toLocaleDateString("en-GB",{day:"2-digit",month:"long",year:"numeric",hour:"2-digit",minute:"2-digit"});initAutoSave();});
+
+        // Calculator functions
+        function toggleCalculator(){document.getElementById("calculatorPanel").classList.toggle("active")}
+        function switchCalcTab(e,t){document.querySelectorAll(".calc-tab").forEach(e=>e.classList.remove("active")),t.classList.add("active"),document.getElementById("basicCalc").style.display="basic"===e?"block":"none",document.getElementById("isotopeCalc").classList.toggle("active","isotope"===e),document.querySelectorAll(".calc-input-group").forEach(e=>e.classList.remove("active"))}
+        function appendCalc(e){const t=document.getElementById("calcDisplay");t.value="0"===t.value||"Error"===t.value?e:t.value+e}
+        function clearCalc(){document.getElementById("calcDisplay").value="0"}
+        function calculate(){const e=document.getElementById("calcDisplay");try{e.value=eval(e.value).toFixed(4)}catch{e.value="Error"}}
+        function showIsotopeFunc(e){document.querySelectorAll(".calc-input-group").forEach(e=>e.classList.remove("active")),document.getElementById("func_"+e).classList.add("active")}
+        function calcPhosphateTemp(){const e=parseFloat(document.getElementById("phos_d18O").value),t=parseFloat(document.getElementById("phos_water").value);if(isNaN(e)||isNaN(t))return void(document.getElementById("result_temp_phosphate").innerHTML='<span style="color:red">Enter valid numbers / Gültige Zahlen eingeben</span>');const n=117.4-4.5*(e-t);document.getElementById("result_temp_phosphate").innerHTML=`<strong>Temperature = ${n.toFixed(1)} °C</strong><br><small>T = 117.4 - 4.50 × (${e} - (${t})) = ${n.toFixed(2)}</small>`}
+        function calcAndersonTemp(){const e=parseFloat(document.getElementById("aa_d18O_carb").value),t=parseFloat(document.getElementById("aa_water").value);if(isNaN(e)||isNaN(t))return void(document.getElementById("result_temp_anderson").innerHTML='<span style="color:red">Enter valid numbers / Gültige Zahlen eingeben</span>');const n=e-t,a=16-4.14*n+.13*Math.pow(n,2);document.getElementById("result_temp_anderson").innerHTML=`<strong>Temperature = ${a.toFixed(1)} °C</strong><br><small>δc (VPDB) = ${e}‰</small><br><small>δw (VSMOW) = ${t}‰</small><br><small>(δc - δw) = ${n.toFixed(2)}</small><br><small>T = 16.0 - 4.14(${n.toFixed(2)}) + 0.13(${n.toFixed(2)})² = ${a.toFixed(1)}</small>`}
+        function calcKimTemp(){const e=parseFloat(document.getElementById("kim_d18O_carb").value),t=parseFloat(document.getElementById("kim_water").value);if(isNaN(e)||isNaN(t))return void(document.getElementById("result_temp_kim").innerHTML='<span style="color:red">Enter valid numbers / Gültige Zahlen eingeben</span>');const n=e-t,a=16.1-4.64*n+.09*Math.pow(n,2);document.getElementById("result_temp_kim").innerHTML=`<strong>Temperature = ${a.toFixed(1)} °C</strong><br><small>δ¹⁸O_calcite (VPDB) = ${e}‰</small><br><small>δ¹⁸O_water (VSMOW) = ${t}‰</small><br><small>Δ¹⁸O = ${n.toFixed(2)}‰</small><br><small>T = 16.1 - 4.64(${n.toFixed(2)}) + 0.09(${n.toFixed(2)})² = ${a.toFixed(1)} °C</small>`}
+        function convertStandard(){const e=parseFloat(document.getElementById("convert_value").value),t=document.getElementById("convert_from").value;if(isNaN(e))return void(document.getElementById("result_convert_vpdb").innerHTML='<span style="color:red">Enter a valid number / Gültige Zahl eingeben</span>');let n,a;"vpdb"===t?(n=1.03091*e+30.91,a=`${e}‰ VPDB → ${n.toFixed(2)}‰ VSMOW`):(n=(e-30.91)/1.03091,a=`${e}‰ VSMOW → ${n.toFixed(2)}‰ VPDB`),document.getElementById("result_convert_vpdb").innerHTML=`<strong>${a}</strong>`}
+        function calcAlpha(){const e=parseFloat(document.getElementById("alpha_a").value),t=parseFloat(document.getElementById("alpha_b").value);if(isNaN(e)||isNaN(t))return void(document.getElementById("result_alpha").innerHTML='<span style="color:red">Enter valid numbers / Gültige Zahlen eingeben</span>');const n=(1e3+e)/(1e3+t),a=1e3*Math.log(n);document.getElementById("result_alpha").innerHTML=`<strong>α = ${n.toFixed(5)}</strong><br><small>1000 ln α = ${a.toFixed(2)}</small>`}
     </script>
 </body>
 </html>

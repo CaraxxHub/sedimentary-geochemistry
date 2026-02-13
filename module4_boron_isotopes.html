@@ -97,48 +97,59 @@
         .figure-box { background: #f8f9fa; border-radius: 12px; padding: 20px; margin: 25px 0; text-align: center; }
         .figure-box img { max-width: 100%; height: auto; border-radius: 8px; margin-bottom: 15px; }
         .figure-box .caption { font-size: 0.9em; color: #666; font-style: italic; }
+        /* Language Switch */
+        .lang-switch { position: fixed; top: 70px; right: 15px; z-index: 1001; display: flex; gap: 5px; background: rgba(255,255,255,0.95); padding: 5px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.15); }
+        .lang-btn { padding: 6px 12px; border: 2px solid #16a085; background: white; color: #16a085; font-weight: bold; cursor: pointer; border-radius: 5px; transition: all 0.3s; font-size: 0.85em; }
+        .lang-btn:hover { background: #e8f6f3; }
+        .lang-btn.active { background: #16a085; color: white; }
+        body.lang-en .de { display: none !important; }
+        body.lang-de .en { display: none !important; }
     </style>
 </head>
-<body>
+<body class="lang-en">
+    <div class="lang-switch">
+        <button class="lang-btn active" id="enBtn" onclick="switchLanguage('en')">English</button>
+        <button class="lang-btn" id="deBtn" onclick="switchLanguage('de')">Deutsch</button>
+    </div>
     <nav class="nav-bar">
-        <a href="index.html" class="nav-brand">🔬 Sedimentary Geochemistry</a>
+        <a href="index.html" class="nav-brand">🔬 <span class="en">Sedimentary Geochemistry</span><span class="de">Sedimentäre Geochemie</span></a>
         <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="module1_introduction_isotopes.html">Module 1</a>
-            <a href="module2_carbon_oxygen_isotopes.html">Module 2</a>
-            <a href="module3_clumped_isotopes.html">Module 3</a>
-            <a href="module4_boron_isotopes.html" style="font-weight: bold;">Module 4</a>
-            <a href="module5_strontium_isotopes.html">Module 5</a>
+            <a href="index.html"><span class="en">Home</span><span class="de">Startseite</span></a>
+            <a href="module1_introduction_isotopes.html"><span class="en">Module 1</span><span class="de">Modul 1</span></a>
+            <a href="module2_carbon_oxygen_isotopes.html"><span class="en">Module 2</span><span class="de">Modul 2</span></a>
+            <a href="module3_clumped_isotopes.html"><span class="en">Module 3</span><span class="de">Modul 3</span></a>
+            <a href="module4_boron_isotopes.html" style="font-weight: bold;"><span class="en">Module 4</span><span class="de">Modul 4</span></a>
+            <a href="module5_strontium_isotopes.html"><span class="en">Module 5</span><span class="de">Modul 5</span></a>
         </div>
     </nav>
 
     <header class="hero">
-        <h1>Boron Isotopes (δ¹¹B)</h1>
-        <p class="subtitle">The paleo-pH meter: Ocean acidification through time</p>
-        <span class="module-tag">📖 Module 4 of 5 • Estimated time: 45 minutes</span>
+        <h1><span class="en">Boron Isotopes</span><span class="de">Borisotope</span> (δ¹¹B)</h1>
+        <p class="subtitle"><span class="en">The paleo-pH meter: Ocean acidification through time</span><span class="de">Das Paläo-pH-Meter: Ozeanversäuerung durch die Zeit</span></p>
+        <span class="module-tag">📖 <span class="en">Module 4 of 5 • Estimated time: 45 minutes</span><span class="de">Modul 4 von 5 • Geschätzte Zeit: 45 Minuten</span></span>
     </header>
 
     <main class="container">
         <div class="objectives">
-            <h2>🎯 Learning Objectives</h2>
+            <h2>🎯 <span class="en">Learning Objectives</span><span class="de">Lernziele</span></h2>
             <ul>
-                <li>Understand boron speciation in seawater and its pH dependence</li>
-                <li>Explain why δ¹¹B of carbonates tracks seawater pH</li>
-                <li>Apply the boron isotope proxy to reconstruct paleo-pH and pCO₂</li>
-                <li>Recognize limitations: seawater δ¹¹B evolution and vital effects</li>
-                <li>Interpret case studies: Cenozoic CO₂ and PTB ocean acidification</li>
+                <li><span class="en">Understand boron speciation in seawater and its pH dependence</span><span class="de">Verstehe Borspeciation im Meerwasser und ihre pH-Abhängigkeit</span></li>
+                <li><span class="en">Explain why δ¹¹B of carbonates tracks seawater pH</span><span class="de">Erkläre, warum δ¹¹B von Karbonatien den Meerwasser-pH verfolgt</span></li>
+                <li><span class="en">Apply the boron isotope proxy to reconstruct paleo-pH and pCO₂</span><span class="de">Wende den Borisotop-Proxy an, um Paläo-pH und pCO₂ zu rekonstruieren</span></li>
+                <li><span class="en">Recognize limitations: seawater δ¹¹B evolution and vital effects</span><span class="de">Erkenne Grenzen: Meerwasser δ¹¹B-Evolution und Vitaleffekte</span></li>
+                <li><span class="en">Interpret case studies: Cenozoic CO₂ and PTB ocean acidification</span><span class="de">Interpretiere Fallstudien: Känozoisches CO₂ und PTB-Ozeanversäuerung</span></li>
             </ul>
         </div>
 
         <section class="section">
-            <h2>1. Boron in Seawater</h2>
+            <h2>1. <span class="en">Boron in Seawater</span><span class="de">Bor im Meerwasser</span></h2>
 
             <div class="figure-box">
                 <img src="images/lectures/carbon_d13c_mauna_loa_trend.jpg" alt="Atmospheric δ¹³C trend from Mauna Loa">
                 <div class="caption">Figure: Long-term atmospheric δ¹³C trends from Mauna Loa Observatory (black) and South Pole (red). The decreasing trend reflects the Suess effect — addition of isotopically light carbon from fossil fuel combustion. Understanding this carbon cycle perturbation helps contextualize paleo-CO₂ reconstructions from boron isotopes.</div>
             </div>
 
-            <h3>Basic Properties</h3>
+            <h3><span class="en">Basic Properties</span><span class="de">Grundeigenschaften</span></h3>
             <p>Boron has two stable isotopes that form the basis of this proxy system:</p>
 
             <table class="data-table">
@@ -178,23 +189,23 @@
                 </ul>
             </div>
 
-            <h3>Boron Speciation: The Key to pH Dependence</h3>
+            <h3><span class="en">Boron Speciation: The Key to pH Dependence</span><span class="de">Borspeciation: Der Schlüssel zur pH-Abhängigkeit</span></h3>
             <p>Boron in seawater exists in two molecular forms (species), whose proportions depend on pH:</p>
 
             <div class="two-column">
                 <div class="species-box">
-                    <h4>Boric Acid</h4>
+                    <h4><span class="en">Boric Acid</span><span class="de">Borsäure</span></h4>
                     <div class="formula">B(OH)₃</div>
-                    <p>Trigonal planar geometry</p>
-                    <div class="d11b">Higher δ¹¹B</div>
-                    <p style="font-size: 0.9em; margin-top: 10px;">Dominates at <strong>low pH</strong></p>
+                    <p><span class="en">Trigonal planar geometry</span><span class="de">Trigonal-planare Geometrie</span></p>
+                    <div class="d11b"><span class="en">Higher δ¹¹B</span><span class="de">Höheres δ¹¹B</span></div>
+                    <p style="font-size: 0.9em; margin-top: 10px;"><span class="en">Dominates at</span><span class="de">Überwiegt bei</span> <strong><span class="en">low pH</span><span class="de">niedrigem pH</span></strong></p>
                 </div>
                 <div class="species-box">
-                    <h4>Borate Ion</h4>
+                    <h4><span class="en">Borate Ion</span><span class="de">Borat-Ion</span></h4>
                     <div class="formula">B(OH)₄⁻</div>
-                    <p>Tetrahedral geometry</p>
-                    <div class="d11b">Lower δ¹¹B (by ~20‰)</div>
-                    <p style="font-size: 0.9em; margin-top: 10px;">Dominates at <strong>high pH</strong></p>
+                    <p><span class="en">Tetrahedral geometry</span><span class="de">Tetrahedrische Geometrie</span></p>
+                    <div class="d11b"><span class="en">Lower δ¹¹B (by ~20‰)</span><span class="de">Niedriger δ¹¹B (um ~20‰)</span></div>
+                    <p style="font-size: 0.9em; margin-top: 10px;"><span class="en">Dominates at</span><span class="de">Überwiegt bei</span> <strong><span class="en">high pH</span><span class="de">hohem pH</span></strong></p>
                 </div>
             </div>
 
@@ -212,9 +223,9 @@
         </section>
 
         <section class="section">
-            <h2>2. The Boron-pH Connection</h2>
+            <h2>2. <span class="en">The Boron-pH Connection</span><span class="de">Die Bor-pH-Verbindung</span></h2>
             
-            <h3>Why Does Carbonate δ¹¹B Reflect pH?</h3>
+            <h3><span class="en">Why Does Carbonate δ¹¹B Reflect pH?</span><span class="de">Warum reflektiert Carbonat δ¹¹B den pH?</span></h3>
             <p>The key insight is that <strong>only B(OH)₄⁻</strong> (borate) is incorporated into carbonate minerals — not B(OH)₃!</p>
 
             <div class="concept-box success">
@@ -227,7 +238,7 @@
                 </ol>
             </div>
 
-            <h3>How pH Controls B(OH)₄⁻ Isotopic Composition</h3>
+            <h3><span class="en">How pH Controls B(OH)₄⁻ Isotopic Composition</span><span class="de">Wie pH die B(OH)₄⁻ isotopische Zusammensetzung kontrolliert</span></h3>
             <p>As pH changes, two things happen simultaneously:</p>
 
             <table class="data-table">
@@ -290,7 +301,7 @@
         </section>
 
         <section class="section">
-            <h2>3. From pH to pCO₂</h2>
+            <h2>3. <span class="en">From pH to pCO₂</span><span class="de">Von pH zu pCO₂</span></h2>
             
             <p>The ultimate goal is often to reconstruct atmospheric CO₂. This requires additional steps:</p>
 
@@ -314,7 +325,7 @@
                 </ul>
             </div>
 
-            <h3>Case Study: Cenozoic pCO₂ (Pearson & Palmer, 2000)</h3>
+            <h3><span class="en">Case Study: Cenozoic pCO₂ (Pearson & Palmer, 2000)</span><span class="de">Fallstudie: Känozoisches pCO₂ (Pearson & Palmer, 2000)</span></h3>
             <div class="concept-box success">
                 <h4>📈 60 Million Years of CO₂</h4>
                 <p>Using planktonic foraminifera δ¹¹B:</p>
@@ -328,9 +339,9 @@
         </section>
 
         <section class="section">
-            <h2>4. Limitations and Complications</h2>
+            <h2>4. <span class="en">Limitations and Complications</span><span class="de">Grenzen und Komplikationen</span></h2>
             
-            <h3>A. Seawater δ¹¹B Evolution</h3>
+            <h3>A. <span class="en">Seawater δ¹¹B Evolution</span><span class="de">Meerwasser δ¹¹B-Evolution</span></h3>
             <p>The biggest uncertainty for deep-time applications: <strong>Has seawater δ¹¹B changed through Earth history?</strong></p>
 
             <div class="concept-box important">
@@ -344,7 +355,7 @@
                 <p style="margin-top: 10px;"><strong>Implication:</strong> Cannot use boron isotopes as pH proxy in deep time without constraining seawater δ¹¹B!</p>
             </div>
 
-            <h3>B. Vital Effects</h3>
+            <h3>B. <span class="en">Vital Effects</span><span class="de">Vitaleffekte</span></h3>
             <p>Many organisms don't incorporate B(OH)₄⁻ in perfect equilibrium:</p>
             <ul style="margin-left: 20px; margin-top: 10px;">
                 <li>Corals show species-specific offsets of 2-5‰</li>
@@ -357,7 +368,7 @@
                 <p>Must use species-specific calibrations (not a generic pH equation) for accurate reconstructions. Offsets are usually constant, allowing correction.</p>
             </div>
 
-            <h3>C. Diagenesis</h3>
+            <h3>C. <span class="en">Diagenesis</span><span class="de">Diagenese</span></h3>
             <p>Boron is mobile during diagenesis:</p>
             <ul style="margin-left: 20px; margin-top: 10px;">
                 <li>Recrystallization can reset δ¹¹B</li>
@@ -367,7 +378,7 @@
         </section>
 
         <section class="section">
-            <h2>5. Case Study: Permo-Triassic Boundary Ocean Acidification</h2>
+            <h2>5. <span class="en">Case Study: Permo-Triassic Boundary Ocean Acidification</span><span class="de">Fallstudie: Permo-Triassische Grenz-Ozeanversäuerung</span></h2>
 
             <div class="figure-box">
                 <img src="images/lectures/stable_isotope_salinity_data.jpg" alt="Stable isotope and salinity relationships">
@@ -379,14 +390,14 @@
                 <p>First boron isotope reconstruction of pH across the Permo-Triassic mass extinction:</p>
             </div>
 
-            <h3>The Data</h3>
+            <h3><span class="en">The Data</span><span class="de">Die Daten</span></h3>
             <ul style="margin-left: 20px; margin-top: 10px;">
                 <li>Analyzed well-preserved brachiopod calcite from UAE and Turkey</li>
                 <li>Observed ~4‰ drop in δ¹¹B at the extinction horizon</li>
                 <li>Corresponds to ~0.6 pH unit decrease</li>
             </ul>
 
-            <h3>The Interpretation</h3>
+            <h3><span class="en">The Interpretation</span><span class="de">Die Interpretation</span></h3>
             <div class="concept-box">
                 <h4>🌋 The Scenario</h4>
                 <ol style="margin-top: 10px;">
@@ -407,7 +418,7 @@
                 </ul>
             </div>
 
-            <h3>Broader Context</h3>
+            <h3><span class="en">Broader Context</span><span class="de">Breiterer Kontext</span></h3>
             <p>The PTB shows the "deadly trio" of environmental stress:</p>
             <table class="data-table">
                 <thead>
@@ -438,7 +449,7 @@
         </section>
 
         <div class="key-points">
-            <h3>📌 Key Points to Remember</h3>
+            <h3>📌 <span class="en">Key Points to Remember</span><span class="de">Wichtige Punkte zum Merken</span></h3>
             <ul>
                 <li>Boron exists as B(OH)₃ (trigonal, high δ¹¹B) and B(OH)₄⁻ (tetrahedral, low δ¹¹B) — ~20‰ fractionation</li>
                 <li>Only B(OH)₄⁻ incorporates into carbonate → carbonate δ¹¹B tracks borate δ¹¹B</li>
@@ -451,8 +462,8 @@
         </div>
 
         <section class="quiz-section" id="quizSection">
-            <h2>🧠 Test Your Understanding</h2>
-            <p style="opacity: 0.9; margin-bottom: 20px;">Answer these questions to check your comprehension of Module 4.</p>
+            <h2>🧠 <span class="en">Test Your Understanding</span><span class="de">Teste dein Verständnis</span></h2>
+            <p style="opacity: 0.9; margin-bottom: 20px;"><span class="en">Answer these questions to check your comprehension of Module 4.</span><span class="de">Beantworte diese Fragen, um dein Verständnis von Modul 4 zu überprüfen.</span></p>
             
             <div class="quiz-progress">
                 <div class="quiz-progress-bar" id="progressBar"></div>
@@ -461,16 +472,16 @@
             <div id="quizContainer"></div>
 
             <div id="quizResults" class="quiz-results" style="display: none;">
-                <h3>Quiz Complete!</h3>
+                <h3><span class="en">Quiz Complete!</span><span class="de">Quiz abgeschlossen!</span></h3>
                 <div class="score-circle" id="scoreCircle">0%</div>
                 <p id="scoreMessage"></p>
                 <p id="scoreDetail"></p>
-                <button class="retry-btn" onclick="restartQuiz()">Try Again</button>
+                <button class="retry-btn" onclick="restartQuiz()"><span class="en">Try Again</span><span class="de">Erneut versuchen</span></button>
             </div>
         </section>
 
         <div class="references">
-            <h3>📚 Key References</h3>
+            <h3>📚 <span class="en">Key References</span><span class="de">Wichtige Referenzen</span></h3>
             <ul>
                 <li>Hemming, N.G. & Hanson, G.N. (1992). Boron isotopic composition and concentration in modern marine carbonates. <em>Geochimica et Cosmochimica Acta</em> 56, 537-543.</li>
                 <li>Pearson, P.N. & Palmer, M.R. (2000). Atmospheric carbon dioxide concentrations over the past 60 million years. <em>Nature</em> 406, 695-699.</li>
@@ -480,19 +491,32 @@
         </div>
 
         <div class="module-nav">
-            <a href="#">← Module 3: Clumped Isotopes</a>
-            <a href="#">Module 5: Strontium Isotopes →</a>
+            <a href="#"><span class="en">← Module 3: Clumped Isotopes</span><span class="de">← Modul 3: Geclumpte Isotope</span></a>
+            <a href="#"><span class="en">Module 5: Strontium Isotopes →</span><span class="de">Modul 5: Strontium-Isotope →</span></a>
         </div>
     </main>
 
     <footer class="footer">
-        <p><strong>Sedimentary Geochemistry</strong> | MSc Course</p>
+        <p><strong><span class="en">Sedimentary Geochemistry</span><span class="de">Sedimentäre Geochemie</span></strong> | <span class="en">MSc Course</span><span class="de">MSc-Kurs</span></p>
         <p>Friedrich-Alexander-Universität Erlangen-Nürnberg (FAU)</p>
         <p>PD Dr. Luca Caracciolo | GeoZentrum Nordbayern</p>
-        <p style="margin-top: 15px; opacity: 0.7;">© 2025 | For educational use only</p>
+        <p style="margin-top: 15px; opacity: 0.7;">© 2025 | <span class="en">For educational use only</span><span class="de">Nur für Bildungszwecke</span></p>
     </footer>
 
     <script>
+        // Language switching
+        function switchLanguage(lang) {
+            document.body.className = 'lang-' + lang;
+            document.getElementById('enBtn').classList.toggle('active', lang === 'en');
+            document.getElementById('deBtn').classList.toggle('active', lang === 'de');
+            localStorage.setItem('preferredLanguage', lang);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const saved = localStorage.getItem('preferredLanguage') || 'en';
+            switchLanguage(saved);
+        });
+
         const quizQuestions = [
             {
                 question: "Which boron species is incorporated into carbonate minerals?",

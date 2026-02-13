@@ -97,406 +97,417 @@
         .module-nav a { display: flex; align-items: center; text-decoration: none; color: #065F46; font-weight: 500; }
         .module-nav a:hover { color: #064E3B; }
         @media (max-width: 768px) { .hero h1 { font-size: 1.8em; } .nav-links { display: none; } .equation-box { font-size: 0.95em; padding: 15px; } .two-column { grid-template-columns: 1fr; } .redox-scale { flex-direction: column; } }
+        /* Language Switch */
+        .lang-switch { position: fixed; top: 70px; right: 15px; z-index: 1001; display: flex; gap: 5px; background: rgba(255,255,255,0.95); padding: 5px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.15); }
+        .lang-btn { padding: 6px 12px; border: 2px solid #16a085; background: white; color: #16a085; font-weight: bold; cursor: pointer; border-radius: 5px; transition: all 0.3s; font-size: 0.85em; }
+        .lang-btn:hover { background: #e8f6f3; }
+        .lang-btn.active { background: #16a085; color: white; }
+        body.lang-en .de { display: none !important; }
+        body.lang-de .en { display: none !important; }
     </style>
 </head>
-<body>
+<body class="lang-en">
+    <div class="lang-switch">
+        <button class="lang-btn active" onclick="setLanguage('en')">English</button>
+        <button class="lang-btn" onclick="setLanguage('de')">Deutsch</button>
+    </div>
     <nav class="nav-bar">
-        <a href="index.html" class="nav-brand">🔬 Sedimentary Geochemistry</a>
+        <a href="index.html" class="nav-brand">🔬 <span class="en">Sedimentary Geochemistry</span><span class="de">Sedimentäre Geochemie</span></a>
         <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="module1_introduction_isotopes.html">Module 1</a>
-            <a href="module2_carbon_oxygen_isotopes.html">Module 2</a>
-            <a href="module3_clumped_isotopes.html">Module 3</a>
-            <a href="module4_boron_isotopes.html">Module 4</a>
-            <a href="module5_strontium_isotopes.html">Module 5</a>
-            <a href="module6_nd_isotopes.html">Module 6</a>
-            <a href="module7_uranium_trace_elements.html" style="font-weight: bold;">Module 7</a>
+            <a href="index.html"><span class="en">Home</span><span class="de">Startseite</span></a>
+            <a href="module1_introduction_isotopes.html"><span class="en">Module 1</span><span class="de">Modul 1</span></a>
+            <a href="module2_carbon_oxygen_isotopes.html"><span class="en">Module 2</span><span class="de">Modul 2</span></a>
+            <a href="module3_clumped_isotopes.html"><span class="en">Module 3</span><span class="de">Modul 3</span></a>
+            <a href="module4_boron_isotopes.html"><span class="en">Module 4</span><span class="de">Modul 4</span></a>
+            <a href="module5_strontium_isotopes.html"><span class="en">Module 5</span><span class="de">Modul 5</span></a>
+            <a href="module6_nd_isotopes.html"><span class="en">Module 6</span><span class="de">Modul 6</span></a>
+            <a href="module7_uranium_trace_elements.html" style="font-weight: bold;"><span class="en">Module 7</span><span class="de">Modul 7</span></a>
         </div>
     </nav>
 
     <header class="hero">
-        <h1>Uranium Isotopes & Trace Elements</h1>
-        <p class="subtitle">Reconstructing ocean oxygenation through geological time</p>
-        <span class="module-tag">📖 Module 7 of 7 • Estimated time: 40 minutes</span>
+        <h1><span class="en">Uranium Isotopes & Trace Elements</span><span class="de">Uranisotope & Spurenelemente</span></h1>
+        <p class="subtitle"><span class="en">Reconstructing ocean oxygenation through geological time</span><span class="de">Rekonstruktion der Ozeanoxidation durch die geologische Zeit</span></p>
+        <span class="module-tag">📖 <span class="en">Module 7 of 7 • Estimated time: 40 minutes</span><span class="de">Modul 7 von 7 • Geschätzte Zeit: 40 Minuten</span></span>
     </header>
 
     <main class="container">
         <div class="objectives">
-            <h2>🎯 Learning Objectives</h2>
+            <h2>🎯 <span class="en">Learning Objectives</span><span class="de">Lernziele</span></h2>
             <ul>
-                <li>Understand the δ²³⁸U notation and uranium isotope fractionation during reduction</li>
-                <li>Explain how δ²³⁸U serves as a global ocean paleoredox proxy</li>
-                <li>Classify redox environments: oxic, suboxic, anoxic, and euxinic</li>
-                <li>Apply trace element enrichment factors (EF) for paleoredox reconstruction</li>
-                <li>Interpret Mo, U, V, and other redox-sensitive trace element patterns</li>
-                <li>Recognize diagenetic complications and how to address them</li>
+                <li><span class="en">Understand the δ²³⁸U notation and uranium isotope fractionation during reduction</span><span class="de">Die δ²³⁸U-Notation und Uranisotopenfraktionierung während der Reduktion verstehen</span></li>
+                <li><span class="en">Explain how δ²³⁸U serves as a global ocean paleoredox proxy</span><span class="de">Erklären Sie, wie δ²³⁸U als globaler Meerespaleoredox-Proxy dient</span></li>
+                <li><span class="en">Classify redox environments: oxic, suboxic, anoxic, and euxinic</span><span class="de">Klassifizieren Sie Redox-Umgebungen: oxisch, suboxisch, anoxisch und euxinisch</span></li>
+                <li><span class="en">Apply trace element enrichment factors (EF) for paleoredox reconstruction</span><span class="de">Wenden Sie Anreicherungsfaktoren für Spurenelemente (EF) zur Paleoredox-Rekonstruktion an</span></li>
+                <li><span class="en">Interpret Mo, U, V, and other redox-sensitive trace element patterns</span><span class="de">Interpretieren Sie Mo-, U-, V- und andere redoxempfindliche Spurenelementmuster</span></li>
+                <li><span class="en">Recognize diagenetic complications and how to address them</span><span class="de">Erkennen Sie diagenetische Komplikationen und deren Lösungen</span></li>
             </ul>
         </div>
 
         <section class="section">
-            <h2>Part 1: Uranium Isotopes (δ²³⁸U)</h2>
+            <h2><span class="en">Part 1: Uranium Isotopes (δ²³⁸U)</span><span class="de">Teil 1: Uranisotope (δ²³⁸U)</span></h2>
 
-            <h3>Uranium Redox Chemistry</h3>
-            <p>Uranium exists in two main oxidation states in natural environments:</p>
+            <h3><span class="en">Uranium Redox Chemistry</span><span class="de">Uranium-Redox-Chemie</span></h3>
+            <p><span class="en">Uranium exists in two main oxidation states in natural environments:</span><span class="de">Uran existiert in zwei Hauptoxidationszuständen in natürlichen Umgebungen:</span></p>
 
             <div class="two-column">
                 <div class="redox-box oxic">
-                    <h4>🌊 Oxic Conditions</h4>
+                    <h4>🌊 <span class="en">Oxic Conditions</span><span class="de">Oxische Bedingungen</span></h4>
                     <div class="species">U⁶⁺</div>
-                    <p><strong>Soluble</strong></p>
+                    <p><strong><span class="en">Soluble</span><span class="de">Löslich</span></strong></p>
                     <ul style="text-align: left; font-size: 0.9em; margin-top: 10px;">
-                        <li>Forms uranyl-carbonate complexes</li>
+                        <li><span class="en">Forms uranyl-carbonate complexes</span><span class="de">Bildet Uranyl-Carbonat-Komplexe</span></li>
                         <li>UO₂(CO₃)₃⁴⁻</li>
-                        <li>Conservative behavior</li>
-                        <li>Long residence time (~400 kyr)</li>
+                        <li><span class="en">Conservative behavior</span><span class="de">Konservatives Verhalten</span></li>
+                        <li><span class="en">Long residence time (~400 kyr)</span><span class="de">Lange Verweilzeit (~400 kyr)</span></li>
                     </ul>
                 </div>
                 <div class="redox-box reducing">
-                    <h4>⚫ Reducing Conditions</h4>
+                    <h4>⚫ <span class="en">Reducing Conditions</span><span class="de">Reduzierende Bedingungen</span></h4>
                     <div class="species">U⁴⁺</div>
-                    <p><strong>Insoluble</strong></p>
+                    <p><strong><span class="en">Insoluble</span><span class="de">Unlöslich</span></strong></p>
                     <ul style="text-align: left; font-size: 0.9em; margin-top: 10px;">
-                        <li>Precipitates as uraninite (UO₂)</li>
-                        <li>Forms complexes with hydroxides</li>
-                        <li>Removed from water column</li>
-                        <li>Enriched in black shales</li>
+                        <li><span class="en">Precipitates as uraninite (UO₂)</span><span class="de">Fällt als Uraninit (UO₂) aus</span></li>
+                        <li><span class="en">Forms complexes with hydroxides</span><span class="de">Bildet Komplexe mit Hydroxiden</span></li>
+                        <li><span class="en">Removed from water column</span><span class="de">Entfernt aus der Wassersäule</span></li>
+                        <li><span class="en">Enriched in black shales</span><span class="de">Angereichert in schwarzen Schiefern</span></li>
                     </ul>
                 </div>
             </div>
 
-            <h3>The δ²³⁸U Notation</h3>
-            <p>Uranium has three naturally occurring isotopes: ²³⁸U, ²³⁵U, and ²³⁴U. The isotope ratio is expressed as:</p>
+            <h3><span class="en">The δ²³⁸U Notation</span><span class="de">Die δ²³⁸U-Notation</span></h3>
+            <p><span class="en">Uranium has three naturally occurring isotopes: ²³⁸U, ²³⁵U, and ²³⁴U. The isotope ratio is expressed as:</span><span class="de">Uran hat drei natürlich vorkommende Isotope: ²³⁸U, ²³⁵U und ²³⁴U. Das Isotopenverhältnis wird wie folgt ausgedrückt:</span></p>
 
             <div class="equation-box">
-                <div class="equation-name">Delta-238U Definition</div>
+                <div class="equation-name"><span class="en">Delta-238U Definition</span><span class="de">Delta-238U Definition</span></div>
                 δ²³⁸U = [(²³⁸U/²³⁵U)sample / (²³⁸U/²³⁵U)CRM145 − 1] × 1000
-                <div class="equation-note">CRM145 = Certified Reference Material (standard)</div>
+                <div class="equation-note"><span class="en">CRM145 = Certified Reference Material (standard)</span><span class="de">CRM145 = Zertifiziertes Referenzmaterial (Standard)</span></div>
             </div>
 
             <div class="concept-box">
-                <h4>🔑 Key Principle: Isotope Fractionation During Reduction</h4>
-                <p>When U⁶⁺ is reduced to U⁴⁺ at low temperatures, there is <strong>mass-dependent fractionation</strong>:</p>
+                <h4>🔑 <span class="en">Key Principle: Isotope Fractionation During Reduction</span><span class="de">Kernprinzip: Isotopenfraktionierung während der Reduktion</span></h4>
+                <p><span class="en">When U⁶⁺ is reduced to U⁴⁺ at low temperatures, there is <strong>mass-dependent fractionation</strong>:</span><span class="de">Wenn U⁶⁺ bei niedrigen Temperaturen zu U⁴⁺ reduziert wird, tritt eine <strong>massenvabhängige Fraktionierung</strong> auf:</span></p>
                 <ul style="margin-top: 10px;">
-                    <li><strong>²³⁸U is preferentially reduced</strong> (heavier isotope enriched in reduced form)</li>
-                    <li>Reduced U⁴⁺ in sediments has <strong>higher δ²³⁸U</strong> than seawater</li>
-                    <li>Fractionation factor: Δ²³⁸U ≈ +0.5‰ (anoxic sediments vs. seawater)</li>
+                    <li><strong><span class="en">²³⁸U is preferentially reduced</span><span class="de">²³⁸U wird bevorzugt reduziert</span></strong> <span class="en">(heavier isotope enriched in reduced form)</span><span class="de">(schwereres Isotop in reduzierter Form angereichert)</span></li>
+                    <li><span class="en">Reduced U⁴⁺ in sediments has <strong>higher δ²³⁸U</strong> than seawater</span><span class="de">Reduziertes U⁴⁺ in Sedimenten hat <strong>höhere δ²³⁸U</strong> als Meerwasser</span></li>
+                    <li><span class="en">Fractionation factor: Δ²³⁸U ≈ +0.5‰ (anoxic sediments vs. seawater)</span><span class="de">Fraktionierungsfaktor: Δ²³⁸U ≈ +0.5‰ (anoxische Sedimente vs. Meerwasser)</span></li>
                 </ul>
             </div>
 
             <div class="figure-box">
                 <img src="images/lectures/uranium_redox_diagram.jpg" alt="Uranium redox cycling in the ocean">
-                <div class="caption">Figure: Uranium cycling between oxic surface waters (U⁶⁺, soluble) and anoxic deep waters/sediments (U⁴⁺, precipitates). The δ²³⁸U of seawater reflects the balance between oxic and anoxic sinks.</div>
+                <div class="caption"><span class="en">Figure: Uranium cycling between oxic surface waters (U⁶⁺, soluble) and anoxic deep waters/sediments (U⁴⁺, precipitates). The δ²³⁸U of seawater reflects the balance between oxic and anoxic sinks.</span><span class="de">Abbildung: Uranium-Kreislauf zwischen oxischen Oberflächengewässern (U⁶⁺, löslich) und anoxischen Tiefengewässern/Sedimenten (U⁴⁺, Präzipitate). Das δ²³⁸U des Meerwassers spiegelt das Gleichgewicht zwischen oxischen und anoxischen Senken wider.</span></div>
             </div>
 
             <div class="figure-box">
                 <img src="images/lectures/uranium_ocean_box_model.jpg" alt="Uranium isotope mass balance box model">
-                <div class="caption">Figure: Box model illustrating uranium isotope mass balance. Modern seawater δ²³⁸U (≈ -0.4‰) reflects ~90% deposition to oxic sinks and ~10% to anoxic sinks. During ocean anoxic events (right), increased anoxic burial shifts seawater to lighter values (≈ -0.65‰).</div>
+                <div class="caption"><span class="en">Figure: Box model illustrating uranium isotope mass balance. Modern seawater δ²³⁸U (≈ -0.4‰) reflects ~90% deposition to oxic sinks and ~10% to anoxic sinks. During ocean anoxic events (right), increased anoxic burial shifts seawater to lighter values (≈ -0.65‰).</span><span class="de">Abbildung: Boxmodell zur Veranschaulichung der Uranisotopen-Massenbilanz. Das moderne Meerwasser δ²³⁸U (≈ -0,4‰) spiegelt ~90% Ablagerung in oxischen Senken und ~10% in anoxischen Senken wider. Bei ozeanischen anoxischen Ereignissen (rechts) führt erhöhte anoxische Beerdigung zu leichteren Werten des Meerwassers (≈ -0,65‰).</span></div>
             </div>
 
-            <h3>δ²³⁸U as a Global Redox Proxy</h3>
+            <h3><span class="en">δ²³⁸U as a Global Redox Proxy</span><span class="de">δ²³⁸U als globaler Redox-Proxy</span></h3>
             <div class="concept-box important">
-                <h4>📊 Mass Balance Model</h4>
-                <p>At steady state, the isotopic composition of U input must equal output:</p>
+                <h4>📊 <span class="en">Mass Balance Model</span><span class="de">Massenbilanzmodell</span></h4>
+                <p><span class="en">At steady state, the isotopic composition of U input must equal output:</span><span class="de">Im stationären Zustand muss die Isotopenzusammensetzung der U-Eingabe gleich der Ausgabe sein:</span></p>
                 <p style="font-family: 'Courier New', monospace; margin: 15px 0;">δ²³⁸U_input = (1 − f_anoxic) × δ²³⁸U_other + f_anoxic × δ²³⁸U_anoxic</p>
-                <p>Where:</p>
+                <p><span class="en">Where:</span><span class="de">Wo:</span></p>
                 <ul style="margin-top: 5px;">
-                    <li>f_anoxic = fraction of U deposited in anoxic facies</li>
-                    <li>δ²³⁸U_input (rivers) ≈ −0.3‰</li>
-                    <li>Δ²³⁸U_anoxic ≈ +0.5‰ (fractionation to anoxic sediments)</li>
-                    <li>Δ²³⁸U_other ≈ +0.1‰ (other sinks)</li>
+                    <li><span class="en">f_anoxic = fraction of U deposited in anoxic facies</span><span class="de">f_anoxic = Anteil des in anoxischen Fazies abgelagerten U</span></li>
+                    <li>δ²³⁸U_input <span class="en">(rivers)</span><span class="de">(Flüsse)</span> ≈ −0.3‰</li>
+                    <li>Δ²³⁸U_anoxic ≈ +0.5‰ <span class="en">(fractionation to anoxic sediments)</span><span class="de">(Fraktionierung zu anoxischen Sedimenten)</span></li>
+                    <li>Δ²³⁸U_other ≈ +0.1‰ <span class="en">(other sinks)</span><span class="de">(andere Senken)</span></li>
                 </ul>
             </div>
 
             <div class="concept-box success">
-                <h4>✓ How It Works</h4>
-                <p>During <strong>oceanic anoxic events</strong>:</p>
+                <h4>✓ <span class="en">How It Works</span><span class="de">Wie es funktioniert</span></h4>
+                <p><span class="en">During <strong>oceanic anoxic events</strong>:</span><span class="de">Während <strong>ozeanischer anoxischer Ereignisse</strong>:</span></p>
                 <ol style="margin-top: 10px;">
-                    <li>Enhanced flux of U to anoxic sediments</li>
-                    <li>Isotopically heavy ²³⁸U preferentially removed</li>
-                    <li>Seawater δ²³⁸U <strong>decreases</strong></li>
-                    <li>This is recorded in carbonates globally</li>
+                    <li><span class="en">Enhanced flux of U to anoxic sediments</span><span class="de">Erhöhter U-Fluss zu anoxischen Sedimenten</span></li>
+                    <li><span class="en">Isotopically heavy ²³⁸U preferentially removed</span><span class="de">Isotopisch schweres ²³⁸U wird bevorzugt entfernt</span></li>
+                    <li><span class="en">Seawater δ²³⁸U <strong>decreases</strong></span><span class="de">Meerwasser δ²³⁸U <strong>nimmt ab</strong></span></li>
+                    <li><span class="en">This is recorded in carbonates globally</span><span class="de">Dies wird weltweit in Karbonaten aufgezeichnet</span></li>
                 </ol>
-                <p style="margin-top: 10px;"><strong>Lower seawater δ²³⁸U = More anoxic ocean</strong></p>
+                <p style="margin-top: 10px;"><strong><span class="en">Lower seawater δ²³⁸U = More anoxic ocean</span><span class="de">Niedrigeres Meerwasser δ²³⁸U = Mehr anoxische Ozeane</span></strong></p>
             </div>
 
             <div class="concept-box warning">
-                <h4>⚠️ Diagenetic Complication</h4>
-                <p>Sedimentary carbonates may incorporate U(IV) from sulfidic porewaters, leading to δ²³⁸U values <strong>0.2–0.4‰ higher</strong> than seawater.</p>
-                <p style="margin-top: 10px;">This diagenetic offset must be considered when interpreting records!</p>
+                <h4>⚠️ <span class="en">Diagenetic Complication</span><span class="de">Diagenetische Komplikation</span></h4>
+                <p><span class="en">Sedimentary carbonates may incorporate U(IV) from sulfidic porewaters, leading to δ²³⁸U values <strong>0.2–0.4‰ higher</strong> than seawater.</span><span class="de">Sedimentäre Karbonate können U(IV) aus sulfidischen Porenwässern aufnehmen, was zu δ²³⁸U-Werten führt, die <strong>0,2–0,4‰ höher</strong> sind als Meerwasser.</span></p>
+                <p style="margin-top: 10px;"><span class="en">This diagenetic offset must be considered when interpreting records!</span><span class="de">Dieser diagenetische Versatz muss bei der Interpretation von Aufzeichnungen berücksichtigt werden!</span></p>
             </div>
         </section>
 
         <section class="section">
-            <h2>Part 2: Redox Classification</h2>
+            <h2><span class="en">Part 2: Redox Classification</span><span class="de">Teil 2: Redox-Klassifizierung</span></h2>
 
-            <p>Depositional environments are classified by oxygen concentration:</p>
+            <p><span class="en">Depositional environments are classified by oxygen concentration:</span><span class="de">Ablagerungsumgebungen werden nach Sauerstoffkonzentration klassifiziert:</span></p>
 
             <div class="redox-scale">
                 <div class="level oxic">
-                    <h5>OXIC</h5>
+                    <h5><span class="en">OXIC</span><span class="de">OXISCH</span></h5>
                     <p>[O₂] > 2.0 ml/L</p>
-                    <small>Aerobic organisms<br>Bioturbation<br>No OM preservation</small>
+                    <small><span class="en">Aerobic organisms<br>Bioturbation<br>No OM preservation</span><span class="de">Aerobe Organismen<br>Bioturbation<br>Keine Organikerhaltung</span></small>
                 </div>
                 <div class="level suboxic">
-                    <h5>SUBOXIC</h5>
+                    <h5><span class="en">SUBOXIC</span><span class="de">SUBOXISCH</span></h5>
                     <p>0.2–2.0 ml/L</p>
-                    <small>Limited bioturbation<br>Mn reduction<br>Partial OM preservation</small>
+                    <small><span class="en">Limited bioturbation<br>Mn reduction<br>Partial OM preservation</span><span class="de">Begrenzte Bioturbation<br>Mn-Reduktion<br>Teilweise Organikerhaltung</span></small>
                 </div>
                 <div class="level anoxic">
-                    <h5>ANOXIC</h5>
+                    <h5><span class="en">ANOXIC</span><span class="de">ANOXISCH</span></h5>
                     <p>[O₂] < 0.2 ml/L</p>
-                    <small>Sulfate reduction<br>Good OM preservation<br>No free H₂S</small>
+                    <small><span class="en">Sulfate reduction<br>Good OM preservation<br>No free H₂S</span><span class="de">Sulfatreduktion<br>Gute Organikerhaltung<br>Kein freies H₂S</span></small>
                 </div>
                 <div class="level euxinic">
-                    <h5>EUXINIC</h5>
-                    <p>H₂S present</p>
-                    <small>Free H₂S in water<br>Sulfide minerals<br>Black Sea type</small>
+                    <h5><span class="en">EUXINIC</span><span class="de">EUXINISCH</span></h5>
+                    <p>H₂S <span class="en">present</span><span class="de">vorhanden</span></p>
+                    <small><span class="en">Free H₂S in water<br>Sulfide minerals<br>Black Sea type</span><span class="de">Freies H₂S im Wasser<br>Sulfidminerale<br>Schwarzmeer-Typ</span></small>
                 </div>
             </div>
 
-            <h3>Electron Acceptor Sequence</h3>
-            <p>When O₂ is depleted, organisms use secondary electron acceptors in order of <strong>decreasing energy yield</strong>:</p>
+            <h3><span class="en">Electron Acceptor Sequence</span><span class="de">Elektronenakzeptor-Sequenz</span></h3>
+            <p><span class="en">When O₂ is depleted, organisms use secondary electron acceptors in order of <strong>decreasing energy yield</strong>:</span><span class="de">Wenn O₂ verbraucht ist, verwenden Organismen sekundäre Elektronenakzeptoren in der Reihenfolge <strong>abnehmender Energieausbeute</strong>:</span></p>
 
             <table class="data-table">
                 <thead>
                     <tr>
-                        <th>Process</th>
-                        <th>Reaction</th>
-                        <th>Zone</th>
+                        <th><span class="en">Process</span><span class="de">Prozess</span></th>
+                        <th><span class="en">Reaction</span><span class="de">Reaktion</span></th>
+                        <th><span class="en">Zone</span><span class="de">Zone</span></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr style="background: #DBEAFE;">
-                        <td>Aerobic Respiration</td>
+                        <td><span class="en">Aerobic Respiration</span><span class="de">Aerobe Atmung</span></td>
                         <td>O₂ → H₂O</td>
-                        <td>Oxic</td>
+                        <td><span class="en">Oxic</span><span class="de">Oxisch</span></td>
                     </tr>
                     <tr>
-                        <td>Denitrification</td>
+                        <td><span class="en">Denitrification</span><span class="de">Denitrifikation</span></td>
                         <td>NO₃⁻ → N₂</td>
-                        <td>Suboxic</td>
+                        <td><span class="en">Suboxic</span><span class="de">Suboxisch</span></td>
                     </tr>
                     <tr>
-                        <td>Mn Reduction</td>
+                        <td><span class="en">Mn Reduction</span><span class="de">Mn-Reduktion</span></td>
                         <td>Mn⁴⁺ → Mn²⁺</td>
-                        <td>Suboxic</td>
+                        <td><span class="en">Suboxic</span><span class="de">Suboxisch</span></td>
                     </tr>
                     <tr>
-                        <td>Fe Reduction</td>
+                        <td><span class="en">Fe Reduction</span><span class="de">Fe-Reduktion</span></td>
                         <td>Fe³⁺ → Fe²⁺</td>
-                        <td>Anoxic</td>
+                        <td><span class="en">Anoxic</span><span class="de">Anoxisch</span></td>
                     </tr>
                     <tr style="background: #F3E8FF;">
-                        <td>Sulfate Reduction</td>
+                        <td><span class="en">Sulfate Reduction</span><span class="de">Sulfatreduktion</span></td>
                         <td>SO₄²⁻ → H₂S</td>
-                        <td>Anoxic/Euxinic</td>
+                        <td><span class="en">Anoxic/Euxinic</span><span class="de">Anoxisch/Euxinisch</span></td>
                     </tr>
                     <tr>
-                        <td>Methanogenesis</td>
+                        <td><span class="en">Methanogenesis</span><span class="de">Methanogenese</span></td>
                         <td>CO₂ → CH₄</td>
-                        <td>Deep anoxic</td>
+                        <td><span class="en">Deep anoxic</span><span class="de">Tiefe Anoxie</span></td>
                     </tr>
                 </tbody>
             </table>
         </section>
 
         <section class="section">
-            <h2>Part 3: Trace Element Proxies</h2>
+            <h2><span class="en">Part 3: Trace Element Proxies</span><span class="de">Teil 3: Spurenelement-Proxys</span></h2>
 
-            <h3>The Dilution Problem</h3>
-            <p>Sediments contain variable proportions of carbonate, opal, organic matter, and detrital material. Raw trace element concentrations are <strong>not directly comparable</strong> between samples.</p>
+            <h3><span class="en">The Dilution Problem</span><span class="de">Das Verdünnungsproblem</span></h3>
+            <p><span class="en">Sediments contain variable proportions of carbonate, opal, organic matter, and detrital material. Raw trace element concentrations are <strong>not directly comparable</strong> between samples.</span><span class="de">Sedimente enthalten unterschiedliche Anteile an Karbonat, Opal, organischer Materie und detritischem Material. Rohe Spurenelementkonzentrationen sind <strong>nicht direkt vergleichbar</strong> zwischen Proben.</span></p>
 
             <div class="concept-box">
-                <h4>✓ Solution: Normalize to Aluminum</h4>
-                <p>Aluminum is:</p>
+                <h4>✓ <span class="en">Solution: Normalize to Aluminum</span><span class="de">Lösung: Normalisierung auf Aluminium</span></h4>
+                <p><span class="en">Aluminum is:</span><span class="de">Aluminium ist:</span></p>
                 <ul style="margin-top: 10px;">
-                    <li>Hosted in aluminosilicates (clays)</li>
-                    <li>Representative of detrital fraction</li>
-                    <li>Immobile during diagenesis</li>
+                    <li><span class="en">Hosted in aluminosilicates (clays)</span><span class="de">In Alumosilikasten (Tonen) gehostet</span></li>
+                    <li><span class="en">Representative of detrital fraction</span><span class="de">Repräsentativ für den detritischen Anteil</span></li>
+                    <li><span class="en">Immobile during diagenesis</span><span class="de">Immobil während der Diagenese</span></li>
                 </ul>
-                <p style="margin-top: 10px;">Normalizing to Al removes dilution effects and isolates <strong>authigenic enrichment</strong>.</p>
+                <p style="margin-top: 10px;"><span class="en">Normalizing to Al removes dilution effects and isolates <strong>authigenic enrichment</strong>.</span><span class="de">Die Normalisierung auf Al beseitigt Verdünnungseffekte und isoliert <strong>authigene Anreicherung</strong>.</span></p>
             </div>
 
             <div class="equation-box">
-                <div class="equation-name">Enrichment Factor (EF)</div>
+                <div class="equation-name"><span class="en">Enrichment Factor (EF)</span><span class="de">Anreicherungsfaktor (EF)</span></div>
                 EF(X) = (X/Al)sample ÷ (X/Al)average shale
-                <div class="equation-note">EF > 1: Enrichment (authigenic addition)<br>EF ≈ 1: Detrital only<br>EF < 1: Depletion</div>
+                <div class="equation-note"><span class="en">EF > 1: Enrichment (authigenic addition)<br>EF ≈ 1: Detrital only<br>EF < 1: Depletion</span><span class="de">EF > 1: Anreicherung (authigene Zugabe)<br>EF ≈ 1: Nur detrital<br>EF < 1: Verarmung</span></div>
             </div>
 
-            <h3>Key Redox-Sensitive Elements</h3>
+            <h3><span class="en">Key Redox-Sensitive Elements</span><span class="de">Wichtige redoxempfindliche Elemente</span></h3>
 
             <div class="figure-box">
                 <img src="images/lectures/uranium_trace_element_table.jpg" alt="Trace element behavior in seawater and sediments">
-                <div class="caption">Figure: Summary of redox-sensitive trace element behavior. Elements like U, Mo, V are soluble in oxic seawater but become insoluble and enriched in sediments under reducing conditions. Note the variations in residence time and seawater concentration. Modified from Calvert & Pedersen (1993).</div>
+                <div class="caption"><span class="en">Figure: Summary of redox-sensitive trace element behavior. Elements like U, Mo, V are soluble in oxic seawater but become insoluble and enriched in sediments under reducing conditions. Note the variations in residence time and seawater concentration. Modified from Calvert & Pedersen (1993).</span><span class="de">Abbildung: Zusammenfassung des redoxempfindlichen Spurenelementenverhaltens. Elemente wie U, Mo, V sind im oxischen Meerwasser löslich, werden aber unter reduzierenden Bedingungen unlöslich und in Sedimenten angereichert. Beachten Sie die Unterschiede in Verweilzeit und Meerwasserkonzentration. Modifiziert nach Calvert & Pedersen (1993).</span></div>
             </div>
 
             <table class="data-table">
                 <thead>
                     <tr>
-                        <th>Element</th>
-                        <th>Oxic Species</th>
-                        <th>Reducing Species</th>
-                        <th>Reliability</th>
+                        <th><span class="en">Element</span><span class="de">Element</span></th>
+                        <th><span class="en">Oxic Species</span><span class="de">Oxische Spezies</span></th>
+                        <th><span class="en">Reducing Species</span><span class="de">Reduzierende Spezies</span></th>
+                        <th><span class="en">Reliability</span><span class="de">Zuverlässigkeit</span></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr style="background: #ECFDF5;">
                         <td><strong>Mo</strong></td>
-                        <td>MoO₄²⁻ (soluble)</td>
+                        <td>MoO₄²⁻ <span class="en">(soluble)</span><span class="de">(löslich)</span></td>
                         <td>MoS₄²⁻, MoS₂</td>
-                        <td>⭐⭐⭐ Excellent</td>
+                        <td>⭐⭐⭐ <span class="en">Excellent</span><span class="de">Ausgezeichnet</span></td>
                     </tr>
                     <tr style="background: #ECFDF5;">
                         <td><strong>U</strong></td>
-                        <td>UO₂(CO₃)₃⁴⁻ (soluble)</td>
-                        <td>UO₂ (uraninite)</td>
-                        <td>⭐⭐⭐ Excellent</td>
+                        <td>UO₂(CO₃)₃⁴⁻ <span class="en">(soluble)</span><span class="de">(löslich)</span></td>
+                        <td>UO₂ <span class="en">(uraninite)</span><span class="de">(Uraninit)</span></td>
+                        <td>⭐⭐⭐ <span class="en">Excellent</span><span class="de">Ausgezeichnet</span></td>
                     </tr>
                     <tr style="background: #ECFDF5;">
                         <td><strong>V</strong></td>
                         <td>HVO₄²⁻, H₂VO₄⁻</td>
                         <td>V(OH)₃, VO(OH)₂</td>
-                        <td>⭐⭐⭐ Excellent</td>
+                        <td>⭐⭐⭐ <span class="en">Excellent</span><span class="de">Ausgezeichnet</span></td>
                     </tr>
                     <tr>
                         <td>Ni</td>
-                        <td>Ni²⁺ (soluble)</td>
-                        <td>NiS, Ni-organics</td>
-                        <td>⭐⭐ Good (nutrient)</td>
+                        <td>Ni²⁺ <span class="en">(soluble)</span><span class="de">(löslich)</span></td>
+                        <td>NiS, <span class="en">Ni-organics</span><span class="de">Ni-Organika</span></td>
+                        <td>⭐⭐ <span class="en">Good (nutrient)</span><span class="de">Gut (Nährstoff)</span></td>
                     </tr>
                     <tr>
                         <td>Cu</td>
-                        <td>Cu²⁺ (soluble)</td>
-                        <td>CuS, Cu-organics</td>
-                        <td>⭐⭐ Good (nutrient)</td>
+                        <td>Cu²⁺ <span class="en">(soluble)</span><span class="de">(löslich)</span></td>
+                        <td>CuS, <span class="en">Cu-organics</span><span class="de">Cu-Organika</span></td>
+                        <td>⭐⭐ <span class="en">Good (nutrient)</span><span class="de">Gut (Nährstoff)</span></td>
                     </tr>
                     <tr>
                         <td>Mn</td>
-                        <td>MnO₂, MnOOH (solid)</td>
-                        <td>Mn²⁺ (soluble!)</td>
-                        <td>⭐ Complicated</td>
+                        <td>MnO₂, MnOOH <span class="en">(solid)</span><span class="de">(fest)</span></td>
+                        <td>Mn²⁺ <span class="en">(soluble!)</span><span class="de">(löslich!)</span></td>
+                        <td>⭐ <span class="en">Complicated</span><span class="de">Kompliziert</span></td>
                     </tr>
                 </tbody>
             </table>
 
-            <h3>Molybdenum (Mo) — The Euxinia Indicator</h3>
+            <h3><span class="en">Molybdenum (Mo) — The Euxinia Indicator</span><span class="de">Molybdän (Mo) — Der Euxinie-Indikator</span></h3>
             <div class="concept-box success">
-                <h4>✓ Why Mo is Special</h4>
-                <p>Mo requires <strong>free H₂S in the water column</strong> for efficient sequestration:</p>
+                <h4>✓ <span class="en">Why Mo is Special</span><span class="de">Warum Mo besonders ist</span></h4>
+                <p><span class="en">Mo requires <strong>free H₂S in the water column</strong> for efficient sequestration:</span><span class="de">Mo benötigt <strong>freies H₂S in der Wassersäule</strong> für effiziente Sequestrierung:</span></p>
                 <ul style="margin-top: 10px;">
-                    <li><strong>Oxic:</strong> Mo remains as soluble MoO₄²⁻</li>
-                    <li><strong>Anoxic (no H₂S):</strong> Limited Mo uptake</li>
-                    <li><strong>Euxinic (H₂S present):</strong> MoO₄²⁻ → MoS₄²⁻ → rapid scavenging</li>
+                    <li><strong><span class="en">Oxic:</span><span class="de">Oxisch:</span></strong> <span class="en">Mo remains as soluble MoO₄²⁻</span><span class="de">Mo bleibt als lösliches MoO₄²⁻</span></li>
+                    <li><strong><span class="en">Anoxic (no H₂S):</span><span class="de">Anoxisch (kein H₂S):</span></strong> <span class="en">Limited Mo uptake</span><span class="de">Begrenzte Mo-Aufnahme</span></li>
+                    <li><strong><span class="en">Euxinic (H₂S present):</span><span class="de">Euxinisch (H₂S vorhanden):</span></strong> MoO₄²⁻ → MoS₄²⁻ → <span class="en">rapid scavenging</span><span class="de">schnelle Ausräumung</span></li>
                 </ul>
-                <p style="margin-top: 10px;"><strong>High Mo enrichment = Euxinic conditions</strong> (H₂S in water column)</p>
+                <p style="margin-top: 10px;"><strong><span class="en">High Mo enrichment = Euxinic conditions</span><span class="de">Hohe Mo-Anreicherung = Euxinische Bedingungen</span></strong> <span class="en">(H₂S in water column)</span><span class="de">(H₂S in Wassersäule)</span></p>
             </div>
 
-            <h3>Mo-U Covariation Patterns</h3>
-            <p>The ratio of Mo to U enrichment helps distinguish redox conditions:</p>
+            <h3><span class="en">Mo-U Covariation Patterns</span><span class="de">Mo-U-Kovariation-Muster</span></h3>
+            <p><span class="en">The ratio of Mo to U enrichment helps distinguish redox conditions:</span><span class="de">Das Verhältnis der Mo- zur U-Anreicherung hilft, Redox-Bedingungen zu unterscheiden:</span></p>
 
             <div class="figure-box">
                 <img src="images/lectures/uranium_framboid_sem.jpg" alt="SEM images of pyrite framboids">
-                <div class="caption">Figure: Scanning electron microscope (SEM) images of pyrite framboids from euxinic sediments. The size distribution of framboids can indicate whether they formed in the water column (euxinic, smaller, uniform) or within sediments (larger, variable). Scale bars shown.</div>
+                <div class="caption"><span class="en">Figure: Scanning electron microscope (SEM) images of pyrite framboids from euxinic sediments. The size distribution of framboids can indicate whether they formed in the water column (euxinic, smaller, uniform) or within sediments (larger, variable). Scale bars shown.</span><span class="de">Abbildung: Rasterelektronenmikroskop-(SEM)-Bilder von Pyrithexaeder aus euxinischen Sedimenten. Die Größenverteilung der Framboide kann anzeigen, ob sie sich in der Wassersäule (euxinisch, kleiner, einheitlich) oder in Sedimenten (größer, variabel) gebildet haben. Maßstabsleisten angezeigt.</span></div>
             </div>
 
             <div class="figure-box">
                 <img src="images/lectures/uranium_dop_histograms.jpg" alt="Degree of pyritization histograms">
-                <div class="caption">Figure: Degree of Pyritization (DOP) histograms from various geological formations. DOP values near 1.0 indicate full conversion of reactive iron to pyrite under euxinic conditions, while lower values suggest anoxic (non-sulfidic) or oxic conditions. After Wilkin et al. (1996).</div>
+                <div class="caption"><span class="en">Figure: Degree of Pyritization (DOP) histograms from various geological formations. DOP values near 1.0 indicate full conversion of reactive iron to pyrite under euxinic conditions, while lower values suggest anoxic (non-sulfidic) or oxic conditions. After Wilkin et al. (1996).</span><span class="de">Abbildung: Pyritisierungsgrad (DOP)-Histogramme aus verschiedenen geologischen Formationen. DOP-Werte nahe 1,0 zeigen die vollständige Umwandlung von reaktivem Eisen zu Pyrit unter euxinischen Bedingungen an, während niedrigere Werte auf anoxische (nicht-sulfidische) oder oxische Bedingungen hindeuten. Nach Wilkin et al. (1996).</span></div>
             </div>
 
             <table class="data-table">
                 <thead>
                     <tr>
-                        <th>Pattern</th>
-                        <th>Interpretation</th>
-                        <th>Example</th>
+                        <th><span class="en">Pattern</span><span class="de">Muster</span></th>
+                        <th><span class="en">Interpretation</span><span class="de">Interpretation</span></th>
+                        <th><span class="en">Example</span><span class="de">Beispiel</span></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>High Mo/U (>> seawater)</td>
-                        <td>Euxinic (H₂S present)</td>
-                        <td>Black Sea</td>
+                        <td><span class="en">High Mo/U (>> seawater)</span><span class="de">Hohes Mo/U (>> Meerwasser)</span></td>
+                        <td><span class="en">Euxinic (H₂S present)</span><span class="de">Euxinisch (H₂S vorhanden)</span></td>
+                        <td><span class="en">Black Sea</span><span class="de">Schwarzes Meer</span></td>
                     </tr>
                     <tr>
-                        <td>Mo/U ≈ seawater ratio</td>
-                        <td>Anoxic, non-euxinic</td>
-                        <td>Cariaco Basin</td>
+                        <td><span class="en">Mo/U ≈ seawater ratio</span><span class="de">Mo/U ≈ Meerwassserverhältnis</span></td>
+                        <td><span class="en">Anoxic, non-euxinic</span><span class="de">Anoxisch, nicht-euxinisch</span></td>
+                        <td><span class="en">Cariaco Basin</span><span class="de">Cariaco-Becken</span></td>
                     </tr>
                     <tr>
-                        <td>Low Mo/U</td>
-                        <td>Suboxic to weakly anoxic</td>
-                        <td>Saanich Inlet</td>
+                        <td><span class="en">Low Mo/U</span><span class="de">Niedriges Mo/U</span></td>
+                        <td><span class="en">Suboxic to weakly anoxic</span><span class="de">Suboxisch bis schwach anoxisch</span></td>
+                        <td><span class="en">Saanich Inlet</span><span class="de">Saanich-Inlet</span></td>
                     </tr>
                 </tbody>
             </table>
 
             <div class="concept-box danger">
-                <h4>⚠️ Manganese Complication</h4>
-                <p>Unlike other redox elements, Mn behaves <strong>oppositely</strong>:</p>
+                <h4>⚠️ <span class="en">Manganese Complication</span><span class="de">Mangankomplikation</span></h4>
+                <p><span class="en">Unlike other redox elements, Mn behaves <strong>oppositely</strong>:</span><span class="de">Im Gegensatz zu anderen Redox-Elementen verhält sich Mn <strong>entgegengesetzt</strong>:</span></p>
                 <ul style="margin-top: 10px;">
-                    <li><strong>Oxic:</strong> Mn²⁺ oxidizes to MnO₂ (solid) — enriched in sediments</li>
-                    <li><strong>Reducing:</strong> MnO₂ dissolves, Mn²⁺ released — can diffuse away!</li>
+                    <li><strong><span class="en">Oxic:</span><span class="de">Oxisch:</span></strong> <span class="en">Mn²⁺ oxidizes to MnO₂ (solid) — enriched in sediments</span><span class="de">Mn²⁺ oxidiert zu MnO₂ (fest) — in Sedimenten angereichert</span></li>
+                    <li><strong><span class="en">Reducing:</span><span class="de">Reduzierend:</span></strong> <span class="en">MnO₂ dissolves, Mn²⁺ released — can diffuse away!</span><span class="de">MnO₂ löst sich auf, Mn²⁺ wird freigesetzt — kann diffundieren!</span></li>
                 </ul>
-                <p style="margin-top: 10px;">Mn can be <strong>lost</strong> from anoxic sediments. Mn enrichment often marks the <strong>oxic-anoxic interface</strong>, not anoxia itself.</p>
+                <p style="margin-top: 10px;"><span class="en">Mn can be <strong>lost</strong> from anoxic sediments. Mn enrichment often marks the <strong>oxic-anoxic interface</strong>, not anoxia itself.</span><span class="de">Mn kann <strong>verloren</strong> gehen von anoxischen Sedimenten. Mn-Anreicherung markiert oft die <strong>oxisch-anoxische Grenzfläche</strong>, nicht die Anoxie selbst.</span></p>
             </div>
         </section>
 
         <section class="section">
-            <h2>Part 4: Applications — The End-Permian Example</h2>
+            <h2><span class="en">Part 4: Applications — The End-Permian Example</span><span class="de">Teil 4: Anwendungen — Das End-Perm-Beispiel</span></h2>
 
-            <p>The Permian-Triassic boundary (~252 Ma) provides an excellent case study for multi-proxy paleoredox reconstruction:</p>
+            <p><span class="en">The Permian-Triassic boundary (~252 Ma) provides an excellent case study for multi-proxy paleoredox reconstruction:</span><span class="de">Die Perm-Trias-Grenze (~252 Ma) bietet eine ausgezeichnete Fallstudie für die Rekonstruktion von Multi-Proxy-Paleoredox:</span></p>
 
             <div class="figure-box">
                 <img src="images/lectures/uranium_permo_triassic_boundary.jpg" alt="δ²³⁸U and δ¹³C across the Permian-Triassic boundary">
-                <div class="caption">Figure: Chemostratigraphic records across the Permian-Triassic boundary. The coupled negative excursions in δ²³⁸U and δ¹³C record the expansion of ocean anoxia and carbon cycle perturbation during Earth's largest mass extinction (~252 Ma).</div>
+                <div class="caption"><span class="en">Figure: Chemostratigraphic records across the Permian-Triassic boundary. The coupled negative excursions in δ²³⁸U and δ¹³C record the expansion of ocean anoxia and carbon cycle perturbation during Earth's largest mass extinction (~252 Ma).</span><span class="de">Abbildung: Chemostratigraphische Aufzeichnungen an der Perm-Trias-Grenze. Die gekoppelten negativen Ausschläge in δ²³⁸U und δ¹³C dokumentieren die Ausweitung der Ozeanoxanoxie und die Kohlenstoffkreislaufstörung während des größten Massenaussterbens der Erde (~252 Ma).</span></div>
             </div>
 
             <div class="figure-box">
                 <img src="images/lectures/uranium_permian_extinction_data.jpg" alt="Multi-proxy data from the end-Permian">
-                <div class="caption">Figure: High-resolution δ¹³C, δ²³⁸U, and modeled ocean anoxia (f_anox) across the Permian-Triassic boundary. The rapid expansion of anoxic conditions (up to ~80-90% of ocean floor) correlates with the extinction horizon (EPME = End-Permian Mass Extinction).</div>
+                <div class="caption"><span class="en">Figure: High-resolution δ¹³C, δ²³⁸U, and modeled ocean anoxia (f_anox) across the Permian-Triassic boundary. The rapid expansion of anoxic conditions (up to ~80-90% of ocean floor) correlates with the extinction horizon (EPME = End-Permian Mass Extinction).</span><span class="de">Abbildung: Hochauflösungs-δ¹³C-, δ²³⁸U- und modellierte Ozeanoxanoxie (f_anox) an der Perm-Trias-Grenze. Die schnelle Ausweitung anoxischer Bedingungen (bis zu ~80-90% des Meeresbodens) korreliert mit dem Aussterben (EPME = End-Permian Mass Extinction).</span></div>
             </div>
 
             <div class="concept-box important">
-                <h4>📊 PTB Proxy Evidence for Ocean Anoxia</h4>
+                <h4>📊 <span class="en">PTB Proxy Evidence for Ocean Anoxia</span><span class="de">PTB-Proxy-Beweis für Ozeanoxanoxie</span></h4>
                 <ul style="margin-top: 10px;">
-                    <li><strong>δ²³⁸U decrease:</strong> Seawater became isotopically lighter = expanded anoxia</li>
-                    <li><strong>Mo enrichment:</strong> High Mo/U ratios indicate euxinic conditions</li>
-                    <li><strong>U enrichment:</strong> Increased authigenic U in carbonates</li>
-                    <li><strong>Ce anomalies:</strong> Negative Ce anomalies indicate reducing conditions</li>
+                    <li><strong>δ²³⁸U <span class="en">decrease:</span><span class="de">Abnahme:</span></strong> <span class="en">Seawater became isotopically lighter = expanded anoxia</span><span class="de">Meerwasser wurde isotopisch leichter = erweiterte Anoxie</span></li>
+                    <li><strong><span class="en">Mo enrichment:</span><span class="de">Mo-Anreicherung:</span></strong> <span class="en">High Mo/U ratios indicate euxinic conditions</span><span class="de">Hohe Mo/U-Verhältnisse deuten auf euxinische Bedingungen hin</span></li>
+                    <li><strong><span class="en">U enrichment:</span><span class="de">U-Anreicherung:</span></strong> <span class="en">Increased authigenic U in carbonates</span><span class="de">Erhöhtes authigenes U in Karbonaten</span></li>
+                    <li><strong><span class="en">Ce anomalies:</span><span class="de">Ce-Anomalien:</span></strong> <span class="en">Negative Ce anomalies indicate reducing conditions</span><span class="de">Negative Ce-Anomalien deuten auf reduzierende Bedingungen hin</span></li>
                 </ul>
             </div>
 
             <div class="concept-box">
-                <h4>🔗 Multi-Proxy Integration</h4>
-                <p>Combining redox proxies with other isotope systems:</p>
+                <h4>🔗 <span class="en">Multi-Proxy Integration</span><span class="de">Multi-Proxy-Integration</span></h4>
+                <p><span class="en">Combining redox proxies with other isotope systems:</span><span class="de">Kombination von Redox-Proxys mit anderen Isotopensystemen:</span></p>
                 <ul style="margin-top: 10px;">
-                    <li><strong>δ¹³C:</strong> Carbon cycle perturbation (volcanic + thermogenic CO₂)</li>
-                    <li><strong>δ¹⁸O:</strong> Temperature increase (~15°C warming)</li>
-                    <li><strong>δ¹¹B:</strong> Ocean acidification</li>
-                    <li><strong>⁸⁷Sr/⁸⁶Sr:</strong> Enhanced weathering</li>
-                    <li><strong>δ²³⁸U + trace elements:</strong> Ocean deoxygenation</li>
+                    <li><strong>δ¹³C:</strong> <span class="en">Carbon cycle perturbation (volcanic + thermogenic CO₂)</span><span class="de">Kohlenstoffkreislaufstörung (vulkanisch + thermogenes CO₂)</span></li>
+                    <li><strong>δ¹⁸O:</strong> <span class="en">Temperature increase (~15°C warming)</span><span class="de">Temperaturanstieg (~15°C Erwärmung)</span></li>
+                    <li><strong>δ¹¹B:</strong> <span class="en">Ocean acidification</span><span class="de">Ozeanversäuerung</span></li>
+                    <li><strong>⁸⁷Sr/⁸⁶Sr:</strong> <span class="en">Enhanced weathering</span><span class="de">Verstärkte Verwitterung</span></li>
+                    <li><strong>δ²³⁸U + <span class="en">trace elements:</span><span class="de">Spurenelemente:</span></strong> <span class="en">Ocean deoxygenation</span><span class="de">Ozeanenoxydation</span></li>
                 </ul>
-                <p style="margin-top: 10px;">Together, these proxies reconstruct the cascade of environmental changes that caused Earth's largest mass extinction.</p>
+                <p style="margin-top: 10px;"><span class="en">Together, these proxies reconstruct the cascade of environmental changes that caused Earth's largest mass extinction.</span><span class="de">Zusammen rekonstruieren diese Proxys die Abfolge von Umweltveränderungen, die zum größten Massenaussterben der Erde führten.</span></p>
             </div>
         </section>
 
         <div class="key-points">
-            <h3>📝 Key Points Summary</h3>
+            <h3>📝 <span class="en">Key Points Summary</span><span class="de">Zusammenfassung der Schlüsselpunkte</span></h3>
             <ul>
-                <li>δ²³⁸U decreases in seawater when anoxic sediment deposition increases (²³⁸U preferentially removed)</li>
-                <li>Redox environments: Oxic → Suboxic → Anoxic → Euxinic (increasing reduction)</li>
-                <li>Normalize trace elements to Al to calculate Enrichment Factors (EF)</li>
-                <li>Mo, U, V are the most reliable redox proxies; Mo specifically indicates euxinia</li>
-                <li>Mo/U ratios help distinguish anoxic from euxinic conditions</li>
-                <li>Mn behaves oppositely — enriched under oxic conditions, lost under anoxia</li>
-                <li>Diagenetic effects can modify primary signals — always consider preservation</li>
+                <li><span class="en">δ²³⁸U decreases in seawater when anoxic sediment deposition increases (²³⁸U preferentially removed)</span><span class="de">δ²³⁸U nimmt im Meerwasser ab, wenn die Ablagerung anoxischer Sedimente zunimmt (²³⁸U wird bevorzugt entfernt)</span></li>
+                <li><span class="en">Redox environments: Oxic → Suboxic → Anoxic → Euxinic (increasing reduction)</span><span class="de">Redox-Umgebungen: Oxisch → Suboxisch → Anoxisch → Euxinisch (zunehmende Reduktion)</span></li>
+                <li><span class="en">Normalize trace elements to Al to calculate Enrichment Factors (EF)</span><span class="de">Normalisieren Sie Spurenelemente auf Al, um Anreicherungsfaktoren (EF) zu berechnen</span></li>
+                <li><span class="en">Mo, U, V are the most reliable redox proxies; Mo specifically indicates euxinia</span><span class="de">Mo, U, V sind die zuverlässigsten Redox-Proxys; Mo deutet speziell auf Euxinie hin</span></li>
+                <li><span class="en">Mo/U ratios help distinguish anoxic from euxinic conditions</span><span class="de">Mo/U-Verhältnisse helfen, anoxische von euxinischen Bedingungen zu unterscheiden</span></li>
+                <li><span class="en">Mn behaves oppositely — enriched under oxic conditions, lost under anoxia</span><span class="de">Mn verhält sich entgegengesetzt — angereichert unter oxischen Bedingungen, verloren unter Anoxie</span></li>
+                <li><span class="en">Diagenetic effects can modify primary signals — always consider preservation</span><span class="de">Diagenetische Effekte können primäre Signale ändern — berücksichtigen Sie immer die Konservierung</span></li>
             </ul>
         </div>
 
         <!-- Quiz Section -->
         <section class="quiz-section">
-            <h2>📝 Self-Assessment Quiz</h2>
+            <h2>📝 <span class="en">Self-Assessment Quiz</span><span class="de">Selbsttest-Quiz</span></h2>
             <div class="quiz-progress">
                 <div class="quiz-progress-bar" id="quizProgress"></div>
             </div>
@@ -504,90 +515,90 @@
             <div id="quizContainer">
                 <!-- Question 1 -->
                 <div class="question-container" data-question="1">
-                    <div class="question-number">Question 1 of 5</div>
-                    <div class="question-text">During an oceanic anoxic event, what happens to seawater δ²³⁸U?</div>
+                    <div class="question-number"><span class="en">Question 1 of 5</span><span class="de">Frage 1 von 5</span></div>
+                    <div class="question-text"><span class="en">During an oceanic anoxic event, what happens to seawater δ²³⁸U?</span><span class="de">Was passiert während eines ozeanischen anoxischen Ereignisses mit dem Meerwasser δ²³⁸U?</span></div>
                     <ul class="options">
-                        <li data-correct="false">It increases because more ²³⁸U enters the ocean</li>
-                        <li data-correct="true">It decreases because ²³⁸U is preferentially removed to anoxic sediments</li>
-                        <li data-correct="false">It stays constant because U has a long residence time</li>
-                        <li data-correct="false">It becomes more variable</li>
+                        <li data-correct="false"><span class="en">It increases because more ²³⁸U enters the ocean</span><span class="de">Es nimmt zu, weil mehr ²³⁸U in den Ozean gelangt</span></li>
+                        <li data-correct="true"><span class="en">It decreases because ²³⁸U is preferentially removed to anoxic sediments</span><span class="de">Es sinkt, weil ²³⁸U bevorzugt zu anoxischen Sedimenten entfernt wird</span></li>
+                        <li data-correct="false"><span class="en">It stays constant because U has a long residence time</span><span class="de">Es bleibt konstant, weil U eine lange Verweilzeit hat</span></li>
+                        <li data-correct="false"><span class="en">It becomes more variable</span><span class="de">Es wird variabler</span></li>
                     </ul>
-                    <div class="feedback correct">✓ Correct! During reduction, ²³⁸U is preferentially incorporated into sediments, leaving seawater depleted in the heavy isotope (lower δ²³⁸U).</div>
-                    <div class="feedback incorrect">✗ Incorrect. Enhanced anoxic U burial removes isotopically heavy ²³⁸U, lowering seawater δ²³⁸U.</div>
+                    <div class="feedback correct">✓ <span class="en">Correct! During reduction, ²³⁸U is preferentially incorporated into sediments, leaving seawater depleted in the heavy isotope (lower δ²³⁸U).</span><span class="de">Richtig! Während der Reduktion wird ²³⁸U bevorzugt in Sedimente eingebaut, was zu einer Verarmung des schweren Isotops im Meerwasser führt (niedriges δ²³⁸U).</span></div>
+                    <div class="feedback incorrect">✗ <span class="en">Incorrect. Enhanced anoxic U burial removes isotopically heavy ²³⁸U, lowering seawater δ²³⁸U.</span><span class="de">Falsch. Erhöhte anoxische U-Beerdigung entfernt isotopisch schweres ²³⁸U und senkt das Meerwasser δ²³⁸U.</span></div>
                 </div>
 
                 <!-- Question 2 -->
                 <div class="question-container hidden" data-question="2">
-                    <div class="question-number">Question 2 of 5</div>
-                    <div class="question-text">What distinguishes euxinic conditions from simply anoxic conditions?</div>
+                    <div class="question-number"><span class="en">Question 2 of 5</span><span class="de">Frage 2 von 5</span></div>
+                    <div class="question-text"><span class="en">What distinguishes euxinic conditions from simply anoxic conditions?</span><span class="de">Was unterscheidet euxinische Bedingungen von einfach anoxischen Bedingungen?</span></div>
                     <ul class="options">
-                        <li data-correct="false">Lower oxygen concentrations</li>
-                        <li data-correct="true">Presence of free H₂S in the water column</li>
-                        <li data-correct="false">Higher temperature</li>
-                        <li data-correct="false">More organic carbon burial</li>
+                        <li data-correct="false"><span class="en">Lower oxygen concentrations</span><span class="de">Niedrigere Sauerstoffkonzentrationen</span></li>
+                        <li data-correct="true"><span class="en">Presence of free H₂S in the water column</span><span class="de">Vorhandensein von freiem H₂S in der Wassersäule</span></li>
+                        <li data-correct="false"><span class="en">Higher temperature</span><span class="de">Höhere Temperatur</span></li>
+                        <li data-correct="false"><span class="en">More organic carbon burial</span><span class="de">Mehr Begräbnis von organischem Kohlenstoff</span></li>
                     </ul>
-                    <div class="feedback correct">✓ Correct! Euxinic conditions are defined by the presence of free hydrogen sulfide (H₂S) in the water column, not just the absence of oxygen.</div>
-                    <div class="feedback incorrect">✗ Incorrect. Euxinic specifically means H₂S is present in the water column (like the modern Black Sea).</div>
+                    <div class="feedback correct">✓ <span class="en">Correct! Euxinic conditions are defined by the presence of free hydrogen sulfide (H₂S) in the water column, not just the absence of oxygen.</span><span class="de">Richtig! Euxinische Bedingungen werden durch das Vorhandensein von freiem Schwefelwasserstoff (H₂S) in der Wassersäule definiert, nicht nur durch das Fehlen von Sauerstoff.</span></div>
+                    <div class="feedback incorrect">✗ <span class="en">Incorrect. Euxinic specifically means H₂S is present in the water column (like the modern Black Sea).</span><span class="de">Falsch. Euxinisch bedeutet speziell, dass H₂S in der Wassersäule vorhanden ist (wie im modernen Schwarzen Meer).</span></div>
                 </div>
 
                 <!-- Question 3 -->
                 <div class="question-container hidden" data-question="3">
-                    <div class="question-number">Question 3 of 5</div>
-                    <div class="question-text">Why is Mo particularly useful for identifying euxinic conditions?</div>
+                    <div class="question-number"><span class="en">Question 3 of 5</span><span class="de">Frage 3 von 5</span></div>
+                    <div class="question-text"><span class="en">Why is Mo particularly useful for identifying euxinic conditions?</span><span class="de">Warum ist Mo besonders nützlich zur Identifizierung euxinischer Bedingungen?</span></div>
                     <ul class="options">
-                        <li data-correct="false">Mo is more abundant in euxinic settings</li>
-                        <li data-correct="false">Mo has a shorter residence time</li>
-                        <li data-correct="true">Mo requires H₂S for efficient conversion to particle-reactive thiomolybdate (MoS₄²⁻)</li>
-                        <li data-correct="false">Mo is enriched in all reducing sediments equally</li>
+                        <li data-correct="false"><span class="en">Mo is more abundant in euxinic settings</span><span class="de">Mo ist häufiger in euxinischen Umgebungen</span></li>
+                        <li data-correct="false"><span class="en">Mo has a shorter residence time</span><span class="de">Mo hat eine kürzere Verweilzeit</span></li>
+                        <li data-correct="true"><span class="en">Mo requires H₂S for efficient conversion to particle-reactive thiomolybdate (MoS₄²⁻)</span><span class="de">Mo benötigt H₂S für die effiziente Umwandlung in partikelreaktives Thiomolybdat (MoS₄²⁻)</span></li>
+                        <li data-correct="false"><span class="en">Mo is enriched in all reducing sediments equally</span><span class="de">Mo ist in allen reduzierenden Sedimenten gleichermaßen angereichert</span></li>
                     </ul>
-                    <div class="feedback correct">✓ Correct! Mo is efficiently scavenged only when H₂S converts soluble molybdate (MoO₄²⁻) to thiomolybdate (MoS₄²⁻), which is particle-reactive.</div>
-                    <div class="feedback incorrect">✗ Incorrect. Mo's special behavior relates to its chemistry with sulfide — it requires H₂S for efficient sequestration.</div>
+                    <div class="feedback correct">✓ <span class="en">Correct! Mo is efficiently scavenged only when H₂S converts soluble molybdate (MoO₄²⁻) to thiomolybdate (MoS₄²⁻), which is particle-reactive.</span><span class="de">Richtig! Mo wird nur effizient ausgeräumt, wenn H₂S das lösliche Molybdat (MoO₄²⁻) in das partikelreaktive Thiomolybdat (MoS₄²⁻) umwandelt.</span></div>
+                    <div class="feedback incorrect">✗ <span class="en">Incorrect. Mo's special behavior relates to its chemistry with sulfide — it requires H₂S for efficient sequestration.</span><span class="de">Falsch. Das besondere Verhalten von Mo hängt mit seiner Chemie mit Sulfiden zusammen – es benötigt H₂S für effiziente Sequestrierung.</span></div>
                 </div>
 
                 <!-- Question 4 -->
                 <div class="question-container hidden" data-question="4">
-                    <div class="question-number">Question 4 of 5</div>
-                    <div class="question-text">An Enrichment Factor (EF) of 5 for uranium in a shale sample indicates:</div>
+                    <div class="question-number"><span class="en">Question 4 of 5</span><span class="de">Frage 4 von 5</span></div>
+                    <div class="question-text"><span class="en">An Enrichment Factor (EF) of 5 for uranium in a shale sample indicates:</span><span class="de">Ein Anreicherungsfaktor (EF) von 5 für Uran in einer Schieferprobe zeigt an:</span></div>
                     <ul class="options">
-                        <li data-correct="true">The sample has 5× more U/Al than average shale — significant authigenic enrichment</li>
-                        <li data-correct="false">The sample contains 5 ppm uranium</li>
-                        <li data-correct="false">The sample is 5 times older than average shale</li>
-                        <li data-correct="false">The sample has depleted uranium</li>
+                        <li data-correct="true"><span class="en">The sample has 5× more U/Al than average shale — significant authigenic enrichment</span><span class="de">Die Probe hat 5× mehr U/Al als durchschnittlicher Schiefer — signifikante authigene Anreicherung</span></li>
+                        <li data-correct="false"><span class="en">The sample contains 5 ppm uranium</span><span class="de">Die Probe enthält 5 ppm Uran</span></li>
+                        <li data-correct="false"><span class="en">The sample is 5 times older than average shale</span><span class="de">Die Probe ist 5-mal älter als durchschnittlicher Schiefer</span></li>
+                        <li data-correct="false"><span class="en">The sample has depleted uranium</span><span class="de">Die Probe hat verarmtes Uran</span></li>
                     </ul>
-                    <div class="feedback correct">✓ Correct! EF > 1 indicates enrichment above detrital background. EF = 5 means substantial authigenic U addition under reducing conditions.</div>
-                    <div class="feedback incorrect">✗ Incorrect. EF is a ratio comparing the sample's element/Al to average shale. EF > 1 means enrichment.</div>
+                    <div class="feedback correct">✓ <span class="en">Correct! EF > 1 indicates enrichment above detrital background. EF = 5 means substantial authigenic U addition under reducing conditions.</span><span class="de">Richtig! EF > 1 zeigt Anreicherung über dem detritischen Hintergrund an. EF = 5 bedeutet bedeutende authigene U-Addition unter reduzierenden Bedingungen.</span></div>
+                    <div class="feedback incorrect">✗ <span class="en">Incorrect. EF is a ratio comparing the sample's element/Al to average shale. EF > 1 means enrichment.</span><span class="de">Falsch. EF ist ein Verhältnis, das das Element/Al der Probe mit durchschnittlichem Schiefer vergleicht. EF > 1 bedeutet Anreicherung.</span></div>
                 </div>
 
                 <!-- Question 5 -->
                 <div class="question-container hidden" data-question="5">
-                    <div class="question-number">Question 5 of 5</div>
-                    <div class="question-text">Why is manganese NOT a straightforward indicator of anoxia?</div>
+                    <div class="question-number"><span class="en">Question 5 of 5</span><span class="de">Frage 5 von 5</span></div>
+                    <div class="question-text"><span class="en">Why is manganese NOT a straightforward indicator of anoxia?</span><span class="de">Warum ist Mangan KEIN einfacher Indikator für Anoxie?</span></div>
                     <ul class="options">
-                        <li data-correct="false">Mn is not redox-sensitive</li>
-                        <li data-correct="false">Mn is always enriched in all sediments</li>
-                        <li data-correct="true">Under reducing conditions, Mn oxides dissolve and Mn²⁺ can diffuse away from the sediment</li>
-                        <li data-correct="false">Mn has too long a residence time</li>
+                        <li data-correct="false"><span class="en">Mn is not redox-sensitive</span><span class="de">Mn ist nicht redoxempfindlich</span></li>
+                        <li data-correct="false"><span class="en">Mn is always enriched in all sediments</span><span class="de">Mn ist immer in allen Sedimenten angereichert</span></li>
+                        <li data-correct="true"><span class="en">Under reducing conditions, Mn oxides dissolve and Mn²⁺ can diffuse away from the sediment</span><span class="de">Unter reduzierenden Bedingungen lösen sich Mn-Oxide auf und Mn²⁺ kann aus dem Sediment diffundieren</span></li>
+                        <li data-correct="false"><span class="en">Mn has too long a residence time</span><span class="de">Mn hat eine zu lange Verweilzeit</span></li>
                     </ul>
-                    <div class="feedback correct">✓ Correct! Unlike U, V, and Mo which precipitate under reducing conditions, Mn oxides dissolve when reduced, and the soluble Mn²⁺ can be lost from anoxic sediments.</div>
-                    <div class="feedback incorrect">✗ Incorrect. Mn's complication is that it becomes mobile (soluble) under reducing conditions, opposite to elements like U and Mo.</div>
+                    <div class="feedback correct">✓ <span class="en">Correct! Unlike U, V, and Mo which precipitate under reducing conditions, Mn oxides dissolve when reduced, and the soluble Mn²⁺ can be lost from anoxic sediments.</span><span class="de">Richtig! Im Gegensatz zu U, V und Mo, die unter reduzierenden Bedingungen ausfallen, lösen sich Mn-Oxide auf, wenn sie reduziert werden, und das lösliche Mn²⁺ kann aus anoxischen Sedimenten verloren gehen.</span></div>
+                    <div class="feedback incorrect">✗ <span class="en">Incorrect. Mn's complication is that it becomes mobile (soluble) under reducing conditions, opposite to elements like U and Mo.</span><span class="de">Falsch. Die Komplikation von Mn ist, dass es unter reduzierenden Bedingungen mobil (löslich) wird, im Gegensatz zu Elementen wie U und Mo.</span></div>
                 </div>
             </div>
 
             <div class="quiz-nav">
-                <button class="quiz-btn" id="prevBtn" disabled>← Previous</button>
-                <button class="quiz-btn" id="nextBtn">Next →</button>
+                <button class="quiz-btn" id="prevBtn" disabled><span class="en">← Previous</span><span class="de">← Zurück</span></button>
+                <button class="quiz-btn" id="nextBtn"><span class="en">Next →</span><span class="de">Weiter →</span></button>
             </div>
 
             <div class="quiz-results hidden" id="quizResults">
-                <h3>Quiz Complete!</h3>
+                <h3><span class="en">Quiz Complete!</span><span class="de">Quiz abgeschlossen!</span></h3>
                 <div class="score-circle" id="scoreCircle">0/5</div>
                 <p id="resultMessage"></p>
-                <button class="quiz-btn" onclick="restartQuiz()">Retry Quiz</button>
+                <button class="quiz-btn" onclick="restartQuiz()"><span class="en">Retry Quiz</span><span class="de">Quiz erneut versuchen</span></button>
             </div>
         </section>
 
         <div class="references">
-            <h3>📚 Key References</h3>
+            <h3>📚 <span class="en">Key References</span><span class="de">Wichtige Referenzen</span></h3>
             <ul>
                 <li>Tribovillard, N. et al. (2006) Trace metals as paleoredox and paleoproductivity proxies: An update. <em>Chemical Geology</em> 232, 12-32.</li>
                 <li>Brennecka, G.A. et al. (2011) Rapid expansion of oceanic anoxia immediately before the end-Permian mass extinction. <em>PNAS</em> 108, 17631-17634.</li>
@@ -597,17 +608,37 @@
         </div>
 
         <nav class="module-nav">
-            <a href="module6_nd_isotopes.html">← Module 6: Nd Isotopes</a>
-            <a href="index.html">Return to Course Home →</a>
+            <a href="module6_nd_isotopes.html"><span class="en">← Module 6: Nd Isotopes</span><span class="de">← Modul 6: Nd-Isotope</span></a>
+            <a href="index.html"><span class="en">Return to Course Home →</span><span class="de">Zurück zur Kurs-Startseite →</span></a>
         </nav>
     </main>
 
     <footer class="footer">
-        <p>Sedimentary Geochemistry · GeoZentrum Nordbayern · FAU Erlangen-Nürnberg</p>
-        <p style="margin-top: 10px;">Content: Prof. Dr. Michael Joachimski & PD Dr. Luca Caracciolo</p>
+        <p><span class="en">Sedimentary Geochemistry · GeoZentrum Nordbayern · FAU Erlangen-Nürnberg</span><span class="de">Sedimentäre Geochemie · GeoZentrum Nordbayern · FAU Erlangen-Nürnberg</span></p>
+        <p style="margin-top: 10px;"><span class="en">Content: Prof. Dr. Michael Joachimski & PD Dr. Luca Caracciolo</span><span class="de">Inhalt: Prof. Dr. Michael Joachimski & PD Dr. Luca Caracciolo</span></p>
     </footer>
 
     <script>
+        // Language switching
+        function setLanguage(lang) {
+            document.body.className = 'lang-' + lang;
+            localStorage.setItem('language', lang);
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        // Load saved language preference
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedLang = localStorage.getItem('language') || 'en';
+            document.body.className = 'lang-' + savedLang;
+            const buttons = document.querySelectorAll('.lang-btn');
+            buttons.forEach((btn, idx) => {
+                if ((idx === 0 && savedLang === 'en') || (idx === 1 && savedLang === 'de')) {
+                    btn.classList.add('active');
+                }
+            });
+        });
+
         // Quiz functionality
         let currentQuestion = 1;
         const totalQuestions = 5;

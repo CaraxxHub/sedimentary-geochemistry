@@ -88,54 +88,65 @@
         .module-nav a { display: flex; align-items: center; text-decoration: none; color: #1E40AF; font-weight: 500; }
         .module-nav a:hover { color: #1E3A8A; }
         @media (max-width: 768px) { .hero h1 { font-size: 1.8em; } .nav-links { display: none; } .equation-box { font-size: 0.95em; padding: 15px; } .two-column { grid-template-columns: 1fr; } }
+        /* Language Switch */
+        .lang-switch { position: fixed; top: 70px; right: 15px; z-index: 1001; display: flex; gap: 5px; background: rgba(255,255,255,0.95); padding: 5px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.15); }
+        .lang-btn { padding: 6px 12px; border: 2px solid #16a085; background: white; color: #16a085; font-weight: bold; cursor: pointer; border-radius: 5px; transition: all 0.3s; font-size: 0.85em; }
+        .lang-btn:hover { background: #e8f6f3; }
+        .lang-btn.active { background: #16a085; color: white; }
+        body.lang-en .de { display: none !important; }
+        body.lang-de .en { display: none !important; }
     </style>
 </head>
-<body>
+<body class="lang-en">
+    <div class="lang-switch">
+        <button class="lang-btn active" onclick="setLanguage('en')">English</button>
+        <button class="lang-btn" onclick="setLanguage('de')">Deutsch</button>
+    </div>
     <nav class="nav-bar">
-        <a href="index.html" class="nav-brand">🔬 Sedimentary Geochemistry</a>
+        <a href="index.html" class="nav-brand">🔬 <span class="en">Sedimentary Geochemistry</span><span class="de">Sedimentäre Geochemie</span></a>
         <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="module1_introduction_isotopes.html">Module 1</a>
-            <a href="module2_carbon_oxygen_isotopes.html">Module 2</a>
-            <a href="module3_clumped_isotopes.html">Module 3</a>
-            <a href="module4_boron_isotopes.html">Module 4</a>
-            <a href="module5_strontium_isotopes.html">Module 5</a>
-            <a href="module6_nd_isotopes.html" style="font-weight: bold;">Module 6</a>
-            <a href="module7_uranium_trace_elements.html">Module 7</a>
+            <a href="index.html"><span class="en">Home</span><span class="de">Startseite</span></a>
+            <a href="module1_introduction_isotopes.html"><span class="en">Module 1</span><span class="de">Modul 1</span></a>
+            <a href="module2_carbon_oxygen_isotopes.html"><span class="en">Module 2</span><span class="de">Modul 2</span></a>
+            <a href="module3_clumped_isotopes.html"><span class="en">Module 3</span><span class="de">Modul 3</span></a>
+            <a href="module4_boron_isotopes.html"><span class="en">Module 4</span><span class="de">Modul 4</span></a>
+            <a href="module5_strontium_isotopes.html"><span class="en">Module 5</span><span class="de">Modul 5</span></a>
+            <a href="module6_nd_isotopes.html" style="font-weight: bold;"><span class="en">Module 6</span><span class="de">Modul 6</span></a>
+            <a href="module7_uranium_trace_elements.html"><span class="en">Module 7</span><span class="de">Modul 7</span></a>
         </div>
     </nav>
 
     <header class="hero">
-        <h1>Neodymium Isotopes (εNd)</h1>
-        <p class="subtitle">Tracing ocean circulation and crustal provenance</p>
-        <span class="module-tag">📖 Module 6 of 7 • Estimated time: 35 minutes</span>
+        <h1><span class="en">Neodymium Isotopes (εNd)</span><span class="de">Neodym-Isotope (εNd)</span></h1>
+        <p class="subtitle"><span class="en">Tracing ocean circulation and crustal provenance</span><span class="de">Verfolgung der Ozeanszirkulation und krustalen Provenienz</span></p>
+        <span class="module-tag">📖 <span class="en">Module 6 of 7 • Estimated time: 35 minutes</span><span class="de">Modul 6 von 7 • Geschätzte Zeit: 35 Minuten</span></span>
     </header>
 
     <main class="container">
         <div class="objectives">
-            <h2>🎯 Learning Objectives</h2>
+            <h2>🎯 <span class="en">Learning Objectives</span><span class="de">Lernziele</span></h2>
             <ul>
-                <li>Explain the Sm→Nd decay system and why εNd notation is used</li>
-                <li>Differentiate radiogenic (high εNd, mantle) vs. non-radiogenic (low εNd, crustal) signatures</li>
-                <li>Describe Sm/Nd fractionation during magma formation creating crustal vs. mantle reservoirs</li>
-                <li>Identify main Nd sources (weathering, riverine) and sinks (Fe-Mn nodules, fish teeth)</li>
-                <li>Interpret εNd variations in modern water masses (NADW, AAIW, Pacific deep water)</li>
-                <li>Apply εNd as a paleoceanographic tracer to reconstruct past ocean circulation</li>
+                <li><span class="en">Explain the Sm→Nd decay system and why εNd notation is used</span><span class="de">Erklären Sie das Sm→Nd-Zerfallssystem und warum die εNd-Notation verwendet wird</span></li>
+                <li><span class="en">Differentiate radiogenic (high εNd, mantle) vs. non-radiogenic (low εNd, crustal) signatures</span><span class="de">Unterscheiden Sie zwischen radiogenen (hoher εNd, Mantel) und nicht-radiogenen (niedriger εNd, krustalen) Signaturen</span></li>
+                <li><span class="en">Describe Sm/Nd fractionation during magma formation creating crustal vs. mantle reservoirs</span><span class="de">Beschreiben Sie die Sm/Nd-Fraktionierung während der Magmabildung, die zu krustalen vs. Mantelreservoirs führt</span></li>
+                <li><span class="en">Identify main Nd sources (weathering, riverine) and sinks (Fe-Mn nodules, fish teeth)</span><span class="de">Identifizieren Sie die wichtigsten Nd-Quellen (Verwitterung, fluviatil) und Senken (Fe-Mn-Knollen, Fischzähne)</span></li>
+                <li><span class="en">Interpret εNd variations in modern water masses (NADW, AAIW, Pacific deep water)</span><span class="de">Interpretieren Sie εNd-Variationen in modernen Wassermassen (NADW, AAIW, Pazifisches Tiefenwasser)</span></li>
+                <li><span class="en">Apply εNd as a paleoceanographic tracer to reconstruct past ocean circulation</span><span class="de">Wenden Sie εNd als paläozeanographischen Tracer an, um frühere Ozeanszirkulation zu rekonstruieren</span></li>
             </ul>
         </div>
 
         <section class="section">
-            <h2>1. The Sm-Nd Decay System</h2>
+            <h2>1. <span class="en">The Sm-Nd Decay System</span><span class="de">Das Sm-Nd-Zerfallssystem</span></h2>
 
-            <h3>Radiogenic Isotope Systems</h3>
-            <p>Neodymium (Nd) belongs to a family of radiogenic isotope systems used in geochemistry:</p>
+            <h3><span class="en">Radiogenic Isotope Systems</span><span class="de">Radiogene Isotopensysteme</span></h3>
+            <p><span class="en">Neodymium (Nd) belongs to a family of radiogenic isotope systems used in geochemistry:</span><span class="de">Neodym (Nd) gehört zu einer Familie radiogener Isotopensysteme, die in der Geochemie verwendet werden:</span></p>
 
             <table class="data-table">
                 <thead>
                     <tr>
-                        <th>Decay</th>
-                        <th>Ratio Measured</th>
-                        <th>Half-life</th>
+                        <th><span class="en">Decay</span><span class="de">Zerfall</span></th>
+                        <th><span class="en">Ratio Measured</span><span class="de">Gemessenes Verhältnis</span></th>
+                        <th><span class="en">Half-life</span><span class="de">Halbwertzeit</span></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -163,9 +174,9 @@
             </table>
 
             <div class="concept-box">
-                <h4>🔑 Key Principle</h4>
-                <p>Isotope ratios of trace elements (Nd, Sr, Hf, Pb) dissolved in seawater are <strong>not dependent on fractionation processes</strong> in the ocean due to the very long half-life times.</p>
-                <p style="margin-top: 10px;">Changes in isotope ratios → <strong>input from another reservoir</strong> (e.g., continental crust vs. mantle)</p>
+                <h4>🔑 <span class="en">Key Principle</span><span class="de">Schlüsselprinzip</span></h4>
+                <p><span class="en">Isotope ratios of trace elements (Nd, Sr, Hf, Pb) dissolved in seawater are <strong>not dependent on fractionation processes</strong> in the ocean due to the very long half-life times.</span><span class="de">Isotopenverhältnisse von Spurenelementen (Nd, Sr, Hf, Pb), die in Meerwasser gelöst sind, sind <strong>nicht abhängig von Fraktionierungsprozessen</strong> im Ozean aufgrund der sehr langen Halbwertzeiten.</span></p>
+                <p style="margin-top: 10px;"><span class="en">Changes in isotope ratios → <strong>input from another reservoir</strong> (e.g., continental crust vs. mantle)</span><span class="de">Änderungen der Isotopenverhältnisse → <strong>Einfluss aus einem anderen Reservoir</strong> (z.B. Kontinentalkruste vs. Mantel)</span></p>
             </div>
 
             <div class="figure-box">
@@ -173,8 +184,8 @@
                 <div class="caption">Figure: The Sm-Nd isotope system showing radioactive decay relationships. ¹⁴⁷Sm decays to ¹⁴³Nd with a half-life of 106 Ga. The ratio ¹⁴³Nd/¹⁴⁴Nd reflects both initial composition and subsequent radiogenic growth.</div>
             </div>
 
-            <h3>Residence Time Concept</h3>
-            <p>The key to using Nd as a water mass tracer is its <strong>short residence time</strong>:</p>
+            <h3><span class="en">Residence Time Concept</span><span class="de">Konzept der Verweilzeit</span></h3>
+            <p><span class="en">The key to using Nd as a water mass tracer is its <strong>short residence time</strong>:</span><span class="de">Der Schlüssel zur Verwendung von Nd als Wassermassen-Tracer ist seine <strong>kurze Verweilzeit</strong>:</span></p>
 
             <div class="figure-box">
                 <img src="images/lectures/nd_residence_time_bathtub.jpg" alt="Bathtub analogy for residence time">
@@ -184,67 +195,67 @@
             <table class="data-table">
                 <thead>
                     <tr>
-                        <th>Isotope System</th>
-                        <th>Residence Time</th>
-                        <th>Utility</th>
+                        <th><span class="en">Isotope System</span><span class="de">Isotopensystem</span></th>
+                        <th><span class="en">Residence Time</span><span class="de">Verweilzeit</span></th>
+                        <th><span class="en">Utility</span><span class="de">Nutzen</span></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr style="background: #EFF6FF; font-weight: bold;">
                         <td>¹⁴³Nd/¹⁴⁴Nd</td>
-                        <td>600 – 1,000 years</td>
-                        <td>Excellent water mass tracer</td>
+                        <td>600 – 1,000 <span class="en">years</span><span class="de">Jahre</span></td>
+                        <td><span class="en">Excellent water mass tracer</span><span class="de">Ausgezeichneter Wassermassen-Tracer</span></td>
                     </tr>
                     <tr>
                         <td>¹⁷⁶Hf/¹⁷⁷Hf</td>
-                        <td>~2,000 years</td>
-                        <td>Good water mass tracer</td>
+                        <td>~2,000 <span class="en">years</span><span class="de">Jahre</span></td>
+                        <td><span class="en">Good water mass tracer</span><span class="de">Guter Wassermassen-Tracer</span></td>
                     </tr>
                     <tr>
                         <td>²⁰⁶Pb/²⁰⁴Pb</td>
-                        <td>50 – 400 years</td>
-                        <td>Very short, local tracer</td>
+                        <td>50 – 400 <span class="en">years</span><span class="de">Jahre</span></td>
+                        <td><span class="en">Very short, local tracer</span><span class="de">Sehr kurz, lokaler Tracer</span></td>
                     </tr>
                     <tr>
                         <td>⁸⁷Sr/⁸⁶Sr</td>
-                        <td>~2 million years</td>
-                        <td>Global average (homogeneous)</td>
+                        <td>~2 <span class="en">million years</span><span class="de">Millionen Jahre</span></td>
+                        <td><span class="en">Global average (homogeneous)</span><span class="de">Globaler Durchschnitt (homogen)</span></td>
                     </tr>
                 </tbody>
             </table>
 
             <div class="concept-box success">
-                <h4>✓ Why Nd Works as a Tracer</h4>
-                <p>Nd residence time (600-1000 years) is <strong>shorter than ocean mixing time (~1,500 years)</strong>.</p>
-                <p style="margin-top: 10px;">This means different water masses can maintain <strong>distinct εNd signatures</strong> before they mix!</p>
+                <h4>✓ <span class="en">Why Nd Works as a Tracer</span><span class="de">Warum Nd als Tracer funktioniert</span></h4>
+                <p><span class="en">Nd residence time (600-1000 years) is <strong>shorter than ocean mixing time (~1,500 years)</strong>.</span><span class="de">Die Nd-Verweilzeit (600-1000 Jahre) ist <strong>kürzer als die Ozeanmischzeit (~1.500 Jahre)</strong>.</span></p>
+                <p style="margin-top: 10px;"><span class="en">This means different water masses can maintain <strong>distinct εNd signatures</strong> before they mix!</span><span class="de">Das bedeutet, dass verschiedene Wassermassen <strong>unterschiedliche εNd-Signaturen</strong> bewahren können, bevor sie sich vermischen!</span></p>
             </div>
         </section>
 
         <section class="section">
-            <h2>2. The εNd Notation</h2>
+            <h2>2. <span class="en">The εNd Notation</span><span class="de">Die εNd-Notation</span></h2>
 
-            <p>Because ¹⁴⁷Sm has an extremely long half-life, variations in ¹⁴³Nd/¹⁴⁴Nd are very small (4th or 5th decimal place). We use the <strong>epsilon notation</strong> for convenience:</p>
+            <p><span class="en">Because ¹⁴⁷Sm has an extremely long half-life, variations in ¹⁴³Nd/¹⁴⁴Nd are very small (4th or 5th decimal place). We use the <strong>epsilon notation</strong> for convenience:</span><span class="de">Da ¹⁴⁷Sm eine extrem lange Halbwertzeit hat, sind Variationen in ¹⁴³Nd/¹⁴⁴Nd sehr klein (4. oder 5. Dezimalstelle). Wir verwenden die <strong>Epsilon-Notation</strong> aus Gründen der Bequemlichkeit:</span></p>
 
             <div class="equation-box">
-                <div class="equation-name">Epsilon Nd Definition</div>
+                <div class="equation-name"><span class="en">Epsilon Nd Definition</span><span class="de">Epsilon Nd Definition</span></div>
                 εNd = [(¹⁴³Nd/¹⁴⁴Nd)sample / (¹⁴³Nd/¹⁴⁴Nd)CHUR - 1] × 10,000
-                <div class="equation-note">CHUR = Chondritic Uniform Reservoir (bulk Earth reference)<br>¹⁴³Nd/¹⁴⁴Nd of CHUR = 0.512638</div>
+                <div class="equation-note"><span class="en">CHUR = Chondritic Uniform Reservoir (bulk Earth reference)<br>¹⁴³Nd/¹⁴⁴Nd of CHUR = 0.512638</span><span class="de">CHUR = Chondritisches uniformes Reservoir (Referenz für die Gesamterde)<br>¹⁴³Nd/¹⁴⁴Nd von CHUR = 0,512638</span></div>
             </div>
 
             <div class="concept-box important">
-                <h4>📊 Interpreting εNd Values</h4>
+                <h4>📊 <span class="en">Interpreting εNd Values</span><span class="de">Interpretation von εNd-Werten</span></h4>
                 <ul style="margin-top: 10px;">
-                    <li><strong>εNd = 0:</strong> Same as bulk Earth (chondrite)</li>
-                    <li><strong>εNd > 0 (positive):</strong> More radiogenic than bulk Earth → <strong>mantle-derived</strong></li>
-                    <li><strong>εNd < 0 (negative):</strong> Less radiogenic than bulk Earth → <strong>continental crust</strong></li>
+                    <li><strong>εNd = 0:</strong> <span class="en">Same as bulk Earth (chondrite)</span><span class="de">Gleich wie die Gesamterde (Chondrit)</span></li>
+                    <li><strong>εNd > 0 (positive):</strong> <span class="en">More radiogenic than bulk Earth → <strong>mantle-derived</strong></span><span class="de">Radiogener als die Gesamterde → <strong>Mantel-Ursprung</strong></span></li>
+                    <li><strong>εNd < 0 (negative):</strong> <span class="en">Less radiogenic than bulk Earth → <strong>continental crust</strong></span><span class="de">Weniger radiogen als die Gesamterde → <strong>Kontinentalkruste</strong></span></li>
                 </ul>
             </div>
         </section>
 
         <section class="section">
-            <h2>3. Crustal vs. Mantle Reservoirs</h2>
+            <h2>3. <span class="en">Crustal vs. Mantle Reservoirs</span><span class="de">Krustale vs. Mantel-Reservoirs</span></h2>
 
-            <p>The key to understanding εNd is the <strong>fractionation of Sm and Nd during partial melting</strong>.</p>
+            <p><span class="en">The key to understanding εNd is the <strong>fractionation of Sm and Nd during partial melting</strong>.</span><span class="de">Der Schlüssel zum Verständnis von εNd ist die <strong>Fraktionierung von Sm und Nd während des Teilschmelzens</strong>.</span></p>
 
             <div class="figure-box">
                 <img src="images/lectures/nd_partial_melting.jpg" alt="Partial melting and Sm/Nd fractionation">
@@ -256,82 +267,82 @@
                 <div class="caption">Figure: εNd as a tracer of ocean circulation through deep time. Continental margins with old crust contribute negative (non-radiogenic) εNd values, while volcanic arcs contribute positive (radiogenic) values, allowing water mass tracking across ocean basins.</div>
             </div>
 
-            <h3>REE Behavior During Melting</h3>
-            <p>Samarium (Sm) and Neodymium (Nd) are both <strong>Rare Earth Elements (REE)</strong>:</p>
+            <h3><span class="en">REE Behavior During Melting</span><span class="de">Verhalten von Seltenerdenelementen beim Schmelzen</span></h3>
+            <p><span class="en">Samarium (Sm) and Neodymium (Nd) are both <strong>Rare Earth Elements (REE)</strong>:</span><span class="de">Samarium (Sm) und Neodym (Nd) sind beide <strong>Seltenerdenlemente (REE)</strong>:</span></p>
             <ul style="margin-left: 20px;">
-                <li>All REE have 3+ charge</li>
-                <li>Ionic radii decrease with increasing atomic number</li>
-                <li>All REE are "incompatible" (prefer the melt)</li>
-                <li><strong>Light REE (including Nd) are MORE incompatible than heavy REE</strong></li>
+                <li><span class="en">All REE have 3+ charge</span><span class="de">Alle Seltenerdenlemente haben eine 3+ Ladung</span></li>
+                <li><span class="en">Ionic radii decrease with increasing atomic number</span><span class="de">Ionenradien nehmen mit zunehmender Ordnungszahl ab</span></li>
+                <li><span class="en">All REE are "incompatible" (prefer the melt)</span><span class="de">Alle Seltenerdenlemente sind "inkompatibel" (bevorzugen die Schmelze)</span></li>
+                <li><strong><span class="en">Light REE (including Nd) are MORE incompatible than heavy REE</span><span class="de">Leichte Seltenerdenlemente (einschließlich Nd) sind INKOMPATIBILIER als schwere Seltenerdenlemente</span></strong></li>
             </ul>
 
             <div class="concept-box">
-                <h4>🔑 The Critical Insight</h4>
-                <p>Nd is <strong>less compatible</strong> in the mantle than Sm. During melting:</p>
+                <h4>🔑 <span class="en">The Critical Insight</span><span class="de">Der kritische Einblick</span></h4>
+                <p><span class="en">Nd is <strong>less compatible</strong> in the mantle than Sm. During melting:</span><span class="de">Nd ist <strong>weniger kompatibel</strong> im Mantel als Sm. Während des Schmelzens:</span></p>
                 <ul style="margin-top: 10px;">
-                    <li>Melts become enriched in Nd → <strong>Low Sm/Nd</strong></li>
-                    <li>Mantle residue retains more Sm → <strong>High Sm/Nd</strong></li>
+                    <li><span class="en">Melts become enriched in Nd → <strong>Low Sm/Nd</strong></span><span class="de">Schmelzen werden in Nd angereichert → <strong>Niedriges Sm/Nd</strong></span></li>
+                    <li><span class="en">Mantle residue retains more Sm → <strong>High Sm/Nd</strong></span><span class="de">Mantelrückstand behält mehr Sm → <strong>Hohes Sm/Nd</strong></span></li>
                 </ul>
-                <p style="margin-top: 10px;">Over billions of years, the high Sm/Nd mantle produces more ¹⁴³Nd from ¹⁴⁷Sm decay → <strong>higher εNd</strong></p>
+                <p style="margin-top: 10px;"><span class="en">Over billions of years, the high Sm/Nd mantle produces more ¹⁴³Nd from ¹⁴⁷Sm decay → <strong>higher εNd</strong></span><span class="de">Im Laufe von Milliarden von Jahren erzeugt der Mantel mit hohem Sm/Nd mehr ¹⁴³Nd aus dem ¹⁴⁷Sm-Zerfall → <strong>höheres εNd</strong></span></p>
             </div>
 
             <div class="two-column">
                 <div class="endmember-box crust">
-                    <h4>🏔️ Continental Crust</h4>
+                    <h4>🏔️ <span class="en">Continental Crust</span><span class="de">Kontinentalkruste</span></h4>
                     <div class="value">εNd: -10 to -40</div>
-                    <p><strong>Non-radiogenic</strong></p>
+                    <p><strong><span class="en">Non-radiogenic</span><span class="de">Nicht-radiogen</span></strong></p>
                     <ul style="text-align: left; font-size: 0.9em; margin-top: 10px;">
-                        <li>Old, low Sm/Nd rocks</li>
-                        <li>Granites, sediments</li>
-                        <li>Accumulated since ~4 Ga</li>
-                        <li>North Atlantic rivers: ~-12</li>
+                        <li><span class="en">Old, low Sm/Nd rocks</span><span class="de">Alte, niedrige Sm/Nd-Gesteine</span></li>
+                        <li><span class="en">Granites, sediments</span><span class="de">Granite, Sedimente</span></li>
+                        <li><span class="en">Accumulated since ~4 Ga</span><span class="de">Akkumuliert seit ~4 Ga</span></li>
+                        <li><span class="en">North Atlantic rivers: ~-12</span><span class="de">Nordatlantische Flüsse: ~-12</span></li>
                     </ul>
                 </div>
                 <div class="endmember-box mantle">
-                    <h4>🌋 Depleted Mantle</h4>
+                    <h4>🌋 <span class="en">Depleted Mantle</span><span class="de">Verarmter Mantel</span></h4>
                     <div class="value">εNd: +8 to +12</div>
-                    <p><strong>Radiogenic</strong></p>
+                    <p><strong><span class="en">Radiogenic</span><span class="de">Radiogen</span></strong></p>
                     <ul style="text-align: left; font-size: 0.9em; margin-top: 10px;">
-                        <li>High Sm/Nd residue</li>
-                        <li>MORB basalts</li>
-                        <li>Continuing ¹⁴³Nd production</li>
-                        <li>Pacific volcanic arcs: ~+8</li>
+                        <li><span class="en">High Sm/Nd residue</span><span class="de">Hohes Sm/Nd-Rückstand</span></li>
+                        <li><span class="en">MORB basalts</span><span class="de">MORB-Basalte</span></li>
+                        <li><span class="en">Continuing ¹⁴³Nd production</span><span class="de">Fortsetzung der ¹⁴³Nd-Produktion</span></li>
+                        <li><span class="en">Pacific volcanic arcs: ~+8</span><span class="de">Pazifische Vulkanbögen: ~+8</span></li>
                     </ul>
                 </div>
             </div>
         </section>
 
         <section class="section">
-            <h2>4. Nd in the Modern Ocean</h2>
+            <h2>4. <span class="en">Nd in the Modern Ocean</span><span class="de">Nd im modernen Ozean</span></h2>
 
-            <h3>Sources and Sinks</h3>
+            <h3><span class="en">Sources and Sinks</span><span class="de">Quellen und Senken</span></h3>
             <table class="data-table">
                 <thead>
                     <tr>
-                        <th>Sources</th>
-                        <th>Sinks</th>
+                        <th><span class="en">Sources</span><span class="de">Quellen</span></th>
+                        <th><span class="en">Sinks</span><span class="de">Senken</span></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>River runoff (dissolved + particulate)</td>
-                        <td>Fe-Mn nodules and crusts</td>
+                        <td><span class="en">River runoff (dissolved + particulate)</span><span class="de">Flussabfluss (gelöst + Partikel)</span></td>
+                        <td><span class="en">Fe-Mn nodules and crusts</span><span class="de">Fe-Mn-Knollen und Krusten</span></td>
                     </tr>
                     <tr>
-                        <td>Dust dissolution</td>
-                        <td>Fish teeth and bones (bioapatite)</td>
+                        <td><span class="en">Dust dissolution</span><span class="de">Staubauflösung</span></td>
+                        <td><span class="en">Fish teeth and bones (bioapatite)</span><span class="de">Fischzähne und Knochen (Bioapatit)</span></td>
                     </tr>
                     <tr>
-                        <td>Submarine groundwater discharge</td>
-                        <td>Authigenic minerals in sediments</td>
+                        <td><span class="en">Submarine groundwater discharge</span><span class="de">Unterseegrundwasserentladung</span></td>
+                        <td><span class="en">Authigenic minerals in sediments</span><span class="de">Authigene Minerale in Sedimenten</span></td>
                     </tr>
                     <tr>
-                        <td>Hydrothermal input</td>
-                        <td>Foraminiferal coatings</td>
+                        <td><span class="en">Hydrothermal input</span><span class="de">Hydrothermale Einführung</span></td>
+                        <td><span class="en">Foraminiferal coatings</span><span class="de">Foraminiferen-Beschichtungen</span></td>
                     </tr>
                     <tr>
-                        <td>Boundary exchange with sediments</td>
-                        <td>Scavenging by particles</td>
+                        <td><span class="en">Boundary exchange with sediments</span><span class="de">Grenzflächenaustausch mit Sedimenten</span></td>
+                        <td><span class="en">Scavenging by particles</span><span class="de">Abfuhr durch Partikel</span></td>
                     </tr>
                 </tbody>
             </table>
@@ -341,8 +352,8 @@
                 <div class="caption">Figure: Fish teeth (ichthyoliths) and bone fragments serve as excellent archives for seawater εNd. During early diagenesis, Nd³⁺ ions from seawater/porewater substitute for Ca in bioapatite, preserving the bottom water isotope signature.</div>
             </div>
 
-            <h3>Modern Water Mass Signatures</h3>
-            <p>Different ocean basins have distinct εNd values reflecting their source regions:</p>
+            <h3><span class="en">Modern Water Mass Signatures</span><span class="de">Moderne Wassermassen-Signaturen</span></h3>
+            <p><span class="en">Different ocean basins have distinct εNd values reflecting their source regions:</span><span class="de">Verschiedene Ozeanbeeken haben unterschiedliche εNd-Werte, die ihre Quellenregionen widerspiegeln:</span></p>
 
             <div class="figure-box">
                 <img src="images/lectures/nd_epsilon_pacific_map.jpg" alt="εNd distribution in the Pacific region">
@@ -352,91 +363,91 @@
             <table class="data-table">
                 <thead>
                     <tr>
-                        <th>Water Mass</th>
+                        <th><span class="en">Water Mass</span><span class="de">Wassermasse</span></th>
                         <th>εNd</th>
-                        <th>Source Region</th>
+                        <th><span class="en">Source Region</span><span class="de">Quellenregion</span></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>North Atlantic Deep Water (NADW)</td>
+                        <td><span class="en">North Atlantic Deep Water (NADW)</span><span class="de">Nordatlantisches Tiefenwasser (NADW)</span></td>
                         <td>-13 to -14</td>
-                        <td>Old continental margins</td>
+                        <td><span class="en">Old continental margins</span><span class="de">Alte Kontinentalränder</span></td>
                     </tr>
                     <tr>
-                        <td>Antarctic Bottom Water (AABW)</td>
+                        <td><span class="en">Antarctic Bottom Water (AABW)</span><span class="de">Antarktisches Bodenwasser (AABW)</span></td>
                         <td>-8 to -9</td>
-                        <td>Mixed sources</td>
+                        <td><span class="en">Mixed sources</span><span class="de">Gemischte Quellen</span></td>
                     </tr>
                     <tr>
-                        <td>Antarctic Intermediate Water (AAIW)</td>
+                        <td><span class="en">Antarctic Intermediate Water (AAIW)</span><span class="de">Antarktisches Zwischenwasser (AAIW)</span></td>
                         <td>-7 to -8</td>
-                        <td>Southern Ocean</td>
+                        <td><span class="en">Southern Ocean</span><span class="de">Südlicher Ozean</span></td>
                     </tr>
                     <tr>
-                        <td>Pacific Deep Water</td>
+                        <td><span class="en">Pacific Deep Water</span><span class="de">Pazifisches Tiefenwasser</span></td>
                         <td>-3 to -5</td>
-                        <td>Young volcanic arcs</td>
+                        <td><span class="en">Young volcanic arcs</span><span class="de">Junge Vulkanbögen</span></td>
                     </tr>
                     <tr>
-                        <td>Indian Ocean Deep Water</td>
+                        <td><span class="en">Indian Ocean Deep Water</span><span class="de">Indisches Ozean Tiefenwasser</span></td>
                         <td>-7 to -9</td>
-                        <td>Mixed NADW + Pacific</td>
+                        <td><span class="en">Mixed NADW + Pacific</span><span class="de">Gemischte NADW + Pazifik</span></td>
                     </tr>
                 </tbody>
             </table>
 
             <div class="concept-box success">
-                <h4>✓ The Atlantic-Pacific Gradient</h4>
-                <p>The most striking feature is the <strong>gradient from Atlantic (εNd ≈ -13) to Pacific (εNd ≈ -4)</strong>.</p>
-                <p style="margin-top: 10px;">This reflects:</p>
+                <h4>✓ <span class="en">The Atlantic-Pacific Gradient</span><span class="de">Der Atlantik-Pazifik-Gradient</span></h4>
+                <p><span class="en">The most striking feature is the <strong>gradient from Atlantic (εNd ≈ -13) to Pacific (εNd ≈ -4)</strong>.</span><span class="de">Das auffälligste Merkmal ist der <strong>Gradient vom Atlantik (εNd ≈ -13) zum Pazifik (εNd ≈ -4)</strong>.</span></p>
+                <p style="margin-top: 10px;"><span class="en">This reflects:</span><span class="de">Dies spiegelt wider:</span></p>
                 <ul style="margin-top: 5px;">
-                    <li>Atlantic margins: old cratons → unradiogenic input</li>
-                    <li>Pacific margins: young volcanic arcs → radiogenic input</li>
-                    <li>Progressive mixing along thermohaline circulation</li>
+                    <li><span class="en">Atlantic margins: old cratons → unradiogenic input</span><span class="de">Atlantikränder: alte Kratone → nicht-radiogene Einführung</span></li>
+                    <li><span class="en">Pacific margins: young volcanic arcs → radiogenic input</span><span class="de">Pazifikränder: junge Vulkanbögen → radiogene Einführung</span></li>
+                    <li><span class="en">Progressive mixing along thermohaline circulation</span><span class="de">Progressive Mischung entlang der thermohalinen Zirkulation</span></li>
                 </ul>
             </div>
         </section>
 
         <section class="section">
-            <h2>5. Paleoceanographic Applications</h2>
+            <h2>5. <span class="en">Paleoceanographic Applications</span><span class="de">Paläozeanografische Anwendungen</span></h2>
 
-            <h3>Archives for Past Seawater εNd</h3>
-            <p>Several materials can record the εNd of past seawater:</p>
+            <h3><span class="en">Archives for Past Seawater εNd</span><span class="de">Archive für vergangenes Seewasser εNd</span></h3>
+            <p><span class="en">Several materials can record the εNd of past seawater:</span><span class="de">Mehrere Materialien können das εNd von vergangenen Meerwasser aufzeichnen:</span></p>
 
             <table class="data-table">
                 <thead>
                     <tr>
-                        <th>Archive</th>
-                        <th>Advantages</th>
-                        <th>Considerations</th>
+                        <th><span class="en">Archive</span><span class="de">Archiv</span></th>
+                        <th><span class="en">Advantages</span><span class="de">Vorteile</span></th>
+                        <th><span class="en">Considerations</span><span class="de">Überlegungen</span></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Fish teeth/bones</td>
-                        <td>Direct seawater recorder</td>
-                        <td>Rare in some settings</td>
+                        <td><span class="en">Fish teeth/bones</span><span class="de">Fischzähne/Knochen</span></td>
+                        <td><span class="en">Direct seawater recorder</span><span class="de">Direktes Meerwasser-Aufzeichnung</span></td>
+                        <td><span class="en">Rare in some settings</span><span class="de">Selten in einigen Umgebungen</span></td>
                     </tr>
                     <tr>
-                        <td>Fe-Mn crusts</td>
-                        <td>Long continuous records</td>
-                        <td>Low resolution</td>
+                        <td><span class="en">Fe-Mn crusts</span><span class="de">Fe-Mn-Krusten</span></td>
+                        <td><span class="en">Long continuous records</span><span class="de">Lange kontinuierliche Aufzeichnungen</span></td>
+                        <td><span class="en">Low resolution</span><span class="de">Niedrige Auflösung</span></td>
                     </tr>
                     <tr>
-                        <td>Foraminiferal coatings</td>
-                        <td>High resolution possible</td>
-                        <td>Need careful cleaning</td>
+                        <td><span class="en">Foraminiferal coatings</span><span class="de">Foraminiferen-Beschichtungen</span></td>
+                        <td><span class="en">High resolution possible</span><span class="de">Hohe Auflösung möglich</span></td>
+                        <td><span class="en">Need careful cleaning</span><span class="de">Sorgfältige Reinigung erforderlich</span></td>
                     </tr>
                     <tr>
-                        <td>Authigenic phases</td>
-                        <td>Widely available</td>
-                        <td>Verify bottom water signal</td>
+                        <td><span class="en">Authigenic phases</span><span class="de">Authigene Phasen</span></td>
+                        <td><span class="en">Widely available</span><span class="de">Weit verbreitet</span></td>
+                        <td><span class="en">Verify bottom water signal</span><span class="de">Bodenwassersignal überprüfen</span></td>
                     </tr>
                 </tbody>
             </table>
 
-            <h3>Case Study: Tectonic Gateway Changes</h3>
+            <h3><span class="en">Case Study: Tectonic Gateway Changes</span><span class="de">Fallstudie: Tektonische Torveränderungen</span></h3>
 
             <div class="figure-box">
                 <img src="images/lectures/nd_drake_passage_evolution.jpg" alt="Opening of Drake Passage traced by εNd">
@@ -444,31 +455,31 @@
             </div>
 
             <div class="concept-box important">
-                <h4>🌊 Panama Closure (~3 Ma)</h4>
-                <p>The closure of the Central American Seaway fundamentally changed Atlantic circulation:</p>
+                <h4>🌊 <span class="en">Panama Closure (~3 Ma)</span><span class="de">Panama-Schließung (~3 Ma)</span></h4>
+                <p><span class="en">The closure of the Central American Seaway fundamentally changed Atlantic circulation:</span><span class="de">Die Schließung der Mittelamerikanischen Meerenge veränderte die Atlantische Zirkulation grundlegend:</span></p>
                 <ul style="margin-top: 10px;">
-                    <li><strong>Before closure:</strong> Pacific water mixed into Caribbean → higher εNd</li>
-                    <li><strong>After closure:</strong> Atlantic isolated → εNd became more negative</li>
-                    <li>Enhanced thermohaline circulation → Gulf Stream intensification</li>
-                    <li>Contributed to Northern Hemisphere glaciation</li>
+                    <li><strong><span class="en">Before closure:</span><span class="de">Vor der Schließung:</span></strong> <span class="en">Pacific water mixed into Caribbean → higher εNd</span><span class="de">Pazifisches Wasser gemischt in Karibik → höheres εNd</span></li>
+                    <li><strong><span class="en">After closure:</span><span class="de">Nach der Schließung:</span></strong> <span class="en">Atlantic isolated → εNd became more negative</span><span class="de">Atlantik isoliert → εNd wurde negativer</span></li>
+                    <li><span class="en">Enhanced thermohaline circulation → Gulf Stream intensification</span><span class="de">Verstärkte thermohaline Zirkulation → Golfstrom-Intensivierung</span></li>
+                    <li><span class="en">Contributed to Northern Hemisphere glaciation</span><span class="de">Trug zur Vereisung der nördlichen Hemisphäre bei</span></li>
                 </ul>
             </div>
 
             <div class="concept-box">
-                <h4>🧊 Glacial-Interglacial Changes</h4>
-                <p>εNd records show circulation changes during ice ages:</p>
+                <h4>🧊 <span class="en">Glacial-Interglacial Changes</span><span class="de">Glaziale-Interglaiale Veränderungen</span></h4>
+                <p><span class="en">εNd records show circulation changes during ice ages:</span><span class="de">εNd-Aufzeichnungen zeigen Zirkulationsänderungen während der Eiszeiten:</span></p>
                 <ul style="margin-top: 10px;">
-                    <li><strong>Glacial periods:</strong> Reduced NADW production → less negative εNd in deep Atlantic</li>
-                    <li><strong>Interglacials:</strong> Strong NADW → more negative εNd</li>
-                    <li>This reflects changing dominance of northern vs. southern water masses</li>
+                    <li><strong><span class="en">Glacial periods:</span><span class="de">Glaziale Perioden:</span></strong> <span class="en">Reduced NADW production → less negative εNd in deep Atlantic</span><span class="de">Reduzierte NADW-Produktion → weniger negatives εNd im tiefen Atlantik</span></li>
+                    <li><strong><span class="en">Interglacials:</span><span class="de">Interglazialen:</span></strong> <span class="en">Strong NADW → more negative εNd</span><span class="de">Starkes NADW → negativeres εNd</span></li>
+                    <li><span class="en">This reflects changing dominance of northern vs. southern water masses</span><span class="de">Dies spiegelt die wechselnde Dominanz von nördlichen vs. südlichen Wassermassen wider</span></li>
                 </ul>
             </div>
         </section>
 
         <section class="section">
-            <h2>6. Provenance Tracing in Sediments</h2>
+            <h2>6. <span class="en">Provenance Tracing in Sediments</span><span class="de">Provenienz-Verfolgung in Sedimenten</span></h2>
 
-            <p>Beyond water mass tracing, εNd is powerful for identifying <strong>sediment sources</strong>:</p>
+            <p><span class="en">Beyond water mass tracing, εNd is powerful for identifying <strong>sediment sources</strong>:</span><span class="de">Über die Wassermassenverfolgung hinaus ist εNd leistungsstark zur Identifizierung von <strong>Sedimentquellen</strong>:</span></p>
 
             <div class="figure-box">
                 <img src="images/lectures/nd_morocco_basin_map.jpg" alt="εNd mapping in Devonian Morocco basins">
@@ -476,41 +487,41 @@
             </div>
 
             <div class="concept-box">
-                <h4>📍 Applications</h4>
+                <h4>📍 <span class="en">Applications</span><span class="de">Anwendungen</span></h4>
                 <ul style="margin-top: 10px;">
-                    <li><strong>Dust provenance:</strong> Track Saharan dust across Atlantic</li>
-                    <li><strong>River sediments:</strong> Identify drainage basin sources</li>
-                    <li><strong>Turbidites:</strong> Trace submarine flows to source regions</li>
-                    <li><strong>Ice-rafted debris:</strong> Track iceberg calving sources</li>
+                    <li><strong><span class="en">Dust provenance:</span><span class="de">Staubprovenienz:</span></strong> <span class="en">Track Saharan dust across Atlantic</span><span class="de">Verfolgung der Saharastaubverteilung über den Atlantik</span></li>
+                    <li><strong><span class="en">River sediments:</span><span class="de">Flusssedimente:</span></strong> <span class="en">Identify drainage basin sources</span><span class="de">Identifizierung von Einzugsgebietquellen</span></li>
+                    <li><strong><span class="en">Turbidites:</span><span class="de">Turbidite:</span></strong> <span class="en">Trace submarine flows to source regions</span><span class="de">Verfolgung von Unterseenströmen zu den Quellenregionen</span></li>
+                    <li><strong><span class="en">Ice-rafted debris:</span><span class="de">Vereisung transportiertes Material:</span></strong> <span class="en">Track iceberg calving sources</span><span class="de">Verfolgung von Eisbergabbruchquellen</span></li>
                 </ul>
             </div>
 
             <div class="concept-box success">
-                <h4>✓ Combined with Sr Isotopes</h4>
-                <p>εNd and ⁸⁷Sr/⁸⁶Sr together provide powerful discrimination:</p>
+                <h4>✓ <span class="en">Combined with Sr Isotopes</span><span class="de">Kombiniert mit Sr-Isotopen</span></h4>
+                <p><span class="en">εNd and ⁸⁷Sr/⁸⁶Sr together provide powerful discrimination:</span><span class="de">εNd und ⁸⁷Sr/⁸⁶Sr zusammen bieten eine starke Unterscheidung:</span></p>
                 <ul style="margin-top: 10px;">
-                    <li><strong>Sr:</strong> Weathering intensity signal (Rb/Sr depends on mineralogy)</li>
-                    <li><strong>Nd:</strong> Crustal age signal (Sm/Nd depends on extraction history)</li>
-                    <li>Different sediment sources plot in distinct fields on εNd vs. ⁸⁷Sr/⁸⁶Sr diagrams</li>
+                    <li><strong><span class="en">Sr:</span><span class="de">Sr:</span></strong> <span class="en">Weathering intensity signal (Rb/Sr depends on mineralogy)</span><span class="de">Verwitterungsintensitätssignal (Rb/Sr hängt von der Mineralogie ab)</span></li>
+                    <li><strong><span class="en">Nd:</span><span class="de">Nd:</span></strong> <span class="en">Crustal age signal (Sm/Nd depends on extraction history)</span><span class="de">Krustales Alter-Signal (Sm/Nd hängt von der Extraktionsgeschichte ab)</span></li>
+                    <li><span class="en">Different sediment sources plot in distinct fields on εNd vs. ⁸⁷Sr/⁸⁶Sr diagrams</span><span class="de">Verschiedene Sedimentquellen werden auf εNd vs. ⁸⁷Sr/⁸⁶Sr-Diagrammen in unterschiedlichen Feldern dargestellt</span></li>
                 </ul>
             </div>
         </section>
 
         <div class="key-points">
-            <h3>📝 Key Points Summary</h3>
+            <h3>📝 <span class="en">Key Points Summary</span><span class="de">Zusammenfassung der wichtigsten Punkte</span></h3>
             <ul>
-                <li>εNd notation expresses ¹⁴³Nd/¹⁴⁴Nd relative to bulk Earth (CHUR)</li>
-                <li>Positive εNd = mantle-derived (radiogenic); Negative εNd = continental crust (non-radiogenic)</li>
-                <li>Nd residence time (~600-1000 yrs) < ocean mixing time → water mass tracer</li>
-                <li>Atlantic deep water is unradiogenic (εNd ≈ -13), Pacific is more radiogenic (εNd ≈ -4)</li>
-                <li>Archives: fish teeth, Fe-Mn crusts, foraminiferal coatings, authigenic phases</li>
-                <li>Records tectonic gateway changes and glacial-interglacial circulation shifts</li>
+                <li><span class="en">εNd notation expresses ¹⁴³Nd/¹⁴⁴Nd relative to bulk Earth (CHUR)</span><span class="de">εNd-Notation drückt ¹⁴³Nd/¹⁴⁴Nd relativ zur Gesamterde (CHUR) aus</span></li>
+                <li><span class="en">Positive εNd = mantle-derived (radiogenic); Negative εNd = continental crust (non-radiogenic)</span><span class="de">Positives εNd = Mantel-Ursprung (radiogen); Negatives εNd = Kontinentalkruste (nicht-radiogen)</span></li>
+                <li><span class="en">Nd residence time (~600-1000 yrs) < ocean mixing time → water mass tracer</span><span class="de">Nd-Verweilzeit (~600-1000 Jahre) < Ozeanmischzeit → Wassermassen-Tracer</span></li>
+                <li><span class="en">Atlantic deep water is unradiogenic (εNd ≈ -13), Pacific is more radiogenic (εNd ≈ -4)</span><span class="de">Atlantisches Tiefenwasser ist nicht-radiogen (εNd ≈ -13), Pazifik ist radiogener (εNd ≈ -4)</span></li>
+                <li><span class="en">Archives: fish teeth, Fe-Mn crusts, foraminiferal coatings, authigenic phases</span><span class="de">Archive: Fischzähne, Fe-Mn-Krusten, Foraminiferen-Beschichtungen, authigene Phasen</span></li>
+                <li><span class="en">Records tectonic gateway changes and glacial-interglacial circulation shifts</span><span class="de">Zeichnet tektonische Torveränderungen und glazial-interglaziale Zirkulationsschwankungen auf</span></li>
             </ul>
         </div>
 
         <!-- Quiz Section -->
         <section class="quiz-section">
-            <h2>📝 Self-Assessment Quiz</h2>
+            <h2>📝 <span class="en">Self-Assessment Quiz</span><span class="de">Selbsteinschätzungs-Quiz</span></h2>
             <div class="quiz-progress">
                 <div class="quiz-progress-bar" id="quizProgress"></div>
             </div>
@@ -518,90 +529,90 @@
             <div id="quizContainer">
                 <!-- Question 1 -->
                 <div class="question-container" data-question="1">
-                    <div class="question-number">Question 1 of 5</div>
-                    <div class="question-text">A rock has εNd = +8. What does this indicate about its origin?</div>
+                    <div class="question-number"><span class="en">Question 1 of 5</span><span class="de">Frage 1 von 5</span></div>
+                    <div class="question-text"><span class="en">A rock has εNd = +8. What does this indicate about its origin?</span><span class="de">Ein Stein hat εNd = +8. Was sagt das über seinen Ursprung aus?</span></div>
                     <ul class="options">
-                        <li data-correct="false">Old continental crust</li>
-                        <li data-correct="true">Mantle-derived (depleted mantle)</li>
-                        <li data-correct="false">Identical to bulk Earth</li>
-                        <li data-correct="false">Seawater contamination</li>
+                        <li data-correct="false"><span class="en">Old continental crust</span><span class="de">Alte Kontinentalkruste</span></li>
+                        <li data-correct="true"><span class="en">Mantle-derived (depleted mantle)</span><span class="de">Mantel-Ursprung (verarmter Mantel)</span></li>
+                        <li data-correct="false"><span class="en">Identical to bulk Earth</span><span class="de">Identisch mit der Gesamterde</span></li>
+                        <li data-correct="false"><span class="en">Seawater contamination</span><span class="de">Meerwasserkontamination</span></li>
                     </ul>
-                    <div class="feedback correct">✓ Correct! Positive εNd values indicate the rock has more radiogenic Nd than bulk Earth, characteristic of mantle-derived materials with high Sm/Nd ratios.</div>
-                    <div class="feedback incorrect">✗ Incorrect. Positive εNd indicates mantle derivation. Continental crust has negative εNd values.</div>
+                    <div class="feedback correct">✓ <span class="en">Correct! Positive εNd values indicate the rock has more radiogenic Nd than bulk Earth, characteristic of mantle-derived materials with high Sm/Nd ratios.</span><span class="de">Richtig! Positive εNd-Werte zeigen an, dass das Gestein mehr radiogenes Nd als die Gesamterde hat, charakteristisch für Mantel-abgeleitete Materialien mit hohen Sm/Nd-Verhältnissen.</span></div>
+                    <div class="feedback incorrect">✗ <span class="en">Incorrect. Positive εNd indicates mantle derivation. Continental crust has negative εNd values.</span><span class="de">Falsch. Positives εNd zeigt einen Mantel-Ursprung an. Kontinentalkruste hat negative εNd-Werte.</span></div>
                 </div>
 
                 <!-- Question 2 -->
                 <div class="question-container hidden" data-question="2">
-                    <div class="question-number">Question 2 of 5</div>
-                    <div class="question-text">Why does Nd work as a water mass tracer while Sr does not?</div>
+                    <div class="question-number"><span class="en">Question 2 of 5</span><span class="de">Frage 2 von 5</span></div>
+                    <div class="question-text"><span class="en">Why does Nd work as a water mass tracer while Sr does not?</span><span class="de">Warum funktioniert Nd als Wassermassen-Tracer, während Sr nicht funktioniert?</span></div>
                     <ul class="options">
-                        <li data-correct="false">Sr is not radiogenic</li>
-                        <li data-correct="true">Nd residence time (~700 yrs) is shorter than ocean mixing time, while Sr (~2 Myr) is much longer</li>
-                        <li data-correct="false">Nd has more isotopes than Sr</li>
-                        <li data-correct="false">Sr is biologically cycled</li>
+                        <li data-correct="false"><span class="en">Sr is not radiogenic</span><span class="de">Sr ist nicht radiogen</span></li>
+                        <li data-correct="true"><span class="en">Nd residence time (~700 yrs) is shorter than ocean mixing time, while Sr (~2 Myr) is much longer</span><span class="de">Nd-Verweilzeit (~700 Jahre) ist kürzer als die Ozeanmischzeit, während Sr (~2 Mio. Jahre) viel länger ist</span></li>
+                        <li data-correct="false"><span class="en">Nd has more isotopes than Sr</span><span class="de">Nd hat mehr Isotope als Sr</span></li>
+                        <li data-correct="false"><span class="en">Sr is biologically cycled</span><span class="de">Sr wird biologisch zyklisiert</span></li>
                     </ul>
-                    <div class="feedback correct">✓ Correct! Nd's short residence time allows different water masses to maintain distinct signatures before mixing homogenizes them. Sr's long residence time means the ocean is homogeneous.</div>
-                    <div class="feedback incorrect">✗ Incorrect. The key is residence time relative to ocean mixing time (~1500 years).</div>
+                    <div class="feedback correct">✓ <span class="en">Correct! Nd's short residence time allows different water masses to maintain distinct signatures before mixing homogenizes them. Sr's long residence time means the ocean is homogeneous.</span><span class="de">Richtig! Die kurze Verweilzeit von Nd ermöglicht es verschiedenen Wassermassen, unterschiedliche Signaturen beizubehalten, bevor das Mischen sie vereinheitlicht. Die lange Verweilzeit von Sr bedeutet, dass der Ozean homogen ist.</span></div>
+                    <div class="feedback incorrect">✗ <span class="en">Incorrect. The key is residence time relative to ocean mixing time (~1500 years).</span><span class="de">Falsch. Der Schlüssel ist die Verweilzeit relativ zur Ozeanmischzeit (~1500 Jahre).</span></div>
                 </div>
 
                 <!-- Question 3 -->
                 <div class="question-container hidden" data-question="3">
-                    <div class="question-number">Question 3 of 5</div>
-                    <div class="question-text">Why does continental crust have lower Sm/Nd than the mantle?</div>
+                    <div class="question-number"><span class="en">Question 3 of 5</span><span class="de">Frage 3 von 5</span></div>
+                    <div class="question-text"><span class="en">Why does continental crust have lower Sm/Nd than the mantle?</span><span class="de">Warum hat die Kontinentalkruste ein niedrigeres Sm/Nd als der Mantel?</span></div>
                     <ul class="options">
-                        <li data-correct="false">Sm decays faster in the crust</li>
-                        <li data-correct="false">Nd is more soluble in seawater</li>
-                        <li data-correct="true">During partial melting, Nd preferentially enters the melt while Sm stays in the residue</li>
-                        <li data-correct="false">Continental weathering removes Sm</li>
+                        <li data-correct="false"><span class="en">Sm decays faster in the crust</span><span class="de">Sm zerfällt schneller in der Kruste</span></li>
+                        <li data-correct="false"><span class="en">Nd is more soluble in seawater</span><span class="de">Nd ist in Meerwasser löslicher</span></li>
+                        <li data-correct="true"><span class="en">During partial melting, Nd preferentially enters the melt while Sm stays in the residue</span><span class="de">Während des Teilschmelzens tritt Nd bevorzugt in die Schmelze ein, während Sm im Rückstand bleibt</span></li>
+                        <li data-correct="false"><span class="en">Continental weathering removes Sm</span><span class="de">Kontinentale Verwitterung entfernt Sm</span></li>
                     </ul>
-                    <div class="feedback correct">✓ Correct! Nd is more incompatible than Sm during melting, so melts (which form continental crust) have lower Sm/Nd than the mantle residue.</div>
-                    <div class="feedback incorrect">✗ Incorrect. The fractionation occurs during magma formation, where Nd preferentially enters the melt.</div>
+                    <div class="feedback correct">✓ <span class="en">Correct! Nd is more incompatible than Sm during melting, so melts (which form continental crust) have lower Sm/Nd than the mantle residue.</span><span class="de">Richtig! Nd ist inkompatibilier als Sm während des Schmelzens, sodass Schmelzen (die Kontinentalkruste bilden) ein niedrigeres Sm/Nd als der Mantelrückstand haben.</span></div>
+                    <div class="feedback incorrect">✗ <span class="en">Incorrect. The fractionation occurs during magma formation, where Nd preferentially enters the melt.</span><span class="de">Falsch. Die Fraktionierung findet während der Magmabildung statt, wo Nd bevorzugt in die Schmelze eintritt.</span></div>
                 </div>
 
                 <!-- Question 4 -->
                 <div class="question-container hidden" data-question="4">
-                    <div class="question-number">Question 4 of 5</div>
-                    <div class="question-text">NADW has εNd ≈ -13, while Pacific Deep Water has εNd ≈ -4. What explains this difference?</div>
+                    <div class="question-number"><span class="en">Question 4 of 5</span><span class="de">Frage 4 von 5</span></div>
+                    <div class="question-text"><span class="en">NADW has εNd ≈ -13, while Pacific Deep Water has εNd ≈ -4. What explains this difference?</span><span class="de">NADW hat εNd ≈ -13, während Pazifisches Tiefenwasser εNd ≈ -4 hat. Was erklärt diesen Unterschied?</span></div>
                     <ul class="options">
-                        <li data-correct="false">Pacific has more biological productivity</li>
-                        <li data-correct="false">NADW is colder</li>
-                        <li data-correct="true">Atlantic margins have old continental crust; Pacific margins have young volcanic arcs</li>
-                        <li data-correct="false">The Pacific is larger</li>
+                        <li data-correct="false"><span class="en">Pacific has more biological productivity</span><span class="de">Pazifik hat eine höhere biologische Produktivität</span></li>
+                        <li data-correct="false"><span class="en">NADW is colder</span><span class="de">NADW ist kälter</span></li>
+                        <li data-correct="true"><span class="en">Atlantic margins have old continental crust; Pacific margins have young volcanic arcs</span><span class="de">Atlantikränder haben alte Kontinentalkruste; Pazifikränder haben junge Vulkanbögen</span></li>
+                        <li data-correct="false"><span class="en">The Pacific is larger</span><span class="de">Der Pazifik ist größer</span></li>
                     </ul>
-                    <div class="feedback correct">✓ Correct! The Atlantic is bordered by old cratons (unradiogenic Nd), while the Pacific is surrounded by young volcanic margins (more radiogenic Nd).</div>
-                    <div class="feedback incorrect">✗ Incorrect. The εNd of water masses reflects the age and type of continental crust around each basin.</div>
+                    <div class="feedback correct">✓ <span class="en">Correct! The Atlantic is bordered by old cratons (unradiogenic Nd), while the Pacific is surrounded by young volcanic margins (more radiogenic Nd).</span><span class="de">Richtig! Der Atlantik wird von alten Kratonen (nicht-radiogenes Nd) begrenzt, während der Pazifik von jungen vulkanischen Rändern (mehr radiogenes Nd) umgeben ist.</span></div>
+                    <div class="feedback incorrect">✗ <span class="en">Incorrect. The εNd of water masses reflects the age and type of continental crust around each basin.</span><span class="de">Falsch. Das εNd von Wassermassen spiegelt das Alter und die Art der Kontinentalkruste um jedes Becken wider.</span></div>
                 </div>
 
                 <!-- Question 5 -->
                 <div class="question-container hidden" data-question="5">
-                    <div class="question-number">Question 5 of 5</div>
-                    <div class="question-text">Which material is commonly used to reconstruct past seawater εNd?</div>
+                    <div class="question-number"><span class="en">Question 5 of 5</span><span class="de">Frage 5 von 5</span></div>
+                    <div class="question-text"><span class="en">Which material is commonly used to reconstruct past seawater εNd?</span><span class="de">Welches Material wird häufig zur Rekonstruktion des früheren Meerwasser-εNd verwendet?</span></div>
                     <ul class="options">
-                        <li data-correct="false">Coral aragonite</li>
-                        <li data-correct="true">Fish teeth and Fe-Mn crusts</li>
-                        <li data-correct="false">Planktonic foraminiferal calcite (cleaned)</li>
-                        <li data-correct="false">Diatom silica</li>
+                        <li data-correct="false"><span class="en">Coral aragonite</span><span class="de">Korallenaragonit</span></li>
+                        <li data-correct="true"><span class="en">Fish teeth and Fe-Mn crusts</span><span class="de">Fischzähne und Fe-Mn-Krusten</span></li>
+                        <li data-correct="false"><span class="en">Planktonic foraminiferal calcite (cleaned)</span><span class="de">Planktonische Foraminiferenkalkstein (gereinigt)</span></li>
+                        <li data-correct="false"><span class="en">Diatom silica</span><span class="de">Diatomeenkieselsäure</span></li>
                     </ul>
-                    <div class="feedback correct">✓ Correct! Fish teeth (bioapatite) and Fe-Mn crusts/nodules directly record seawater Nd concentrations and isotope ratios.</div>
-                    <div class="feedback incorrect">✗ Incorrect. Fish teeth and Fe-Mn crusts are the primary archives for seawater εNd.</div>
+                    <div class="feedback correct">✓ <span class="en">Correct! Fish teeth (bioapatite) and Fe-Mn crusts/nodules directly record seawater Nd concentrations and isotope ratios.</span><span class="de">Richtig! Fischzähne (Bioapatit) und Fe-Mn-Krusten/-Knollen zeichnen direkt die Nd-Konzentrationen und Isotopenverhältnisse des Seewassers auf.</span></div>
+                    <div class="feedback incorrect">✗ <span class="en">Incorrect. Fish teeth and Fe-Mn crusts are the primary archives for seawater εNd.</span><span class="de">Falsch. Fischzähne und Fe-Mn-Krusten sind die wichtigsten Archive für das Seewasser-εNd.</span></div>
                 </div>
             </div>
 
             <div class="quiz-nav">
-                <button class="quiz-btn" id="prevBtn" disabled>← Previous</button>
-                <button class="quiz-btn" id="nextBtn">Next →</button>
+                <button class="quiz-btn" id="prevBtn" disabled><span class="en">← Previous</span><span class="de">← Zurück</span></button>
+                <button class="quiz-btn" id="nextBtn"><span class="en">Next →</span><span class="de">Weiter →</span></button>
             </div>
 
             <div class="quiz-results hidden" id="quizResults">
-                <h3>Quiz Complete!</h3>
+                <h3><span class="en">Quiz Complete!</span><span class="de">Quiz abgeschlossen!</span></h3>
                 <div class="score-circle" id="scoreCircle">0/5</div>
                 <p id="resultMessage"></p>
-                <button class="quiz-btn" onclick="restartQuiz()">Retry Quiz</button>
+                <button class="quiz-btn" onclick="restartQuiz()"><span class="en">Retry Quiz</span><span class="de">Quiz wiederholen</span></button>
             </div>
         </section>
 
         <div class="references">
-            <h3>📚 Key References</h3>
+            <h3>📚 <span class="en">Key References</span><span class="de">Wichtigste Referenzen</span></h3>
             <ul>
                 <li>DePaolo, D.J. & Wasserburg, G.J. (1976) Nd isotopic variations and petrogenetic models. <em>Geophysical Research Letters</em> 3, 249-252.</li>
                 <li>Goldstein, S.L. & Hemming, S.R. (2003) Long-lived isotopic tracers in oceanography, paleoceanography, and ice-sheet dynamics. <em>Treatise on Geochemistry</em> 6, 453-489.</li>
@@ -611,17 +622,45 @@
         </div>
 
         <nav class="module-nav">
-            <a href="module5_strontium_isotopes.html">← Module 5: Strontium Isotopes</a>
-            <a href="module7_uranium_trace_elements.html">Module 7: Uranium & Trace Elements →</a>
+            <a href="module5_strontium_isotopes.html">← <span class="en">Module 5: Strontium Isotopes</span><span class="de">Modul 5: Strontium-Isotope</span></a>
+            <a href="module7_uranium_trace_elements.html"><span class="en">Module 7: Uranium & Trace Elements</span><span class="de">Modul 7: Uran & Spurenelemente</span> →</a>
         </nav>
     </main>
 
     <footer class="footer">
-        <p>Sedimentary Geochemistry · GeoZentrum Nordbayern · FAU Erlangen-Nürnberg</p>
-        <p style="margin-top: 10px;">Content: Prof. Dr. Michael Joachimski & PD Dr. Luca Caracciolo</p>
+        <p><span class="en">Sedimentary Geochemistry · GeoZentrum Nordbayern · FAU Erlangen-Nürnberg</span><span class="de">Sedimentäre Geochemie · GeoZentrum Nordbayern · FAU Erlangen-Nürnberg</span></p>
+        <p style="margin-top: 10px;"><span class="en">Content: Prof. Dr. Michael Joachimski & PD Dr. Luca Caracciolo</span><span class="de">Inhalt: Prof. Dr. Michael Joachimski & PD Dr. Luca Caracciolo</span></p>
     </footer>
 
     <script>
+        // Language switching
+        function setLanguage(lang) {
+            document.body.className = 'lang-' + lang;
+            localStorage.setItem('preferredLanguage', lang);
+
+            // Update active button
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        // Load preferred language on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedLang = localStorage.getItem('preferredLanguage') || 'en';
+            document.body.className = 'lang-' + savedLang;
+
+            // Update active button
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                if ((savedLang === 'en' && btn.textContent.trim() === 'English') ||
+                    (savedLang === 'de' && btn.textContent.trim() === 'Deutsch')) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+        });
+
         // Quiz functionality
         let currentQuestion = 1;
         const totalQuestions = 5;
@@ -689,15 +728,25 @@
             document.getElementById('quizResults').classList.remove('hidden');
             document.getElementById('scoreCircle').textContent = score + '/' + totalQuestions;
 
+            const currentLang = document.body.className.includes('lang-de') ? 'de' : 'en';
             let message = '';
+
             if (score === totalQuestions) {
-                message = "Perfect! You've mastered Nd isotope geochemistry!";
+                message = currentLang === 'en'
+                    ? "Perfect! You've mastered Nd isotope geochemistry!"
+                    : "Perfekt! Sie haben die Nd-Isotop-Geochemie gemeistert!";
             } else if (score >= 4) {
-                message = "Excellent work! You have a strong understanding of εNd applications.";
+                message = currentLang === 'en'
+                    ? "Excellent work! You have a strong understanding of εNd applications."
+                    : "Hervorragende Arbeit! Sie haben ein starkes Verständnis für εNd-Anwendungen.";
             } else if (score >= 3) {
-                message = "Good job! Review the sections on water mass signatures and crustal evolution.";
+                message = currentLang === 'en'
+                    ? "Good job! Review the sections on water mass signatures and crustal evolution."
+                    : "Gute Arbeit! Überprüfen Sie die Abschnitte über Wassermassen-Signaturen und Krustale Entwicklung.";
             } else {
-                message = "Keep studying! Focus on the relationship between Sm/Nd fractionation and εNd values.";
+                message = currentLang === 'en'
+                    ? "Keep studying! Focus on the relationship between Sm/Nd fractionation and εNd values."
+                    : "Weiter studieren! Konzentrieren Sie sich auf die Beziehung zwischen Sm/Nd-Fraktionierung und εNd-Werten.";
             }
             document.getElementById('resultMessage').textContent = message;
         }

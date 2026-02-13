@@ -44,6 +44,40 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* Language Switching */
+        body.lang-de .en { display: none !important; }
+        body.lang-en .de { display: none !important; }
+
+        .lang-switch {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            z-index: 1001;
+            display: flex;
+            gap: 5px;
+            background: white;
+            padding: 5px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        }
+        .lang-btn {
+            padding: 8px 16px;
+            border: 2px solid var(--fau-blue);
+            background: white;
+            color: var(--fau-blue);
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+        .lang-btn:hover { background: #EBF4FF; }
+        .lang-btn.active {
+            background: var(--fau-blue);
+            color: white;
+        }
+
         body {
             font-family: var(--font-sans);
             line-height: 1.6;
@@ -643,86 +677,92 @@
         }
     </style>
 </head>
-<body>
+<body class="lang-en">
+    <!-- Language Switch -->
+    <div class="lang-switch">
+        <button class="lang-btn active" data-lang="en" onclick="setLanguage('en')">EN</button>
+        <button class="lang-btn" data-lang="de" onclick="setLanguage('de')">DE</button>
+    </div>
+
     <div class="password-overlay hidden" id="passwordOverlay" style="display:none">
         <div class="password-box">
             <div style="display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--gray-200);">
                 <img src="images/FAU_NatFak_H_black.png" alt="FAU NatFak" style="height: 45px; width: auto;">
             </div>
-            <h2>Exam Simulation</h2>
-            <h3>Sedimentary Geochemistry</h3>
-            <p style="color: var(--fau-blue); font-weight: 500;">Late Devonian Mass Extinction</p>
-            <p style="font-size: 0.8em; color: var(--gray-500); margin-top: 8px;">Authorized: ji66ciip@fauad.fau.de</p>
+            <h2><span class="en">Exam Simulation</span><span class="de">Prüfungssimulation</span></h2>
+            <h3><span class="en">Sedimentary Geochemistry</span><span class="de">Sedimentäre Geochemie</span></h3>
+            <p style="color: var(--fau-blue); font-weight: 500;"><span class="en">Late Devonian Mass Extinction</span><span class="de">Spätdevonisches Massenaussterben</span></p>
+            <p style="font-size: 0.8em; color: var(--gray-500); margin-top: 8px;"><span class="en">Authorized:</span><span class="de">Autorisiert:</span> ji66ciip@fauad.fau.de</p>
             <input type="password" id="passwordInput" placeholder="Enter exam password..." onkeypress="if(event.key==='Enter')checkPassword()">
-            <button onclick="checkPassword()">Start Exam</button>
+            <button onclick="checkPassword()"><span class="en">Start Exam</span><span class="de">Prüfung starten</span></button>
             <div class="error-message" id="errorMessage"></div>
         </div>
     </div>
 
     <div class="timer-bar hidden" id="timerBar">
         <div>
-            <div style="font-size: 0.9em; opacity: 0.9;">Exam in Progress</div>
+            <div style="font-size: 0.9em; opacity: 0.9;"><span class="en">Exam in Progress</span><span class="de">Prüfung läuft</span></div>
             <div class="timer-display" id="timerDisplay">02:00:00</div>
         </div>
-        <div style="text-align: center;"><strong>Late Devonian Exam</strong><br><span style="font-size: 0.85em;">Auto-save enabled</span></div>
-        <button class="submit-timer-btn" onclick="submitExam()">Submit Exam</button>
+        <div style="text-align: center;"><strong><span class="en">Late Devonian Exam</span><span class="de">Spätdevon-Prüfung</span></strong><br><span style="font-size: 0.85em;"><span class="en">Auto-save enabled</span><span class="de">Automatische Speicherung aktiviert</span></span></div>
+        <button class="submit-timer-btn" onclick="submitExam()"><span class="en">Submit Exam</span><span class="de">Prüfung abgeben</span></button>
     </div>
 
     <div class="watermark hidden" id="watermark"></div>
 
     <div class="main-content visible" id="mainContent">
         <div class="header">
-            <h1>SEDIMENTARY GEOCHEMISTRY</h1>
-            <div class="subtitle">Exam Simulation: The Late Devonian Mass Extinction</div>
-            <div class="exam-info"><strong>Total Points:</strong> 100 + 10 Bonus | <strong>Time:</strong> 2 hours (+5 min grace)<br>Winter Semester 2025-26 | FAU Erlangen-Nürnberg</div>
+            <h1><span class="en">SEDIMENTARY GEOCHEMISTRY</span><span class="de">SEDIMENTÄRE GEOCHEMIE</span></h1>
+            <div class="subtitle"><span class="en">Exam Simulation: The Late Devonian Mass Extinction</span><span class="de">Prüfungssimulation: Das Spätdevonische Massenaussterben</span></div>
+            <div class="exam-info"><span class="en"><strong>Total Points:</strong> 100 + 10 Bonus | <strong>Time:</strong> 2 hours (+5 min grace)</span><span class="de"><strong>Gesamtpunkte:</strong> 100 + 10 Bonus | <strong>Zeit:</strong> 2 Stunden (+5 Min. Nachfrist)</span><br><span class="en">Winter Semester 2025-26 | FAU Erlangen-Nürnberg</span><span class="de">Wintersemester 2025-26 | FAU Erlangen-Nürnberg</span></div>
         </div>
 
         <div class="reference-bar">
-            <span><strong>Course:</strong> Sedimentary Geochemistry (MSc)</span>
-            <span><strong>Instructor:</strong> PD Dr. Luca Caracciolo</span>
-            <span><strong>Contact:</strong> luca.caracciolo@fau.de</span>
+            <span><strong><span class="en">Course:</span><span class="de">Kurs:</span></strong> <span class="en">Sedimentary Geochemistry (MSc)</span><span class="de">Sedimentäre Geochemie (MSc)</span></span>
+            <span><strong><span class="en">Instructor:</span><span class="de">Dozent:</span></strong> PD Dr. Luca Caracciolo</span>
+            <span><strong><span class="en">Contact:</span><span class="de">Kontakt:</span></strong> luca.caracciolo@fau.de</span>
         </div>
 
         <div class="student-info">
-            <h3>📋 Student Information</h3>
+            <h3>📋 <span class="en">Student Information</span><span class="de">Studenteninformationen</span></h3>
             <div class="info-grid">
-                <div class="info-field"><label>Full Name: *</label><input type="text" id="studentName" placeholder="Enter your full name" oninput="updateWatermark()"></div>
+                <div class="info-field"><label><span class="en">Full Name: *</span><span class="de">Vollständiger Name: *</span></label><input type="text" id="studentName" placeholder="Enter your full name" oninput="updateWatermark()"></div>
                 <div class="info-field"><label>Email: *</label><input type="email" id="studentEmail" value="ji66ciip@fauad.fau.de" readonly style="background:#f0f0f0;"></div>
-                <div class="info-field"><label>Student ID: *</label><input type="text" id="studentId" placeholder="e.g., 12345678"></div>
-                <div class="info-field"><label>Date:</label><input type="date" id="submissionDate"></div>
+                <div class="info-field"><label><span class="en">Student ID: *</span><span class="de">Matrikelnummer: *</span></label><input type="text" id="studentId" placeholder="e.g., 12345678"></div>
+                <div class="info-field"><label><span class="en">Date:</span><span class="de">Datum:</span></label><input type="date" id="submissionDate"></div>
             </div>
         </div>
 
         <!-- BACKGROUND SECTION -->
         <div class="section background-section">
-            <div class="section-title">GEOLOGICAL BACKGROUND: Late Devonian Mass Extinction (Read: ~5 min)</div>
-            
-            <p>The <strong>Late Devonian mass extinction</strong>, centered on the Frasnian-Famennian (F-F) boundary at ~372 Ma, eliminated ~70-80% of marine species, with devastating losses among reef ecosystems, brachiopods, and trilobites.</p>
+            <div class="section-title"><span class="en">GEOLOGICAL BACKGROUND: Late Devonian Mass Extinction (Read: ~5 min)</span><span class="de">GEOLOGISCHER HINTERGRUND: Spätdevonisches Massenaussterben (Lesezeit: ~5 Min.)</span></div>
+
+            <p><span class="en">The <strong>Late Devonian mass extinction</strong>, centered on the Frasnian-Famennian (F-F) boundary at ~372 Ma, eliminated ~70-80% of marine species, with devastating losses among reef ecosystems, brachiopods, and trilobites.</span><span class="de">Das <strong>Spätdevonische Massenaussterben</strong>, zentriert an der Frasnium-Famennium (F-F) Grenze vor ~372 Ma, führte zur Auslöschung von ~70-80% der marinen Arten mit verheerenden Verlusten unter Riffökosystemen, Brachiopoden und Trilobiten.</span></p>
 
             <div class="key-difference">
-                <strong>🌡️ KEY DISTINCTION FROM PTB:</strong> Unlike the Permo-Triassic (extreme warming from volcanism), the Late Devonian was characterized by <strong>global cooling</strong> driven by enhanced continental weathering from expanding land plant ecosystems. The geochemical signatures are fundamentally opposite.
+                <strong>🌡️ <span class="en">KEY DISTINCTION FROM PTB:</span><span class="de">WICHTIGER UNTERSCHIED ZUR PTB:</span></strong> <span class="en">Unlike the Permo-Triassic (extreme warming from volcanism), the Late Devonian was characterized by <strong>global cooling</strong> driven by enhanced continental weathering from expanding land plant ecosystems. The geochemical signatures are fundamentally opposite.</span><span class="de">Im Gegensatz zum Perm-Trias (extreme Erwärmung durch Vulkanismus) war das Spätdevon durch <strong>globale Abkühlung</strong> gekennzeichnet, angetrieben durch verstärkte kontinentale Verwitterung aufgrund expandierender Landpflanzen-Ökosysteme. Die geochemischen Signaturen sind grundlegend entgegengesetzt.</span>
             </div>
 
             <!-- FIGURE 1: Oxygen and Carbon Isotope Stratigraphy -->
             <div class="figure-box">
                 <img src="images/exam_figures/fig1_joachimski2002_d18O_d13C_stratigraphy.jpg" alt="δ¹⁸O and δ¹³C stratigraphy across F-F boundary">
                 <div class="figure-caption">
-                    <strong>Figure 1: Oxygen and Carbon Isotope Stratigraphy</strong>
-                    Oxygen isotope composition of conodont apatite and carbon isotope composition of carbonates for Frasnian-Famennian boundary sections (Behringhäuser Tunnel and Vogelsberg Quarry, Germany). Note the positive δ¹³C excursions and increasing δ¹⁸O (cooling) toward the F-F boundary.
-                    <div class="figure-source">Source: Joachimski & Buggisch (2002), Figure 1</div>
+                    <strong><span class="en">Figure 1: Oxygen and Carbon Isotope Stratigraphy</span><span class="de">Abbildung 1: Sauerstoff- und Kohlenstoffisotopen-Stratigraphie</span></strong>
+                    <span class="en">Oxygen isotope composition of conodont apatite and carbon isotope composition of carbonates for Frasnian-Famennian boundary sections (Behringhäuser Tunnel and Vogelsberg Quarry, Germany). Note the positive δ¹³C excursions and increasing δ¹⁸O (cooling) toward the F-F boundary.</span><span class="de">Sauerstoffisotopen-Zusammensetzung von Conodonten-Apatit und Kohlenstoffisotopen-Zusammensetzung von Karbonaten für Frasnium-Famennium-Grenzprofile (Behringhäuser Tunnel und Vogelsberg Steinbruch, Deutschland). Beachten Sie die positiven δ¹³C-Exkursionen und das zunehmende δ¹⁸O (Abkühlung) zur F-F-Grenze hin.</span>
+                    <div class="figure-source"><span class="en">Source:</span><span class="de">Quelle:</span> Joachimski & Buggisch (2002), Figure 1</div>
                 </div>
             </div>
 
             <div class="concept-box">
-                <strong>🌍 Paleogeographic Setting:</strong><br>
-                Laurussia in the north, Gondwana in the south. The Middle-Late Devonian saw the first forests with <em>Archaeopteris</em> trees reaching 30+ meters — a biological revolution that transformed Earth's surface processes.
+                <strong>🌍 <span class="en">Paleogeographic Setting:</span><span class="de">Paläogeographische Situation:</span></strong><br>
+                <span class="en">Laurussia in the north, Gondwana in the south. The Middle-Late Devonian saw the first forests with <em>Archaeopteris</em> trees reaching 30+ meters — a biological revolution that transformed Earth's surface processes.</span><span class="de">Laurussia im Norden, Gondwana im Süden. Das Mittel- bis Spätdevon sah die ersten Wälder mit <em>Archaeopteris</em>-Bäumen, die über 30 Meter erreichten – eine biologische Revolution, die die Oberflächenprozesse der Erde transformierte.</span>
             </div>
 
             <table class="data-table">
-                <thead><tr><th>Event</th><th>Timing</th><th>Characteristics</th><th>Biotic Impact</th></tr></thead>
+                <thead><tr><th><span class="en">Event</span><span class="de">Ereignis</span></th><th><span class="en">Timing</span><span class="de">Zeitpunkt</span></th><th><span class="en">Characteristics</span><span class="de">Charakteristika</span></th><th><span class="en">Biotic Impact</span><span class="de">Biotische Auswirkung</span></th></tr></thead>
                 <tbody>
-                    <tr><td><strong>Lower Kellwasser (LKE)</strong></td><td>Late Frasnian (~374 Ma)</td><td>Black shale, positive δ¹³C</td><td>Major reef decline</td></tr>
-                    <tr><td><strong>Upper Kellwasser (UKE)</strong></td><td>F-F boundary (~372 Ma)</td><td>Maximum anoxia, largest δ¹³C shift</td><td>Mass extinction peak</td></tr>
+                    <tr><td><strong>Lower Kellwasser (LKE)</strong></td><td><span class="en">Late Frasnian (~374 Ma)</span><span class="de">Spätes Frasnium (~374 Ma)</span></td><td><span class="en">Black shale, positive δ¹³C</span><span class="de">Schwarzschiefer, positive δ¹³C</span></td><td><span class="en">Major reef decline</span><span class="de">Starker Riffrückgang</span></td></tr>
+                    <tr><td><strong>Upper Kellwasser (UKE)</strong></td><td><span class="en">F-F boundary (~372 Ma)</span><span class="de">F-F-Grenze (~372 Ma)</span></td><td><span class="en">Maximum anoxia, largest δ¹³C shift</span><span class="de">Maximum Anoxie, größte δ¹³C-Verschiebung</span></td><td><span class="en">Mass extinction peak</span><span class="de">Höhepunkt des Massenaussterbens</span></td></tr>
                 </tbody>
             </table>
 
@@ -730,34 +770,34 @@
             <div class="figure-box">
                 <img src="images/exam_figures/fig2_joachimski2002_synthesis_cooling.jpg" alt="Multi-proxy synthesis across F-F boundary">
                 <div class="figure-caption">
-                    <strong>Figure 2: Sea-Level, δ¹³C, Temperature & Biotic Events Across F-F Boundary</strong>
-                    Comparison of sea-level changes, δ¹³C record, sea-surface temperature (SST) estimates, and biotic events across the Frasnian-Famennian boundary. The Kellwasser horizons (KW) correlate with positive δ¹³C excursions, cooling episodes, and mass extinction pulses.
-                    <div class="figure-source">Source: Joachimski & Buggisch (2002), Figure 2</div>
+                    <strong><span class="en">Figure 2: Sea-Level, δ¹³C, Temperature & Biotic Events Across F-F Boundary</span><span class="de">Abbildung 2: Meeresspiegel, δ¹³C, Temperatur & Biotische Ereignisse über die F-F-Grenze</span></strong>
+                    <span class="en">Comparison of sea-level changes, δ¹³C record, sea-surface temperature (SST) estimates, and biotic events across the Frasnian-Famennian boundary. The Kellwasser horizons (KW) correlate with positive δ¹³C excursions, cooling episodes, and mass extinction pulses.</span><span class="de">Vergleich von Meeresspiegeländerungen, δ¹³C-Profil, Meeresoberflächentemperatur (SST)-Schätzungen und biotischen Ereignissen über die Frasnium-Famennium-Grenze. Die Kellwasser-Horizonte (KW) korrelieren mit positiven δ¹³C-Exkursionen, Abkühlungsepisoden und Massenaussterbe-Pulsen.</span>
+                    <div class="figure-source"><span class="en">Source:</span><span class="de">Quelle:</span> Joachimski & Buggisch (2002), Figure 2</div>
                 </div>
             </div>
         </div>
 
         <!-- PART 1: CARBON ISOTOPES -->
         <div class="section">
-            <div class="section-title">PART 1: CARBON ISOTOPES (25 points)</div>
-            
+            <div class="section-title"><span class="en">PART 1: CARBON ISOTOPES (25 points)</span><span class="de">TEIL 1: KOHLENSTOFFISOTOPE (25 Punkte)</span></div>
+
             <div class="question-block">
-                <div class="question-title">Question 1.1: The Positive Carbon Isotope Excursion (15 points)</div>
-                
-                <p>The δ¹³C record across the F-F boundary shows a pronounced <strong>positive</strong> carbon isotope excursion—the <em>opposite</em> of what is observed at the Permo-Triassic boundary!</p>
+                <div class="question-title"><span class="en">Question 1.1: The Positive Carbon Isotope Excursion (15 points)</span><span class="de">Frage 1.1: Die Positive Kohlenstoffisotopen-Exkursion (15 Punkte)</span></div>
+
+                <p><span class="en">The δ¹³C record across the F-F boundary shows a pronounced <strong>positive</strong> carbon isotope excursion—the <em>opposite</em> of what is observed at the Permo-Triassic boundary!</span><span class="de">Das δ¹³C-Profil über die F-F-Grenze zeigt eine ausgeprägte <strong>positive</strong> Kohlenstoffisotopen-Exkursion—das <em>Gegenteil</em> dessen, was an der Perm-Trias-Grenze beobachtet wird!</span></p>
 
                 <!-- FIGURE 3: Carbon isotope stratigraphy detail -->
                 <div class="figure-box">
                     <img src="images/exam_figures/fig3_joachimski2002_d13C_excursion.jpg" alt="δ¹³C stratigraphy detail">
                     <div class="figure-caption">
-                        <strong>Figure 3: δ¹³C Profile with Kellwasser Events</strong>
-                        Detailed carbon isotope stratigraphy showing the positive δ¹³C excursions during the Lower Kellwasser Event (LKE) and Upper Kellwasser Event (UKE). The baseline δ¹³C values around +1.2‰ shift to peak values of +3.5 to +4.8‰ during the extinction intervals.
-                        <div class="figure-source">Source: Joachimski & Buggisch (2002), Figure 1</div>
+                        <strong><span class="en">Figure 3: δ¹³C Profile with Kellwasser Events</span><span class="de">Abbildung 3: δ¹³C-Profil mit Kellwasser-Ereignissen</span></strong>
+                        <span class="en">Detailed carbon isotope stratigraphy showing the positive δ¹³C excursions during the Lower Kellwasser Event (LKE) and Upper Kellwasser Event (UKE). The baseline δ¹³C values around +1.2‰ shift to peak values of +3.5 to +4.8‰ during the extinction intervals.</span><span class="de">Detaillierte Kohlenstoffisotopen-Stratigraphie mit den positiven δ¹³C-Exkursionen während des Unteren Kellwasser-Ereignisses (LKE) und Oberen Kellwasser-Ereignisses (UKE). Die Grundlinienwerte von δ¹³C um +1,2‰ verschieben sich während der Aussterbensintervalle zu Spitzenwerten von +3,5 bis +4,8‰.</span>
+                        <div class="figure-source"><span class="en">Source:</span><span class="de">Quelle:</span> Joachimski & Buggisch (2002), Figure 1</div>
                     </div>
                 </div>
 
                 <table class="data-table">
-                    <thead><tr><th>Sample</th><th>Position</th><th>Conodont Zone</th><th>δ¹³C<sub>carb</sub> (‰ VPDB)</th></tr></thead>
+                    <thead><tr><th><span class="en">Sample</span><span class="de">Probe</span></th><th><span class="en">Position</span><span class="de">Position</span></th><th><span class="en">Conodont Zone</span><span class="de">Conodonten-Zone</span></th><th>δ¹³C<sub>carb</sub> (‰ VPDB)</th></tr></thead>
                     <tbody>
                         <tr><td>DEV-1</td><td>Pre-LKE baseline</td><td>Early rhenana</td><td>+1.2</td></tr>
                         <tr><td>DEV-2</td><td>LKE onset</td><td>Late rhenana</td><td>+2.8</td></tr>
@@ -770,26 +810,26 @@
                 </table>
 
                 <div class="sub-question">
-                    <div class="sub-question-title">Part A (5 points): Calculate the CIE magnitude</div>
-                    <p>Calculate the total magnitude of the <strong>positive</strong> δ¹³C excursion from pre-excursion baseline to maximum.</p>
-                    <div class="calculation-label">💻 CALCULATION:</div>
+                    <div class="sub-question-title"><span class="en">Part A (5 points): Calculate the CIE magnitude</span><span class="de">Teil A (5 Punkte): Berechnen Sie die Größe der CIE</span></div>
+                    <p><span class="en">Calculate the total magnitude of the <strong>positive</strong> δ¹³C excursion from pre-excursion baseline to maximum.</span><span class="de">Berechnen Sie die Gesamtgröße der <strong>positiven</strong> δ¹³C-Exkursion vom Ausgangswert vor der Exkursion bis zum Maximum.</span></p>
+                    <div class="calculation-label">💻 <span class="en">CALCULATION:</span><span class="de">BERECHNUNG:</span></div>
                     <textarea class="calculation-area" id="p1_1a_calc" placeholder="Pre-excursion baseline δ¹³C = ...
 Maximum δ¹³C = ...
 Δδ¹³C = ..."></textarea>
                 </div>
 
                 <div class="sub-question">
-                    <div class="sub-question-title">Part B (10 points): Interpretation of the Positive CIE</div>
-                    
+                    <div class="sub-question-title"><span class="en">Part B (10 points): Interpretation of the Positive CIE</span><span class="de">Teil B (10 Punkte): Interpretation der Positiven CIE</span></div>
+
                     <div class="info-note">
-                        <strong>⚠️ Critical Contrast with PTB:</strong><br>
-                        • <strong>PTB:</strong> Negative δ¹³C excursion → Carbon <em>added</em> to ocean-atmosphere (volcanic/thermogenic)<br>
-                        • <strong>Late Devonian:</strong> Positive δ¹³C excursion → Carbon <em>removed</em> from ocean-atmosphere (organic burial)
+                        <strong>⚠️ <span class="en">Critical Contrast with PTB:</span><span class="de">Kritischer Kontrast zur PTB:</span></strong><br>
+                        • <strong>PTB:</strong> <span class="en">Negative δ¹³C excursion → Carbon <em>added</em> to ocean-atmosphere (volcanic/thermogenic)</span><span class="de">Negative δ¹³C-Exkursion → Kohlenstoff dem Ozean-Atmosphäre-System <em>zugeführt</em> (vulkanisch/thermogen)</span><br>
+                        • <strong><span class="en">Late Devonian:</span><span class="de">Spätdevon:</span></strong> <span class="en">Positive δ¹³C excursion → Carbon <em>removed</em> from ocean-atmosphere (organic burial)</span><span class="de">Positive δ¹³C-Exkursion → Kohlenstoff aus dem Ozean-Atmosphäre-System <em>entfernt</em> (organische Einlagerung)</span>
                     </div>
-                    
-                    <p>Explain the mechanism linking: <strong>land plant expansion → enhanced weathering → nutrient delivery → ocean productivity → organic carbon burial → positive CIE</strong>. Why would this process lead to global cooling?</p>
-                    
-                    <div class="calculation-label">📝 YOUR INTERPRETATION:</div>
+
+                    <p><span class="en">Explain the mechanism linking: <strong>land plant expansion → enhanced weathering → nutrient delivery → ocean productivity → organic carbon burial → positive CIE</strong>. Why would this process lead to global cooling?</span><span class="de">Erklären Sie den Mechanismus, der verbindet: <strong>Landpflanzen-Expansion → verstärkte Verwitterung → Nährstoffzufuhr → Ozeanproduktivität → organische Kohlenstoff-Einlagerung → positive CIE</strong>. Warum würde dieser Prozess zu globaler Abkühlung führen?</span></p>
+
+                    <div class="calculation-label">📝 <span class="en">YOUR INTERPRETATION:</span><span class="de">IHRE INTERPRETATION:</span></div>
                     <textarea class="answer-area" id="p1_1b" placeholder="Write 150-200 words addressing:
 - How do land plants enhance chemical weathering?
 - How does weathering deliver nutrients (P, N) to the ocean?
@@ -800,18 +840,18 @@ Maximum δ¹³C = ...
             </div>
 
             <div class="question-block">
-                <div class="question-title">Question 1.2: δ¹³C Stratigraphy as a Correlation Tool (10 points)</div>
-                
-                <p>The Kellwasser positive δ¹³C excursions have been recognized globally—from Germany, Poland, Morocco, Australia, Canada, and China.</p>
+                <div class="question-title"><span class="en">Question 1.2: δ¹³C Stratigraphy as a Correlation Tool (10 points)</span><span class="de">Frage 1.2: δ¹³C-Stratigraphie als Korrelationswerkzeug (10 Punkte)</span></div>
+
+                <p><span class="en">The Kellwasser positive δ¹³C excursions have been recognized globally—from Germany, Poland, Morocco, Australia, Canada, and China.</span><span class="de">Die positiven Kellwasser δ¹³C-Exkursionen wurden global erkannt—in Deutschland, Polen, Marokko, Australien, Kanada und China.</span></p>
 
                 <div class="sub-question">
-                    <div class="sub-question-title">Full Question (10 points)</div>
-                    <p>Explain why <strong>positive</strong> δ¹³C excursions are particularly useful for global stratigraphic correlation. Address:</p>
+                    <div class="sub-question-title"><span class="en">Full Question (10 points)</span><span class="de">Vollständige Frage (10 Punkte)</span></div>
+                    <p><span class="en">Explain why <strong>positive</strong> δ¹³C excursions are particularly useful for global stratigraphic correlation. Address:</span><span class="de">Erklären Sie, warum <strong>positive</strong> δ¹³C-Exkursionen besonders nützlich für globale stratigraphische Korrelation sind. Behandeln Sie:</span></p>
                     <ol>
-                        <li>What makes the δ¹³C signal global rather than local?</li>
-                        <li>Why might positive excursions (from organic burial) be easier to use for correlation than negative excursions (from carbon release)?</li>
+                        <li><span class="en">What makes the δ¹³C signal global rather than local?</span><span class="de">Was macht das δ¹³C-Signal global statt lokal?</span></li>
+                        <li><span class="en">Why might positive excursions (from organic burial) be easier to use for correlation than negative excursions (from carbon release)?</span><span class="de">Warum könnten positive Exkursionen (durch organische Einlagerung) einfacher für Korrelationen zu nutzen sein als negative Exkursionen (durch Kohlenstofffreisetzung)?</span></li>
                     </ol>
-                    <div class="calculation-label">📝 YOUR ANSWER:</div>
+                    <div class="calculation-label">📝 <span class="en">YOUR ANSWER:</span><span class="de">IHRE ANTWORT:</span></div>
                     <textarea class="answer-area" id="p1_2" placeholder="Consider:
 - The residence time of DIC in the ocean (~100 kyr)
 - How organic burial creates a global signal
@@ -823,48 +863,48 @@ Maximum δ¹³C = ...
 
         <!-- PART 2: OXYGEN ISOTOPES & TEMPERATURE -->
         <div class="section">
-            <div class="section-title">PART 2: OXYGEN ISOTOPES & PALEOCLIMATE (30 points)</div>
-            
+            <div class="section-title"><span class="en">PART 2: OXYGEN ISOTOPES & PALEOCLIMATE (30 points)</span><span class="de">TEIL 2: SAUERSTOFFISOTOPE & PALÄOKLIMA (30 Punkte)</span></div>
+
             <div class="question-block">
-                <div class="question-title">Question 2.1: Paleotemperature from Conodont Apatite (20 points)</div>
-                
+                <div class="question-title"><span class="en">Question 2.1: Paleotemperature from Conodont Apatite (20 points)</span><span class="de">Frage 2.1: Paläotemperatur aus Conodonten-Apatit (20 Punkte)</span></div>
+
                 <!-- FIGURE 4: Oxygen isotope and temperature data -->
                 <div class="figure-box">
                     <img src="images/exam_figures/fig4_joachimski2012_d18O_temperature.jpg" alt="Conodont δ¹⁸O and paleotemperature">
                     <div class="figure-caption">
-                        <strong>Figure 4: Conodont δ¹⁸O and Paleotemperature Reconstruction</strong>
-                        Oxygen isotopes of conodont apatite (VSMOW) and carbon isotopes (VPDB) across a mass extinction boundary. Temperature estimates from the phosphate-water oxygen isotope thermometer show progressive cooling. Note: This figure is from the PTB study but demonstrates the same methodology applied to the Late Devonian.
-                        <div class="figure-source">Source: Joachimski et al. (2012), Figure 1</div>
+                        <strong><span class="en">Figure 4: Conodont δ¹⁸O and Paleotemperature Reconstruction</span><span class="de">Abbildung 4: Conodonten δ¹⁸O und Paläotemperatur-Rekonstruktion</span></strong>
+                        <span class="en">Oxygen isotopes of conodont apatite (VSMOW) and carbon isotopes (VPDB) across a mass extinction boundary. Temperature estimates from the phosphate-water oxygen isotope thermometer show progressive cooling. Note: This figure is from the PTB study but demonstrates the same methodology applied to the Late Devonian.</span><span class="de">Sauerstoffisotope von Conodonten-Apatit (VSMOW) und Kohlenstoffisotope (VPDB) über eine Massenaussterbe-Grenze. Temperaturschätzungen vom Phosphat-Wasser-Sauerstoffisotopen-Thermometer zeigen progressive Abkühlung. Hinweis: Diese Abbildung stammt aus der PTB-Studie, demonstriert aber dieselbe Methodik, die auf das Spätdevon angewandt wird.</span>
+                        <div class="figure-source"><span class="en">Source:</span><span class="de">Quelle:</span> Joachimski et al. (2012), Figure 1</div>
                     </div>
                 </div>
 
                 <table class="data-table">
-                    <thead><tr><th>Sample</th><th>Position</th><th>Conodont Zone</th><th>δ¹⁸O<sub>apatite</sub> (‰ VSMOW)</th><th>CAI</th></tr></thead>
+                    <thead><tr><th><span class="en">Sample</span><span class="de">Probe</span></th><th><span class="en">Position</span><span class="de">Position</span></th><th><span class="en">Conodont Zone</span><span class="de">Conodonten-Zone</span></th><th>δ¹⁸O<sub>apatite</sub> (‰ VSMOW)</th><th>CAI</th></tr></thead>
                     <tbody>
-                        <tr><td>CON-1</td><td>Pre-LKE</td><td>Early rhenana</td><td>18.5</td><td>1.5</td></tr>
-                        <tr><td>CON-2</td><td>LKE peak</td><td>Late rhenana</td><td>19.8</td><td>1.5</td></tr>
+                        <tr><td>CON-1</td><td><span class="en">Pre-LKE</span><span class="de">Prä-LKE</span></td><td>Early rhenana</td><td>18.5</td><td>1.5</td></tr>
+                        <tr><td>CON-2</td><td><span class="en">LKE peak</span><span class="de">LKE-Maximum</span></td><td>Late rhenana</td><td>19.8</td><td>1.5</td></tr>
                         <tr><td>CON-3</td><td>Inter-Kellwasser</td><td>linguiformis</td><td>19.2</td><td>2.0</td></tr>
-                        <tr><td>CON-4</td><td>UKE peak</td><td>F-F boundary</td><td>20.5</td><td>1.5</td></tr>
-                        <tr><td>CON-5</td><td>Early Famennian</td><td>triangularis</td><td>19.5</td><td>2.0</td></tr>
+                        <tr><td>CON-4</td><td><span class="en">UKE peak</span><span class="de">UKE-Maximum</span></td><td><span class="en">F-F boundary</span><span class="de">F-F-Grenze</span></td><td>20.5</td><td>1.5</td></tr>
+                        <tr><td>CON-5</td><td><span class="en">Early Famennian</span><span class="de">Frühes Famennium</span></td><td>triangularis</td><td>19.5</td><td>2.0</td></tr>
                     </tbody>
                 </table>
 
                 <div class="equation-box">
-                    <div class="equation-title">Phosphate-Water Oxygen Isotope Thermometer (Lécuyer et al., 2013):</div>
+                    <div class="equation-title"><span class="en">Phosphate-Water Oxygen Isotope Thermometer (Lécuyer et al., 2013):</span><span class="de">Phosphat-Wasser-Sauerstoffisotopen-Thermometer (Lécuyer et al., 2013):</span></div>
                     T(°C) = 117.4 - 4.50 × (δ¹⁸O<sub>phosphate</sub> - δ¹⁸O<sub>water</sub>)
                     <br><br>
-                    <em>Where both values are in ‰ VSMOW</em>
+                    <em><span class="en">Where both values are in ‰ VSMOW</span><span class="de">Wobei beide Werte in ‰ VSMOW angegeben sind</span></em>
                 </div>
 
                 <div class="info-note">
-                    <strong>⚠️ Seawater Assumption:</strong> For a Late Devonian ice-free world, assume δ¹⁸O<sub>seawater</sub> = <strong>-1.0‰ VSMOW</strong>.<br>
-                    CAI (Color Alteration Index) values &lt;3 indicate minimal thermal alteration — these conodonts preserve primary signals.
+                    <strong>⚠️ <span class="en">Seawater Assumption:</span><span class="de">Meerwasser-Annahme:</span></strong> <span class="en">For a Late Devonian ice-free world, assume δ¹⁸O<sub>seawater</sub> = <strong>-1.0‰ VSMOW</strong>.</span><span class="de">Für eine eisfreie Spätdevon-Welt nehmen Sie δ¹⁸O<sub>Meerwasser</sub> = <strong>-1,0‰ VSMOW</strong> an.</span><br>
+                    <span class="en">CAI (Color Alteration Index) values &lt;3 indicate minimal thermal alteration — these conodonts preserve primary signals.</span><span class="de">CAI (Farbänderungsindex) Werte &lt;3 zeigen minimale thermische Alteration an — diese Conodonten bewahren primäre Signale.</span>
                 </div>
 
                 <div class="sub-question">
-                    <div class="sub-question-title">Part A (10 points): Calculate temperatures for all samples</div>
-                    <p>Calculate paleotemperature for each conodont sample. Show your work for the first calculation, then tabulate all results.</p>
-                    <div class="calculation-label">💻 CALCULATIONS:</div>
+                    <div class="sub-question-title"><span class="en">Part A (10 points): Calculate temperatures for all samples</span><span class="de">Teil A (10 Punkte): Berechnen Sie die Temperaturen für alle Proben</span></div>
+                    <p><span class="en">Calculate paleotemperature for each conodont sample. Show your work for the first calculation, then tabulate all results.</span><span class="de">Berechnen Sie die Paläotemperatur für jede Conodonten-Probe. Zeigen Sie Ihren Rechenweg für die erste Berechnung und tabellieren Sie dann alle Ergebnisse.</span></p>
+                    <div class="calculation-label">💻 <span class="en">CALCULATIONS:</span><span class="de">BERECHNUNGEN:</span></div>
                     <textarea class="calculation-area" id="p2_1a_calc" placeholder="Example for CON-1:
 T = 117.4 - 4.50 × (18.5 - (-1.0))
 T = 117.4 - 4.50 × 19.5
@@ -875,21 +915,21 @@ Complete table:
 Sample | δ¹⁸O_apatite | T (°C)
 -------|--------------|-------
 CON-1  | 18.5         | ~30
-CON-2  | 19.8         | 
-CON-3  | 19.2         | 
-CON-4  | 20.5         | 
+CON-2  | 19.8         |
+CON-3  | 19.2         |
+CON-4  | 20.5         |
 CON-5  | 19.5         | "></textarea>
                 </div>
 
                 <div class="sub-question">
-                    <div class="sub-question-title">Part B (10 points): Temperature Interpretation — The Cooling Signal</div>
-                    <p>Based on your calculations, describe the temperature trend. Address:</p>
+                    <div class="sub-question-title"><span class="en">Part B (10 points): Temperature Interpretation — The Cooling Signal</span><span class="de">Teil B (10 Punkte): Temperaturinterpretation — Das Abkühlungssignal</span></div>
+                    <p><span class="en">Based on your calculations, describe the temperature trend. Address:</span><span class="de">Beschreiben Sie basierend auf Ihren Berechnungen den Temperaturtrend. Behandeln Sie:</span></p>
                     <ol>
-                        <li>Direction and magnitude of temperature change across the F-F interval</li>
-                        <li>Explain why <strong>increasing δ¹⁸O</strong> indicates <strong>cooling</strong> (this confuses many students!)</li>
-                        <li>Compare this Late Devonian cooling to the warming observed at the PTB</li>
+                        <li><span class="en">Direction and magnitude of temperature change across the F-F interval</span><span class="de">Richtung und Größe der Temperaturänderung über das F-F-Intervall</span></li>
+                        <li><span class="en">Explain why <strong>increasing δ¹⁸O</strong> indicates <strong>cooling</strong> (this confuses many students!)</span><span class="de">Erklären Sie, warum <strong>zunehmendes δ¹⁸O</strong> <strong>Abkühlung</strong> anzeigt (das verwirrt viele Studierende!)</span></li>
+                        <li><span class="en">Compare this Late Devonian cooling to the warming observed at the PTB</span><span class="de">Vergleichen Sie diese spätdevonische Abkühlung mit der Erwärmung an der PTB</span></li>
                     </ol>
-                    <div class="calculation-label">📝 YOUR INTERPRETATION:</div>
+                    <div class="calculation-label">📝 <span class="en">YOUR INTERPRETATION:</span><span class="de">IHRE INTERPRETATION:</span></div>
                     <textarea class="answer-area" id="p2_1b" placeholder="Address all three points:
 
 1. Temperature change (direction, magnitude, timing):
@@ -901,27 +941,27 @@ CON-5  | 19.5         | "></textarea>
             </div>
 
             <div class="question-block">
-                <div class="question-title">Question 2.2: Gondwana Glaciation Evidence (10 points)</div>
-                
-                <p>Some researchers have proposed brief glaciation on Gondwana during the F-F interval, based on possible glacial deposits in South America and rapid sea-level fluctuations.</p>
+                <div class="question-title"><span class="en">Question 2.2: Gondwana Glaciation Evidence (10 points)</span><span class="de">Frage 2.2: Hinweise auf Gondwana-Vereisung (10 Punkte)</span></div>
+
+                <p><span class="en">Some researchers have proposed brief glaciation on Gondwana during the F-F interval, based on possible glacial deposits in South America and rapid sea-level fluctuations.</span><span class="de">Einige Forscher haben eine kurze Vereisung Gondwanas während des F-F-Intervalls vorgeschlagen, basierend auf möglichen Glazialablagerungen in Südamerika und schnellen Meeresspiegelschwankungen.</span></p>
 
                 <div class="sub-question">
-                    <div class="sub-question-title">Full Question (10 points)</div>
-                    <p>If significant ice sheets existed during the F-F interval:</p>
+                    <div class="sub-question-title"><span class="en">Full Question (10 points)</span><span class="de">Vollständige Frage (10 Punkte)</span></div>
+                    <p><span class="en">If significant ice sheets existed during the F-F interval:</span><span class="de">Falls signifikante Eisschilde während des F-F-Intervalls existierten:</span></p>
                     <ol>
-                        <li>Would your calculated temperatures be <strong>too high</strong> or <strong>too low</strong>? Explain using the isotope mass balance principle.</li>
-                        <li>Quantify the error: Calculate temperature for CON-4 if δ¹⁸O<sub>sw</sub> = -0.5‰ instead of -1.0‰ (ice sheet storage of ¹⁶O).</li>
+                        <li><span class="en">Would your calculated temperatures be <strong>too high</strong> or <strong>too low</strong>? Explain using the isotope mass balance principle.</span><span class="de">Wären Ihre berechneten Temperaturen <strong>zu hoch</strong> oder <strong>zu niedrig</strong>? Erklären Sie dies mit dem Isotopen-Massenbilanz-Prinzip.</span></li>
+                        <li><span class="en">Quantify the error: Calculate temperature for CON-4 if δ¹⁸O<sub>sw</sub> = -0.5‰ instead of -1.0‰ (ice sheet storage of ¹⁶O).</span><span class="de">Quantifizieren Sie den Fehler: Berechnen Sie die Temperatur für CON-4, wenn δ¹⁸O<sub>sw</sub> = -0,5‰ statt -1,0‰ (Eisschildspeicherung von ¹⁶O).</span></li>
                     </ol>
-                    <div class="calculation-label">💻 YOUR ANSWER AND CALCULATION:</div>
+                    <div class="calculation-label">💻 <span class="en">YOUR ANSWER AND CALCULATION:</span><span class="de">IHRE ANTWORT UND BERECHNUNG:</span></div>
                     <textarea class="calculation-area" id="p2_2_calc" placeholder="1. Direction of temperature error and explanation:
 (Consider: ice sheets preferentially store ¹⁶O, making seawater heavier...)
 
 2. Calculation for CON-4:
 Original (δ¹⁸O_sw = -1.0‰):
-T = 117.4 - 4.50 × (20.5 - (-1.0)) = 
+T = 117.4 - 4.50 × (20.5 - (-1.0)) =
 
 With ice sheets (δ¹⁸O_sw = -0.5‰):
-T = 117.4 - 4.50 × (20.5 - (-0.5)) = 
+T = 117.4 - 4.50 × (20.5 - (-0.5)) =
 
 Temperature difference = ...°C"></textarea>
                 </div>
@@ -930,38 +970,38 @@ Temperature difference = ...°C"></textarea>
 
         <!-- PART 3: WEATHERING & REDOX PROXIES -->
         <div class="section">
-            <div class="section-title">PART 3: WEATHERING & REDOX PROXIES (25 points)</div>
-            
+            <div class="section-title"><span class="en">PART 3: WEATHERING & REDOX PROXIES (25 points)</span><span class="de">TEIL 3: VERWITTERUNGS- & REDOX-PROXIES (25 Punkte)</span></div>
+
             <div class="question-block">
-                <div class="question-title">Question 3.1: Strontium Isotopes — The Biological Weathering Pump (15 points)</div>
-                
+                <div class="question-title"><span class="en">Question 3.1: Strontium Isotopes — The Biological Weathering Pump (15 points)</span><span class="de">Frage 3.1: Strontium-Isotope — Die Biologische Verwitterungspumpe (15 Punkte)</span></div>
+
                 <!-- FIGURE 5: Multi-proxy context including Sr discussion -->
                 <div class="figure-box">
                     <img src="images/exam_figures/fig5_phanerozoic_sr_curve.jpg" alt="Multi-proxy synthesis with Sr isotope context">
                     <div class="figure-caption">
-                        <strong>Figure 5: Environmental Synthesis Across F-F Boundary</strong>
-                        Multi-proxy compilation showing the relationship between sea-level changes, carbon isotope excursions, temperature variations, and biotic events. The ⁸⁷Sr/⁸⁶Sr seawater curve shows a dramatic increase during the Late Devonian (0.7078 → 0.7084), reflecting enhanced continental weathering driven by land plant expansion.
-                        <div class="figure-source">Source: Joachimski & Buggisch (2002), Figure 2</div>
+                        <strong><span class="en">Figure 5: Environmental Synthesis Across F-F Boundary</span><span class="de">Abbildung 5: Umweltsynthese über die F-F-Grenze</span></strong>
+                        <span class="en">Multi-proxy compilation showing the relationship between sea-level changes, carbon isotope excursions, temperature variations, and biotic events. The ⁸⁷Sr/⁸⁶Sr seawater curve shows a dramatic increase during the Late Devonian (0.7078 → 0.7084), reflecting enhanced continental weathering driven by land plant expansion.</span><span class="de">Multi-Proxy-Zusammenstellung, die die Beziehung zwischen Meeresspiegeländerungen, Kohlenstoffisotopen-Exkursionen, Temperaturvariationen und biotischen Ereignissen zeigt. Die ⁸⁷Sr/⁸⁶Sr-Meerwasserkurve zeigt einen dramatischen Anstieg während des Spätdevon (0,7078 → 0,7084), der verstärkte kontinentale Verwitterung durch Landpflanzen-Expansion widerspiegelt.</span>
+                        <div class="figure-source"><span class="en">Source:</span><span class="de">Quelle:</span> Joachimski & Buggisch (2002), Figure 2</div>
                     </div>
                 </div>
 
-                <p>The Late Devonian ⁸⁷Sr/⁸⁶Sr seawater curve shows a <strong>dramatic increase</strong>—one of the most rapid in the Phanerozoic:</p>
+                <p><span class="en">The Late Devonian ⁸⁷Sr/⁸⁶Sr seawater curve shows a <strong>dramatic increase</strong>—one of the most rapid in the Phanerozoic:</span><span class="de">Die spätdevonische ⁸⁷Sr/⁸⁶Sr-Meerwasserkurve zeigt einen <strong>dramatischen Anstieg</strong>—einen der schnellsten im Phanerozoikum:</span></p>
 
                 <table class="data-table">
-                    <thead><tr><th>Time Interval</th><th>⁸⁷Sr/⁸⁶Sr</th><th>Trend</th></tr></thead>
+                    <thead><tr><th><span class="en">Time Interval</span><span class="de">Zeitintervall</span></th><th>⁸⁷Sr/⁸⁶Sr</th><th><span class="en">Trend</span><span class="de">Trend</span></th></tr></thead>
                     <tbody>
-                        <tr><td>Early Frasnian</td><td>0.7078</td><td>Baseline</td></tr>
-                        <tr><td>Middle Frasnian</td><td>0.7079</td><td>Gradual rise</td></tr>
-                        <tr><td>Late Frasnian (LKE)</td><td>0.7081</td><td>Accelerating</td></tr>
-                        <tr><td>F-F boundary (UKE)</td><td>0.7084</td><td>Peak</td></tr>
-                        <tr><td>Early Famennian</td><td>0.7083</td><td>Plateau</td></tr>
+                        <tr><td><span class="en">Early Frasnian</span><span class="de">Frühes Frasnium</span></td><td>0.7078</td><td><span class="en">Baseline</span><span class="de">Ausgangswert</span></td></tr>
+                        <tr><td><span class="en">Middle Frasnian</span><span class="de">Mittleres Frasnium</span></td><td>0.7079</td><td><span class="en">Gradual rise</span><span class="de">Gradueller Anstieg</span></td></tr>
+                        <tr><td><span class="en">Late Frasnian (LKE)</span><span class="de">Spätes Frasnium (LKE)</span></td><td>0.7081</td><td><span class="en">Accelerating</span><span class="de">Beschleunigend</span></td></tr>
+                        <tr><td><span class="en">F-F boundary (UKE)</span><span class="de">F-F-Grenze (UKE)</span></td><td>0.7084</td><td><span class="en">Peak</span><span class="de">Maximum</span></td></tr>
+                        <tr><td><span class="en">Early Famennian</span><span class="de">Frühes Famennium</span></td><td>0.7083</td><td><span class="en">Plateau</span><span class="de">Plateau</span></td></tr>
                     </tbody>
                 </table>
 
                 <div class="sub-question">
-                    <div class="sub-question-title">Part A (8 points): The Biological Weathering Pump Mechanism</div>
-                    <p>The expansion of vascular land plants has been proposed as a driver of enhanced continental weathering. Explain how plant evolution could have caused the observed ⁸⁷Sr/⁸⁶Sr increase through the "biological weathering pump."</p>
-                    <div class="calculation-label">📝 YOUR ANSWER:</div>
+                    <div class="sub-question-title"><span class="en">Part A (8 points): The Biological Weathering Pump Mechanism</span><span class="de">Teil A (8 Punkte): Der Mechanismus der Biologischen Verwitterungspumpe</span></div>
+                    <p><span class="en">The expansion of vascular land plants has been proposed as a driver of enhanced continental weathering. Explain how plant evolution could have caused the observed ⁸⁷Sr/⁸⁶Sr increase through the "biological weathering pump."</span><span class="de">Die Ausbreitung vaskulärer Landpflanzen wurde als Antrieb verstärkter kontinentaler Verwitterung vorgeschlagen. Erklären Sie, wie die Pflanzenevolution den beobachteten ⁸⁷Sr/⁸⁶Sr-Anstieg durch die „biologische Verwitterungspumpe" verursacht haben könnte.</span></p>
+                    <div class="calculation-label">📝 <span class="en">YOUR ANSWER:</span><span class="de">IHRE ANTWORT:</span></div>
                     <textarea class="answer-area" id="p3_1a" placeholder="Consider:
 - How do plant root systems affect physical weathering?
 - How do organic acids from plants affect chemical weathering?
@@ -970,10 +1010,10 @@ Temperature difference = ...°C"></textarea>
                 </div>
 
                 <div class="sub-question">
-                    <div class="sub-question-title">Part B (7 points): Alternative Interpretation — Provenance Change</div>
-                    <p>An alternative hypothesis: the ⁸⁷Sr/⁸⁶Sr increase could reflect a <strong>change in the source rocks being weathered</strong> (provenance) rather than an increase in weathering intensity.</p>
-                    <p>Propose <strong>ONE additional geochemical proxy</strong> that could distinguish between enhanced weathering intensity vs. provenance change. Explain expected results under each hypothesis.</p>
-                    <div class="calculation-label">📝 YOUR ANSWER:</div>
+                    <div class="sub-question-title"><span class="en">Part B (7 points): Alternative Interpretation — Provenance Change</span><span class="de">Teil B (7 Punkte): Alternative Interpretation — Provenienzänderung</span></div>
+                    <p><span class="en">An alternative hypothesis: the ⁸⁷Sr/⁸⁶Sr increase could reflect a <strong>change in the source rocks being weathered</strong> (provenance) rather than an increase in weathering intensity.</span><span class="de">Eine alternative Hypothese: Der ⁸⁷Sr/⁸⁶Sr-Anstieg könnte eine <strong>Änderung der verwitterten Ausgangsgesteine</strong> (Provenienz) widerspiegeln statt einer Zunahme der Verwitterungsintensität.</span></p>
+                    <p><span class="en">Propose <strong>ONE additional geochemical proxy</strong> that could distinguish between enhanced weathering intensity vs. provenance change. Explain expected results under each hypothesis.</span><span class="de">Schlagen Sie <strong>EINEN zusätzlichen geochemischen Proxy</strong> vor, der zwischen verstärkter Verwitterungsintensität und Provenienzänderung unterscheiden könnte. Erklären Sie die erwarteten Ergebnisse unter jeder Hypothese.</span></p>
+                    <div class="calculation-label">📝 <span class="en">YOUR ANSWER:</span><span class="de">IHRE ANTWORT:</span></div>
                     <textarea class="answer-area" id="p3_1b" placeholder="Proposed additional proxy:
 (e.g., Os isotopes, Li isotopes, weathering indices, sediment flux estimates...)
 
@@ -986,38 +1026,38 @@ How this distinguishes the hypotheses:"></textarea>
             </div>
 
             <div class="question-block">
-                <div class="question-title">Question 3.2: Redox Evidence — Sulfur Isotopes and Biomarkers (10 points)</div>
-                
+                <div class="question-title"><span class="en">Question 3.2: Redox Evidence — Sulfur Isotopes and Biomarkers (10 points)</span><span class="de">Frage 3.2: Redox-Nachweis — Schwefelisotope und Biomarker (10 Punkte)</span></div>
+
                 <!-- FIGURE 6: Redox and anoxia context -->
                 <div class="figure-box">
                     <img src="images/exam_figures/fig6_joachimski2002_redox_anoxia.jpg" alt="Redox proxy synthesis for Kellwasser events">
                     <div class="figure-caption">
-                        <strong>Figure 6: Redox Context and Anoxia During Kellwasser Events</strong>
-                        The Kellwasser black shales indicate widespread ocean anoxia and euxinia. Positive δ¹³C excursions correlate with enhanced organic carbon burial, linking productivity increases to oxygen depletion. The presence of isorenieratane biomarkers indicates photic zone euxinia—H₂S penetrating into surface waters.
-                        <div class="figure-source">Source: Joachimski & Buggisch (2002), Figure 2</div>
+                        <strong><span class="en">Figure 6: Redox Context and Anoxia During Kellwasser Events</span><span class="de">Abbildung 6: Redox-Kontext und Anoxie während der Kellwasser-Ereignisse</span></strong>
+                        <span class="en">The Kellwasser black shales indicate widespread ocean anoxia and euxinia. Positive δ¹³C excursions correlate with enhanced organic carbon burial, linking productivity increases to oxygen depletion. The presence of isorenieratane biomarkers indicates photic zone euxinia—H₂S penetrating into surface waters.</span><span class="de">Die Kellwasser-Schwarzschiefer zeigen weit verbreitete ozeanische Anoxie und Euxinie. Positive δ¹³C-Exkursionen korrelieren mit verstärkter organischer Kohlenstoff-Einlagerung und verbinden Produktivitätssteigerungen mit Sauerstoffverarmung. Das Vorkommen von Isorenieratan-Biomarkern zeigt photische Zonen-Euxinie an—H₂S, das in Oberflächengewässer eindringt.</span>
+                        <div class="figure-source"><span class="en">Source:</span><span class="de">Quelle:</span> Joachimski & Buggisch (2002), Figure 2</div>
                     </div>
                 </div>
 
-                <p>The Kellwasser black shales contain multiple lines of evidence for ocean anoxia and euxinia (sulfidic conditions):</p>
+                <p><span class="en">The Kellwasser black shales contain multiple lines of evidence for ocean anoxia and euxinia (sulfidic conditions):</span><span class="de">Die Kellwasser-Schwarzschiefer enthalten mehrere Nachweise für ozeanische Anoxie und Euxinie (sulfidische Bedingungen):</span></p>
 
                 <table class="data-table">
-                    <thead><tr><th>Proxy</th><th>Kellwasser Signal</th><th>Interpretation</th></tr></thead>
+                    <thead><tr><th>Proxy</th><th><span class="en">Kellwasser Signal</span><span class="de">Kellwasser-Signal</span></th><th><span class="en">Interpretation</span><span class="de">Interpretation</span></th></tr></thead>
                     <tbody>
-                        <tr><td>Pyrite δ³⁴S</td><td>-30 to -40‰</td><td>Bacterial sulfate reduction</td></tr>
-                        <tr><td>CAS δ³⁴S</td><td>+5 to +10‰ excursion</td><td>Enhanced pyrite burial</td></tr>
-                        <tr><td>Mo enrichment</td><td>10-100× above crustal</td><td>Euxinic bottom waters</td></tr>
-                        <tr><td>Isorenieratane</td><td>Present</td><td>Photic zone euxinia</td></tr>
+                        <tr><td>Pyrite δ³⁴S</td><td>-30 to -40‰</td><td><span class="en">Bacterial sulfate reduction</span><span class="de">Bakterielle Sulfatreduktion</span></td></tr>
+                        <tr><td>CAS δ³⁴S</td><td><span class="en">+5 to +10‰ excursion</span><span class="de">+5 bis +10‰ Exkursion</span></td><td><span class="en">Enhanced pyrite burial</span><span class="de">Verstärkte Pyrit-Einlagerung</span></td></tr>
+                        <tr><td><span class="en">Mo enrichment</span><span class="de">Mo-Anreicherung</span></td><td><span class="en">10-100× above crustal</span><span class="de">10-100× über Krustenwert</span></td><td><span class="en">Euxinic bottom waters</span><span class="de">Euxinisches Bodenwasser</span></td></tr>
+                        <tr><td>Isorenieratan</td><td><span class="en">Present</span><span class="de">Vorhanden</span></td><td><span class="en">Photic zone euxinia</span><span class="de">Photische Zonen-Euxinie</span></td></tr>
                     </tbody>
                 </table>
 
                 <div class="sub-question">
-                    <div class="sub-question-title">Full Question (10 points)</div>
-                    <p>The biomarker <strong>isorenieratane</strong> is derived from green sulfur bacteria (Chlorobiaceae), which require <em>both</em> H₂S <em>and</em> light for photosynthesis.</p>
+                    <div class="sub-question-title"><span class="en">Full Question (10 points)</span><span class="de">Vollständige Frage (10 Punkte)</span></div>
+                    <p><span class="en">The biomarker <strong>isorenieratane</strong> is derived from green sulfur bacteria (Chlorobiaceae), which require <em>both</em> H₂S <em>and</em> light for photosynthesis.</span><span class="de">Der Biomarker <strong>Isorenieratan</strong> stammt von grünen Schwefelbakterien (Chlorobiaceae), die <em>sowohl</em> H₂S <em>als auch</em> Licht für die Photosynthese benötigen.</span></p>
                     <ol>
-                        <li>What does the presence of isorenieratane specifically indicate about ocean structure during the Kellwasser events? (5 points)</li>
-                        <li>How might this "photic zone euxinia" have contributed to the marine mass extinction? (5 points)</li>
+                        <li><span class="en">What does the presence of isorenieratane specifically indicate about ocean structure during the Kellwasser events? (5 points)</span><span class="de">Was zeigt das Vorkommen von Isorenieratan spezifisch über die Ozeanstruktur während der Kellwasser-Ereignisse an? (5 Punkte)</span></li>
+                        <li><span class="en">How might this "photic zone euxinia" have contributed to the marine mass extinction? (5 points)</span><span class="de">Wie könnte diese „photische Zonen-Euxinie" zum marinen Massenaussterben beigetragen haben? (5 Punkte)</span></li>
                     </ol>
-                    <div class="calculation-label">📝 YOUR ANSWER:</div>
+                    <div class="calculation-label">📝 <span class="en">YOUR ANSWER:</span><span class="de">IHRE ANTWORT:</span></div>
                     <textarea class="answer-area" id="p3_2" placeholder="1. What isorenieratane indicates about ocean structure:
 (Consider: Where must the chemocline have been located? What does this mean for the depth of H₂S penetration?)
 
@@ -1029,18 +1069,18 @@ How this distinguishes the hypotheses:"></textarea>
 
         <!-- PART 4: MULTI-PROXY SYNTHESIS -->
         <div class="section">
-            <div class="section-title">PART 4: MULTI-PROXY SYNTHESIS (20 points)</div>
-            
+            <div class="section-title"><span class="en">PART 4: MULTI-PROXY SYNTHESIS (20 points)</span><span class="de">TEIL 4: MULTI-PROXY-SYNTHESE (20 Punkte)</span></div>
+
             <div class="question-block">
-                <div class="question-title">Question 4.1: Data Visualization (5 points)</div>
-                
-                <p>Using the chart tool below, plot your calculated paleotemperatures to visualize the cooling trend.</p>
+                <div class="question-title"><span class="en">Question 4.1: Data Visualization (5 points)</span><span class="de">Frage 4.1: Datenvisualisierung (5 Punkte)</span></div>
+
+                <p><span class="en">Using the chart tool below, plot your calculated paleotemperatures to visualize the cooling trend.</span><span class="de">Verwenden Sie das untenstehende Diagramm-Tool, um Ihre berechneten Paläotemperaturen zu visualisieren und den Abkühlungstrend darzustellen.</span></p>
 
                 <div class="chart-container">
-                    <h4>📊 Temperature vs Stratigraphic Position</h4>
+                    <h4>📊 <span class="en">Temperature vs Stratigraphic Position</span><span class="de">Temperatur vs. Stratigraphische Position</span></h4>
                     <div class="chart-data-input">
                         <div>
-                            <label><strong>X-axis (Position 1-5):</strong></label>
+                            <label><strong><span class="en">X-axis (Position 1-5):</span><span class="de">X-Achse (Position 1-5):</span></strong></label>
                             <textarea id="chartXData">1
 2
 3
@@ -1048,40 +1088,40 @@ How this distinguishes the hypotheses:"></textarea>
 5</textarea>
                         </div>
                         <div>
-                            <label><strong>Y-axis (Your calculated T in °C):</strong></label>
+                            <label><strong><span class="en">Y-axis (Your calculated T in °C):</span><span class="de">Y-Achse (Ihre berechneten T in °C):</span></strong></label>
                             <textarea id="chartYData" placeholder="Enter your temperatures from Q2.1"></textarea>
                         </div>
                     </div>
-                    <button onclick="generateChart()" style="padding: 10px 25px; background: linear-gradient(135deg, #1a5276, #2980b9); color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Generate Plot</button>
+                    <button onclick="generateChart()" style="padding: 10px 25px; background: linear-gradient(135deg, #1a5276, #2980b9); color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;"><span class="en">Generate Plot</span><span class="de">Diagramm erstellen</span></button>
                     <div style="background: white; padding: 15px; border-radius: 8px; margin-top: 15px;">
                         <canvas id="tempChart" width="600" height="300"></canvas>
                     </div>
-                    <p style="margin-top: 10px; font-size: 0.9em; color: #666;"><em>Position 1 = Pre-LKE, Position 4 = UKE peak. Your plot should show cooling toward the extinction horizon.</em></p>
+                    <p style="margin-top: 10px; font-size: 0.9em; color: #666;"><em><span class="en">Position 1 = Pre-LKE, Position 4 = UKE peak. Your plot should show cooling toward the extinction horizon.</span><span class="de">Position 1 = Prä-LKE, Position 4 = UKE-Maximum. Ihr Diagramm sollte Abkühlung zum Aussterbens-Horizont zeigen.</span></em></p>
                 </div>
 
                 <div class="sub-question">
-                    <div class="sub-question-title">Describe your plot (5 points)</div>
-                    <p>In 2-3 sentences, describe the temperature pattern and identify when maximum cooling occurred.</p>
-                    <div class="calculation-label">📝 YOUR DESCRIPTION:</div>
+                    <div class="sub-question-title"><span class="en">Describe your plot (5 points)</span><span class="de">Beschreiben Sie Ihr Diagramm (5 Punkte)</span></div>
+                    <p><span class="en">In 2-3 sentences, describe the temperature pattern and identify when maximum cooling occurred.</span><span class="de">Beschreiben Sie in 2-3 Sätzen das Temperaturmuster und identifizieren Sie, wann die maximale Abkühlung auftrat.</span></p>
+                    <div class="calculation-label">📝 <span class="en">YOUR DESCRIPTION:</span><span class="de">IHRE BESCHREIBUNG:</span></div>
                     <textarea class="answer-area" id="p4_1" placeholder="Describe the cooling trend visible in your plot..."></textarea>
                 </div>
             </div>
 
             <div class="question-block">
-                <div class="question-title">Question 4.2: Integrated Environmental Reconstruction (15 points)</div>
-                
+                <div class="question-title"><span class="en">Question 4.2: Integrated Environmental Reconstruction (15 points)</span><span class="de">Frage 4.2: Integrierte Umweltrekonstruktion (15 Punkte)</span></div>
+
                 <div class="info-note">
-                    <strong>Your synthesis MUST address:</strong><br>
-                    1. The causal sequence: weathering → nutrient delivery → productivity → anoxia → cooling<br>
-                    2. How the <strong>positive</strong> δ¹³C excursion relates to cooling (opposite to PTB)<br>
-                    3. The role of land plant expansion as the ultimate driver<br>
-                    4. At least ONE limitation or uncertainty in the proxy interpretation
+                    <strong><span class="en">Your synthesis MUST address:</span><span class="de">Ihre Synthese MUSS behandeln:</span></strong><br>
+                    <span class="en">1. The causal sequence: weathering → nutrient delivery → productivity → anoxia → cooling</span><span class="de">1. Die kausale Abfolge: Verwitterung → Nährstoffzufuhr → Produktivität → Anoxie → Abkühlung</span><br>
+                    <span class="en">2. How the <strong>positive</strong> δ¹³C excursion relates to cooling (opposite to PTB)</span><span class="de">2. Wie die <strong>positive</strong> δ¹³C-Exkursion mit Abkühlung zusammenhängt (Gegenteil zur PTB)</span><br>
+                    <span class="en">3. The role of land plant expansion as the ultimate driver</span><span class="de">3. Die Rolle der Landpflanzen-Expansion als ultimativer Antrieb</span><br>
+                    <span class="en">4. At least ONE limitation or uncertainty in the proxy interpretation</span><span class="de">4. Mindestens EINE Einschränkung oder Unsicherheit in der Proxy-Interpretation</span>
                 </div>
 
                 <div class="sub-question">
-                    <div class="sub-question-title">Full Synthesis (15 points)</div>
-                    <p>Using ALL proxy evidence (δ¹³C, δ¹⁸O/temperature, ⁸⁷Sr/⁸⁶Sr, redox), write a <strong>synthesis paragraph (250-350 words)</strong> reconstructing the environmental changes.</p>
-                    <div class="calculation-label">📝 YOUR SYNTHESIS:</div>
+                    <div class="sub-question-title"><span class="en">Full Synthesis (15 points)</span><span class="de">Vollständige Synthese (15 Punkte)</span></div>
+                    <p><span class="en">Using ALL proxy evidence (δ¹³C, δ¹⁸O/temperature, ⁸⁷Sr/⁸⁶Sr, redox), write a <strong>synthesis paragraph (250-350 words)</strong> reconstructing the environmental changes.</span><span class="de">Verfassen Sie unter Verwendung ALLER Proxy-Belege (δ¹³C, δ¹⁸O/Temperatur, ⁸⁷Sr/⁸⁶Sr, Redox) einen <strong>Synthese-Absatz (250-350 Wörter)</strong>, der die Umweltveränderungen rekonstruiert.</span></p>
+                    <div class="calculation-label">📝 <span class="en">YOUR SYNTHESIS:</span><span class="de">IHRE SYNTHESE:</span></div>
                     <textarea class="answer-area" id="p4_2" style="min-height: 280px;" placeholder="Structure suggestion:
 
 OPENING: State the main environmental story (biological weathering pump → cooling extinction)
@@ -1097,39 +1137,39 @@ CAUSATION: Connect land plants → weathering → nutrients → productivity →
 CONTRAST: How this differs fundamentally from volcanism-driven extinctions (PTB)
 
 LIMITATIONS: Acknowledge at least one uncertainty"></textarea>
-                    <p style="margin-top: 10px; font-size: 0.9em; color: #666;">Word count target: 250-350 words. Current count: <span id="wordCount">0</span></p>
+                    <p style="margin-top: 10px; font-size: 0.9em; color: #666;"><span class="en">Word count target: 250-350 words. Current count:</span><span class="de">Wortanzahl-Ziel: 250-350 Wörter. Aktuelle Anzahl:</span> <span id="wordCount">0</span></p>
                 </div>
             </div>
         </div>
 
         <!-- BONUS SECTION -->
         <div class="section bonus-section">
-            <div class="section-title">⭐ BONUS QUESTION: Late Devonian vs Permo-Triassic Comparison (10 points)</div>
-            
+            <div class="section-title">⭐ <span class="en">BONUS QUESTION: Late Devonian vs Permo-Triassic Comparison (10 points)</span><span class="de">BONUSFRAGE: Spätdevon vs. Perm-Trias-Vergleich (10 Punkte)</span></div>
+
             <div class="question-block">
-                <div class="question-title">Comparative Analysis: Two Fundamentally Different Mass Extinctions</div>
-                
-                <p>The Late Devonian and Permo-Triassic boundary represent <strong>opposite modes of environmental catastrophe</strong>:</p>
+                <div class="question-title"><span class="en">Comparative Analysis: Two Fundamentally Different Mass Extinctions</span><span class="de">Vergleichende Analyse: Zwei grundlegend verschiedene Massenaussterben</span></div>
+
+                <p><span class="en">The Late Devonian and Permo-Triassic boundary represent <strong>opposite modes of environmental catastrophe</strong>:</span><span class="de">Das Spätdevon und die Perm-Trias-Grenze stellen <strong>entgegengesetzte Modi der Umweltkatastrophe</strong> dar:</span></p>
 
                 <table class="data-table">
-                    <thead><tr><th>Parameter</th><th>Late Devonian (F-F)</th><th>Permo-Triassic Boundary</th></tr></thead>
+                    <thead><tr><th><span class="en">Parameter</span><span class="de">Parameter</span></th><th><span class="en">Late Devonian (F-F)</span><span class="de">Spätdevon (F-F)</span></th><th><span class="en">Permo-Triassic Boundary</span><span class="de">Perm-Trias-Grenze</span></th></tr></thead>
                     <tbody>
-                        <tr><td><strong>δ¹³C signal</strong></td><td>Positive (+3 to +4‰)</td><td>Negative (-3 to -7‰)</td></tr>
-                        <tr><td><strong>Temperature</strong></td><td>Cooling (4-8°C decrease)</td><td>Warming (8-10°C increase)</td></tr>
-                        <tr><td><strong>Duration</strong></td><td>Multi-pulsed, ~3 Myr</td><td>Rapid, ~60 kyr main pulse</td></tr>
-                        <tr><td><strong>Primary driver</strong></td><td>Biological weathering pump</td><td>Siberian Traps volcanism</td></tr>
-                        <tr><td><strong>Carbon cycle</strong></td><td>Carbon burial (removal)</td><td>Carbon release (addition)</td></tr>
-                        <tr><td><strong>⁸⁷Sr/⁸⁶Sr</strong></td><td>Increase (enhanced weathering)</td><td>Minimum, then increase</td></tr>
+                        <tr><td><strong><span class="en">δ¹³C signal</span><span class="de">δ¹³C-Signal</span></strong></td><td><span class="en">Positive (+3 to +4‰)</span><span class="de">Positiv (+3 bis +4‰)</span></td><td><span class="en">Negative (-3 to -7‰)</span><span class="de">Negativ (-3 bis -7‰)</span></td></tr>
+                        <tr><td><strong><span class="en">Temperature</span><span class="de">Temperatur</span></strong></td><td><span class="en">Cooling (4-8°C decrease)</span><span class="de">Abkühlung (4-8°C Rückgang)</span></td><td><span class="en">Warming (8-10°C increase)</span><span class="de">Erwärmung (8-10°C Anstieg)</span></td></tr>
+                        <tr><td><strong><span class="en">Duration</span><span class="de">Dauer</span></strong></td><td><span class="en">Multi-pulsed, ~3 Myr</span><span class="de">Mehrpulsig, ~3 Mio. Jahre</span></td><td><span class="en">Rapid, ~60 kyr main pulse</span><span class="de">Schnell, ~60 kyr Hauptpuls</span></td></tr>
+                        <tr><td><strong><span class="en">Primary driver</span><span class="de">Primärer Antrieb</span></strong></td><td><span class="en">Biological weathering pump</span><span class="de">Biologische Verwitterungspumpe</span></td><td><span class="en">Siberian Traps volcanism</span><span class="de">Sibirische Trapp-Vulkanismus</span></td></tr>
+                        <tr><td><strong><span class="en">Carbon cycle</span><span class="de">Kohlenstoffkreislauf</span></strong></td><td><span class="en">Carbon burial (removal)</span><span class="de">Kohlenstoff-Einlagerung (Entfernung)</span></td><td><span class="en">Carbon release (addition)</span><span class="de">Kohlenstoff-Freisetzung (Zufuhr)</span></td></tr>
+                        <tr><td><strong>⁸⁷Sr/⁸⁶Sr</strong></td><td><span class="en">Increase (enhanced weathering)</span><span class="de">Anstieg (verstärkte Verwitterung)</span></td><td><span class="en">Minimum, then increase</span><span class="de">Minimum, dann Anstieg</span></td></tr>
                     </tbody>
                 </table>
 
                 <div class="sub-question">
-                    <div class="sub-question-title">Bonus Question (10 points)</div>
-                    <p>Despite opposite geochemical signatures, both events caused mass extinction. Write a <strong>critical comparison (200-300 words)</strong> addressing:</p>
+                    <div class="sub-question-title"><span class="en">Bonus Question (10 points)</span><span class="de">Bonusfrage (10 Punkte)</span></div>
+                    <p><span class="en">Despite opposite geochemical signatures, both events caused mass extinction. Write a <strong>critical comparison (200-300 words)</strong> addressing:</span><span class="de">Trotz entgegengesetzter geochemischer Signaturen verursachten beide Ereignisse Massenaussterben. Verfassen Sie einen <strong>kritischen Vergleich (200-300 Wörter)</strong>, der behandelt:</span></p>
                     <ol>
-                        <li>Why opposite temperature trends (cooling vs. warming) could both cause mass extinction</li>
-                        <li>What the contrasting δ¹³C signals reveal about fundamentally different carbon cycle perturbations</li>
-                        <li>Which extinction mechanism you consider more "dangerous" for modern biodiversity and why</li>
+                        <li><span class="en">Why opposite temperature trends (cooling vs. warming) could both cause mass extinction</span><span class="de">Warum entgegengesetzte Temperaturtrends (Abkühlung vs. Erwärmung) beide Massenaussterben verursachen konnten</span></li>
+                        <li><span class="en">What the contrasting δ¹³C signals reveal about fundamentally different carbon cycle perturbations</span><span class="de">Was die kontrastierenden δ¹³C-Signale über grundlegend verschiedene Kohlenstoffkreislauf-Störungen verraten</span></li>
+                        <li><span class="en">Which extinction mechanism you consider more "dangerous" for modern biodiversity and why</span><span class="de">Welchen Aussterbe-Mechanismus Sie für die moderne Biodiversität als „gefährlicher" betrachten und warum</span></li>
                     </ol>
                     <div class="calculation-label">📝 YOUR COMPARISON:</div>
                     <textarea class="answer-area" id="bonus" style="min-height: 220px;" placeholder="Consider:
@@ -1154,12 +1194,12 @@ LIMITATIONS: Acknowledge at least one uncertainty"></textarea>
 
         <!-- EXPORT SECTION -->
         <div class="export-section">
-            <h3>📤 Submit Your Exam</h3>
-            <p style="color: #e74c3c;"><strong>Warning:</strong> You can only submit once. Ensure all answers are complete.</p>
+            <h3>📤 <span class="en">Submit Your Exam</span><span class="de">Prüfung abgeben</span></h3>
+            <p style="color: #e74c3c;"><strong><span class="en">Warning:</span><span class="de">Warnung:</span></strong> <span class="en">You can only submit once. Ensure all answers are complete.</span><span class="de">Sie können nur einmal abgeben. Stellen Sie sicher, dass alle Antworten vollständig sind.</span></p>
             <div class="export-buttons">
-                <button class="export-btn submit" onclick="submitExam()">✓ Submit Exam</button>
-                <button class="export-btn word" onclick="exportToWord()">📘 Export to Word</button>
-                <button class="export-btn copy" onclick="copyToClipboard()">📋 Copy to Clipboard</button>
+                <button class="export-btn submit" onclick="submitExam()">✓ <span class="en">Submit Exam</span><span class="de">Prüfung abgeben</span></button>
+                <button class="export-btn word" onclick="exportToWord()">📘 <span class="en">Export to Word</span><span class="de">Word-Export</span></button>
+                <button class="export-btn copy" onclick="copyToClipboard()">📋 <span class="en">Copy to Clipboard</span><span class="de">In Zwischenablage</span></button>
             </div>
         </div>
     </div>
@@ -1167,12 +1207,12 @@ LIMITATIONS: Acknowledge at least one uncertainty"></textarea>
     <!-- Calculator -->
     <div class="calculator-container">
         <div class="calculator-panel" id="calculatorPanel">
-            <div class="calc-header">🧮 Isotope Calculator</div>
+            <div class="calc-header">🧮 <span class="en">Isotope Calculator</span><span class="de">Isotopen-Rechner</span></div>
             <div class="calc-body">
                 <input type="text" class="calc-display" id="calcDisplay" readonly placeholder="0">
                 <div class="calc-tabs">
-                    <button class="calc-tab active" onclick="switchCalcTab('basic')">Basic</button>
-                    <button class="calc-tab" onclick="switchCalcTab('isotope')">Isotope</button>
+                    <button class="calc-tab active" onclick="switchCalcTab('basic')"><span class="en">Basic</span><span class="de">Basis</span></button>
+                    <button class="calc-tab" onclick="switchCalcTab('isotope')"><span class="en">Isotope</span><span class="de">Isotope</span></button>
                 </div>
                 <div id="basicCalc">
                     <div class="calc-buttons">
@@ -1198,9 +1238,9 @@ LIMITATIONS: Acknowledge at least one uncertainty"></textarea>
                     </div>
                 </div>
                 <div id="isotopeCalc" class="isotope-functions">
-                    <button class="isotope-func-btn" onclick="showFunc('phosphate')">🌡️ Phosphate Temperature (Lécuyer)</button>
-                    <button class="isotope-func-btn" onclick="showFunc('convert')">🔄 VPDB ↔ VSMOW Conversion</button>
-                    <button class="isotope-func-btn" onclick="showFunc('delta')">Δ Delta Calculation</button>
+                    <button class="isotope-func-btn" onclick="showFunc('phosphate')">🌡️ <span class="en">Phosphate Temperature (Lécuyer)</span><span class="de">Phosphat-Temperatur (Lécuyer)</span></button>
+                    <button class="isotope-func-btn" onclick="showFunc('convert')">🔄 <span class="en">VPDB ↔ VSMOW Conversion</span><span class="de">VPDB ↔ VSMOW Umrechnung</span></button>
+                    <button class="isotope-func-btn" onclick="showFunc('delta')">Δ <span class="en">Delta Calculation</span><span class="de">Delta-Berechnung</span></button>
                     
                     <div class="calc-input-group" id="func_phosphate">
                         <h4 style="margin:0 0 10px 0;">T(°C) = 117.4 - 4.50 × (δ¹⁸O<sub>phos</sub> - δ¹⁸O<sub>water</sub>)</h4>
@@ -1237,17 +1277,37 @@ LIMITATIONS: Acknowledge at least one uncertainty"></textarea>
                 </div>
             </div>
         </div>
-        <button class="calculator-toggle" onclick="toggleCalculator()">🧮 Calculator</button>
+        <button class="calculator-toggle" onclick="toggleCalculator()">🧮 <span class="en">Calculator</span><span class="de">Rechner</span></button>
     </div>
 
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loading-box">
             <div class="spinner"></div>
-            <p id="loadingText">Processing...</p>
+            <p id="loadingText"><span class="en">Processing...</span><span class="de">Verarbeitung...</span></p>
         </div>
     </div>
 
     <script>
+        // ========================================
+        // LANGUAGE SWITCHING
+        // ========================================
+        function setLanguage(lang) {
+            document.body.classList.remove('lang-en', 'lang-de');
+            document.body.classList.add('lang-' + lang);
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+            localStorage.setItem('sedgeo-exam-lang', lang);
+        }
+
+        // Initialize language from localStorage
+        (function() {
+            const savedLang = localStorage.getItem('sedgeo-exam-lang');
+            if (savedLang && (savedLang === 'en' || savedLang === 'de')) {
+                setLanguage(savedLang);
+            }
+        })();
+
         // ========================================
         // CONFIGURATION
         // ========================================

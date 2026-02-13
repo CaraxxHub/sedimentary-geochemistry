@@ -411,27 +411,67 @@
             .info-grid {
                 grid-template-columns: 1fr;
             }
-            
+
             .export-buttons {
                 flex-direction: column;
                 align-items: center;
             }
-            
+
             .export-btn {
                 width: 100%;
                 max-width: 250px;
             }
         }
+
+        /* Language Switch */
+        .lang-switch {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 1000;
+            display: flex;
+            gap: 5px;
+            background: rgba(255,255,255,0.95);
+            padding: 5px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        }
+        .lang-btn {
+            padding: 8px 16px;
+            border: 2px solid #16a085;
+            background: white;
+            color: #16a085;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        .lang-btn:hover {
+            background: #e8f6f3;
+        }
+        .lang-btn.active {
+            background: #16a085;
+            color: white;
+        }
+        /* Language visibility */
+        body.lang-en .de { display: none !important; }
+        body.lang-de .en { display: none !important; }
     </style>
 </head>
-<body>
+<body class="lang-en">
+    <!-- Language Switch -->
+    <div class="lang-switch">
+        <button class="lang-btn active" data-lang="en" onclick="setLanguage('en')">EN</button>
+        <button class="lang-btn" data-lang="de" onclick="setLanguage('de')">DE</button>
+    </div>
+
     <!-- Password Overlay -->
     <div class="password-overlay hidden" id="passwordOverlay" style="display:none">
         <div class="password-box">
-            <h2>🔐 Protected Assignment</h2>
-            <p>Enter the password provided by your instructor</p>
+            <h2><span class="en">🔐 Protected Assignment</span><span class="de">🔐 Geschützte Aufgabe</span></h2>
+            <p><span class="en">Enter the password provided by your instructor</span><span class="de">Geben Sie das Passwort ein, das Sie von Ihrem Dozenten erhalten haben</span></p>
             <input type="password" id="passwordInput" placeholder="Enter password..." onkeypress="if(event.key==='Enter')checkPassword()">
-            <button onclick="checkPassword()">Unlock Assignment</button>
+            <button onclick="checkPassword()"><span class="en">Unlock Assignment</span><span class="de">Aufgabe Freischalten</span></button>
             <div class="error-message" id="errorMessage"></div>
         </div>
     </div>
@@ -443,7 +483,7 @@
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loading-box">
             <div class="spinner"></div>
-            <div id="loadingText">Generating document...</div>
+            <div id="loadingText"><span class="en">Generating document...</span><span class="de">Dokument wird erstellt...</span></div>
         </div>
     </div>
     
@@ -451,47 +491,47 @@
     <div class="main-content visible" id="mainContent">
         <!-- Header -->
         <div class="header">
-            <h1>Mass Extinction Isotope Geochemistry</h1>
-            <div class="subtitle">Presentation Feedback Assignment</div>
+            <h1><span class="en">Mass Extinction Isotope Geochemistry</span><span class="de">Isotopengeochemie der Massenaussterben</span></h1>
+            <div class="subtitle"><span class="en">Presentation Feedback Assignment</span><span class="de">Präsentations-Feedback-Aufgabe</span></div>
         </div>
         
         <!-- Reference Bar -->
         <div class="reference-bar">
-            <strong>Course:</strong> Sedimentary Geochemistry | 
-            <strong>Instructor:</strong> PD Dr. Luca Caracciolo | 
-            <strong>Contact:</strong> luca.caracciolo@fau.de
+            <strong><span class="en">Course:</span><span class="de">Kurs:</span></strong> <span class="en">Sedimentary Geochemistry</span><span class="de">Sedimentäre Geochemie</span> |
+            <strong><span class="en">Instructor:</span><span class="de">Dozent:</span></strong> PD Dr. Luca Caracciolo |
+            <strong><span class="en">Contact:</span><span class="de">Kontakt:</span></strong> luca.caracciolo@fau.de
         </div>
         
         <!-- Instructions -->
         <div class="instructions">
-            <h3>📋 Instructions</h3>
+            <h3><span class="en">📋 Instructions</span><span class="de">📋 Anweisungen</span></h3>
             <ul>
-                <li>Answer the questions based on the presentation feedback and your understanding of isotope geochemistry</li>
-                <li>Focus on <strong>proxy mechanisms</strong>, <strong>interpretations</strong>, and <strong>comparisons between events</strong></li>
-                <li>Your work is automatically saved in your browser</li>
-                <li>Export options: Email, Word document, Copy to clipboard, or Text file</li>
-                <li>Each section corresponds to one of the four student presentations</li>
+                <li><span class="en">Answer the questions based on the presentation feedback and your understanding of isotope geochemistry</span><span class="de">Beantworten Sie die Fragen basierend auf dem Präsentations-Feedback und Ihrem Verständnis der Isotopengeochemie</span></li>
+                <li><span class="en">Focus on <strong>proxy mechanisms</strong>, <strong>interpretations</strong>, and <strong>comparisons between events</strong></span><span class="de">Konzentrieren Sie sich auf <strong>Proxy-Mechanismen</strong>, <strong>Interpretationen</strong> und <strong>Vergleiche zwischen Ereignissen</strong></span></li>
+                <li><span class="en">Your work is automatically saved in your browser</span><span class="de">Ihre Arbeit wird automatisch im Browser gespeichert</span></li>
+                <li><span class="en">Export options: Email, Word document, Copy to clipboard, or Text file</span><span class="de">Export-Optionen: E-Mail, Word-Dokument, In Zwischenablage kopieren oder Textdatei</span></li>
+                <li><span class="en">Each section corresponds to one of the four student presentations</span><span class="de">Jeder Abschnitt entspricht einer der vier Studierendenpräsentationen</span></li>
             </ul>
         </div>
         
         <!-- Student Information -->
         <div class="student-info">
-            <h3>👤 Student Information</h3>
+            <h3><span class="en">👤 Student Information</span><span class="de">👤 Studierenden-Informationen</span></h3>
             <div class="info-grid">
                 <div class="info-field">
-                    <label>Full Name *</label>
+                    <label><span class="en">Full Name *</span><span class="de">Vollständiger Name *</span></label>
                     <input type="text" id="studentName" placeholder="Enter your full name" oninput="updateWatermark()">
                 </div>
                 <div class="info-field">
-                    <label>Email *</label>
+                    <label><span class="en">Email *</span><span class="de">E-Mail *</span></label>
                     <input type="email" id="studentEmail" placeholder="your.email@fau.de">
                 </div>
                 <div class="info-field">
-                    <label>Student ID *</label>
+                    <label><span class="en">Student ID *</span><span class="de">Matrikelnummer *</span></label>
                     <input type="text" id="studentId" placeholder="e.g., 12345678">
                 </div>
                 <div class="info-field">
-                    <label>Submission Date</label>
+                    <label><span class="en">Submission Date</span><span class="de">Abgabedatum</span></label>
                     <input type="text" id="submissionDate" readonly>
                 </div>
             </div>
@@ -500,39 +540,42 @@
         <!-- ==================== LATE DEVONIAN ==================== -->
         <div class="event-section">
             <div class="event-header devonian-header">
-                SECTION 1: Late Devonian Mass Extinction
+                <span class="en">SECTION 1: Late Devonian Mass Extinction</span><span class="de">ABSCHNITT 1: Spätdevonisches Massenaussterben</span>
             </div>
             <div class="event-content">
                 <!-- Question 1.1 -->
                 <div class="question-block">
-                    <span class="question-number">Question 1.1</span>
-                    <span class="points">10 pts</span>
+                    <span class="question-number"><span class="en">Question 1.1</span><span class="de">Frage 1.1</span></span>
+                    <span class="points">10 <span class="en">pts</span><span class="de">Pkt</span></span>
                     <div class="question-text">
-                        The Devonian shows a +3.6‰ δ¹³C excursion while the PTB shows -4 to -7‰. What do these opposite signals tell us about the carbon cycle perturbation in each event?
+                        <span class="en">The Devonian shows a +3.6‰ δ¹³C excursion while the PTB shows -4 to -7‰. What do these opposite signals tell us about the carbon cycle perturbation in each event?</span>
+                        <span class="de">Das Devon zeigt eine +3,6‰ δ¹³C-Exkursion, während die PTB -4 bis -7‰ zeigt. Was sagen uns diese gegensätzlichen Signale über die Störung des Kohlenstoffkreislaufs bei jedem Ereignis?</span>
                     </div>
-                    <label class="answer-label">✍️ YOUR ANSWER:</label>
+                    <label class="answer-label"><span class="en">✍️ YOUR ANSWER:</span><span class="de">✍️ IHRE ANTWORT:</span></label>
                     <textarea class="answer-area" id="dev_q1" placeholder="Explain the mechanistic difference between positive and negative CIEs, and what each tells us about carbon cycling..."></textarea>
                 </div>
                 
                 <!-- Question 1.2 -->
                 <div class="question-block">
-                    <span class="question-number">Question 1.2</span>
-                    <span class="points">10 pts</span>
+                    <span class="question-number"><span class="en">Question 1.2</span><span class="de">Frage 1.2</span></span>
+                    <span class="points">10 <span class="en">pts</span><span class="de">Pkt</span></span>
                     <div class="question-text">
-                        The presentation correctly notes that the ⁸⁷Sr/⁸⁶Sr increase could reflect enhanced weathering intensity OR provenance change. How would you distinguish these hypotheses using additional proxies? Predict the expected results under each scenario.
+                        <span class="en">The presentation correctly notes that the ⁸⁷Sr/⁸⁶Sr increase could reflect enhanced weathering intensity OR provenance change. How would you distinguish these hypotheses using additional proxies? Predict the expected results under each scenario.</span>
+                        <span class="de">Die Präsentation stellt korrekt fest, dass der ⁸⁷Sr/⁸⁶Sr-Anstieg eine verstärkte Verwitterungsintensität ODER eine Provenienzänderung widerspiegeln könnte. Wie würden Sie diese Hypothesen mit zusätzlichen Proxies unterscheiden? Sagen Sie die erwarteten Ergebnisse für jedes Szenario voraus.</span>
                     </div>
-                    <label class="answer-label">✍️ YOUR ANSWER:</label>
+                    <label class="answer-label"><span class="en">✍️ YOUR ANSWER:</span><span class="de">✍️ IHRE ANTWORT:</span></label>
                     <textarea class="answer-area" id="dev_q2" placeholder="Identify proxies that could discriminate between weathering intensity and provenance change, and explain what results you would expect..."></textarea>
                 </div>
-                
+
                 <!-- Question 1.3 -->
                 <div class="question-block">
-                    <span class="question-number">Question 1.3</span>
-                    <span class="points">10 pts</span>
+                    <span class="question-number"><span class="en">Question 1.3</span><span class="de">Frage 1.3</span></span>
+                    <span class="points">10 <span class="en">pts</span><span class="de">Pkt</span></span>
                     <div class="question-text">
-                        Both the Late Devonian (cooling) and PTB (warming) caused mass extinction. How can opposite climate trends produce similar biotic outcomes? Which mode is more relevant to modern climate change?
+                        <span class="en">Both the Late Devonian (cooling) and PTB (warming) caused mass extinction. How can opposite climate trends produce similar biotic outcomes? Which mode is more relevant to modern climate change?</span>
+                        <span class="de">Sowohl das Spätdevon (Abkühlung) als auch die PTB (Erwärmung) verursachten Massenaussterben. Wie können gegensätzliche Klimatrends zu ähnlichen biotischen Ergebnissen führen? Welcher Modus ist relevanter für den modernen Klimawandel?</span>
                     </div>
-                    <label class="answer-label">✍️ YOUR ANSWER:</label>
+                    <label class="answer-label"><span class="en">✍️ YOUR ANSWER:</span><span class="de">✍️ IHRE ANTWORT:</span></label>
                     <textarea class="answer-area" id="dev_q3" placeholder="Discuss the kill mechanisms of both cooling and warming, and compare to modern climate trajectories..."></textarea>
                 </div>
             </div>
@@ -541,39 +584,42 @@
         <!-- ==================== PTB ==================== -->
         <div class="event-section">
             <div class="event-header ptb-header">
-                SECTION 2: Permo-Triassic Boundary Extinction
+                <span class="en">SECTION 2: Permo-Triassic Boundary Extinction</span><span class="de">ABSCHNITT 2: Perm-Trias-Grenze Aussterben</span>
             </div>
             <div class="event-content">
                 <!-- Question 2.1 -->
                 <div class="question-block">
-                    <span class="question-number">Question 2.1</span>
-                    <span class="points">10 pts</span>
+                    <span class="question-number"><span class="en">Question 2.1</span><span class="de">Frage 2.1</span></span>
+                    <span class="points">10 <span class="en">pts</span><span class="de">Pkt</span></span>
                     <div class="question-text">
-                        The presentation reports a pH drop of 0.6 units based on δ¹¹B. Explain mechanistically WHY lower ocean pH produces lower δ¹¹B values in carbonate archives — what's happening at the molecular level with borate vs. boric acid?
+                        <span class="en">The presentation reports a pH drop of 0.6 units based on δ¹¹B. Explain mechanistically WHY lower ocean pH produces lower δ¹¹B values in carbonate archives — what's happening at the molecular level with borate vs. boric acid?</span>
+                        <span class="de">Die Präsentation berichtet von einem pH-Abfall von 0,6 Einheiten basierend auf δ¹¹B. Erklären Sie mechanistisch, WARUM niedrigerer Ozean-pH niedrigere δ¹¹B-Werte in Karbonatarchiven erzeugt — was passiert auf molekularer Ebene mit Borat vs. Borsäure?</span>
                     </div>
-                    <label class="answer-label">✍️ YOUR ANSWER:</label>
+                    <label class="answer-label"><span class="en">✍️ YOUR ANSWER:</span><span class="de">✍️ IHRE ANTWORT:</span></label>
                     <textarea class="answer-area" id="ptb_q1" placeholder="Explain the boron speciation equilibrium, isotopic fractionation, and why only borate incorporates into carbonates..."></textarea>
                 </div>
-                
+
                 <!-- Question 2.2 -->
                 <div class="question-block">
-                    <span class="question-number">Question 2.2</span>
-                    <span class="points">10 pts</span>
+                    <span class="question-number"><span class="en">Question 2.2</span><span class="de">Frage 2.2</span></span>
+                    <span class="points">10 <span class="en">pts</span><span class="de">Pkt</span></span>
                     <div class="question-text">
-                        The δ²³⁸U shift from -0.37‰ to -0.65‰ indicates expanded anoxia. Explain the mechanism (why does anoxic seafloor cause seawater δ²³⁸U to become MORE NEGATIVE?) and what percentage of seafloor this shift implies was anoxic.
+                        <span class="en">The δ²³⁸U shift from -0.37‰ to -0.65‰ indicates expanded anoxia. Explain the mechanism (why does anoxic seafloor cause seawater δ²³⁸U to become MORE NEGATIVE?) and what percentage of seafloor this shift implies was anoxic.</span>
+                        <span class="de">Die δ²³⁸U-Verschiebung von -0,37‰ zu -0,65‰ deutet auf ausgedehnte Anoxie hin. Erklären Sie den Mechanismus (warum verursacht anoxischer Meeresboden, dass das δ²³⁸U des Meerwassers NEGATIVER wird?) und welchen Prozentsatz des Meeresbodens diese Verschiebung als anoxisch impliziert.</span>
                     </div>
-                    <label class="answer-label">✍️ YOUR ANSWER:</label>
+                    <label class="answer-label"><span class="en">✍️ YOUR ANSWER:</span><span class="de">✍️ IHRE ANTWORT:</span></label>
                     <textarea class="answer-area" id="ptb_q2" placeholder="Describe the uranium redox chemistry, isotope fractionation during reduction, and quantify the extent of anoxia..."></textarea>
                 </div>
-                
+
                 <!-- Question 2.3 -->
                 <div class="question-block">
-                    <span class="question-number">Question 2.3</span>
-                    <span class="points">10 pts</span>
+                    <span class="question-number"><span class="en">Question 2.3</span><span class="de">Frage 2.3</span></span>
+                    <span class="points">10 <span class="en">pts</span><span class="de">Pkt</span></span>
                     <div class="question-text">
-                        PTB recovery was extraordinarily slow (~5 Myr) compared to PETM (~200 kyr). Propose TWO mechanistic hypotheses for why recovery was so slow, and what proxy evidence would test each hypothesis.
+                        <span class="en">PTB recovery was extraordinarily slow (~5 Myr) compared to PETM (~200 kyr). Propose TWO mechanistic hypotheses for why recovery was so slow, and what proxy evidence would test each hypothesis.</span>
+                        <span class="de">Die PTB-Erholung war außerordentlich langsam (~5 Mio. Jahre) im Vergleich zum PETM (~200.000 Jahre). Schlagen Sie ZWEI mechanistische Hypothesen vor, warum die Erholung so langsam war, und welche Proxy-Evidenz jede Hypothese testen würde.</span>
                     </div>
-                    <label class="answer-label">✍️ YOUR ANSWER:</label>
+                    <label class="answer-label"><span class="en">✍️ YOUR ANSWER:</span><span class="de">✍️ IHRE ANTWORT:</span></label>
                     <textarea class="answer-area" id="ptb_q3" placeholder="Propose two testable hypotheses for slow recovery (e.g., persistent temperatures, carbon instability, ecological cascade) with specific proxy tests..."></textarea>
                 </div>
             </div>
@@ -582,39 +628,42 @@
         <!-- ==================== PETM ==================== -->
         <div class="event-section">
             <div class="event-header petm-header">
-                SECTION 3: Paleocene-Eocene Thermal Maximum
+                <span class="en">SECTION 3: Paleocene-Eocene Thermal Maximum</span><span class="de">ABSCHNITT 3: Paläozän-Eozän-Temperaturmaximum</span>
             </div>
             <div class="event-content">
                 <!-- Question 3.1 -->
                 <div class="question-block">
-                    <span class="question-number">Question 3.1</span>
-                    <span class="points">10 pts</span>
+                    <span class="question-number"><span class="en">Question 3.1</span><span class="de">Frage 3.1</span></span>
+                    <span class="points">10 <span class="en">pts</span><span class="de">Pkt</span></span>
                     <div class="question-text">
-                        The presentation cites 3,000-10,000 Pg C released — an enormous range. Explain what controls this uncertainty and how the isotopic composition of different sources (volcanic CO₂ vs. methane) constrains the estimates.
+                        <span class="en">The presentation cites 3,000-10,000 Pg C released — an enormous range. Explain what controls this uncertainty and how the isotopic composition of different sources (volcanic CO₂ vs. methane) constrains the estimates.</span>
+                        <span class="de">Die Präsentation zitiert 3.000-10.000 Pg C Freisetzung — ein enormer Bereich. Erklären Sie, was diese Unsicherheit kontrolliert und wie die Isotopenzusammensetzung verschiedener Quellen (vulkanisches CO₂ vs. Methan) die Schätzungen einschränkt.</span>
                     </div>
-                    <label class="answer-label">✍️ YOUR ANSWER:</label>
+                    <label class="answer-label"><span class="en">✍️ YOUR ANSWER:</span><span class="de">✍️ IHRE ANTWORT:</span></label>
                     <textarea class="answer-area" id="petm_q1" placeholder="Discuss how source δ¹³C affects mass estimates, why different archives record different CIE magnitudes, and what recent isotope data suggest..."></textarea>
                 </div>
-                
+
                 <!-- Question 3.2 -->
                 <div class="question-block">
-                    <span class="question-number">Question 3.2</span>
-                    <span class="points">10 pts</span>
+                    <span class="question-number"><span class="en">Question 3.2</span><span class="de">Frage 3.2</span></span>
+                    <span class="points">10 <span class="en">pts</span><span class="de">Pkt</span></span>
                     <div class="question-text">
-                        The CCD rose from ~4500m to ~3000m during the PETM. Explain the mechanism linking CO₂ release to CCD shoaling, and what this means for interpreting the PETM sedimentary record.
+                        <span class="en">The CCD rose from ~4500m to ~3000m during the PETM. Explain the mechanism linking CO₂ release to CCD shoaling, and what this means for interpreting the PETM sedimentary record.</span>
+                        <span class="de">Die CCD stieg während des PETM von ~4500m auf ~3000m. Erklären Sie den Mechanismus, der die CO₂-Freisetzung mit der CCD-Anhebung verbindet, und was dies für die Interpretation des PETM-Sedimentarchivs bedeutet.</span>
                     </div>
-                    <label class="answer-label">✍️ YOUR ANSWER:</label>
+                    <label class="answer-label"><span class="en">✍️ YOUR ANSWER:</span><span class="de">✍️ IHRE ANTWORT:</span></label>
                     <textarea class="answer-area" id="petm_q2" placeholder="Explain the carbonate chemistry, why CCD rises with acidification, and implications for the sediment record (dissolution, clay layers, missing data)..."></textarea>
                 </div>
-                
+
                 <!-- Question 3.3 -->
                 <div class="question-block">
-                    <span class="question-number">Question 3.3</span>
-                    <span class="points">10 pts</span>
+                    <span class="question-number"><span class="en">Question 3.3</span><span class="de">Frage 3.3</span></span>
+                    <span class="points">10 <span class="en">pts</span><span class="de">Pkt</span></span>
                     <div class="question-text">
-                        PETM recovery (~200 kyr) was much faster than PTB (~5 Myr). Give TWO mechanistic reasons why the PETM system was more "resilient."
+                        <span class="en">PETM recovery (~200 kyr) was much faster than PTB (~5 Myr). Give TWO mechanistic reasons why the PETM system was more "resilient."</span>
+                        <span class="de">Die PETM-Erholung (~200.000 Jahre) war viel schneller als die PTB (~5 Mio. Jahre). Nennen Sie ZWEI mechanistische Gründe, warum das PETM-System "resilienter" war.</span>
                     </div>
-                    <label class="answer-label">✍️ YOUR ANSWER:</label>
+                    <label class="answer-label"><span class="en">✍️ YOUR ANSWER:</span><span class="de">✍️ IHRE ANTWORT:</span></label>
                     <textarea class="answer-area" id="petm_q3" placeholder="Compare temperature magnitudes, weathering feedbacks, ocean chemistry, ecological damage, and carbon source exhaustion between the two events..."></textarea>
                 </div>
             </div>
@@ -623,39 +672,42 @@
         <!-- ==================== MESOZOIC OAEs ==================== -->
         <div class="event-section">
             <div class="event-header oae-header">
-                SECTION 4: Mesozoic Ocean Anoxic Events
+                <span class="en">SECTION 4: Mesozoic Ocean Anoxic Events</span><span class="de">ABSCHNITT 4: Mesozoische Ozeanische Anoxische Ereignisse</span>
             </div>
             <div class="event-content">
                 <!-- Question 4.1 -->
                 <div class="question-block">
-                    <span class="question-number">Question 4.1</span>
-                    <span class="points">10 pts</span>
+                    <span class="question-number"><span class="en">Question 4.1</span><span class="de">Frage 4.1</span></span>
+                    <span class="points">10 <span class="en">pts</span><span class="de">Pkt</span></span>
                     <div class="question-text">
-                        OAE-2 shows a POSITIVE δ¹³C excursion (+2-3‰) while the Toarcian shows NEGATIVE (-3-7‰). Both are "Ocean Anoxic Events" with organic carbon burial. Explain this apparent paradox.
+                        <span class="en">OAE-2 shows a POSITIVE δ¹³C excursion (+2-3‰) while the Toarcian shows NEGATIVE (-3-7‰). Both are "Ocean Anoxic Events" with organic carbon burial. Explain this apparent paradox.</span>
+                        <span class="de">OAE-2 zeigt eine POSITIVE δ¹³C-Exkursion (+2-3‰), während das Toarcium NEGATIVE (-3-7‰) zeigt. Beides sind "Ozeanische Anoxische Ereignisse" mit organischer Kohlenstoffeinlagerung. Erklären Sie dieses scheinbare Paradoxon.</span>
                     </div>
-                    <label class="answer-label">✍️ YOUR ANSWER:</label>
+                    <label class="answer-label"><span class="en">✍️ YOUR ANSWER:</span><span class="de">✍️ IHRE ANTWORT:</span></label>
                     <textarea class="answer-area" id="oae_q1" placeholder="Explain why the sign of the CIE depends on the balance between carbon input and burial, and what dominated each event..."></textarea>
                 </div>
-                
+
                 <!-- Question 4.2 -->
                 <div class="question-block">
-                    <span class="question-number">Question 4.2</span>
-                    <span class="points">10 pts</span>
+                    <span class="question-number"><span class="en">Question 4.2</span><span class="de">Frage 4.2</span></span>
+                    <span class="points">10 <span class="en">pts</span><span class="de">Pkt</span></span>
                     <div class="question-text">
-                        For OAE-2, was enhanced organic burial driven by increased productivity or better preservation under anoxia? Why does this distinction matter for understanding kill mechanisms and modern implications?
+                        <span class="en">For OAE-2, was enhanced organic burial driven by increased productivity or better preservation under anoxia? Why does this distinction matter for understanding kill mechanisms and modern implications?</span>
+                        <span class="de">War bei OAE-2 die verstärkte organische Einlagerung durch erhöhte Produktivität oder bessere Erhaltung unter Anoxie angetrieben? Warum ist diese Unterscheidung wichtig für das Verständnis von Aussterbemechanismen und modernen Implikationen?</span>
                     </div>
-                    <label class="answer-label">✍️ YOUR ANSWER:</label>
+                    <label class="answer-label"><span class="en">✍️ YOUR ANSWER:</span><span class="de">✍️ IHRE ANTWORT:</span></label>
                     <textarea class="answer-area" id="oae_q2" placeholder="Discuss the productivity vs. preservation debate, what evidence supports each, and implications for modern eutrophication vs. warming scenarios..."></textarea>
                 </div>
-                
+
                 <!-- Question 4.3 -->
                 <div class="question-block">
-                    <span class="question-number">Question 4.3</span>
-                    <span class="points">10 pts</span>
+                    <span class="question-number"><span class="en">Question 4.3</span><span class="de">Frage 4.3</span></span>
+                    <span class="points">10 <span class="en">pts</span><span class="de">Pkt</span></span>
                     <div class="question-text">
-                        Both OAE-2 and PETM were triggered by LIP volcanism. Why did they produce opposite δ¹³C signals and different recovery timescales? What does this tell us about the importance of context in interpreting geochemical signals?
+                        <span class="en">Both OAE-2 and PETM were triggered by LIP volcanism. Why did they produce opposite δ¹³C signals and different recovery timescales? What does this tell us about the importance of context in interpreting geochemical signals?</span>
+                        <span class="de">Sowohl OAE-2 als auch PETM wurden durch LIP-Vulkanismus ausgelöst. Warum erzeugten sie entgegengesetzte δ¹³C-Signale und unterschiedliche Erholungszeitskalen? Was sagt uns das über die Bedeutung des Kontexts bei der Interpretation geochemischer Signale?</span>
                     </div>
-                    <label class="answer-label">✍️ YOUR ANSWER:</label>
+                    <label class="answer-label"><span class="en">✍️ YOUR ANSWER:</span><span class="de">✍️ IHRE ANTWORT:</span></label>
                     <textarea class="answer-area" id="oae_q3" placeholder="Compare the dominant processes (carbon release vs. burial), dominant stressors, and explain why the same trigger can produce different outcomes..."></textarea>
                 </div>
             </div>
@@ -663,18 +715,36 @@
         
         <!-- Export Section -->
         <div class="export-section">
-            <h3>📤 Submit Your Assignment</h3>
-            <p>Choose your preferred export method:</p>
+            <h3><span class="en">📤 Submit Your Assignment</span><span class="de">📤 Aufgabe Abgeben</span></h3>
+            <p><span class="en">Choose your preferred export method:</span><span class="de">Wählen Sie Ihre bevorzugte Export-Methode:</span></p>
             <div class="export-buttons">
-                <button class="export-btn btn-email" onclick="exportEmail()">📧 Email to Instructor</button>
-                <button class="export-btn btn-word" onclick="exportWord()">📘 Download Word</button>
-                <button class="export-btn btn-copy" onclick="exportClipboard()">📋 Copy to Clipboard</button>
-                <button class="export-btn btn-text" onclick="exportText()">💾 Download Text</button>
+                <button class="export-btn btn-email" onclick="exportEmail()"><span class="en">📧 Email to Instructor</span><span class="de">📧 E-Mail an Dozenten</span></button>
+                <button class="export-btn btn-word" onclick="exportWord()"><span class="en">📘 Download Word</span><span class="de">📘 Word Herunterladen</span></button>
+                <button class="export-btn btn-copy" onclick="exportClipboard()"><span class="en">📋 Copy to Clipboard</span><span class="de">📋 In Zwischenablage Kopieren</span></button>
+                <button class="export-btn btn-text" onclick="exportText()"><span class="en">💾 Download Text</span><span class="de">💾 Text Herunterladen</span></button>
             </div>
         </div>
     </div>
     
     <script>
+        // ========================================
+        // LANGUAGE SWITCHING
+        // ========================================
+        function setLanguage(lang) {
+            document.body.classList.remove('lang-en', 'lang-de');
+            document.body.classList.add('lang-' + lang);
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+            localStorage.setItem('sedgeo-exam-lang', lang);
+        }
+
+        // Initialize language on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedLang = localStorage.getItem('sedgeo-exam-lang') || 'en';
+            setLanguage(savedLang);
+        });
+
         // ========================================
         // CONFIGURATION
         // ========================================
@@ -692,7 +762,10 @@
                 initAutoSave();
                 setCurrentDate();
             } else {
-                document.getElementById('errorMessage').textContent = 'Incorrect password. Please try again.';
+                const isGerman = document.body.classList.contains('lang-de');
+                document.getElementById('errorMessage').textContent = isGerman
+                    ? 'Falsches Passwort. Bitte versuchen Sie es erneut.'
+                    : 'Incorrect password. Please try again.';
             }
         }
         
@@ -740,8 +813,9 @@
         // ========================================
         // LOADING OVERLAY
         // ========================================
-        function showLoading(text) {
-            document.getElementById('loadingText').textContent = text;
+        function showLoading(text, textDe) {
+            const isGerman = document.body.classList.contains('lang-de');
+            document.getElementById('loadingText').textContent = isGerman ? (textDe || text) : text;
             document.getElementById('loadingOverlay').classList.add('active');
         }
         
@@ -766,7 +840,10 @@
             const email = document.getElementById('studentEmail').value;
             const id = document.getElementById('studentId').value;
             if (!name || !email || !id) {
-                alert('Please fill in all student information fields before exporting.');
+                const isGerman = document.body.classList.contains('lang-de');
+                alert(isGerman
+                    ? 'Bitte füllen Sie alle Studierenden-Informationsfelder aus, bevor Sie exportieren.'
+                    : 'Please fill in all student information fields before exporting.');
                 return false;
             }
             return true;
@@ -782,7 +859,7 @@
         
         function exportWord() {
             if (!validateForm()) return;
-            showLoading('Generating Word document...');
+            showLoading('Generating Word document...', 'Word-Dokument wird erstellt...');
             
             try {
                 const info = getStudentInfo();
@@ -841,7 +918,8 @@
                 
             } catch (error) {
                 hideLoading();
-                alert('Error generating document: ' + error.message);
+                const isGerman = document.body.classList.contains('lang-de');
+                alert((isGerman ? 'Fehler beim Erstellen des Dokuments: ' : 'Error generating document: ') + error.message);
             }
         }
         
@@ -893,9 +971,10 @@
                 });
             });
             
+            const isGerman = document.body.classList.contains('lang-de');
             navigator.clipboard.writeText(text)
-                .then(() => alert('Copied to clipboard!'))
-                .catch(err => alert('Failed to copy: ' + err));
+                .then(() => alert(isGerman ? 'In Zwischenablage kopiert!' : 'Copied to clipboard!'))
+                .catch(err => alert((isGerman ? 'Kopieren fehlgeschlagen: ' : 'Failed to copy: ') + err));
         }
         
         function exportText() {

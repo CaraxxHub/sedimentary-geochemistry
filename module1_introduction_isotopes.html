@@ -392,51 +392,87 @@
             .nav-links { display: none; }
             .equation-box { font-size: 1em; }
         }
+
+        /* Language Switch */
+        .lang-switch {
+            position: fixed;
+            top: 70px;
+            right: 15px;
+            z-index: 1001;
+            display: flex;
+            gap: 5px;
+            background: rgba(255,255,255,0.95);
+            padding: 5px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        }
+        .lang-btn {
+            padding: 6px 12px;
+            border: 2px solid #16a085;
+            background: white;
+            color: #16a085;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s;
+            font-size: 0.85em;
+        }
+        .lang-btn:hover { background: #e8f6f3; }
+        .lang-btn.active { background: #16a085; color: white; }
+        /* Language visibility */
+        body.lang-en .de { display: none !important; }
+        body.lang-de .en { display: none !important; }
     </style>
 </head>
-<body>
+<body class="lang-en">
+    <!-- Language Switch -->
+    <div class="lang-switch">
+        <button class="lang-btn active" data-lang="en" onclick="setLanguage('en')">EN</button>
+        <button class="lang-btn" data-lang="de" onclick="setLanguage('de')">DE</button>
+    </div>
+
     <!-- Navigation -->
     <nav class="nav-bar">
-        <a href="index.html" class="nav-brand">🔬 Sedimentary Geochemistry</a>
+        <a href="index.html" class="nav-brand"><span class="en">🔬 Sedimentary Geochemistry</span><span class="de">🔬 Sedimentäre Geochemie</span></a>
         <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="module1_introduction_isotopes.html" style="font-weight: bold;">Module 1</a>
-            <a href="module2_carbon_oxygen_isotopes.html">Module 2</a>
-            <a href="module3_clumped_isotopes.html">Module 3</a>
-            <a href="module4_boron_isotopes.html">Module 4</a>
-            <a href="module5_strontium_isotopes.html">Module 5</a>
+            <a href="index.html"><span class="en">Home</span><span class="de">Startseite</span></a>
+            <a href="module1_introduction_isotopes.html" style="font-weight: bold;"><span class="en">Module 1</span><span class="de">Modul 1</span></a>
+            <a href="module2_carbon_oxygen_isotopes.html"><span class="en">Module 2</span><span class="de">Modul 2</span></a>
+            <a href="module3_clumped_isotopes.html"><span class="en">Module 3</span><span class="de">Modul 3</span></a>
+            <a href="module4_boron_isotopes.html"><span class="en">Module 4</span><span class="de">Modul 4</span></a>
+            <a href="module5_strontium_isotopes.html"><span class="en">Module 5</span><span class="de">Modul 5</span></a>
         </div>
     </nav>
 
     <!-- Hero -->
     <header class="hero">
-        <h1>Introduction to Stable Isotopes</h1>
-        <p class="subtitle">Fundamentals of isotope geochemistry and fractionation processes</p>
-        <span class="module-tag">📖 Module 1 of 5 • Estimated time: 45 minutes</span>
+        <h1><span class="en">Introduction to Stable Isotopes</span><span class="de">Einführung in Stabile Isotope</span></h1>
+        <p class="subtitle"><span class="en">Fundamentals of isotope geochemistry and fractionation processes</span><span class="de">Grundlagen der Isotopengeochemie und Fraktionierungsprozesse</span></p>
+        <span class="module-tag"><span class="en">📖 Module 1 of 5 • Estimated time: 45 minutes</span><span class="de">📖 Modul 1 von 5 • Geschätzte Zeit: 45 Minuten</span></span>
     </header>
 
     <main class="container">
         <!-- Learning Objectives -->
         <div class="objectives">
-            <h2>🎯 Learning Objectives</h2>
+            <h2><span class="en">🎯 Learning Objectives</span><span class="de">🎯 Lernziele</span></h2>
             <ul>
-                <li>Understand what isotopes are and why they matter in geochemistry</li>
-                <li>Master the delta (δ) notation and calculate isotope ratios</li>
-                <li>Distinguish between kinetic and equilibrium fractionation</li>
-                <li>Calculate fractionation factors (α) and apply them to geological problems</li>
-                <li>Recognize the major international isotope standards (VPDB, VSMOW)</li>
+                <li><span class="en">Understand what isotopes are and why they matter in geochemistry</span><span class="de">Verstehen, was Isotope sind und warum sie in der Geochemie wichtig sind</span></li>
+                <li><span class="en">Master the delta (δ) notation and calculate isotope ratios</span><span class="de">Die Delta (δ) Notation beherrschen und Isotopenverhältnisse berechnen</span></li>
+                <li><span class="en">Distinguish between kinetic and equilibrium fractionation</span><span class="de">Zwischen kinetischer und Gleichgewichtsfraktionierung unterscheiden</span></li>
+                <li><span class="en">Calculate fractionation factors (α) and apply them to geological problems</span><span class="de">Fraktionierungsfaktoren (α) berechnen und auf geologische Probleme anwenden</span></li>
+                <li><span class="en">Recognize the major international isotope standards (VPDB, VSMOW)</span><span class="de">Die wichtigsten internationalen Isotopenstandards (VPDB, VSMOW) kennen</span></li>
             </ul>
         </div>
 
         <!-- Section 1: What are Isotopes? -->
         <section class="section">
-            <h2>1. What Are Stable Isotopes?</h2>
-            
-            <p>Isotopes are atoms of the same element that have the <strong>same number of protons</strong> but <strong>different numbers of neutrons</strong>. This means they have identical chemical properties but slightly different masses.</p>
+            <h2><span class="en">1. What Are Stable Isotopes?</span><span class="de">1. Was sind Stabile Isotope?</span></h2>
+
+            <p><span class="en">Isotopes are atoms of the same element that have the <strong>same number of protons</strong> but <strong>different numbers of neutrons</strong>. This means they have identical chemical properties but slightly different masses.</span><span class="de">Isotope sind Atome desselben Elements, die die <strong>gleiche Anzahl von Protonen</strong> aber <strong>unterschiedliche Anzahl von Neutronen</strong> haben. Das bedeutet, sie haben identische chemische Eigenschaften aber leicht unterschiedliche Massen.</span></p>
 
             <div class="concept-box">
-                <h4>🔑 Key Definition</h4>
-                <p><strong>Stable isotopes</strong> are nuclides that do not undergo radioactive decay. Unlike radiogenic isotopes (e.g., ¹⁴C, ²³⁸U), stable isotopes remain unchanged over geological time, making them ideal tracers of past environmental conditions.</p>
+                <h4><span class="en">🔑 Key Definition</span><span class="de">🔑 Schlüsseldefinition</span></h4>
+                <p><span class="en"><strong>Stable isotopes</strong> are nuclides that do not undergo radioactive decay. Unlike radiogenic isotopes (e.g., ¹⁴C, ²³⁸U), stable isotopes remain unchanged over geological time, making them ideal tracers of past environmental conditions.</span><span class="de"><strong>Stabile Isotope</strong> sind Nuklide, die keinem radioaktiven Zerfall unterliegen. Im Gegensatz zu radiogenen Isotopen (z.B. ¹⁴C, ²³⁸U) bleiben stabile Isotope über geologische Zeiträume unverändert, was sie zu idealen Tracern vergangener Umweltbedingungen macht.</span></p>
             </div>
 
             <div class="figure-box">
@@ -444,70 +480,70 @@
                 <div class="caption">Figure: Isotopic abundances and relative atomic masses of the key elements used in stable isotope geochemistry. Note the large mass ratio for hydrogen isotopes (H/D) compared to heavier elements.</div>
             </div>
 
-            <h3>Why Do Mass Differences Matter?</h3>
-            <p>Although isotopes of an element behave almost identically in chemical reactions, their mass differences cause subtle variations in:</p>
+            <h3><span class="en">Why Do Mass Differences Matter?</span><span class="de">Warum sind Massenunterschiede wichtig?</span></h3>
+            <p><span class="en">Although isotopes of an element behave almost identically in chemical reactions, their mass differences cause subtle variations in:</span><span class="de">Obwohl sich Isotope eines Elements in chemischen Reaktionen fast identisch verhalten, verursachen ihre Massenunterschiede subtile Variationen in:</span></p>
             <ul style="margin-left: 20px; margin-bottom: 15px;">
-                <li><strong>Reaction rates</strong> — lighter isotopes react slightly faster</li>
-                <li><strong>Bond strengths</strong> — heavier isotopes form stronger bonds</li>
-                <li><strong>Diffusion rates</strong> — lighter isotopes diffuse faster</li>
-                <li><strong>Vapor pressures</strong> — lighter isotopes evaporate more readily</li>
+                <li><span class="en"><strong>Reaction rates</strong> — lighter isotopes react slightly faster</span><span class="de"><strong>Reaktionsraten</strong> — leichtere Isotope reagieren etwas schneller</span></li>
+                <li><span class="en"><strong>Bond strengths</strong> — heavier isotopes form stronger bonds</span><span class="de"><strong>Bindungsstärken</strong> — schwerere Isotope bilden stärkere Bindungen</span></li>
+                <li><span class="en"><strong>Diffusion rates</strong> — lighter isotopes diffuse faster</span><span class="de"><strong>Diffusionsraten</strong> — leichtere Isotope diffundieren schneller</span></li>
+                <li><span class="en"><strong>Vapor pressures</strong> — lighter isotopes evaporate more readily</span><span class="de"><strong>Dampfdrücke</strong> — leichtere Isotope verdampfen leichter</span></li>
             </ul>
 
-            <p>These differences lead to <strong>isotope fractionation</strong> — the partitioning of isotopes between different phases or compounds during physical and chemical processes.</p>
+            <p><span class="en">These differences lead to <strong>isotope fractionation</strong> — the partitioning of isotopes between different phases or compounds during physical and chemical processes.</span><span class="de">Diese Unterschiede führen zur <strong>Isotopenfraktionierung</strong> — der Aufteilung von Isotopen zwischen verschiedenen Phasen oder Verbindungen während physikalischer und chemischer Prozesse.</span></p>
 
             <table class="data-table">
                 <thead>
                     <tr>
-                        <th>Element</th>
-                        <th>Light Isotope</th>
-                        <th>Heavy Isotope</th>
-                        <th>Mass Ratio</th>
-                        <th>Primary Application</th>
+                        <th><span class="en">Element</span><span class="de">Element</span></th>
+                        <th><span class="en">Light Isotope</span><span class="de">Leichtes Isotop</span></th>
+                        <th><span class="en">Heavy Isotope</span><span class="de">Schweres Isotop</span></th>
+                        <th><span class="en">Mass Ratio</span><span class="de">Massenverhältnis</span></th>
+                        <th><span class="en">Primary Application</span><span class="de">Hauptanwendung</span></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Hydrogen</td>
-                        <td>¹H (protium)</td>
-                        <td>²H (deuterium)</td>
+                        <td><span class="en">Hydrogen</span><span class="de">Wasserstoff</span></td>
+                        <td>¹H (<span class="en">protium</span><span class="de">Protium</span>)</td>
+                        <td>²H (<span class="en">deuterium</span><span class="de">Deuterium</span>)</td>
                         <td>2:1</td>
-                        <td>Water cycle, paleoclimate</td>
+                        <td><span class="en">Water cycle, paleoclimate</span><span class="de">Wasserkreislauf, Paläoklima</span></td>
                     </tr>
                     <tr>
-                        <td>Carbon</td>
+                        <td><span class="en">Carbon</span><span class="de">Kohlenstoff</span></td>
                         <td>¹²C</td>
                         <td>¹³C</td>
                         <td>13:12 = 1.083</td>
-                        <td>Carbon cycle, productivity</td>
+                        <td><span class="en">Carbon cycle, productivity</span><span class="de">Kohlenstoffkreislauf, Produktivität</span></td>
                     </tr>
                     <tr>
-                        <td>Oxygen</td>
+                        <td><span class="en">Oxygen</span><span class="de">Sauerstoff</span></td>
                         <td>¹⁶O</td>
                         <td>¹⁸O</td>
                         <td>18:16 = 1.125</td>
-                        <td>Paleotemperature, ice volume</td>
+                        <td><span class="en">Paleotemperature, ice volume</span><span class="de">Paläotemperatur, Eisvolumen</span></td>
                     </tr>
                     <tr>
-                        <td>Sulfur</td>
+                        <td><span class="en">Sulfur</span><span class="de">Schwefel</span></td>
                         <td>³²S</td>
                         <td>³⁴S</td>
                         <td>34:32 = 1.063</td>
-                        <td>Redox conditions, diagenesis</td>
+                        <td><span class="en">Redox conditions, diagenesis</span><span class="de">Redoxbedingungen, Diagenese</span></td>
                     </tr>
                 </tbody>
             </table>
 
             <div class="concept-box warning">
-                <h4>⚠️ Important Principle</h4>
-                <p>Isotope fractionation is <strong>larger when the relative mass difference is greater</strong>. This is why hydrogen isotopes (D/H, ratio 2:1) show much larger fractionations than oxygen isotopes (¹⁸O/¹⁶O, ratio 1.125).</p>
+                <h4><span class="en">⚠️ Important Principle</span><span class="de">⚠️ Wichtiges Prinzip</span></h4>
+                <p><span class="en">Isotope fractionation is <strong>larger when the relative mass difference is greater</strong>. This is why hydrogen isotopes (D/H, ratio 2:1) show much larger fractionations than oxygen isotopes (¹⁸O/¹⁶O, ratio 1.125).</span><span class="de">Die Isotopenfraktionierung ist <strong>größer, wenn der relative Massenunterschied größer ist</strong>. Deshalb zeigen Wasserstoffisotope (D/H, Verhältnis 2:1) viel größere Fraktionierungen als Sauerstoffisotope (¹⁸O/¹⁶O, Verhältnis 1,125).</span></p>
             </div>
         </section>
 
         <!-- Section 2: Delta Notation -->
         <section class="section">
-            <h2>2. The Delta (δ) Notation</h2>
-            
-            <p>Because absolute isotope ratios are very small numbers and difficult to measure precisely, geochemists express isotope compositions as <strong>deviations from a standard</strong> using delta notation.</p>
+            <h2><span class="en">2. The Delta (δ) Notation</span><span class="de">2. Die Delta (δ) Notation</span></h2>
+
+            <p><span class="en">Because absolute isotope ratios are very small numbers and difficult to measure precisely, geochemists express isotope compositions as <strong>deviations from a standard</strong> using delta notation.</span><span class="de">Da absolute Isotopenverhältnisse sehr kleine Zahlen sind und schwer präzise zu messen, drücken Geochemiker Isotopenzusammensetzungen als <strong>Abweichungen von einem Standard</strong> mit der Delta-Notation aus.</span></p>
 
             <div class="equation-box">
                 <div class="equation-name">Delta Notation Definition</div>
@@ -594,9 +630,9 @@
 
         <!-- Section 3: Fractionation -->
         <section class="section">
-            <h2>3. Isotope Fractionation</h2>
-            
-            <p>Fractionation occurs because isotopes partition differently between phases or during reactions. There are two main types:</p>
+            <h2><span class="en">3. Isotope Fractionation</span><span class="de">3. Isotopenfraktionierung</span></h2>
+
+            <p><span class="en">Fractionation occurs because isotopes partition differently between phases or during reactions. There are two main types:</span><span class="de">Fraktionierung tritt auf, weil sich Isotope unterschiedlich zwischen Phasen oder bei Reaktionen verteilen. Es gibt zwei Haupttypen:</span></p>
 
             <h3>A. Equilibrium Fractionation</h3>
             <div class="concept-box">
@@ -652,9 +688,9 @@
 
         <!-- Section 4: Fractionation Factor -->
         <section class="section">
-            <h2>4. The Fractionation Factor (α)</h2>
-            
-            <p>The fractionation factor quantifies isotope partitioning between two phases or compounds:</p>
+            <h2><span class="en">4. The Fractionation Factor (α)</span><span class="de">4. Der Fraktionierungsfaktor (α)</span></h2>
+
+            <p><span class="en">The fractionation factor quantifies isotope partitioning between two phases or compounds:</span><span class="de">Der Fraktionierungsfaktor quantifiziert die Isotopenverteilung zwischen zwei Phasen oder Verbindungen:</span></p>
 
             <div class="equation-box">
                 <div class="equation-name">Fractionation Factor Definition</div>
@@ -706,9 +742,9 @@
 
         <!-- Section 5: Mass Spectrometry -->
         <section class="section">
-            <h2>5. Measuring Isotope Ratios</h2>
-            
-            <p>Stable isotope ratios are measured using <strong>gas-source isotope ratio mass spectrometry (IRMS)</strong>.</p>
+            <h2><span class="en">5. Measuring Isotope Ratios</span><span class="de">5. Messung von Isotopenverhältnissen</span></h2>
+
+            <p><span class="en">Stable isotope ratios are measured using <strong>gas-source isotope ratio mass spectrometry (IRMS)</strong>.</span><span class="de">Stabile Isotopenverhältnisse werden mittels <strong>Gasquellen-Isotopenverhältnis-Massenspektrometrie (IRMS)</strong> gemessen.</span></p>
 
             <h3>Basic Principle</h3>
             <ol style="margin-left: 20px; margin-bottom: 20px;">
@@ -764,22 +800,22 @@
 
         <!-- Key Points Summary -->
         <div class="key-points">
-            <h3>📌 Key Points to Remember</h3>
+            <h3><span class="en">📌 Key Points to Remember</span><span class="de">📌 Wichtige Punkte zum Merken</span></h3>
             <ul>
-                <li>Isotopes are atoms with same protons but different neutrons — same chemistry, different mass</li>
-                <li>Delta notation expresses isotope ratios as deviations from standards (in ‰)</li>
-                <li>Positive δ = enriched in heavy isotope; Negative δ = depleted in heavy isotope</li>
-                <li>Equilibrium fractionation: reversible, temperature-dependent, heavy isotope in stronger bonds</li>
-                <li>Kinetic fractionation: irreversible, light isotope reacts/moves faster</li>
-                <li>Fractionation factor α = R<sub>A</sub>/R<sub>B</sub> ≈ (1000 + δ<sub>A</sub>)/(1000 + δ<sub>B</sub>)</li>
-                <li>VPDB for carbonate C and O; VSMOW for water O — know how to convert!</li>
+                <li><span class="en">Isotopes are atoms with same protons but different neutrons — same chemistry, different mass</span><span class="de">Isotope sind Atome mit gleichen Protonen aber verschiedenen Neutronen — gleiche Chemie, verschiedene Masse</span></li>
+                <li><span class="en">Delta notation expresses isotope ratios as deviations from standards (in ‰)</span><span class="de">Delta-Notation drückt Isotopenverhältnisse als Abweichungen von Standards aus (in ‰)</span></li>
+                <li><span class="en">Positive δ = enriched in heavy isotope; Negative δ = depleted in heavy isotope</span><span class="de">Positives δ = angereichert an schwerem Isotop; Negatives δ = verarmt an schwerem Isotop</span></li>
+                <li><span class="en">Equilibrium fractionation: reversible, temperature-dependent, heavy isotope in stronger bonds</span><span class="de">Gleichgewichtsfraktionierung: reversibel, temperaturabhängig, schweres Isotop in stärkeren Bindungen</span></li>
+                <li><span class="en">Kinetic fractionation: irreversible, light isotope reacts/moves faster</span><span class="de">Kinetische Fraktionierung: irreversibel, leichtes Isotop reagiert/bewegt sich schneller</span></li>
+                <li><span class="en">Fractionation factor α = R<sub>A</sub>/R<sub>B</sub> ≈ (1000 + δ<sub>A</sub>)/(1000 + δ<sub>B</sub>)</span><span class="de">Fraktionierungsfaktor α = R<sub>A</sub>/R<sub>B</sub> ≈ (1000 + δ<sub>A</sub>)/(1000 + δ<sub>B</sub>)</span></li>
+                <li><span class="en">VPDB for carbonate C and O; VSMOW for water O — know how to convert!</span><span class="de">VPDB für Karbonat-C und -O; VSMOW für Wasser-O — wissen Sie, wie man umrechnet!</span></li>
             </ul>
         </div>
 
         <!-- Quiz Section -->
         <section class="quiz-section" id="quizSection">
-            <h2>🧠 Test Your Understanding</h2>
-            <p style="opacity: 0.9; margin-bottom: 20px;">Answer these questions to check your comprehension of Module 1.</p>
+            <h2><span class="en">🧠 Test Your Understanding</span><span class="de">🧠 Testen Sie Ihr Verständnis</span></h2>
+            <p style="opacity: 0.9; margin-bottom: 20px;"><span class="en">Answer these questions to check your comprehension of Module 1.</span><span class="de">Beantworten Sie diese Fragen, um Ihr Verständnis von Modul 1 zu überprüfen.</span></p>
             
             <div class="quiz-progress">
                 <div class="quiz-progress-bar" id="progressBar"></div>
@@ -800,7 +836,7 @@
 
         <!-- References -->
         <div class="references">
-            <h3>📚 Key References & Further Reading</h3>
+            <h3><span class="en">📚 Key References & Further Reading</span><span class="de">📚 Wichtige Referenzen & Weiterführende Literatur</span></h3>
             <ul>
                 <li>Sharp, Z. (2017). <em>Principles of Stable Isotope Geochemistry</em>, 2nd Edition.</li>
                 <li>Hoefs, J. (2018). <em>Stable Isotope Geochemistry</em>, 8th Edition. Springer.</li>
@@ -811,20 +847,37 @@
 
         <!-- Module Navigation -->
         <div class="module-nav">
-            <span style="color: #999;">← This is the first module</span>
-            <a href="#">Module 2: Carbon & Oxygen Isotopes →</a>
+            <span style="color: #999;"><span class="en">← This is the first module</span><span class="de">← Dies ist das erste Modul</span></span>
+            <a href="#"><span class="en">Module 2: Carbon & Oxygen Isotopes →</span><span class="de">Modul 2: Kohlenstoff- & Sauerstoffisotope →</span></a>
         </div>
     </main>
 
     <!-- Footer -->
     <footer class="footer">
-        <p><strong>Sedimentary Geochemistry</strong> | MSc Course</p>
+        <p><strong><span class="en">Sedimentary Geochemistry</span><span class="de">Sedimentäre Geochemie</span></strong> | <span class="en">MSc Course</span><span class="de">MSc Kurs</span></p>
         <p>Friedrich-Alexander-Universität Erlangen-Nürnberg (FAU)</p>
         <p>PD Dr. Luca Caracciolo | GeoZentrum Nordbayern</p>
-        <p style="margin-top: 15px; opacity: 0.7;">© 2025 | For educational use only</p>
+        <p style="margin-top: 15px; opacity: 0.7;">© 2025 | <span class="en">For educational use only</span><span class="de">Nur für Bildungszwecke</span></p>
     </footer>
 
     <script>
+        // Language Switching
+        function setLanguage(lang) {
+            document.body.classList.remove('lang-en', 'lang-de');
+            document.body.classList.add('lang-' + lang);
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+            localStorage.setItem('sedgeo-exam-lang', lang);
+        }
+
+        // Initialize language on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedLang = localStorage.getItem('sedgeo-exam-lang') || 'en';
+            setLanguage(savedLang);
+            loadQuiz(); // Ensure quiz loads after language is set
+        });
+
         // Delta Calculation
         function calculateDelta() {
             const rs = parseFloat(document.getElementById('r_sample').value);

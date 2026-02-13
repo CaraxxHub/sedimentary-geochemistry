@@ -99,43 +99,55 @@
         .figure-box { background: #f8f9fa; border-radius: 12px; padding: 20px; margin: 25px 0; text-align: center; }
         .figure-box img { max-width: 100%; height: auto; border-radius: 8px; margin-bottom: 15px; }
         .figure-box .caption { font-size: 0.9em; color: #666; font-style: italic; }
+        /* Language Switch */
+        .lang-switch { position: fixed; top: 70px; right: 15px; z-index: 1001; display: flex; gap: 5px; background: rgba(255,255,255,0.95); padding: 5px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.15); }
+        .lang-btn { padding: 6px 12px; border: 2px solid #16a085; background: white; color: #16a085; font-weight: bold; cursor: pointer; border-radius: 5px; transition: all 0.3s; font-size: 0.85em; }
+        .lang-btn:hover { background: #e8f6f3; }
+        .lang-btn.active { background: #16a085; color: white; }
+        body.lang-en .de { display: none !important; }
+        body.lang-de .en { display: none !important; }
     </style>
 </head>
-<body>
+<body class="lang-en">
+    <div class="lang-switch">
+        <button class="lang-btn active" onclick="setLanguage('en')">English</button>
+        <button class="lang-btn" onclick="setLanguage('de')">Deutsch</button>
+    </div>
+
     <nav class="nav-bar">
-        <a href="index.html" class="nav-brand">🔬 Sedimentary Geochemistry</a>
+        <a href="index.html" class="nav-brand">🔬 <span class="en">Sedimentary Geochemistry</span><span class="de">Sedimentäre Geochemie</span></a>
         <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="module1_introduction_isotopes.html">Module 1</a>
-            <a href="module2_carbon_oxygen_isotopes.html">Module 2</a>
-            <a href="module3_clumped_isotopes.html" style="font-weight: bold;">Module 3</a>
-            <a href="module4_boron_isotopes.html">Module 4</a>
-            <a href="module5_strontium_isotopes.html">Module 5</a>
+            <a href="index.html"><span class="en">Home</span><span class="de">Startseite</span></a>
+            <a href="module1_introduction_isotopes.html"><span class="en">Module 1</span><span class="de">Modul 1</span></a>
+            <a href="module2_carbon_oxygen_isotopes.html"><span class="en">Module 2</span><span class="de">Modul 2</span></a>
+            <a href="module3_clumped_isotopes.html" style="font-weight: bold;"><span class="en">Module 3</span><span class="de">Modul 3</span></a>
+            <a href="module4_boron_isotopes.html"><span class="en">Module 4</span><span class="de">Modul 4</span></a>
+            <a href="module5_strontium_isotopes.html"><span class="en">Module 5</span><span class="de">Modul 5</span></a>
         </div>
     </nav>
 
     <header class="hero">
-        <h1>Clumped Isotopes (Δ₄₇)</h1>
-        <p class="subtitle">Temperature-only paleothermometry from carbonate "clumping"</p>
-        <span class="module-tag">📖 Module 3 of 5 • Estimated time: 45 minutes</span>
+        <h1><span class="en">Clumped Isotopes (Δ₄₇)</span><span class="de">Geklumpte Isotope (Δ₄₇)</span></h1>
+        <p class="subtitle"><span class="en">Temperature-only paleothermometry from carbonate "clumping"</span><span class="de">Ausschließlich temperaturbasierte Paläothermometrie durch Karbonat-"Klumpung"</span></p>
+        <span class="module-tag">📖 <span class="en">Module 3 of 5 • Estimated time: 45 minutes</span><span class="de">Modul 3 von 5 • Geschätzte Zeit: 45 Minuten</span></span>
     </header>
 
     <main class="container">
         <div class="objectives">
-            <h2>🎯 Learning Objectives</h2>
+            <h2>🎯 <span class="en">Learning Objectives</span><span class="de">Lernziele</span></h2>
             <ul>
-                <li>Understand the principle of isotope clumping and why Δ₄₇ depends only on temperature</li>
-                <li>Apply Ghosh et al. (2006) and Henkes et al. (2013) calibration equations</li>
-                <li>Recognize the advantage of clumped isotopes over conventional δ¹⁸O paleothermometry</li>
-                <li>Understand thermal resetting limits and preservation windows</li>
-                <li>Interpret case studies: Early Cretaceous belemnites, Ordovician glaciation</li>
+                <li><span class="en">Understand the principle of isotope clumping and why Δ₄₇ depends only on temperature</span><span class="de">Das Prinzip der Isotopen-Klumpung verstehen und erklären, warum Δ₄₇ nur von der Temperatur abhängt</span></li>
+                <li><span class="en">Apply Ghosh et al. (2006) and Henkes et al. (2013) calibration equations</span><span class="de">Kalibrierungsgleichungen von Ghosh et al. (2006) und Henkes et al. (2013) anwenden</span></li>
+                <li><span class="en">Recognize the advantage of clumped isotopes over conventional δ¹⁸O paleothermometry</span><span class="de">Die Vorteile von geklumpten Isotopen gegenüber konventioneller δ¹⁸O-Paläothermometrie erkennen</span></li>
+                <li><span class="en">Understand thermal resetting limits and preservation windows</span><span class="de">Grenzen der thermalen Zurückstellung und Erhaltungsfenster verstehen</span></li>
+                <li><span class="en">Interpret case studies: Early Cretaceous belemnites, Ordovician glaciation</span><span class="de">Fallstudien interpretieren: Belemniten der Frühen Kreidezeit, Ordovizische Vereisung</span></li>
             </ul>
         </div>
 
         <section class="section">
-            <h2>1. The Principle of Clumped Isotopes</h2>
-            
-            <h3>From Conventional to Clumped</h3>
+            <h2><span class="en">1. The Principle of Clumped Isotopes</span><span class="de">1. Das Prinzip der geklumpten Isotope</span></h2>
+
+            <h3><span class="en">From Conventional to Clumped</span><span class="de">Von konventionell zu geklumpt</span></h3>
             <p>Conventional oxygen isotope thermometry measures the distribution of ¹⁸O between <strong>two phases</strong> (e.g., carbonate and water). The challenge: you need to know δ¹⁸O of the water to calculate temperature.</p>
 
             <div class="concept-box">
@@ -167,8 +179,8 @@
                 <div class="caption">Figure: The enrichment factor ε relates to fractionation factor α. In clumped isotope thermometry, we measure the excess of ¹³C-¹⁸O bonds relative to random distribution, which is controlled by thermodynamic preferences at different temperatures.</div>
             </div>
 
-            <h3>The Δ₄₇ Parameter</h3>
-            <p>Δ₄₇ measures the <strong>excess abundance</strong> of mass-47 CO₂ (containing ¹³C¹⁸O¹⁶O) relative to a stochastic (random) distribution:</p>
+            <h3><span class="en">The Δ₄₇ Parameter</span><span class="de">Der Δ₄₇-Parameter</span></h3>
+            <p><span class="en">Δ₄₇ measures the <strong>excess abundance</strong> of mass-47 CO₂ (containing ¹³C¹⁸O¹⁶O) relative to a stochastic (random) distribution:</span><span class="de">Δ₄₇ misst die <strong>Überschusskonzentration</strong> von Masse-47 CO₂ (enthält ¹³C¹⁸O¹⁶O) relativ zu einer stochastischen (zufälligen) Verteilung:</span></p>
 
             <div class="equation-box">
                 <div class="equation-name">Definition of Δ₄₇</div>
@@ -210,7 +222,7 @@
         </section>
 
         <section class="section">
-            <h2>2. Temperature Calibrations</h2>
+            <h2><span class="en">2. Temperature Calibrations</span><span class="de">2. Temperaturkalibrierungen</span></h2>
 
             <div class="figure-box">
                 <img src="images/lectures/vsmow_vpdb_standards.jpg" alt="VSMOW and VPDB standards conversion">
@@ -275,7 +287,7 @@
         </section>
 
         <section class="section">
-            <h2>3. The Power of Clumped Isotopes: Separating Temperature from δ¹⁸O_water</h2>
+            <h2><span class="en">3. The Power of Clumped Isotopes: Separating Temperature from δ¹⁸O_water</span><span class="de">3. Die Kraft der geklumpten Isotope: Temperatur von δ¹⁸O_Wasser trennen</span></h2>
             
             <p>The greatest advantage of clumped isotopes is the ability to <strong>independently determine both temperature AND δ¹⁸O of the water</strong>:</p>
 
@@ -323,7 +335,7 @@
         </section>
 
         <section class="section">
-            <h2>4. Diagenetic Resetting: The >120°C Limit</h2>
+            <h2><span class="en">4. Diagenetic Resetting: The >120°C Limit</span><span class="de">4. Diagenetische Zurückstellung: Die >120°C-Grenze</span></h2>
             
             <p>Unlike conventional δ¹⁸O, clumped isotope signals can be <strong>reset by burial heating</strong> without any fluid-rock interaction:</p>
 
@@ -379,7 +391,7 @@
         </section>
 
         <section class="section">
-            <h2>5. Case Studies</h2>
+            <h2><span class="en">5. Case Studies</span><span class="de">5. Fallstudien</span></h2>
 
             <div class="figure-box">
                 <img src="images/lectures/d18o_latitude_global.jpg" alt="Global δ¹⁸O vs latitude">
@@ -423,21 +435,21 @@
         </section>
 
         <div class="key-points">
-            <h3>📌 Key Points to Remember</h3>
+            <h3>📌 <span class="en">Key Points to Remember</span><span class="de">Wichtige Punkte zum Merken</span></h3>
             <ul>
-                <li>Clumped isotopes measure ¹³C-¹⁸O bond abundance — depends only on temperature, not water composition</li>
-                <li>Δ₄₇ is higher at low temperatures (more clumping) and lower at high temperatures</li>
-                <li>Ghosh (2006) vs Henkes (2013): ~50% difference in temperature sensitivity — calibration choice matters!</li>
-                <li>Major advantage: Can independently determine temperature AND reconstruct δ¹⁸O_water</li>
-                <li>Critical limitation: Solid-state resetting above ~120°C erases primary signal</li>
-                <li>Deep-time applications require careful burial history assessment</li>
-                <li>Late Ordovician study separated ~7°C cooling from ~200m sea level equivalent ice volume</li>
+                <li><span class="en">Clumped isotopes measure ¹³C-¹⁸O bond abundance — depends only on temperature, not water composition</span><span class="de">Geklumpte Isotope messen die Häufigkeit von ¹³C-¹⁸O-Bindungen — hängt nur von der Temperatur ab, nicht von der Wasserzusammensetzung</span></li>
+                <li><span class="en">Δ₄₇ is higher at low temperatures (more clumping) and lower at high temperatures</span><span class="de">Δ₄₇ ist bei niedrigen Temperaturen höher (mehr Klumpung) und bei hohen Temperaturen niedriger</span></li>
+                <li><span class="en">Ghosh (2006) vs Henkes (2013): ~50% difference in temperature sensitivity — calibration choice matters!</span><span class="de">Ghosh (2006) vs Henkes (2013): ~50% Unterschied in der Temperaturempfindlichkeit — die Kalibrierungswahl ist wichtig!</span></li>
+                <li><span class="en">Major advantage: Can independently determine temperature AND reconstruct δ¹⁸O_water</span><span class="de">Hauptvorteil: Kann unabhängig die Temperatur bestimmen UND δ¹⁸O_Wasser rekonstruieren</span></li>
+                <li><span class="en">Critical limitation: Solid-state resetting above ~120°C erases primary signal</span><span class="de">Kritische Einschränkung: Festphasen-Zurückstellung über ~120°C löscht das primäre Signal</span></li>
+                <li><span class="en">Deep-time applications require careful burial history assessment</span><span class="de">Anwendungen im Tieflicht erfordern sorgfältige Bewertung der Versenkungsgeschichte</span></li>
+                <li><span class="en">Late Ordovician study separated ~7°C cooling from ~200m sea level equivalent ice volume</span><span class="de">Die spätordovizische Studie trennte ~7°C Abkühlung von ~200m Meerespiegeläquivalent-Eisvolumen</span></li>
             </ul>
         </div>
 
         <section class="quiz-section" id="quizSection">
-            <h2>🧠 Test Your Understanding</h2>
-            <p style="opacity: 0.9; margin-bottom: 20px;">Answer these questions to check your comprehension of Module 3.</p>
+            <h2>🧠 <span class="en">Test Your Understanding</span><span class="de">Testen Sie Ihr Verständnis</span></h2>
+            <p style="opacity: 0.9; margin-bottom: 20px;"><span class="en">Answer these questions to check your comprehension of Module 3.</span><span class="de">Beantworten Sie diese Fragen, um Ihr Verständnis von Modul 3 zu überprüfen.</span></p>
             
             <div class="quiz-progress">
                 <div class="quiz-progress-bar" id="progressBar"></div>
@@ -455,7 +467,7 @@
         </section>
 
         <div class="references">
-            <h3>📚 Key References</h3>
+            <h3>📚 <span class="en">Key References</span><span class="de">Wichtige Referenzen</span></h3>
             <ul>
                 <li>Ghosh, P. et al. (2006). ¹³C-¹⁸O bonds in carbonate minerals: A new kind of paleothermometer. <em>Geochimica et Cosmochimica Acta</em> 70, 1439-1456.</li>
                 <li>Henkes, G.A. et al. (2013). Carbonate clumped isotope compositions of modern marine mollusk and brachiopod shells. <em>Geochimica et Cosmochimica Acta</em> 106, 307-325.</li>
@@ -472,13 +484,32 @@
     </main>
 
     <footer class="footer">
-        <p><strong>Sedimentary Geochemistry</strong> | MSc Course</p>
+        <p><strong><span class="en">Sedimentary Geochemistry</span><span class="de">Sedimentäre Geochemie</span></strong> | <span class="en">MSc Course</span><span class="de">MSc-Kurs</span></p>
         <p>Friedrich-Alexander-Universität Erlangen-Nürnberg (FAU)</p>
         <p>PD Dr. Luca Caracciolo | GeoZentrum Nordbayern</p>
-        <p style="margin-top: 15px; opacity: 0.7;">© 2025 | For educational use only</p>
+        <p style="margin-top: 15px; opacity: 0.7;">© 2025 | <span class="en">For educational use only</span><span class="de">Nur für Bildungszwecke</span></p>
     </footer>
 
     <script>
+        function setLanguage(lang) {
+            document.body.className = 'lang-' + lang;
+            localStorage.setItem('moduleLanguage', lang);
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedLang = localStorage.getItem('moduleLanguage') || 'en';
+            document.body.className = 'lang-' + savedLang;
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                if (btn.textContent.includes(savedLang === 'en' ? 'English' : 'Deutsch')) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+        });
+
         function showTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));

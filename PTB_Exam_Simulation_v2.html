@@ -7,7 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         * { box-sizing: border-box; }
-        
+
         body {
             font-family: 'Georgia', serif;
             line-height: 1.6;
@@ -16,6 +16,39 @@
             margin: 0 auto;
             padding: 20px;
             background-color: #f7f9fc;
+        }
+
+        /* Language Switching */
+        body.lang-de .en { display: none !important; }
+        body.lang-en .de { display: none !important; }
+
+        .lang-switch {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            z-index: 1001;
+            display: flex;
+            gap: 5px;
+            background: white;
+            padding: 5px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        }
+        .lang-btn {
+            padding: 8px 16px;
+            border: 2px solid #16a085;
+            background: white;
+            color: #16a085;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+        .lang-btn:hover { background: #e8f8f5; }
+        .lang-btn.active {
+            background: #16a085;
+            color: white;
         }
 
         /* Password Overlay */
@@ -456,19 +489,31 @@
             .timer-bar { flex-direction: column; text-align: center; }
             .timer-bar > * { margin: 5px 0; }
             .calculator-panel { width: 95%; right: 2.5%; }
+            .lang-switch { top: auto; bottom: 80px; right: 100px; }
+        }
+
+        @media print {
+            .lang-switch, .calculator-container, .timer-bar, .export-section { display: none !important; }
+            .question-block, .sub-question { page-break-inside: avoid; }
         }
     </style>
 </head>
-<body>
+<body class="lang-en">
+    <!-- Language Switch -->
+    <div class="lang-switch">
+        <button class="lang-btn active" data-lang="en" onclick="setLanguage('en')">EN</button>
+        <button class="lang-btn" data-lang="de" onclick="setLanguage('de')">DE</button>
+    </div>
+
     <!-- Password Overlay -->
     <div class="password-overlay hidden" id="passwordOverlay" style="display:none">
         <div class="password-box">
-            <h2>🔬 Exam Simulation</h2>
-            <h3>Sedimentary Geochemistry</h3>
-            <p>Permo-Triassic Boundary Case Study</p>
-            <p style="font-size: 0.9em; color: #888;">Enter the password provided by your instructor</p>
+            <h2>🔬 <span class="en">Exam Simulation</span><span class="de">Prüfungssimulation</span></h2>
+            <h3><span class="en">Sedimentary Geochemistry</span><span class="de">Sedimentäre Geochemie</span></h3>
+            <p><span class="en">Permo-Triassic Boundary Case Study</span><span class="de">Fallstudie zur Perm-Trias-Grenze</span></p>
+            <p style="font-size: 0.9em; color: #888;"><span class="en">Enter the password provided by your instructor</span><span class="de">Geben Sie das von Ihrem Dozenten bereitgestellte Passwort ein</span></p>
             <input type="password" id="passwordInput" placeholder="Enter password..." onkeypress="if(event.key==='Enter')checkPassword()">
-            <button onclick="checkPassword()">Start Exam</button>
+            <button onclick="checkPassword()"><span class="en">Start Exam</span><span class="de">Prüfung starten</span></button>
             <div class="error-message" id="errorMessage"></div>
         </div>
     </div>
@@ -476,14 +521,14 @@
     <!-- Timer Bar -->
     <div class="timer-bar hidden" id="timerBar">
         <div>
-            <div class="timer-status" id="timerStatus">Exam in Progress</div>
+            <div class="timer-status" id="timerStatus"><span class="en">Exam in Progress</span><span class="de">Prüfung läuft</span></div>
             <div class="timer-display" id="timerDisplay">01:45:00</div>
         </div>
         <div style="text-align: center;">
-            <strong>PTB Exam Simulation</strong><br>
-            <span style="font-size: 0.85em;">Auto-save enabled</span>
+            <strong><span class="en">PTB Exam Simulation</span><span class="de">PTB-Prüfungssimulation</span></strong><br>
+            <span style="font-size: 0.85em;"><span class="en">Auto-save enabled</span><span class="de">Automatische Speicherung aktiviert</span></span>
         </div>
-        <button class="submit-timer-btn" onclick="submitExam()">Submit Exam</button>
+        <button class="submit-timer-btn" onclick="submitExam()"><span class="en">Submit Exam</span><span class="de">Prüfung abgeben</span></button>
     </div>
 
     <!-- Watermark -->
@@ -493,27 +538,32 @@
     <div class="main-content visible" id="mainContent">
         <!-- Header -->
         <div class="header">
-            <h1>SEDIMENTARY GEOCHEMISTRY</h1>
-            <div class="subtitle">Exam Simulation: The Permo-Triassic Mass Extinction</div>
+            <h1><span class="en">SEDIMENTARY GEOCHEMISTRY</span><span class="de">SEDIMENTÄRE GEOCHEMIE</span></h1>
+            <div class="subtitle">
+                <span class="en">Exam Simulation: The Permo-Triassic Mass Extinction</span>
+                <span class="de">Prüfungssimulation: Das Perm-Trias-Massenaussterben</span>
+            </div>
             <div class="exam-info">
-                <strong>Total Points:</strong> 100 | <strong>Time:</strong> 1 hour 45 minutes (+5 min grace period)<br>
-                Winter Semester 2025-26 | Friedrich-Alexander-Universität Erlangen-Nürnberg
+                <span class="en"><strong>Total Points:</strong> 100 | <strong>Time:</strong> 1 hour 45 minutes (+5 min grace period)</span>
+                <span class="de"><strong>Gesamtpunkte:</strong> 100 | <strong>Zeit:</strong> 1 Stunde 45 Minuten (+5 Min. Nachfrist)</span><br>
+                <span class="en">Winter Semester 2025-26 | Friedrich-Alexander-Universität Erlangen-Nürnberg</span>
+                <span class="de">Wintersemester 2025-26 | Friedrich-Alexander-Universität Erlangen-Nürnberg</span>
             </div>
         </div>
 
         <!-- Reference Bar -->
         <div class="reference-bar">
-            <span><strong>Course:</strong> Sedimentary Geochemistry (MSc)</span>
-            <span><strong>Instructor:</strong> PD Dr. Luca Caracciolo</span>
-            <span><strong>Contact:</strong> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b2dec7d1d39cd1d3c0d3d1d1dbdddeddf2d4d3c79cd6d7">[email&#160;protected]</a></span>
+            <span><strong><span class="en">Course:</span><span class="de">Kurs:</span></strong> <span class="en">Sedimentary Geochemistry (MSc)</span><span class="de">Sedimentäre Geochemie (MSc)</span></span>
+            <span><strong><span class="en">Instructor:</span><span class="de">Dozent:</span></strong> PD Dr. Luca Caracciolo</span>
+            <span><strong><span class="en">Contact:</span><span class="de">Kontakt:</span></strong> luca.caracciolo@fau.de</span>
         </div>
 
         <!-- Student Information -->
         <div class="student-info">
-            <h3>📋 Student Information</h3>
+            <h3>📋 <span class="en">Student Information</span><span class="de">Studenteninformationen</span></h3>
             <div class="info-grid">
                 <div class="info-field">
-                    <label>Full Name: *</label>
+                    <label><span class="en">Full Name: *</span><span class="de">Vollständiger Name: *</span></label>
                     <input type="text" id="studentName" placeholder="Enter your full name" oninput="updateWatermark()">
                 </div>
                 <div class="info-field">
@@ -521,11 +571,11 @@
                     <input type="email" id="studentEmail" placeholder="your.email@fau.de">
                 </div>
                 <div class="info-field">
-                    <label>Student ID: *</label>
+                    <label><span class="en">Student ID: *</span><span class="de">Matrikelnummer: *</span></label>
                     <input type="text" id="studentId" placeholder="e.g., 12345678">
                 </div>
                 <div class="info-field">
-                    <label>Date:</label>
+                    <label><span class="en">Date:</span><span class="de">Datum:</span></label>
                     <input type="date" id="submissionDate">
                 </div>
             </div>
@@ -533,53 +583,79 @@
 
         <!-- GEOLOGICAL BACKGROUND -->
         <div class="section background-section">
-            <div class="section-title">GEOLOGICAL BACKGROUND: The Permo-Triassic Mass Extinction (Read: ~5 minutes)</div>
-            
-            <p>The <strong>Permo-Triassic mass extinction (PTME)</strong> at ~252 Ma represents the largest biotic crisis in Earth history, eliminating approximately <strong>90% of marine species</strong> and <strong>70% of terrestrial vertebrate species</strong>. This event, often called the "Great Dying," far exceeds other major extinctions in magnitude.</p>
-
-            <div class="concept-box">
-                <strong>🌍 Paleogeographic Setting:</strong><br>
-                The PTB world consisted of a single supercontinent (<strong>Pangea</strong>) surrounded by the vast <strong>Panthalassa</strong> ocean, with the <strong>Paleo-Tethys</strong> and <strong>Neo-Tethys</strong> forming a giant gulf. The <strong>Siberian Traps Large Igneous Province</strong> erupted 2-7 million km³ of basalt in the northern hemisphere during this interval.
+            <div class="section-title">
+                <span class="en">GEOLOGICAL BACKGROUND: The Permo-Triassic Mass Extinction (Read: ~5 minutes)</span>
+                <span class="de">GEOLOGISCHER HINTERGRUND: Das Perm-Trias-Massenaussterben (Lesezeit: ~5 Minuten)</span>
             </div>
 
-            <p>The biological crisis resulted from cascading environmental changes triggered by volcanic emissions from the Siberian Traps, including:</p>
+            <p>
+                <span class="en">The <strong>Permo-Triassic mass extinction (PTME)</strong> at ~252 Ma represents the largest biotic crisis in Earth history, eliminating approximately <strong>90% of marine species</strong> and <strong>70% of terrestrial vertebrate species</strong>. This event, often called the "Great Dying," far exceeds other major extinctions in magnitude.</span>
+                <span class="de">Das <strong>Perm-Trias-Massenaussterben (PTME)</strong> vor ~252 Ma stellt die größte biotische Krise in der Erdgeschichte dar und führte zur Auslöschung von etwa <strong>90% der marinen Arten</strong> und <strong>70% der terrestrischen Wirbeltierarten</strong>. Dieses Ereignis, oft als „Großes Sterben" bezeichnet, übertrifft alle anderen großen Aussterbeereignisse bei weitem.</span>
+            </p>
+
+            <div class="concept-box">
+                <strong>🌍 <span class="en">Paleogeographic Setting:</span><span class="de">Paläogeographische Situation:</span></strong><br>
+                <span class="en">The PTB world consisted of a single supercontinent (<strong>Pangea</strong>) surrounded by the vast <strong>Panthalassa</strong> ocean, with the <strong>Paleo-Tethys</strong> and <strong>Neo-Tethys</strong> forming a giant gulf. The <strong>Siberian Traps Large Igneous Province</strong> erupted 2-7 million km³ of basalt in the northern hemisphere during this interval.</span>
+                <span class="de">Die Welt an der PTB bestand aus einem einzigen Superkontinent (<strong>Pangäa</strong>), umgeben vom riesigen <strong>Panthalassa</strong>-Ozean, wobei <strong>Paläo-Tethys</strong> und <strong>Neo-Tethys</strong> einen gewaltigen Golf bildeten. Die <strong>Sibirische Trapp-Magmenprovinz</strong> förderte in diesem Zeitraum 2-7 Millionen km³ Basalt auf der Nordhalbkugel.</span>
+            </div>
+
+            <p>
+                <span class="en">The biological crisis resulted from cascading environmental changes triggered by volcanic emissions from the Siberian Traps, including:</span>
+                <span class="de">Die biologische Krise resultierte aus kaskadierenden Umweltveränderungen, die durch vulkanische Emissionen der Sibirischen Trapps ausgelöst wurden:</span>
+            </p>
             <ul>
-                <li><strong>Massive CO₂ release</strong> → Global warming (up to ~10°C increase)</li>
-                <li><strong>SO₂ emissions</strong> → Acid rain, vegetation die-off</li>
-                <li><strong>Thermogenic carbon release</strong> → Additional greenhouse forcing from contact metamorphism</li>
-                <li><strong>Ocean acidification</strong> → Carbonate dissolution, calcifier extinction</li>
-                <li><strong>Oceanic anoxia</strong> → Expansion of oxygen-depleted waters</li>
+                <li><span class="en"><strong>Massive CO₂ release</strong> → Global warming (up to ~10°C increase)</span><span class="de"><strong>Massive CO₂-Freisetzung</strong> → Globale Erwärmung (bis zu ~10°C Temperaturanstieg)</span></li>
+                <li><span class="en"><strong>SO₂ emissions</strong> → Acid rain, vegetation die-off</span><span class="de"><strong>SO₂-Emissionen</strong> → Saurer Regen, Vegetationssterben</span></li>
+                <li><span class="en"><strong>Thermogenic carbon release</strong> → Additional greenhouse forcing from contact metamorphism</span><span class="de"><strong>Thermogene Kohlenstofffreisetzung</strong> → Zusätzlicher Treibhauseffekt durch Kontaktmetamorphose</span></li>
+                <li><span class="en"><strong>Ocean acidification</strong> → Carbonate dissolution, calcifier extinction</span><span class="de"><strong>Ozeanversauerung</strong> → Karbonatlösung, Aussterben von Kalkbildnern</span></li>
+                <li><span class="en"><strong>Oceanic anoxia</strong> → Expansion of oxygen-depleted waters</span><span class="de"><strong>Ozeanische Anoxie</strong> → Ausbreitung sauerstoffarmer Gewässer</span></li>
             </ul>
 
             <div class="info-note">
-                <strong>⚠️ CRITICAL FOR THIS EXAM:</strong><br>
-                The Permo-Triassic was an <strong>ICE-FREE ("greenhouse") world</strong>. Unlike Quaternary climate reconstructions, there were <strong>NO significant continental ice sheets</strong>. This has important implications for how you interpret oxygen isotope data — do NOT apply ice volume corrections!
+                <strong>⚠️ <span class="en">CRITICAL FOR THIS EXAM:</span><span class="de">WICHTIG FÜR DIESE PRÜFUNG:</span></strong><br>
+                <span class="en">The Permo-Triassic was an <strong>ICE-FREE ("greenhouse") world</strong>. Unlike Quaternary climate reconstructions, there were <strong>NO significant continental ice sheets</strong>. This has important implications for how you interpret oxygen isotope data — do NOT apply ice volume corrections!</span>
+                <span class="de">Das Perm-Trias war eine <strong>EISFREIE („Treibhaus"-)Welt</strong>. Im Gegensatz zu quartären Klimarekonstruktionen gab es <strong>KEINE bedeutenden kontinentalen Eisschilde</strong>. Dies hat wichtige Auswirkungen auf die Interpretation von Sauerstoffisotopendaten — wenden Sie KEINE Eisvolumenkorrekturen an!</span>
             </div>
 
-            <p>The stratigraphic record at the Global Stratotype Section and Point (GSSP) at <strong>Meishan, South China</strong> reveals <strong>two distinct extinction pulses</strong>:</p>
+            <p>
+                <span class="en">The stratigraphic record at the Global Stratotype Section and Point (GSSP) at <strong>Meishan, South China</strong> reveals <strong>two distinct extinction pulses</strong>:</span>
+                <span class="de">Das stratigraphische Profil am Global Stratotype Section and Point (GSSP) in <strong>Meishan, Südchina</strong> zeigt <strong>zwei deutliche Aussterbepulse</strong>:</span>
+            </p>
             <ul>
-                <li><strong>1st pulse:</strong> ~251.94 Ma (latest Permian, C. meishanensis Zone)</li>
-                <li><strong>2nd pulse:</strong> ~251.88 Ma (earliest Triassic, I. isarcica Zone)</li>
+                <li><span class="en"><strong>1st pulse:</strong> ~251.94 Ma (latest Permian, C. meishanensis Zone)</span><span class="de"><strong>1. Puls:</strong> ~251,94 Ma (spätes Perm, C. meishanensis-Zone)</span></li>
+                <li><span class="en"><strong>2nd pulse:</strong> ~251.88 Ma (earliest Triassic, I. isarcica Zone)</span><span class="de"><strong>2. Puls:</strong> ~251,88 Ma (früheste Trias, I. isarcica-Zone)</span></li>
             </ul>
 
-            <p>Geochemical proxies provide independent evidence for environmental changes during this interval. In this exam, you will analyze proxy records to reconstruct the environmental conditions during Earth's greatest mass extinction.</p>
+            <p>
+                <span class="en">Geochemical proxies provide independent evidence for environmental changes during this interval. In this exam, you will analyze proxy records to reconstruct the environmental conditions during Earth's greatest mass extinction.</span>
+                <span class="de">Geochemische Proxies liefern unabhängige Belege für Umweltveränderungen während dieses Intervalls. In dieser Prüfung analysieren Sie Proxy-Aufzeichnungen, um die Umweltbedingungen während des größten Massenaussterbens der Erdgeschichte zu rekonstruieren.</span>
+            </p>
         </div>
 
         <!-- PART 1: CARBON ISOTOPES -->
         <div class="section">
-            <div class="section-title">PART 1: CARBON ISOTOPES (25 points) — Estimated time: 25 minutes</div>
+            <div class="section-title">
+                <span class="en">PART 1: CARBON ISOTOPES (25 points) — Estimated time: 25 minutes</span>
+                <span class="de">TEIL 1: KOHLENSTOFFISOTOPE (25 Punkte) — Geschätzte Zeit: 25 Minuten</span>
+            </div>
 
             <div class="question-block">
-                <div class="question-title">Question 1.1: The Carbon Isotope Excursion (15 points)</div>
-                
-                <p>The δ¹³C record across the PTB shows a pronounced <strong>negative carbon isotope excursion (CIE)</strong>. Using the data from the Meishan section provided below, answer the following questions.</p>
+                <div class="question-title">
+                    <span class="en">Question 1.1: The Carbon Isotope Excursion (15 points)</span>
+                    <span class="de">Frage 1.1: Die Kohlenstoffisotopen-Exkursion (15 Punkte)</span>
+                </div>
+
+                <p>
+                    <span class="en">The δ¹³C record across the PTB shows a pronounced <strong>negative carbon isotope excursion (CIE)</strong>. Using the data from the Meishan section provided below, answer the following questions.</span>
+                    <span class="de">Das δ¹³C-Profil über die PTB zeigt eine ausgeprägte <strong>negative Kohlenstoffisotopen-Exkursion (CIE)</strong>. Beantworten Sie anhand der unten angegebenen Daten aus dem Meishan-Profil die folgenden Fragen.</span>
+                </p>
 
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th>Sample</th>
-                            <th>Age (Ma)</th>
-                            <th>Conodont Zone</th>
+                            <th><span class="en">Sample</span><span class="de">Probe</span></th>
+                            <th><span class="en">Age (Ma)</span><span class="de">Alter (Ma)</span></th>
+                            <th><span class="en">Conodont Zone</span><span class="de">Conodonten-Zone</span></th>
                             <th>δ¹³C_carb (‰ VPDB)</th>
                         </tr>
                     </thead>
@@ -595,9 +671,15 @@
                 </table>
 
                 <div class="sub-question">
-                    <div class="sub-question-title">Part A (5 points): Calculate the magnitude of the CIE</div>
-                    <p>Calculate the total magnitude of the negative carbon isotope excursion (Δδ¹³C) from the pre-excursion baseline to the minimum value.</p>
-                    <div class="calculation-label">💻 CALCULATION:</div>
+                    <div class="sub-question-title">
+                        <span class="en">Part A (5 points): Calculate the magnitude of the CIE</span>
+                        <span class="de">Teil A (5 Punkte): Berechnen Sie die Größe der CIE</span>
+                    </div>
+                    <p>
+                        <span class="en">Calculate the total magnitude of the negative carbon isotope excursion (Δδ¹³C) from the pre-excursion baseline to the minimum value.</span>
+                        <span class="de">Berechnen Sie die Gesamtgröße der negativen Kohlenstoffisotopen-Exkursion (Δδ¹³C) vom Ausgangswert vor der Exkursion bis zum Minimalwert.</span>
+                    </p>
+                    <div class="calculation-label">💻 <span class="en">CALCULATION:</span><span class="de">BERECHNUNG:</span></div>
                     <textarea class="calculation-area" id="p1_1a_calc" placeholder="Show your calculation:
 - Pre-excursion baseline δ¹³C = ...
 - Minimum δ¹³C = ...
@@ -605,24 +687,39 @@
                 </div>
 
                 <div class="sub-question">
-                    <div class="sub-question-title">Part B (10 points): Interpretation of the CIE</div>
-                    <p>The negative CIE requires addition of isotopically <strong>light carbon</strong> (low δ¹³C). Several sources have been proposed:</p>
+                    <div class="sub-question-title">
+                        <span class="en">Part B (10 points): Interpretation of the CIE</span>
+                        <span class="de">Teil B (10 Punkte): Interpretation der CIE</span>
+                    </div>
+                    <p>
+                        <span class="en">The negative CIE requires addition of isotopically <strong>light carbon</strong> (low δ¹³C). Several sources have been proposed:</span>
+                        <span class="de">Die negative CIE erfordert die Zufuhr von isotopisch <strong>leichtem Kohlenstoff</strong> (niedriger δ¹³C). Mehrere Quellen wurden vorgeschlagen:</span>
+                    </p>
                     <ul>
-                        <li><strong>Volcanic CO₂:</strong> δ¹³C ≈ -5‰</li>
-                        <li><strong>Thermogenic methane/CO₂:</strong> δ¹³C ≈ -25‰ to -40‰</li>
-                        <li><strong>Methane hydrate dissociation:</strong> δ¹³C ≈ -60‰</li>
-                        <li><strong>Terrestrial biomass oxidation:</strong> δ¹³C ≈ -25‰</li>
+                        <li><span class="en"><strong>Volcanic CO₂:</strong> δ¹³C ≈ -5‰</span><span class="de"><strong>Vulkanisches CO₂:</strong> δ¹³C ≈ -5‰</span></li>
+                        <li><span class="en"><strong>Thermogenic methane/CO₂:</strong> δ¹³C ≈ -25‰ to -40‰</span><span class="de"><strong>Thermogenes Methan/CO₂:</strong> δ¹³C ≈ -25‰ bis -40‰</span></li>
+                        <li><span class="en"><strong>Methane hydrate dissociation:</strong> δ¹³C ≈ -60‰</span><span class="de"><strong>Methanhydrat-Dissoziation:</strong> δ¹³C ≈ -60‰</span></li>
+                        <li><span class="en"><strong>Terrestrial biomass oxidation:</strong> δ¹³C ≈ -25‰</span><span class="de"><strong>Terrestrische Biomasse-Oxidation:</strong> δ¹³C ≈ -25‰</span></li>
                     </ul>
-                    <p>Given the magnitude of the CIE, explain which carbon source(s) are most consistent with the observed excursion.</p>
-                    <div class="calculation-label">📝 YOUR INTERPRETATION:</div>
+                    <p>
+                        <span class="en">Given the magnitude of the CIE, explain which carbon source(s) are most consistent with the observed excursion.</span>
+                        <span class="de">Erklären Sie anhand der Größe der CIE, welche Kohlenstoffquelle(n) am besten mit der beobachteten Exkursion übereinstimmen.</span>
+                    </p>
+                    <div class="calculation-label">📝 <span class="en">YOUR INTERPRETATION:</span><span class="de">IHRE INTERPRETATION:</span></div>
                     <textarea class="answer-area" id="p1_1b" placeholder="Write your interpretation here (150-200 words)..."></textarea>
                 </div>
             </div>
 
             <div class="question-block">
-                <div class="question-title">Question 1.2: δ¹³C_carbonate vs δ¹³C_organic (10 points)</div>
-                <p>At some PTB sections, the δ¹³C_carbonate and δ¹³C_TOC records show <strong>non-parallel trends</strong>. Explain <strong>two mechanisms</strong> that could cause these proxies to show different patterns across the same stratigraphic interval.</p>
-                <div class="calculation-label">📝 YOUR ANSWER:</div>
+                <div class="question-title">
+                    <span class="en">Question 1.2: δ¹³C_carbonate vs δ¹³C_organic (10 points)</span>
+                    <span class="de">Frage 1.2: δ¹³C_Karbonat vs. δ¹³C_organisch (10 Punkte)</span>
+                </div>
+                <p>
+                    <span class="en">At some PTB sections, the δ¹³C_carbonate and δ¹³C_TOC records show <strong>non-parallel trends</strong>. Explain <strong>two mechanisms</strong> that could cause these proxies to show different patterns across the same stratigraphic interval.</span>
+                    <span class="de">An einigen PTB-Profilen zeigen die δ¹³C_Karbonat- und δ¹³C_TOC-Aufzeichnungen <strong>nicht-parallele Trends</strong>. Erklären Sie <strong>zwei Mechanismen</strong>, die dazu führen könnten, dass diese Proxies über das gleiche stratigraphische Intervall unterschiedliche Muster zeigen.</span>
+                </p>
+                <div class="calculation-label">📝 <span class="en">YOUR ANSWER:</span><span class="de">IHRE ANTWORT:</span></div>
                 <textarea class="answer-area" id="p1_2" placeholder="Mechanism 1: ...
 
 Mechanism 2: ..."></textarea>
@@ -631,19 +728,28 @@ Mechanism 2: ..."></textarea>
 
         <!-- PART 2: OXYGEN ISOTOPES -->
         <div class="section">
-            <div class="section-title">PART 2: OXYGEN ISOTOPES & TEMPERATURE (30 points) — Estimated time: 30 minutes</div>
+            <div class="section-title">
+                <span class="en">PART 2: OXYGEN ISOTOPES & TEMPERATURE (30 points) — Estimated time: 30 minutes</span>
+                <span class="de">TEIL 2: SAUERSTOFFISOTOPE & TEMPERATUR (30 Punkte) — Geschätzte Zeit: 30 Minuten</span>
+            </div>
 
             <div class="question-block">
-                <div class="question-title">Question 2.1: Paleotemperature Calculations (20 points)</div>
-                
-                <p>The table below shows δ¹⁸O values measured from <strong>conodont apatite</strong> across the PTB interval.</p>
+                <div class="question-title">
+                    <span class="en">Question 2.1: Paleotemperature Calculations (20 points)</span>
+                    <span class="de">Frage 2.1: Paläotemperatur-Berechnungen (20 Punkte)</span>
+                </div>
+
+                <p>
+                    <span class="en">The table below shows δ¹⁸O values measured from <strong>conodont apatite</strong> across the PTB interval.</span>
+                    <span class="de">Die untenstehende Tabelle zeigt δ¹⁸O-Werte, die an <strong>Conodonten-Apatit</strong> über das PTB-Intervall gemessen wurden.</span>
+                </p>
 
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th>Sample</th>
-                            <th>Age (Ma)</th>
-                            <th>Conodont Zone</th>
+                            <th><span class="en">Sample</span><span class="de">Probe</span></th>
+                            <th><span class="en">Age (Ma)</span><span class="de">Alter (Ma)</span></th>
+                            <th><span class="en">Conodont Zone</span><span class="de">Conodonten-Zone</span></th>
                             <th>δ¹⁸O_apatite (‰ VSMOW)</th>
                         </tr>
                     </thead>
@@ -657,20 +763,30 @@ Mechanism 2: ..."></textarea>
                 </table>
 
                 <div class="equation-box">
-                    <div class="equation-title">Phosphate-Water Oxygen Isotope Thermometer (Lécuyer et al., 2013):</div>
+                    <div class="equation-title">
+                        <span class="en">Phosphate-Water Oxygen Isotope Thermometer (Lécuyer et al., 2013):</span>
+                        <span class="de">Phosphat-Wasser-Sauerstoffisotopen-Thermometer (Lécuyer et al., 2013):</span>
+                    </div>
                     T(°C) = 117.4 - 4.50 × (δ¹⁸O_phosphate - δ¹⁸O_water)<br><br>
-                    <em>Where δ¹⁸O_phosphate and δ¹⁸O_water are both in ‰ VSMOW</em>
+                    <em><span class="en">Where δ¹⁸O_phosphate and δ¹⁸O_water are both in ‰ VSMOW</span><span class="de">Wobei δ¹⁸O_Phosphat und δ¹⁸O_Wasser beide in ‰ VSMOW angegeben sind</span></em>
                 </div>
 
                 <div class="info-note">
-                    <strong>⚠️ IMPORTANT - Seawater δ¹⁸O Assumption:</strong><br>
-                    For an <strong>ice-free world</strong> like the Permo-Triassic, assume δ¹⁸O_seawater = <strong>-1.0‰ VSMOW</strong>.
+                    <strong>⚠️ <span class="en">IMPORTANT - Seawater δ¹⁸O Assumption:</span><span class="de">WICHTIG - Annahme für δ¹⁸O des Meerwassers:</span></strong><br>
+                    <span class="en">For an <strong>ice-free world</strong> like the Permo-Triassic, assume δ¹⁸O_seawater = <strong>-1.0‰ VSMOW</strong>.</span>
+                    <span class="de">Für eine <strong>eisfreie Welt</strong> wie das Perm-Trias nehmen Sie δ¹⁸O_Meerwasser = <strong>-1,0‰ VSMOW</strong> an.</span>
                 </div>
 
                 <div class="sub-question">
-                    <div class="sub-question-title">Part A (12 points): Calculate paleotemperatures</div>
-                    <p>Calculate the sea surface temperature for <strong>each sample</strong>. Show your work for at least TWO samples, then tabulate all results.</p>
-                    <div class="calculation-label">💻 CALCULATIONS:</div>
+                    <div class="sub-question-title">
+                        <span class="en">Part A (12 points): Calculate paleotemperatures</span>
+                        <span class="de">Teil A (12 Punkte): Berechnen Sie die Paläotemperaturen</span>
+                    </div>
+                    <p>
+                        <span class="en">Calculate the sea surface temperature for <strong>each sample</strong>. Show your work for at least TWO samples, then tabulate all results.</span>
+                        <span class="de">Berechnen Sie die Meeresoberflächentemperatur für <strong>jede Probe</strong>. Zeigen Sie Ihren Rechenweg für mindestens ZWEI Proben und tabellieren Sie alle Ergebnisse.</span>
+                    </p>
+                    <div class="calculation-label">💻 <span class="en">CALCULATIONS:</span><span class="de">BERECHNUNGEN:</span></div>
                     <textarea class="calculation-area" id="p2_1a_calc" placeholder="Sample CON-1:
 δ¹⁸O_phosphate = 20.8‰ VSMOW
 δ¹⁸O_water = -1.0‰ VSMOW (ice-free world)
@@ -683,9 +799,15 @@ CON-1  | 252.00   | ..."></textarea>
                 </div>
 
                 <div class="sub-question">
-                    <div class="sub-question-title">Part B (8 points): Temperature interpretation</div>
-                    <p>Based on your calculated temperatures: (1) What is the magnitude of warming? (2) How do these compare to modern tropical SST (~27-29°C)? (3) What are the implications for marine life?</p>
-                    <div class="calculation-label">📝 YOUR INTERPRETATION:</div>
+                    <div class="sub-question-title">
+                        <span class="en">Part B (8 points): Temperature interpretation</span>
+                        <span class="de">Teil B (8 Punkte): Temperaturinterpretation</span>
+                    </div>
+                    <p>
+                        <span class="en">Based on your calculated temperatures: (1) What is the magnitude of warming? (2) How do these compare to modern tropical SST (~27-29°C)? (3) What are the implications for marine life?</span>
+                        <span class="de">Basierend auf Ihren berechneten Temperaturen: (1) Wie groß ist die Erwärmung? (2) Wie verhalten sich diese im Vergleich zu modernen tropischen SST (~27-29°C)? (3) Was sind die Auswirkungen auf das marine Leben?</span>
+                    </p>
+                    <div class="calculation-label">📝 <span class="en">YOUR INTERPRETATION:</span><span class="de">IHRE INTERPRETATION:</span></div>
                     <textarea class="answer-area" id="p2_1b" placeholder="1. Magnitude of warming: ...
 2. Comparison to modern tropics: ...
 3. Implications for marine life: ..."></textarea>
@@ -693,25 +815,46 @@ CON-1  | 252.00   | ..."></textarea>
             </div>
 
             <div class="question-block">
-                <div class="question-title">Question 2.2: The Ice Volume Trap (10 points)</div>
-                
-                <p>A fellow student applies the following reasoning:</p>
-                
+                <div class="question-title">
+                    <span class="en">Question 2.2: The Ice Volume Trap (10 points)</span>
+                    <span class="de">Frage 2.2: Die Eisvolumen-Falle (10 Punkte)</span>
+                </div>
+
+                <p>
+                    <span class="en">A fellow student applies the following reasoning:</span>
+                    <span class="de">Ein Kommilitone wendet folgende Überlegung an:</span>
+                </p>
+
                 <div class="concept-box" style="background: #fdf2f2; border-color: #e74c3c;">
-                    <em>"I know that during the Last Glacial Maximum, seawater δ¹⁸O was about +1.0‰ higher due to ice sheet storage. To be safe, I'll apply a +1.0‰ ice volume correction to my PTB seawater value, changing it from -1.0‰ to 0.0‰ VSMOW."</em>
+                    <em>
+                        <span class="en">"I know that during the Last Glacial Maximum, seawater δ¹⁸O was about +1.0‰ higher due to ice sheet storage. To be safe, I'll apply a +1.0‰ ice volume correction to my PTB seawater value, changing it from -1.0‰ to 0.0‰ VSMOW."</span>
+                        <span class="de">„Ich weiß, dass während des Letzten Glazialen Maximums das δ¹⁸O des Meerwassers aufgrund der Eisspeicherung etwa +1,0‰ höher war. Um sicher zu gehen, wende ich eine Eisvolumenkorrektur von +1,0‰ auf meinen PTB-Meerwasserwert an und ändere ihn von -1,0‰ auf 0,0‰ VSMOW."</span>
+                    </em>
                 </div>
 
                 <div class="sub-question">
-                    <div class="sub-question-title">Part A (5 points): Error identification</div>
-                    <p>Explain why this reasoning is <strong>incorrect</strong> for the Permo-Triassic interval.</p>
-                    <div class="calculation-label">📝 YOUR ANSWER:</div>
+                    <div class="sub-question-title">
+                        <span class="en">Part A (5 points): Error identification</span>
+                        <span class="de">Teil A (5 Punkte): Fehleridentifikation</span>
+                    </div>
+                    <p>
+                        <span class="en">Explain why this reasoning is <strong>incorrect</strong> for the Permo-Triassic interval.</span>
+                        <span class="de">Erklären Sie, warum diese Überlegung für das Perm-Trias-Intervall <strong>falsch</strong> ist.</span>
+                    </p>
+                    <div class="calculation-label">📝 <span class="en">YOUR ANSWER:</span><span class="de">IHRE ANTWORT:</span></div>
                     <textarea class="answer-area" id="p2_2a" placeholder="Explain why the ice volume correction is inappropriate for the PTB..."></textarea>
                 </div>
 
                 <div class="sub-question">
-                    <div class="sub-question-title">Part B (5 points): Quantify the error</div>
-                    <p>Using sample CON-4 (δ¹⁸O = 17.5‰), calculate the temperature using both assumptions and determine the error introduced.</p>
-                    <div class="calculation-label">💻 CALCULATION:</div>
+                    <div class="sub-question-title">
+                        <span class="en">Part B (5 points): Quantify the error</span>
+                        <span class="de">Teil B (5 Punkte): Quantifizieren Sie den Fehler</span>
+                    </div>
+                    <p>
+                        <span class="en">Using sample CON-4 (δ¹⁸O = 17.5‰), calculate the temperature using both assumptions and determine the error introduced.</span>
+                        <span class="de">Berechnen Sie anhand von Probe CON-4 (δ¹⁸O = 17,5‰) die Temperatur mit beiden Annahmen und bestimmen Sie den eingeführten Fehler.</span>
+                    </p>
+                    <div class="calculation-label">💻 <span class="en">CALCULATION:</span><span class="de">BERECHNUNG:</span></div>
                     <textarea class="calculation-area" id="p2_2b_calc" placeholder="CORRECT (δ¹⁸O_sw = -1.0‰):
 T = ...
 
@@ -725,24 +868,48 @@ Error = ... °C"></textarea>
 
         <!-- PART 3: ADVANCED PROXIES -->
         <div class="section">
-            <div class="section-title">PART 3: OCEAN CHEMISTRY PROXIES (20 points) — Estimated time: 20 minutes</div>
+            <div class="section-title">
+                <span class="en">PART 3: OCEAN CHEMISTRY PROXIES (20 points) — Estimated time: 20 minutes</span>
+                <span class="de">TEIL 3: OZEANCHEMIE-PROXIES (20 Punkte) — Geschätzte Zeit: 20 Minuten</span>
+            </div>
 
             <div class="question-block">
-                <div class="question-title">Question 3.1: Boron Isotopes and Ocean Acidification (10 points)</div>
-                
-                <p>The δ¹¹B record from brachiopod calcite shows a decline from ~13.5‰ to ~11.2‰ across the marine extinction interval. Boron isotopes are used as a proxy for seawater pH.</p>
+                <div class="question-title">
+                    <span class="en">Question 3.1: Boron Isotopes and Ocean Acidification (10 points)</span>
+                    <span class="de">Frage 3.1: Bor-Isotope und Ozeanversauerung (10 Punkte)</span>
+                </div>
+
+                <p>
+                    <span class="en">The δ¹¹B record from brachiopod calcite shows a decline from ~13.5‰ to ~11.2‰ across the marine extinction interval. Boron isotopes are used as a proxy for seawater pH.</span>
+                    <span class="de">Das δ¹¹B-Profil aus Brachiopoden-Kalzit zeigt einen Rückgang von ~13,5‰ auf ~11,2‰ über das marine Aussterbensintervall. Bor-Isotope werden als Proxy für den pH-Wert des Meerwassers verwendet.</span>
+                </p>
 
                 <div class="equation-box">
-                    <div class="equation-title">Key Relationships:</div>
+                    <div class="equation-title">
+                        <span class="en">Key Relationships:</span>
+                        <span class="de">Wichtige Zusammenhänge:</span>
+                    </div>
+                    <span class="en">
                     • Boron in seawater exists as B(OH)₃ (boric acid) and B(OH)₄⁻ (borate ion)<br>
                     • The ratio B(OH)₄⁻/B(OH)₃ is controlled by seawater pH<br>
                     • Carbonates preferentially incorporate B(OH)₄⁻<br>
                     • B(OH)₄⁻ is depleted in ¹¹B relative to B(OH)₃ by ~27‰<br>
                     • Lower pH → more B(OH)₃ → lower δ¹¹B in carbonates
+                    </span>
+                    <span class="de">
+                    • Bor im Meerwasser existiert als B(OH)₃ (Borsäure) und B(OH)₄⁻ (Borat-Ion)<br>
+                    • Das Verhältnis B(OH)₄⁻/B(OH)₃ wird durch den pH-Wert des Meerwassers gesteuert<br>
+                    • Karbonate bauen bevorzugt B(OH)₄⁻ ein<br>
+                    • B(OH)₄⁻ ist an ¹¹B gegenüber B(OH)₃ um ~27‰ abgereichert<br>
+                    • Niedrigerer pH → mehr B(OH)₃ → niedrigerer δ¹¹B in Karbonaten
+                    </span>
                 </div>
 
-                <p>Based on the δ¹¹B decline: (1) Explain the chemical mechanism linking lower pH to lower δ¹¹B. (2) What caused PTB ocean acidification, and how does it link to the carbon isotope evidence?</p>
-                <div class="calculation-label">📝 YOUR ANSWER:</div>
+                <p>
+                    <span class="en">Based on the δ¹¹B decline: (1) Explain the chemical mechanism linking lower pH to lower δ¹¹B. (2) What caused PTB ocean acidification, and how does it link to the carbon isotope evidence?</span>
+                    <span class="de">Basierend auf dem δ¹¹B-Rückgang: (1) Erklären Sie den chemischen Mechanismus, der niedrigeren pH-Wert mit niedrigerem δ¹¹B verbindet. (2) Was verursachte die PTB-Ozeanversauerung und wie hängt sie mit dem Kohlenstoffisotopen-Nachweis zusammen?</span>
+                </p>
+                <div class="calculation-label">📝 <span class="en">YOUR ANSWER:</span><span class="de">IHRE ANTWORT:</span></div>
                 <textarea class="answer-area" id="p3_1" placeholder="1. Chemical mechanism:
 ...
 
@@ -751,12 +918,21 @@ Error = ... °C"></textarea>
             </div>
 
             <div class="question-block">
-                <div class="question-title">Question 3.2: Strontium Isotopes — Weathering vs Provenance (10 points)</div>
-                
-                <p>⁸⁷Sr/⁸⁶Sr increases across the PTB, traditionally interpreted as <strong>enhanced continental weathering</strong>. However, an alternative hypothesis suggests <strong>provenance change</strong> (different source rocks with higher ⁸⁷Sr/⁸⁶Sr).</p>
+                <div class="question-title">
+                    <span class="en">Question 3.2: Strontium Isotopes — Weathering vs Provenance (10 points)</span>
+                    <span class="de">Frage 3.2: Strontium-Isotope — Verwitterung vs. Provenienz (10 Punkte)</span>
+                </div>
 
-                <p>Propose <strong>ONE additional proxy or dataset</strong> that could distinguish between these hypotheses. Explain expected results under each hypothesis.</p>
-                <div class="calculation-label">📝 YOUR ANSWER:</div>
+                <p>
+                    <span class="en">⁸⁷Sr/⁸⁶Sr increases across the PTB, traditionally interpreted as <strong>enhanced continental weathering</strong>. However, an alternative hypothesis suggests <strong>provenance change</strong> (different source rocks with higher ⁸⁷Sr/⁸⁶Sr).</span>
+                    <span class="de">⁸⁷Sr/⁸⁶Sr steigt über die PTB an, was traditionell als <strong>verstärkte kontinentale Verwitterung</strong> interpretiert wird. Eine alternative Hypothese schlägt jedoch einen <strong>Provenienzwechsel</strong> vor (verschiedene Ausgangsgesteine mit höherem ⁸⁷Sr/⁸⁶Sr).</span>
+                </p>
+
+                <p>
+                    <span class="en">Propose <strong>ONE additional proxy or dataset</strong> that could distinguish between these hypotheses. Explain expected results under each hypothesis.</span>
+                    <span class="de">Schlagen Sie <strong>EINEN zusätzlichen Proxy oder Datensatz</strong> vor, der zwischen diesen Hypothesen unterscheiden könnte. Erklären Sie die erwarteten Ergebnisse unter jeder Hypothese.</span>
+                </p>
+                <div class="calculation-label">📝 <span class="en">YOUR ANSWER:</span><span class="de">IHRE ANTWORT:</span></div>
                 <textarea class="answer-area" id="p3_2" placeholder="Proposed additional proxy: ...
 
 Expected results under Hypothesis A (enhanced weathering):
@@ -769,19 +945,28 @@ Expected results under Hypothesis B (provenance change):
 
         <!-- PART 4: DATA VISUALIZATION -->
         <div class="section">
-            <div class="section-title">PART 4: DATA VISUALIZATION (5 points) — Estimated time: 10 minutes</div>
+            <div class="section-title">
+                <span class="en">PART 4: DATA VISUALIZATION (5 points) — Estimated time: 10 minutes</span>
+                <span class="de">TEIL 4: DATENVISUALISIERUNG (5 Punkte) — Geschätzte Zeit: 10 Minuten</span>
+            </div>
 
             <div class="question-block">
-                <div class="question-title">Question 4.1: Plot Your Temperature Results</div>
-                
-                <p>Using the chart tool below, create a plot of your calculated paleotemperatures against geological age.</p>
+                <div class="question-title">
+                    <span class="en">Question 4.1: Plot Your Temperature Results</span>
+                    <span class="de">Frage 4.1: Stellen Sie Ihre Temperaturergebnisse grafisch dar</span>
+                </div>
+
+                <p>
+                    <span class="en">Using the chart tool below, create a plot of your calculated paleotemperatures against geological age.</span>
+                    <span class="de">Erstellen Sie mit dem untenstehenden Diagramm-Tool eine Darstellung Ihrer berechneten Paläotemperaturen gegen das geologische Alter.</span>
+                </p>
 
                 <div class="chart-container">
-                    <h4>📊 Temperature vs Age Plot Generator</h4>
-                    
+                    <h4>📊 <span class="en">Temperature vs Age Plot Generator</span><span class="de">Temperatur vs. Alter Diagramm-Generator</span></h4>
+
                     <div class="chart-data-input">
                         <div>
-                            <label><strong>X-axis (Age in Ma):</strong></label>
+                            <label><strong><span class="en">X-axis (Age in Ma):</span><span class="de">X-Achse (Alter in Ma):</span></strong></label>
                             <textarea id="chartXData">252.00
 251.95
 251.92
@@ -789,22 +974,30 @@ Expected results under Hypothesis B (provenance change):
 251.85</textarea>
                         </div>
                         <div>
-                            <label><strong>Y-axis (Temperature in °C):</strong></label>
+                            <label><strong><span class="en">Y-axis (Temperature in °C):</span><span class="de">Y-Achse (Temperatur in °C):</span></strong></label>
                             <textarea id="chartYData" placeholder="Enter your calculated temperatures, one per line"></textarea>
                         </div>
                     </div>
-                    
-                    <button onclick="generateChart()" style="padding: 10px 25px; background: linear-gradient(135deg, #16a085, #27ae60); color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Generate Plot</button>
-                    
+
+                    <button onclick="generateChart()" style="padding: 10px 25px; background: linear-gradient(135deg, #16a085, #27ae60); color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                        <span class="en">Generate Plot</span><span class="de">Diagramm erstellen</span>
+                    </button>
+
                     <div class="chart-canvas-container">
                         <canvas id="tempChart" width="600" height="300"></canvas>
                     </div>
                 </div>
 
                 <div class="sub-question">
-                    <div class="sub-question-title">Describe your plot (5 points)</div>
-                    <p>In 2-3 sentences, describe the pattern and identify when the most rapid warming occurred.</p>
-                    <div class="calculation-label">📝 YOUR DESCRIPTION:</div>
+                    <div class="sub-question-title">
+                        <span class="en">Describe your plot (5 points)</span>
+                        <span class="de">Beschreiben Sie Ihr Diagramm (5 Punkte)</span>
+                    </div>
+                    <p>
+                        <span class="en">In 2-3 sentences, describe the pattern and identify when the most rapid warming occurred.</span>
+                        <span class="de">Beschreiben Sie in 2-3 Sätzen das Muster und identifizieren Sie, wann die schnellste Erwärmung auftrat.</span>
+                    </p>
+                    <div class="calculation-label">📝 <span class="en">YOUR DESCRIPTION:</span><span class="de">IHRE BESCHREIBUNG:</span></div>
                     <textarea class="answer-area" id="p4_1" placeholder="Describe the pattern in your temperature plot..."></textarea>
                 </div>
             </div>
@@ -812,36 +1005,56 @@ Expected results under Hypothesis B (provenance change):
 
         <!-- PART 5: SYNTHESIS -->
         <div class="section">
-            <div class="section-title">PART 5: MULTI-PROXY SYNTHESIS (20 points) — Estimated time: 20 minutes</div>
+            <div class="section-title">
+                <span class="en">PART 5: MULTI-PROXY SYNTHESIS (20 points) — Estimated time: 20 minutes</span>
+                <span class="de">TEIL 5: MULTI-PROXY-SYNTHESE (20 Punkte) — Geschätzte Zeit: 20 Minuten</span>
+            </div>
 
             <div class="question-block">
-                <div class="question-title">Question 5.1: Integrated Environmental Reconstruction</div>
-                
-                <p>Using ALL the proxy evidence (δ¹³C, δ¹⁸O/temperature, δ¹¹B, ⁸⁷Sr/⁸⁶Sr), write a <strong>synthesis paragraph (300-400 words)</strong> reconstructing the environmental changes during the Permo-Triassic mass extinction.</p>
+                <div class="question-title">
+                    <span class="en">Question 5.1: Integrated Environmental Reconstruction</span>
+                    <span class="de">Frage 5.1: Integrierte Umweltrekonstruktion</span>
+                </div>
+
+                <p>
+                    <span class="en">Using ALL the proxy evidence (δ¹³C, δ¹⁸O/temperature, δ¹¹B, ⁸⁷Sr/⁸⁶Sr), write a <strong>synthesis paragraph (300-400 words)</strong> reconstructing the environmental changes during the Permo-Triassic mass extinction.</span>
+                    <span class="de">Verfassen Sie unter Verwendung ALLER Proxy-Belege (δ¹³C, δ¹⁸O/Temperatur, δ¹¹B, ⁸⁷Sr/⁸⁶Sr) einen <strong>Synthese-Absatz (300-400 Wörter)</strong>, der die Umweltveränderungen während des Perm-Trias-Massenaussterbens rekonstruiert.</span>
+                </p>
 
                 <div class="info-note">
-                    <strong>Your synthesis MUST address:</strong><br>
+                    <strong><span class="en">Your synthesis MUST address:</span><span class="de">Ihre Synthese MUSS folgende Punkte behandeln:</span></strong><br>
+                    <span class="en">
                     1. The sequence and timing of environmental changes relative to the two extinction pulses<br>
                     2. Evidence for the role of volcanism (Siberian Traps) in triggering the crisis<br>
                     3. Ocean-atmosphere interactions (warming, acidification, carbon cycle perturbation)<br>
                     4. At least ONE limitation, uncertainty, or alternative interpretation
+                    </span>
+                    <span class="de">
+                    1. Die Abfolge und zeitliche Einordnung der Umweltveränderungen relativ zu den beiden Aussterbepulsen<br>
+                    2. Belege für die Rolle des Vulkanismus (Sibirische Trapps) als Auslöser der Krise<br>
+                    3. Ozean-Atmosphäre-Wechselwirkungen (Erwärmung, Versauerung, Kohlenstoffkreislauf-Störung)<br>
+                    4. Mindestens EINE Einschränkung, Unsicherheit oder alternative Interpretation
+                    </span>
                 </div>
 
-                <div class="calculation-label">📝 YOUR SYNTHESIS:</div>
+                <div class="calculation-label">📝 <span class="en">YOUR SYNTHESIS:</span><span class="de">IHRE SYNTHESE:</span></div>
                 <textarea class="answer-area" id="p5_1" style="min-height: 250px;" placeholder="Write your multi-proxy synthesis here (300-400 words)..."></textarea>
-                <p style="margin-top: 10px; font-size: 0.9em; color: #666;">Word count: <span id="wordCount">0</span> words</p>
+                <p style="margin-top: 10px; font-size: 0.9em; color: #666;"><span class="en">Word count:</span><span class="de">Wortanzahl:</span> <span id="wordCount">0</span> <span class="en">words</span><span class="de">Wörter</span></p>
             </div>
         </div>
 
         <!-- Export Section -->
         <div class="export-section">
-            <h3>📤 Submit Your Exam</h3>
-            <p>When complete, click "Submit Exam" to generate your submission file.</p>
-            
+            <h3>📤 <span class="en">Submit Your Exam</span><span class="de">Prüfung abgeben</span></h3>
+            <p>
+                <span class="en">When complete, click "Submit Exam" to generate your submission file.</span>
+                <span class="de">Wenn Sie fertig sind, klicken Sie auf „Prüfung abgeben", um Ihre Abgabedatei zu erstellen.</span>
+            </p>
+
             <div class="export-buttons">
-                <button class="export-btn submit" onclick="submitExam()">✓ Submit Exam</button>
-                <button class="export-btn copy" onclick="copyToClipboard()">📋 Copy to Clipboard</button>
-                <button class="export-btn text" onclick="downloadText()">💾 Download Text</button>
+                <button class="export-btn submit" onclick="submitExam()">✓ <span class="en">Submit Exam</span><span class="de">Prüfung abgeben</span></button>
+                <button class="export-btn copy" onclick="copyToClipboard()">📋 <span class="en">Copy to Clipboard</span><span class="de">In Zwischenablage</span></button>
+                <button class="export-btn text" onclick="downloadText()">💾 <span class="en">Download Text</span><span class="de">Text herunterladen</span></button>
             </div>
         </div>
     </div>
@@ -849,14 +1062,14 @@ Expected results under Hypothesis B (provenance change):
     <!-- Calculator -->
     <div class="calculator-container">
         <div class="calculator-panel" id="calculatorPanel">
-            <div class="calc-header">🧮 Isotope Calculator</div>
+            <div class="calc-header">🧮 <span class="en">Isotope Calculator</span><span class="de">Isotopen-Rechner</span></div>
             <div class="calculator-panel-inner">
             <div class="calc-body">
                 <input type="text" class="calc-display" id="calcDisplay" readonly placeholder="0">
-                
+
                 <div class="calc-tabs">
-                    <button class="calc-tab active" onclick="switchCalcTab('basic', this)">Basic</button>
-                    <button class="calc-tab" onclick="switchCalcTab('isotope', this)">Isotope Functions</button>
+                    <button class="calc-tab active" onclick="switchCalcTab('basic', this)"><span class="en">Basic</span><span class="de">Basis</span></button>
+                    <button class="calc-tab" onclick="switchCalcTab('isotope', this)"><span class="en">Isotope Functions</span><span class="de">Isotopen-Funktionen</span></button>
                 </div>
 
                 <div id="basicCalc">
@@ -889,78 +1102,98 @@ Expected results under Hypothesis B (provenance change):
                 </div>
 
                 <div id="isotopeCalc" class="isotope-functions">
-                    <button class="isotope-func-btn" onclick="showIsotopeFunc('temp_phosphate')">🌡️ Phosphate Temperature (Lécuyer et al.)</button>
-                    <button class="isotope-func-btn" onclick="showIsotopeFunc('temp_anderson')">🌡️ Carbonate Temperature (Anderson & Arthur)</button>
-                    <button class="isotope-func-btn" onclick="showIsotopeFunc('convert_vpdb')">🔄 Convert VPDB ↔ VSMOW</button>
-                    <button class="isotope-func-btn" onclick="showIsotopeFunc('alpha')">α Alpha from Delta Values</button>
-                    
+                    <button class="isotope-func-btn" onclick="showIsotopeFunc('temp_phosphate')">🌡️ <span class="en">Phosphate Temperature (Lécuyer et al.)</span><span class="de">Phosphat-Temperatur (Lécuyer et al.)</span></button>
+                    <button class="isotope-func-btn" onclick="showIsotopeFunc('temp_anderson')">🌡️ <span class="en">Carbonate Temperature (Anderson & Arthur)</span><span class="de">Karbonat-Temperatur (Anderson & Arthur)</span></button>
+                    <button class="isotope-func-btn" onclick="showIsotopeFunc('convert_vpdb')">🔄 <span class="en">Convert VPDB ↔ VSMOW</span><span class="de">Umrechnung VPDB ↔ VSMOW</span></button>
+                    <button class="isotope-func-btn" onclick="showIsotopeFunc('alpha')">α <span class="en">Alpha from Delta Values</span><span class="de">Alpha aus Delta-Werten</span></button>
+
                     <!-- Phosphate Temperature -->
                     <div class="calc-input-group" id="func_temp_phosphate">
-                        <h4 style="margin-top: 0;">Phosphate Temperature (Lécuyer et al., 2013)</h4>
+                        <h4 style="margin-top: 0;"><span class="en">Phosphate Temperature (Lécuyer et al., 2013)</span><span class="de">Phosphat-Temperatur (Lécuyer et al., 2013)</span></h4>
                         <p style="font-size: 0.85em; color: #666;">T(°C) = 117.4 - 4.50 × (δ¹⁸O_phos - δ¹⁸O_water)</p>
                         <label>δ¹⁸O_phosphate (‰ VSMOW):</label>
                         <input type="number" id="phos_d18O" step="0.1" placeholder="e.g., 20.8">
                         <label>δ¹⁸O_water (‰ VSMOW):</label>
                         <input type="number" id="phos_water" step="0.1" value="-1.0">
-                        <button onclick="calcPhosphateTemp()" style="width: 100%; padding: 10px; background: #16a085; color: white; border: none; border-radius: 5px; cursor: pointer;">Calculate</button>
+                        <button onclick="calcPhosphateTemp()" style="width: 100%; padding: 10px; background: #16a085; color: white; border: none; border-radius: 5px; cursor: pointer;"><span class="en">Calculate</span><span class="de">Berechnen</span></button>
                         <div class="calc-result" id="result_temp_phosphate"></div>
                     </div>
 
-                    <!-- Anderson & Arthur Temperature (FIXED) -->
+                    <!-- Anderson & Arthur Temperature -->
                     <div class="calc-input-group" id="func_temp_anderson">
-                        <h4 style="margin-top: 0;">Carbonate Temperature (Anderson & Arthur, 1983)</h4>
+                        <h4 style="margin-top: 0;"><span class="en">Carbonate Temperature (Anderson & Arthur, 1983)</span><span class="de">Karbonat-Temperatur (Anderson & Arthur, 1983)</span></h4>
                         <p style="font-size: 0.85em; color: #666;">T(°C) = 16.0 - 4.14(δc - δw) + 0.13(δc - δw)²</p>
-                        <p style="font-size: 0.8em; color: #e74c3c;"><strong>Note:</strong> Both values in VPDB scale, or enter water in VSMOW and it will be converted.</p>
+                        <p style="font-size: 0.8em; color: #e74c3c;"><strong><span class="en">Note:</span><span class="de">Hinweis:</span></strong> <span class="en">Both values in VPDB scale, or enter water in VSMOW and it will be converted.</span><span class="de">Beide Werte in VPDB-Skala, oder Wasser in VSMOW eingeben (wird umgerechnet).</span></p>
                         <label>δ¹⁸O_carbonate (‰ VPDB):</label>
                         <input type="number" id="aa_d18O_carb" step="0.1" placeholder="e.g., -3.2">
                         <label>δ¹⁸O_water (‰ VSMOW):</label>
                         <input type="number" id="aa_water" step="0.1" value="-1.0">
-                        <button onclick="calcAndersonTemp()" style="width: 100%; padding: 10px; background: #16a085; color: white; border: none; border-radius: 5px; cursor: pointer;">Calculate</button>
+                        <button onclick="calcAndersonTemp()" style="width: 100%; padding: 10px; background: #16a085; color: white; border: none; border-radius: 5px; cursor: pointer;"><span class="en">Calculate</span><span class="de">Berechnen</span></button>
                         <div class="calc-result" id="result_temp_anderson"></div>
                     </div>
 
                     <!-- VPDB-VSMOW Conversion -->
                     <div class="calc-input-group" id="func_convert_vpdb">
-                        <h4 style="margin-top: 0;">Convert VPDB ↔ VSMOW</h4>
+                        <h4 style="margin-top: 0;"><span class="en">Convert VPDB ↔ VSMOW</span><span class="de">Umrechnung VPDB ↔ VSMOW</span></h4>
                         <p style="font-size: 0.85em; color: #666;">δ¹⁸O_VSMOW = 1.03091 × δ¹⁸O_VPDB + 30.91</p>
-                        <label>Input value (‰):</label>
+                        <label><span class="en">Input value (‰):</span><span class="de">Eingabewert (‰):</span></label>
                         <input type="number" id="convert_value" step="0.1" placeholder="e.g., -3.2">
-                        <label>Convert from:</label>
+                        <label><span class="en">Convert from:</span><span class="de">Umrechnen von:</span></label>
                         <select id="convert_from">
                             <option value="vpdb">VPDB → VSMOW</option>
                             <option value="vsmow">VSMOW → VPDB</option>
                         </select>
-                        <button onclick="convertStandard()" style="width: 100%; padding: 10px; background: #16a085; color: white; border: none; border-radius: 5px; cursor: pointer;">Convert</button>
+                        <button onclick="convertStandard()" style="width: 100%; padding: 10px; background: #16a085; color: white; border: none; border-radius: 5px; cursor: pointer;"><span class="en">Convert</span><span class="de">Umrechnen</span></button>
                         <div class="calc-result" id="result_convert_vpdb"></div>
                     </div>
 
                     <!-- Alpha Calculation -->
                     <div class="calc-input-group" id="func_alpha">
-                        <h4 style="margin-top: 0;">Calculate α (Fractionation Factor)</h4>
+                        <h4 style="margin-top: 0;"><span class="en">Calculate α (Fractionation Factor)</span><span class="de">Berechne α (Fraktionierungsfaktor)</span></h4>
                         <p style="font-size: 0.85em; color: #666;">α = (1000 + δA) / (1000 + δB)</p>
-                        <label>δ_A (phase A, ‰):</label>
+                        <label>δ_A (<span class="en">phase A</span><span class="de">Phase A</span>, ‰):</label>
                         <input type="number" id="alpha_a" step="0.1" placeholder="e.g., carbonate value">
-                        <label>δ_B (phase B, ‰):</label>
+                        <label>δ_B (<span class="en">phase B</span><span class="de">Phase B</span>, ‰):</label>
                         <input type="number" id="alpha_b" step="0.1" placeholder="e.g., water value">
-                        <button onclick="calcAlpha()" style="width: 100%; padding: 10px; background: #16a085; color: white; border: none; border-radius: 5px; cursor: pointer;">Calculate α</button>
+                        <button onclick="calcAlpha()" style="width: 100%; padding: 10px; background: #16a085; color: white; border: none; border-radius: 5px; cursor: pointer;"><span class="en">Calculate α</span><span class="de">Berechne α</span></button>
                         <div class="calc-result" id="result_alpha"></div>
                     </div>
                 </div>
             </div>
             </div>
         </div>
-        <button class="calculator-toggle" onclick="toggleCalculator()">🧮 Calculator</button>
+        <button class="calculator-toggle" onclick="toggleCalculator()">🧮 <span class="en">Calculator</span><span class="de">Rechner</span></button>
     </div>
 
     <!-- Loading Overlay -->
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loading-box">
             <div class="spinner"></div>
-            <div id="loadingText">Processing...</div>
+            <div id="loadingText"><span class="en">Processing...</span><span class="de">Verarbeitung...</span></div>
         </div>
     </div>
 
     <script>
+        // ========================================
+        // LANGUAGE SWITCHING
+        // ========================================
+        function setLanguage(lang) {
+            document.body.classList.remove('lang-en', 'lang-de');
+            document.body.classList.add('lang-' + lang);
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+            localStorage.setItem('sedgeo-exam-lang', lang);
+        }
+
+        // Initialize language from localStorage
+        (function() {
+            const savedLang = localStorage.getItem('sedgeo-exam-lang');
+            if (savedLang && (savedLang === 'en' || savedLang === 'de')) {
+                setLanguage(savedLang);
+            }
+        })();
+
         // ========================================
         // CONFIGURATION
         // ========================================
@@ -989,7 +1222,9 @@ Expected results under Hypothesis B (provenance change):
                 document.getElementById('timerBar').classList.remove('hidden');
                 initExam();
             } else {
-                document.getElementById('errorMessage').textContent = 'Incorrect password. Please try again.';
+                const lang = document.body.classList.contains('lang-de') ? 'de' : 'en';
+                document.getElementById('errorMessage').textContent =
+                    lang === 'de' ? 'Falsches Passwort. Bitte versuchen Sie es erneut.' : 'Incorrect password. Please try again.';
             }
         }
 
@@ -1017,11 +1252,13 @@ Expected results under Hypothesis B (provenance change):
                 if (remainingSeconds <= 0 && !inGracePeriod) {
                     inGracePeriod = true;
                     remainingSeconds = GRACE_PERIOD_MINUTES * 60;
-                    document.getElementById('timerStatus').textContent = '⚠️ GRACE PERIOD';
-                    alert('Time is up! You have 5 minutes for final checks.');
+                    const lang = document.body.classList.contains('lang-de') ? 'de' : 'en';
+                    document.getElementById('timerStatus').innerHTML = '⚠️ ' + (lang === 'de' ? 'NACHFRIST' : 'GRACE PERIOD');
+                    alert(lang === 'de' ? 'Zeit abgelaufen! Sie haben 5 Minuten für letzte Überprüfungen.' : 'Time is up! You have 5 minutes for final checks.');
                 } else if (remainingSeconds <= 0 && inGracePeriod) {
                     clearInterval(timerInterval);
-                    alert('Grace period ended. Submitting automatically.');
+                    const lang = document.body.classList.contains('lang-de') ? 'de' : 'en';
+                    alert(lang === 'de' ? 'Nachfrist beendet. Automatische Abgabe.' : 'Grace period ended. Submitting automatically.');
                     submitExam();
                 }
             }, 1000);
@@ -1114,38 +1351,32 @@ Expected results under Hypothesis B (provenance change):
         function calcPhosphateTemp() {
             const d18O_phos = parseFloat(document.getElementById('phos_d18O').value);
             const d18O_water = parseFloat(document.getElementById('phos_water').value);
+            const lang = document.body.classList.contains('lang-de') ? 'de' : 'en';
             if (isNaN(d18O_phos) || isNaN(d18O_water)) {
-                document.getElementById('result_temp_phosphate').innerHTML = '<span style="color:red">Enter valid numbers</span>';
+                document.getElementById('result_temp_phosphate').innerHTML = `<span style="color:red">${lang === 'de' ? 'Gültige Zahlen eingeben' : 'Enter valid numbers'}</span>`;
                 return;
             }
             const T = 117.4 - 4.50 * (d18O_phos - d18O_water);
             document.getElementById('result_temp_phosphate').innerHTML = `
-                <strong>Temperature = ${T.toFixed(1)} °C</strong><br>
+                <strong>${lang === 'de' ? 'Temperatur' : 'Temperature'} = ${T.toFixed(1)} °C</strong><br>
                 <small>T = 117.4 - 4.50 × (${d18O_phos} - (${d18O_water})) = ${T.toFixed(2)}</small>
             `;
         }
 
-        // Anderson & Arthur Temperature (FIXED)
+        // Anderson & Arthur Temperature
         function calcAndersonTemp() {
             const d18O_carb = parseFloat(document.getElementById('aa_d18O_carb').value);
             const d18O_water_vsmow = parseFloat(document.getElementById('aa_water').value);
+            const lang = document.body.classList.contains('lang-de') ? 'de' : 'en';
             if (isNaN(d18O_carb) || isNaN(d18O_water_vsmow)) {
-                document.getElementById('result_temp_anderson').innerHTML = '<span style="color:red">Enter valid numbers</span>';
+                document.getElementById('result_temp_anderson').innerHTML = `<span style="color:red">${lang === 'de' ? 'Gültige Zahlen eingeben' : 'Enter valid numbers'}</span>`;
                 return;
             }
-            // The Anderson & Arthur equation expects δc in VPDB and δw also effectively referenced to the same scale
-            // The simplest approach: use the approximation that δw(VSMOW) ≈ δw(VPDB) + 30.91 / 1.03091
-            // But the original equation was calibrated with δw as SMOW-like values
-            // Most commonly: (δc - δw) where δc is VPDB and δw is SMOW, but the difference is taken directly
-            // Correct application: δc (VPDB) and δw (VSMOW converted to VPDB-like scale would be wrong)
-            // Actually, the equation is commonly applied with δc in VPDB and δw in SMOW directly
-            // Let me use the direct approach: the equation was calibrated this way
-            
             const diff = d18O_carb - d18O_water_vsmow;
             const T = 16.0 - 4.14 * diff + 0.13 * Math.pow(diff, 2);
-            
+
             document.getElementById('result_temp_anderson').innerHTML = `
-                <strong>Temperature = ${T.toFixed(1)} °C</strong><br>
+                <strong>${lang === 'de' ? 'Temperatur' : 'Temperature'} = ${T.toFixed(1)} °C</strong><br>
                 <small>δc (VPDB) = ${d18O_carb}‰</small><br>
                 <small>δw (VSMOW) = ${d18O_water_vsmow}‰</small><br>
                 <small>(δc - δw) = ${diff.toFixed(2)}</small><br>
@@ -1157,8 +1388,9 @@ Expected results under Hypothesis B (provenance change):
         function convertStandard() {
             const value = parseFloat(document.getElementById('convert_value').value);
             const from = document.getElementById('convert_from').value;
+            const lang = document.body.classList.contains('lang-de') ? 'de' : 'en';
             if (isNaN(value)) {
-                document.getElementById('result_convert_vpdb').innerHTML = '<span style="color:red">Enter a valid number</span>';
+                document.getElementById('result_convert_vpdb').innerHTML = `<span style="color:red">${lang === 'de' ? 'Gültige Zahl eingeben' : 'Enter a valid number'}</span>`;
                 return;
             }
             let result, formula;
@@ -1176,8 +1408,9 @@ Expected results under Hypothesis B (provenance change):
         function calcAlpha() {
             const a = parseFloat(document.getElementById('alpha_a').value);
             const b = parseFloat(document.getElementById('alpha_b').value);
+            const lang = document.body.classList.contains('lang-de') ? 'de' : 'en';
             if (isNaN(a) || isNaN(b)) {
-                document.getElementById('result_alpha').innerHTML = '<span style="color:red">Enter valid numbers</span>';
+                document.getElementById('result_alpha').innerHTML = `<span style="color:red">${lang === 'de' ? 'Gültige Zahlen eingeben' : 'Enter valid numbers'}</span>`;
                 return;
             }
             const alpha = (1000 + a) / (1000 + b);
@@ -1194,21 +1427,28 @@ Expected results under Hypothesis B (provenance change):
         function generateChart() {
             const xData = document.getElementById('chartXData').value.trim().split('\n').map(v => parseFloat(v.trim())).filter(v => !isNaN(v));
             const yData = document.getElementById('chartYData').value.trim().split('\n').map(v => parseFloat(v.trim())).filter(v => !isNaN(v));
-            
-            if (xData.length === 0 || yData.length === 0) { alert('Enter valid data for both axes'); return; }
-            if (xData.length !== yData.length) { alert('X and Y must have same number of values'); return; }
-            
+            const lang = document.body.classList.contains('lang-de') ? 'de' : 'en';
+
+            if (xData.length === 0 || yData.length === 0) {
+                alert(lang === 'de' ? 'Gültige Daten für beide Achsen eingeben' : 'Enter valid data for both axes');
+                return;
+            }
+            if (xData.length !== yData.length) {
+                alert(lang === 'de' ? 'X und Y müssen gleich viele Werte haben' : 'X and Y must have same number of values');
+                return;
+            }
+
             const ctx = document.getElementById('tempChart').getContext('2d');
             if (chartInstance) chartInstance.destroy();
-            
+
             const combined = xData.map((x, i) => ({ x, y: yData[i] })).sort((a, b) => b.x - a.x);
-            
+
             chartInstance = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: combined.map(d => d.x.toFixed(2)),
                     datasets: [{
-                        label: 'Temperature (°C)',
+                        label: lang === 'de' ? 'Temperatur (°C)' : 'Temperature (°C)',
                         data: combined.map(d => d.y),
                         borderColor: '#e74c3c',
                         backgroundColor: 'rgba(231, 76, 60, 0.1)',
@@ -1222,12 +1462,16 @@ Expected results under Hypothesis B (provenance change):
                 options: {
                     responsive: true,
                     plugins: {
-                        title: { display: true, text: 'Sea Surface Temperature Across the PTB', font: { size: 14 } },
+                        title: {
+                            display: true,
+                            text: lang === 'de' ? 'Meeresoberflächentemperatur über die PTB' : 'Sea Surface Temperature Across the PTB',
+                            font: { size: 14 }
+                        },
                         legend: { display: true, position: 'top' }
                     },
                     scales: {
-                        x: { title: { display: true, text: 'Age (Ma)' } },
-                        y: { title: { display: true, text: 'Temperature (°C)' } }
+                        x: { title: { display: true, text: lang === 'de' ? 'Alter (Ma)' : 'Age (Ma)' } },
+                        y: { title: { display: true, text: lang === 'de' ? 'Temperatur (°C)' : 'Temperature (°C)' } }
                     }
                 }
             });
@@ -1271,9 +1515,10 @@ Expected results under Hypothesis B (provenance change):
 
         function validateFields() {
             const required = ['studentName', 'studentEmail', 'studentId'];
+            const lang = document.body.classList.contains('lang-de') ? 'de' : 'en';
             for (const id of required) {
                 if (!document.getElementById(id).value.trim()) {
-                    alert('Please fill in all required student information fields.');
+                    alert(lang === 'de' ? 'Bitte füllen Sie alle erforderlichen Studenteninformationen aus.' : 'Please fill in all required student information fields.');
                     return false;
                 }
             }
@@ -1294,14 +1539,14 @@ Expected results under Hypothesis B (provenance change):
             t += `ID: ${data.studentInfo.studentId}\n`;
             t += `Date: ${data.studentInfo.date}\n`;
             t += `Submitted: ${data.metadata.submissionTime}\n\n`;
-            
+
             t += `${'='.repeat(60)}\n`;
             t += `PART 1: CARBON ISOTOPES (25 points)\n`;
             t += `${'='.repeat(60)}\n\n`;
             t += `Q1.1a - CIE Calculation:\n${data.part1.q1_1a || 'Not completed'}\n\n`;
             t += `Q1.1b - CIE Interpretation:\n${data.part1.q1_1b || 'Not completed'}\n\n`;
             t += `Q1.2 - δ13C_carb vs δ13C_org:\n${data.part1.q1_2 || 'Not completed'}\n\n`;
-            
+
             t += `${'='.repeat(60)}\n`;
             t += `PART 2: OXYGEN ISOTOPES & TEMPERATURE (30 points)\n`;
             t += `${'='.repeat(60)}\n\n`;
@@ -1309,44 +1554,52 @@ Expected results under Hypothesis B (provenance change):
             t += `Q2.1b - Temperature Interpretation:\n${data.part2.q2_1b || 'Not completed'}\n\n`;
             t += `Q2.2a - Ice Volume Error ID:\n${data.part2.q2_2a || 'Not completed'}\n\n`;
             t += `Q2.2b - Ice Volume Error Calc:\n${data.part2.q2_2b || 'Not completed'}\n\n`;
-            
+
             t += `${'='.repeat(60)}\n`;
             t += `PART 3: OCEAN CHEMISTRY PROXIES (20 points)\n`;
             t += `${'='.repeat(60)}\n\n`;
             t += `Q3.1 - Boron Isotopes:\n${data.part3.q3_1 || 'Not completed'}\n\n`;
             t += `Q3.2 - Strontium Isotopes:\n${data.part3.q3_2 || 'Not completed'}\n\n`;
-            
+
             t += `${'='.repeat(60)}\n`;
             t += `PART 4: DATA VISUALIZATION (5 points)\n`;
             t += `${'='.repeat(60)}\n\n`;
             t += `Q4.1 - Plot Description:\n${data.part4.q4_1 || 'Not completed'}\n\n`;
-            
+
             t += `${'='.repeat(60)}\n`;
             t += `PART 5: MULTI-PROXY SYNTHESIS (20 points)\n`;
             t += `${'='.repeat(60)}\n\n`;
             t += `Q5.1 - Synthesis:\n${data.part5.q5_1 || 'Not completed'}\n`;
-            
+
             return t;
         }
 
         function submitExam() {
             if (!validateFields()) return;
-            if (examSubmitted) { alert('Already submitted.'); return; }
-            if (!confirm('Are you sure you want to submit? You cannot change answers after submission.')) return;
-            
+            if (examSubmitted) {
+                const lang = document.body.classList.contains('lang-de') ? 'de' : 'en';
+                alert(lang === 'de' ? 'Bereits abgegeben.' : 'Already submitted.');
+                return;
+            }
+            const lang = document.body.classList.contains('lang-de') ? 'de' : 'en';
+            if (!confirm(lang === 'de' ? 'Sind Sie sicher, dass Sie abgeben möchten? Sie können Ihre Antworten danach nicht mehr ändern.' : 'Are you sure you want to submit? You cannot change answers after submission.')) return;
+
             examSubmitted = true;
             clearInterval(timerInterval);
             downloadText();
             localStorage.removeItem('ptb_exam_remaining_time');
-            alert('Exam submitted! Please save the downloaded file and upload to Teams or email to ' + INSTRUCTOR_EMAIL);
+            alert(lang === 'de' ?
+                'Prüfung abgegeben! Bitte speichern Sie die heruntergeladene Datei und laden Sie sie in Teams hoch oder senden Sie sie per E-Mail an ' + INSTRUCTOR_EMAIL :
+                'Exam submitted! Please save the downloaded file and upload to Teams or email to ' + INSTRUCTOR_EMAIL);
         }
 
         async function copyToClipboard() {
             if (!validateFields()) return;
             const text = formatText(collectData());
+            const lang = document.body.classList.contains('lang-de') ? 'de' : 'en';
             try {
                 await navigator.clipboard.writeText(text);
-                alert('Copied to clipboard!');
+                alert(lang === 'de' ? 'In Zwischenablage kopiert!' : 'Copied to clipboard!');
             } catch {
                 const ta = document.createElement('textarea');
                 ta.value = text;
@@ -1354,7 +1607,7 @@ Expected results under Hypothesis B (provenance change):
                 ta.select();
                 document.execCommand('copy');
                 document.body.removeChild(ta);
-                alert('Copied to clipboard!');
+                alert(lang === 'de' ? 'In Zwischenablage kopiert!' : 'Copied to clipboard!');
             }
         }
 
@@ -1373,6 +1626,13 @@ Expected results under Hypothesis B (provenance change):
             URL.revokeObjectURL(url);
         }
 
-        function showLoading(msg) {
-            document.getElementById('loadingText').textContent = msg;
-            
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('submissionDate').value = new Date().toISOString().split('T')[0];
+            loadSavedData();
+            setupAutoSave();
+            setupWordCounter();
+        });
+    </script>
+</body>
+</html>

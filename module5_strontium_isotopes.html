@@ -102,13 +102,24 @@
         .figure-box { background: #f8f9fa; border-radius: 12px; padding: 20px; margin: 25px 0; text-align: center; }
         .figure-box img { max-width: 100%; height: auto; border-radius: 8px; margin-bottom: 15px; }
         .figure-box .caption { font-size: 0.9em; color: #666; font-style: italic; }
+        /* Language Switch */
+        .lang-switch { position: fixed; top: 70px; right: 15px; z-index: 1001; display: flex; gap: 5px; background: rgba(255,255,255,0.95); padding: 5px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.15); }
+        .lang-btn { padding: 6px 12px; border: 2px solid #16a085; background: white; color: #16a085; font-weight: bold; cursor: pointer; border-radius: 5px; transition: all 0.3s; font-size: 0.85em; }
+        .lang-btn:hover { background: #e8f6f3; }
+        .lang-btn.active { background: #16a085; color: white; }
+        body.lang-en .de { display: none !important; }
+        body.lang-de .en { display: none !important; }
     </style>
 </head>
-<body>
+<body class="lang-en">
+    <div class="lang-switch">
+        <button class="lang-btn active" data-lang="en" onclick="setLanguage('en')">English</button>
+        <button class="lang-btn" data-lang="de" onclick="setLanguage('de')">Deutsch</button>
+    </div>
     <nav class="nav-bar">
-        <a href="index.html" class="nav-brand">🔬 Sedimentary Geochemistry</a>
+        <a href="index.html" class="nav-brand">🔬 <span class="en">Sedimentary Geochemistry</span><span class="de">Sedimentäre Geochemie</span></a>
         <div class="nav-links">
-            <a href="index.html">Home</a>
+            <a href="index.html"><span class="en">Home</span><span class="de">Startseite</span></a>
             <a href="module1_introduction_isotopes.html">Module 1</a>
             <a href="module2_carbon_oxygen_isotopes.html">Module 2</a>
             <a href="module3_clumped_isotopes.html">Module 3</a>
@@ -118,57 +129,57 @@
     </nav>
 
     <header class="hero">
-        <h1>Strontium Isotopes (⁸⁷Sr/⁸⁶Sr)</h1>
-        <p class="subtitle">The weathering proxy: Continental vs. mantle inputs</p>
-        <span class="module-tag">📖 Module 5 of 5 • Estimated time: 45 minutes</span>
+        <h1><span class="en">Strontium Isotopes (⁸⁷Sr/⁸⁶Sr)</span><span class="de">Strontiumisotope (⁸⁷Sr/⁸⁶Sr)</span></h1>
+        <p class="subtitle"><span class="en">The weathering proxy: Continental vs. mantle inputs</span><span class="de">Der Verwitterungsproxy: Kontinentale versus Mantel-Eingaben</span></p>
+        <span class="module-tag">📖 <span class="en">Module 5 of 5 • Estimated time: 45 minutes</span><span class="de">Modul 5 von 5 • Geschätzte Zeit: 45 Minuten</span></span>
     </header>
 
     <main class="container">
         <div class="objectives">
-            <h2>🎯 Learning Objectives</h2>
+            <h2>🎯 <span class="en">Learning Objectives</span><span class="de">Lernziele</span></h2>
             <ul>
-                <li>Understand the two-component mixing model for seawater ⁸⁷Sr/⁸⁶Sr</li>
-                <li>Explain why Sr isotopes do not fractionate during incorporation into carbonates</li>
-                <li>Interpret the Phanerozoic seawater Sr isotope curve</li>
-                <li>Apply Sr isotope stratigraphy for dating and correlation</li>
-                <li>Recognize the Cenozoic rise and its connection to Himalayan uplift</li>
+                <li><span class="en">Understand the two-component mixing model for seawater ⁸⁷Sr/⁸⁶Sr</span><span class="de">Verstehen Sie das Zwei-Komponenten-Mischungsmodell für Meerwasser ⁸⁷Sr/⁸⁶Sr</span></li>
+                <li><span class="en">Explain why Sr isotopes do not fractionate during incorporation into carbonates</span><span class="de">Erklären Sie, warum Sr-Isotope während der Aufnahme in Karbonate nicht fraktioniert werden</span></li>
+                <li><span class="en">Interpret the Phanerozoic seawater Sr isotope curve</span><span class="de">Interpretieren Sie die phanerozoische Meerwasser-Sr-Isotopenkurve</span></li>
+                <li><span class="en">Apply Sr isotope stratigraphy for dating and correlation</span><span class="de">Wenden Sie die Sr-Isotopen-Stratigraphie zur Datierung und Korrelation an</span></li>
+                <li><span class="en">Recognize the Cenozoic rise and its connection to Himalayan uplift</span><span class="de">Erkennen Sie den känozoischen Anstieg und seine Verbindung zur Himalaya-Hebung</span></li>
             </ul>
         </div>
 
         <section class="section">
-            <h2>1. Strontium Isotope Basics</h2>
-            
-            <h3>The Isotopes</h3>
-            <p>Strontium has four naturally occurring isotopes:</p>
+            <h2>1. <span class="en">Strontium Isotope Basics</span><span class="de">Grundlagen der Strontiumisotope</span></h2>
+
+            <h3><span class="en">The Isotopes</span><span class="de">Die Isotope</span></h3>
+            <p><span class="en">Strontium has four naturally occurring isotopes:</span><span class="de">Strontium hat vier natürlich vorkommende Isotope:</span></p>
 
             <table class="data-table">
                 <thead>
                     <tr>
-                        <th>Isotope</th>
-                        <th>Abundance</th>
-                        <th>Origin</th>
+                        <th><span class="en">Isotope</span><span class="de">Isotop</span></th>
+                        <th><span class="en">Abundance</span><span class="de">Häufigkeit</span></th>
+                        <th><span class="en">Origin</span><span class="de">Ursprung</span></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>⁸⁴Sr</td>
                         <td>0.56%</td>
-                        <td>Primordial</td>
+                        <td><span class="en">Primordial</span><span class="de">Primordial</span></td>
                     </tr>
                     <tr>
                         <td>⁸⁶Sr</td>
                         <td>9.86%</td>
-                        <td>Primordial (reference isotope)</td>
+                        <td><span class="en">Primordial (reference isotope)</span><span class="de">Primordial (Referenzisotop)</span></td>
                     </tr>
                     <tr>
                         <td>⁸⁷Sr</td>
                         <td>7.00%</td>
-                        <td>Primordial + radiogenic (from ⁸⁷Rb decay)</td>
+                        <td><span class="en">Primordial + radiogenic (from ⁸⁷Rb decay)</span><span class="de">Primordial + radiogener (aus ⁸⁷Rb-Zerfall)</span></td>
                     </tr>
                     <tr>
                         <td>⁸⁸Sr</td>
                         <td>82.58%</td>
-                        <td>Primordial</td>
+                        <td><span class="en">Primordial</span><span class="de">Primordial</span></td>
                     </tr>
                 </tbody>
             </table>
@@ -179,54 +190,54 @@
                 <p style="margin-top: 10px;">Rocks with high Rb/Sr ratios (like granites) accumulate radiogenic ⁸⁷Sr over time, developing <strong>high ⁸⁷Sr/⁸⁶Sr ratios</strong>.</p>
             </div>
 
-            <h3>No Isotope Fractionation!</h3>
-            <p>Unlike light stable isotopes (C, O, S), Sr isotopes show <strong>no measurable mass-dependent fractionation</strong> during geological processes:</p>
+            <h3><span class="en">No Isotope Fractionation!</span><span class="de">Keine Isotopenfraktionierung!</span></h3>
+            <p><span class="en">Unlike light stable isotopes (C, O, S), Sr isotopes show <strong>no measurable mass-dependent fractionation</strong> during geological processes:</span><span class="de">Im Gegensatz zu leichten stabilen Isotopen (C, O, S) zeigen Sr-Isotope <strong>keine messbare massenabhängige Fraktionierung</strong> während geologischer Prozesse:</span></p>
 
             <div class="concept-box success">
-                <h4>✓ Direct Recording</h4>
-                <p>The ⁸⁷Sr/⁸⁶Sr ratio of a well-preserved marine carbonate <strong>directly reflects</strong> the ⁸⁷Sr/⁸⁶Sr ratio of seawater at the time of precipitation.</p>
-                <p style="margin-top: 10px;">No temperature correction, no vital effects, no fractionation factors needed!</p>
+                <h4>✓ <span class="en">Direct Recording</span><span class="de">Direkte Aufzeichnung</span></h4>
+                <p><span class="en">The ⁸⁷Sr/⁸⁶Sr ratio of a well-preserved marine carbonate <strong>directly reflects</strong> the ⁸⁷Sr/⁸⁶Sr ratio of seawater at the time of precipitation.</span><span class="de">Das ⁸⁷Sr/⁸⁶Sr-Verhältnis eines gut erhaltenen Meereskarbonatstoffs <strong>reflektiert direkt</strong> das ⁸⁷Sr/⁸⁶Sr-Verhältnis des Meerwassers zum Zeitpunkt der Ausfällung.</span></p>
+                <p style="margin-top: 10px;"><span class="en">No temperature correction, no vital effects, no fractionation factors needed!</span><span class="de">Keine Temperaturkorrektur, keine vitalen Effekte, keine Fraktionierungsfaktoren erforderlich!</span></p>
             </div>
         </section>
 
         <section class="section">
-            <h2>2. The Two End-Member Model</h2>
-            
-            <p>Seawater ⁸⁷Sr/⁸⁶Sr is controlled by the balance between two major Sr sources:</p>
+            <h2>2. <span class="en">The Two End-Member Model</span><span class="de">Das Zwei-End-Member-Modell</span></h2>
+
+            <p><span class="en">Seawater ⁸⁷Sr/⁸⁶Sr is controlled by the balance between two major Sr sources:</span><span class="de">Das Meerwasser ⁸⁷Sr/⁸⁶Sr wird durch das Gleichgewicht zwischen zwei Hauptquellen von Sr kontrolliert:</span></p>
 
             <div class="two-column">
                 <div class="endmember-box continental">
-                    <h4>🏔️ Continental Weathering</h4>
+                    <h4>🏔️ <span class="en">Continental Weathering</span><span class="de">Kontinentale Verwitterung</span></h4>
                     <div class="value">0.711 - 0.720</div>
-                    <p><strong>Radiogenic</strong></p>
+                    <p><strong><span class="en">Radiogenic</span><span class="de">Radiogen</span></strong></p>
                     <ul style="text-align: left; font-size: 0.9em; margin-top: 10px;">
-                        <li>Old continental crust</li>
-                        <li>Granites: >0.720</li>
-                        <li>Carbonates: 0.707-0.709</li>
-                        <li>River average: ~0.711</li>
+                        <li><span class="en">Old continental crust</span><span class="de">Alte Kontinentalkruste</span></li>
+                        <li><span class="en">Granites: >0.720</span><span class="de">Granite: > 0.720</span></li>
+                        <li><span class="en">Carbonates: 0.707-0.709</span><span class="de">Karbonate: 0,707-0,709</span></li>
+                        <li><span class="en">River average: ~0.711</span><span class="de">Flussdurchschnitt: ~ 0,711</span></li>
                     </ul>
                 </div>
                 <div class="endmember-box mantle">
-                    <h4>🌋 Hydrothermal / Mantle</h4>
+                    <h4>🌋 <span class="en">Hydrothermal / Mantle</span><span class="de">Hydrothermal / Mantel</span></h4>
                     <div class="value">~0.703</div>
-                    <p><strong>Unradiogenic</strong></p>
+                    <p><strong><span class="en">Unradiogenic</span><span class="de">Nicht radiogen</span></strong></p>
                     <ul style="text-align: left; font-size: 0.9em; margin-top: 10px;">
-                        <li>Mantle-derived basalts</li>
-                        <li>Mid-ocean ridge systems</li>
-                        <li>Low Rb/Sr → low ⁸⁷Sr</li>
-                        <li>Constant over Earth history</li>
+                        <li><span class="en">Mantle-derived basalts</span><span class="de">Mantelbürtige Basalte</span></li>
+                        <li><span class="en">Mid-ocean ridge systems</span><span class="de">Mittelozeanische Rückensysteme</span></li>
+                        <li><span class="en">Low Rb/Sr → low ⁸⁷Sr</span><span class="de">Niedriges Rb/Sr → niedriges ⁸⁷Sr</span></li>
+                        <li><span class="en">Constant over Earth history</span><span class="de">Konstant in der Erdgeschichte</span></li>
                     </ul>
                 </div>
             </div>
 
             <div class="concept-box important">
-                <h4>📊 Modern Seawater: 0.70918</h4>
-                <p>The modern ocean has ⁸⁷Sr/⁸⁶Sr ≈ <strong>0.70918</strong>, which is a mixture of:</p>
+                <h4>📊 <span class="en">Modern Seawater: 0.70918</span><span class="de">Modernes Meerwasser: 0,70918</span></h4>
+                <p><span class="en">The modern ocean has ⁸⁷Sr/⁸⁶Sr ≈ <strong>0.70918</strong>, which is a mixture of:</span><span class="de">Der moderne Ozean hat ⁸⁷Sr/⁸⁶Sr ≈ <strong>0,70918</strong>, was eine Mischung aus:</span></p>
                 <ul style="margin-top: 10px;">
-                    <li>Continental rivers delivering ~75% of Sr input</li>
-                    <li>Hydrothermal vents delivering ~25% of Sr input</li>
+                    <li><span class="en">Continental rivers delivering ~75% of Sr input</span><span class="de">Kontinentale Flüsse liefern ~75% des Sr-Inputs</span></li>
+                    <li><span class="en">Hydrothermal vents delivering ~25% of Sr input</span><span class="de">Hydrothermale Quellen liefern ~25% des Sr-Inputs</span></li>
                 </ul>
-                <p style="margin-top: 10px;">The balance shifts through time as weathering rates and volcanic activity change.</p>
+                <p style="margin-top: 10px;"><span class="en">The balance shifts through time as weathering rates and volcanic activity change.</span><span class="de">Das Gleichgewicht verschiebt sich im Laufe der Zeit, wenn sich Verwitterungsraten und vulkanische Aktivität ändern.</span></p>
             </div>
 
             <div class="figure-box">
@@ -234,33 +245,33 @@
                 <div class="caption">Figure: The global thermohaline circulation ("Ocean Conveyor Belt"). Ocean circulation patterns distribute Sr isotopes globally within ~1,000 years — much shorter than Sr residence time (~2.5 Ma), ensuring homogeneous seawater ⁸⁷Sr/⁸⁶Sr worldwide.</div>
             </div>
 
-            <h3>Sr Fluxes to the Ocean</h3>
+            <h3><span class="en">Sr Fluxes to the Ocean</span><span class="de">Sr-Flüsse zum Ozean</span></h3>
             <table class="data-table">
                 <thead>
                     <tr>
-                        <th>Source</th>
-                        <th>Flux (10¹² g Sr/year)</th>
+                        <th><span class="en">Source</span><span class="de">Quelle</span></th>
+                        <th><span class="en">Flux (10¹² g Sr/year)</span><span class="de">Fluss (10¹² g Sr/Jahr)</span></th>
                         <th>⁸⁷Sr/⁸⁶Sr</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>River runoff</td>
+                        <td><span class="en">River runoff</span><span class="de">Flussabfluss</span></td>
                         <td>~2.7</td>
-                        <td>0.711 (average)</td>
+                        <td><span class="en">0.711 (average)</span><span class="de">0,711 (Durchschnitt)</span></td>
                     </tr>
                     <tr>
-                        <td>Groundwater</td>
+                        <td><span class="en">Groundwater</span><span class="de">Grundwasser</span></td>
                         <td>~2.0</td>
                         <td>0.710</td>
                     </tr>
                     <tr>
-                        <td>Hydrothermal</td>
+                        <td><span class="en">Hydrothermal</span><span class="de">Hydrothermal</span></td>
                         <td>~0.4</td>
                         <td>0.703</td>
                     </tr>
                     <tr>
-                        <td>Diagenesis (carbonate)</td>
+                        <td><span class="en">Diagenesis (carbonate)</span><span class="de">Diagenese (Karbonat)</span></td>
                         <td>~0.3</td>
                         <td>0.709</td>
                     </tr>
@@ -269,224 +280,224 @@
         </section>
 
         <section class="section">
-            <h2>3. The Phanerozoic Seawater Sr Curve</h2>
+            <h2>3. <span class="en">The Phanerozoic Seawater Sr Curve</span><span class="de">Die phanerozoische Meerwasser-Sr-Kurve</span></h2>
 
             <div class="figure-box">
                 <img src="images/lectures/d18o_latitude_global.jpg" alt="δ¹⁸O latitude patterns">
-                <div class="caption">Figure: Global distribution of δ¹⁸O in precipitation versus latitude. While Sr isotopes are not fractionated by temperature, understanding latitude effects on other isotope systems (δ¹⁸O) helps integrate multi-proxy paleoclimate reconstructions.</div>
+                <div class="caption"><span class="en">Figure: Global distribution of δ¹⁸O in precipitation versus latitude. While Sr isotopes are not fractionated by temperature, understanding latitude effects on other isotope systems (δ¹⁸O) helps integrate multi-proxy paleoclimate reconstructions.</span><span class="de">Abbildung: Globale Verteilung von δ¹⁸O in Niederschlag versus Breitengrad. Obwohl Sr-Isotope nicht durch Temperatur fraktioniert werden, hilft das Verständnis von Breitengradeffekten bei anderen Isotopensystemen (δ¹⁸O) bei der Integration von Multi-Proxy-Paläoklima-Rekonstruktionen.</span></div>
             </div>
 
-            <p>The ⁸⁷Sr/⁸⁶Sr ratio of seawater has varied significantly through the Phanerozoic:</p>
+            <p><span class="en">The ⁸⁷Sr/⁸⁶Sr ratio of seawater has varied significantly through the Phanerozoic:</span><span class="de">Das ⁸⁷Sr/⁸⁶Sr-Verhältnis des Meerwassers hat sich im Phanerozoikum erheblich verändert:</span></p>
 
             <div class="concept-box">
-                <h4>📈 Major Features of the Sr Curve</h4>
+                <h4>📈 <span class="en">Major Features of the Sr Curve</span><span class="de">Hauptmerkmale der Sr-Kurve</span></h4>
                 <ul style="margin-top: 10px;">
-                    <li><strong>Range:</strong> 0.7068 to 0.7092 over the Phanerozoic</li>
-                    <li><strong>Minimum:</strong> Middle Jurassic (~0.7068)</li>
-                    <li><strong>Maximum:</strong> Present day (~0.7092)</li>
-                    <li><strong>Major rises:</strong> Late Ordovician, Late Paleozoic, Cenozoic</li>
+                    <li><strong><span class="en">Range:</span><span class="de">Bereich:</span></strong> <span class="en">0.7068 to 0.7092 over the Phanerozoic</span><span class="de">0,7068 bis 0,7092 im Phanerozoikum</span></li>
+                    <li><strong><span class="en">Minimum:</span><span class="de">Minimum:</span></strong> <span class="en">Middle Jurassic (~0.7068)</span><span class="de">Mitteljura (~0,7068)</span></li>
+                    <li><strong><span class="en">Maximum:</span><span class="de">Maximum:</span></strong> <span class="en">Present day (~0.7092)</span><span class="de">Heutiger Tag (~0,7092)</span></li>
+                    <li><strong><span class="en">Major rises:</span><span class="de">Größere Anstiege:</span></strong> <span class="en">Late Ordovician, Late Paleozoic, Cenozoic</span><span class="de">Spätes Ordovizium, spätes Paläozoikum, Känozoikum</span></li>
                 </ul>
             </div>
 
-            <h3>Interpreting the Curve</h3>
+            <h3><span class="en">Interpreting the Curve</span><span class="de">Interpretation der Kurve</span></h3>
             <table class="data-table">
                 <thead>
                     <tr>
-                        <th>⁸⁷Sr/⁸⁶Sr Trend</th>
-                        <th>Interpretation</th>
-                        <th>Geological Context</th>
+                        <th><span class="en">⁸⁷Sr/⁸⁶Sr Trend</span><span class="de">⁸⁷Sr/⁸⁶Sr Trend</span></th>
+                        <th><span class="en">Interpretation</span><span class="de">Interpretation</span></th>
+                        <th><span class="en">Geological Context</span><span class="de">Geologischer Kontext</span></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>↑ Rising</td>
-                        <td>Enhanced continental weathering OR reduced hydrothermal input</td>
-                        <td>Orogeny, continental exposure, falling sea level</td>
+                        <td><span class="en">↑ Rising</span><span class="de">↑ Steigend</span></td>
+                        <td><span class="en">Enhanced continental weathering OR reduced hydrothermal input</span><span class="de">Verstärkte kontinentale Verwitterung ODER reduzierter hydrothermalischer Input</span></td>
+                        <td><span class="en">Orogeny, continental exposure, falling sea level</span><span class="de">Orogenese, Landmasse-Exposition, fallender Meeresspiegel</span></td>
                     </tr>
                     <tr>
-                        <td>↓ Falling</td>
-                        <td>Reduced weathering OR enhanced hydrothermal input</td>
-                        <td>Continental flooding, fast spreading ridges</td>
+                        <td><span class="en">↓ Falling</span><span class="de">↓ Fallend</span></td>
+                        <td><span class="en">Reduced weathering OR enhanced hydrothermal input</span><span class="de">Reduzierte Verwitterung ODER verstärkter hydrothermalischer Input</span></td>
+                        <td><span class="en">Continental flooding, fast spreading ridges</span><span class="de">Kontinentale Überflutung, schnelle Spreizungsrücken</span></td>
                     </tr>
                 </tbody>
             </table>
 
             <div class="timeline">
                 <div class="timeline-item">
-                    <h5>Late Ordovician-Silurian Rise</h5>
-                    <p>Closure of Iapetus Ocean, Caledonian Orogeny → enhanced weathering of radiogenic crust</p>
+                    <h5><span class="en">Late Ordovician-Silurian Rise</span><span class="de">Spätes Ordovizium-Silur Anstieg</span></h5>
+                    <p><span class="en">Closure of Iapetus Ocean, Caledonian Orogeny → enhanced weathering of radiogenic crust</span><span class="de">Schließung des Iapetus-Ozeans, kaledonische Orogenese → verstärkte Verwitterung der radiogenen Kruste</span></p>
                 </div>
                 <div class="timeline-item">
-                    <h5>Late Devonian-Carboniferous Rise</h5>
-                    <p>Collision of Euramerica and Gondwana, Variscan Orogeny</p>
+                    <h5><span class="en">Late Devonian-Carboniferous Rise</span><span class="de">Spätes Devon-Karbon Anstieg</span></h5>
+                    <p><span class="en">Collision of Euramerica and Gondwana, Variscan Orogeny</span><span class="de">Kollision von Euramerika und Gondwana, variszische Orogenese</span></p>
                 </div>
                 <div class="timeline-item">
-                    <h5>Mesozoic Decline</h5>
-                    <p>Continental flooding, supercontinent breakup, fast spreading ridges → more hydrothermal input</p>
+                    <h5><span class="en">Mesozoic Decline</span><span class="de">Mesozoischer Rückgang</span></h5>
+                    <p><span class="en">Continental flooding, supercontinent breakup, fast spreading ridges → more hydrothermal input</span><span class="de">Kontinentale Überflutung, Superkontinental-Aufbau, schnelle Spreizungsrücken → mehr hydrothermalischer Input</span></p>
                 </div>
                 <div class="timeline-item">
-                    <h5>Cenozoic Rise (last 40 Ma)</h5>
-                    <p><strong>Himalayan uplift</strong> — exposed highly radiogenic rocks to weathering</p>
+                    <h5><span class="en">Cenozoic Rise (last 40 Ma)</span><span class="de">Känozoischer Anstieg (letzte 40 Ma)</span></h5>
+                    <p><strong><span class="en">Himalayan uplift</span><span class="de">Himalaya-Hebung</span></strong> <span class="en">— exposed highly radiogenic rocks to weathering</span><span class="de">— legte hochradiogene Gesteine der Verwitterung aus</span></p>
                 </div>
             </div>
         </section>
 
         <section class="section">
-            <h2>4. The Cenozoic Rise: A Case Study</h2>
-            
-            <p>The most dramatic feature of the Sr curve is the <strong>continuous rise over the last 40 million years</strong> from ~0.7077 to ~0.7092.</p>
+            <h2>4. <span class="en">The Cenozoic Rise: A Case Study</span><span class="de">Der känozoische Anstieg: Eine Fallstudie</span></h2>
+
+            <p><span class="en">The most dramatic feature of the Sr curve is the <strong>continuous rise over the last 40 million years</strong> from ~0.7077 to ~0.7092.</span><span class="de">Das dramatischste Merkmal der Sr-Kurve ist der <strong>kontinuierliche Anstieg der letzten 40 Millionen Jahre</strong> von ~0,7077 auf ~0,7092.</span></p>
 
             <div class="concept-box">
-                <h4>🏔️ The Himalayan Connection</h4>
-                <p>The collision of India with Asia (~50 Ma) and subsequent Himalayan uplift exposed:</p>
+                <h4>🏔️ <span class="en">The Himalayan Connection</span><span class="de">Die Himalaya-Verbindung</span></h4>
+                <p><span class="en">The collision of India with Asia (~50 Ma) and subsequent Himalayan uplift exposed:</span><span class="de">Die Kollision Indiens mit Asien (~50 Ma) und die anschließende Himalaya-Hebung legten frei:</span></p>
                 <ul style="margin-top: 10px;">
-                    <li>Old, highly radiogenic rocks (⁸⁷Sr/⁸⁶Sr > 0.720)</li>
-                    <li>High-grade metamorphic terranes</li>
-                    <li>Ancient granites with high Rb/Sr ratios</li>
+                    <li><span class="en">Old, highly radiogenic rocks (⁸⁷Sr/⁸⁶Sr > 0.720)</span><span class="de">Alt, hochradiogene Gesteine (⁸⁷Sr/⁸⁶Sr > 0,720)</span></li>
+                    <li><span class="en">High-grade metamorphic terranes</span><span class="de">Hochgradige metamorphe Terranen</span></li>
+                    <li><span class="en">Ancient granites with high Rb/Sr ratios</span><span class="de">Alte Granite mit hohen Rb/Sr-Verhältnissen</span></li>
                 </ul>
             </div>
 
             <div class="concept-box success">
-                <h4>✓ Evidence: Ganges-Brahmaputra Rivers</h4>
-                <p>Rivers draining the Himalayas have exceptionally high ⁸⁷Sr/⁸⁶Sr:</p>
+                <h4>✓ <span class="en">Evidence: Ganges-Brahmaputra Rivers</span><span class="de">Beweis: Ganges-Brahmaputra-Flüsse</span></h4>
+                <p><span class="en">Rivers draining the Himalayas have exceptionally high ⁸⁷Sr/⁸⁶Sr:</span><span class="de">Flüsse, die die Himalaya entwässern, haben außergewöhnlich hohe ⁸⁷Sr/⁸⁶Sr:</span></p>
                 <ul style="margin-top: 10px;">
-                    <li>Ganges: ~0.725 (much higher than global river average of ~0.711)</li>
-                    <li>Brahmaputra: ~0.720</li>
-                    <li>These rivers deliver disproportionately radiogenic Sr to the ocean</li>
+                    <li><span class="en">Ganges: ~0.725 (much higher than global river average of ~0.711)</span><span class="de">Ganges: ~0,725 (viel höher als der globale Flussdurchschnitt von ~0,711)</span></li>
+                    <li><span class="en">Brahmaputra: ~0.720</span><span class="de">Brahmaputra: ~0,720</span></li>
+                    <li><span class="en">These rivers deliver disproportionately radiogenic Sr to the ocean</span><span class="de">Diese Flüsse liefern überproportional radiogenes Sr zum Ozean</span></li>
                 </ul>
             </div>
 
-            <h3>Implications for Climate</h3>
+            <h3><span class="en">Implications for Climate</span><span class="de">Auswirkungen auf das Klima</span></h3>
             <div class="concept-box important">
-                <h4>🌍 Weathering-CO₂ Feedback</h4>
-                <p>Enhanced silicate weathering (recorded by rising ⁸⁷Sr/⁸⁶Sr) consumes atmospheric CO₂:</p>
+                <h4>🌍 <span class="en">Weathering-CO₂ Feedback</span><span class="de">Verwitterungs-CO₂-Rückkopplung</span></h4>
+                <p><span class="en">Enhanced silicate weathering (recorded by rising ⁸⁷Sr/⁸⁶Sr) consumes atmospheric CO₂:</span><span class="de">Verstärkte Silikatverwitterung (aufgezeichnet durch steigendes ⁸⁷Sr/⁸⁶Sr) verbraucht atmosphärisches CO₂:</span></p>
                 <p style="margin-top: 10px; font-family: 'Courier New', monospace;">CaSiO₃ + CO₂ → CaCO₃ + SiO₂</p>
-                <p style="margin-top: 10px;">The Cenozoic Sr rise correlates with:</p>
+                <p style="margin-top: 10px;"><span class="en">The Cenozoic Sr rise correlates with:</span><span class="de">Der känozoische Sr-Anstieg korreliert mit:</span></p>
                 <ul style="margin-top: 5px;">
-                    <li>Long-term global cooling</li>
-                    <li>Development of Antarctic ice sheet (~34 Ma)</li>
-                    <li>Northern Hemisphere glaciation (~2.7 Ma)</li>
+                    <li><span class="en">Long-term global cooling</span><span class="de">Langfristige globale Abkühlung</span></li>
+                    <li><span class="en">Development of Antarctic ice sheet (~34 Ma)</span><span class="de">Entwicklung der antarktischen Eisschicht (~34 Ma)</span></li>
+                    <li><span class="en">Northern Hemisphere glaciation (~2.7 Ma)</span><span class="de">Vergletscherung der Nordhemisphäre (~2,7 Ma)</span></li>
                 </ul>
             </div>
         </section>
 
         <section class="section">
-            <h2>5. Sr Isotope Stratigraphy: Dating Applications</h2>
+            <h2>5. <span class="en">Sr Isotope Stratigraphy: Dating Applications</span><span class="de">Sr-Isotopen-Stratigraphie: Anwendungen zur Datierung</span></h2>
 
             <div class="figure-box">
                 <img src="images/lectures/carbonate_bahamas_platform.jpg" alt="Modern carbonate platform">
-                <div class="caption">Figure: Modern carbonate platform (Bahamas/Florida region). Marine carbonates preserve seawater ⁸⁷Sr/⁸⁶Sr at the time of deposition, enabling chronostratigraphic dating by comparing sample ratios to the global Sr curve.</div>
+                <div class="caption"><span class="en">Figure: Modern carbonate platform (Bahamas/Florida region). Marine carbonates preserve seawater ⁸⁷Sr/⁸⁶Sr at the time of deposition, enabling chronostratigraphic dating by comparing sample ratios to the global Sr curve.</span><span class="de">Abbildung: Moderne Karbonatplattform (Bahamas/Florida-Region). Marine Karbonate konservieren Meerwasser ⁸⁷Sr/⁸⁶Sr zum Zeitpunkt der Ablagerung, was eine chronostratigraphische Datierung durch Vergleich der Probenverhältnisse mit der globalen Sr-Kurve ermöglicht.</span></div>
             </div>
 
-            <p>Because seawater ⁸⁷Sr/⁸⁶Sr changed through time, it can be used for <strong>chronostratigraphic dating</strong>.</p>
+            <p><span class="en">Because seawater ⁸⁷Sr/⁸⁶Sr changed through time, it can be used for <strong>chronostratigraphic dating</strong>.</span><span class="de">Da sich Meerwasser ⁸⁷Sr/⁸⁶Sr im Laufe der Zeit verändert hat, kann es für <strong>chronostratigraphische Datierung</strong> verwendet werden.</span></p>
 
             <div class="concept-box">
-                <h4>📅 How It Works</h4>
+                <h4>📅 <span class="en">How It Works</span><span class="de">Wie es funktioniert</span></h4>
                 <ol style="margin-top: 10px;">
-                    <li>Measure ⁸⁷Sr/⁸⁶Sr of well-preserved marine carbonate</li>
-                    <li>Compare to the global seawater Sr curve (McArthur et al., 2020)</li>
-                    <li>Find the age(s) where the measured ratio intersects the curve</li>
+                    <li><span class="en">Measure ⁸⁷Sr/⁸⁶Sr of well-preserved marine carbonate</span><span class="de">Messen Sie ⁸⁷Sr/⁸⁶Sr von gut erhaltenem Meerkarbonaton</span></li>
+                    <li><span class="en">Compare to the global seawater Sr curve (McArthur et al., 2020)</span><span class="de">Vergleichen Sie mit der globalen Meerwasser-Sr-Kurve (McArthur et al., 2020)</span></li>
+                    <li><span class="en">Find the age(s) where the measured ratio intersects the curve</span><span class="de">Finden Sie das/die Alter, bei dem/denen sich das gemessene Verhältnis mit der Kurve schneidet</span></li>
                 </ol>
             </div>
 
-            <h3>Requirements and Limitations</h3>
+            <h3><span class="en">Requirements and Limitations</span><span class="de">Anforderungen und Einschränkungen</span></h3>
             <table class="data-table">
                 <thead>
                     <tr>
-                        <th>Requirement</th>
-                        <th>Reason</th>
+                        <th><span class="en">Requirement</span><span class="de">Voraussetzung</span></th>
+                        <th><span class="en">Reason</span><span class="de">Grund</span></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Well-preserved sample</td>
-                        <td>Diagenesis can alter original ⁸⁷Sr/⁸⁶Sr</td>
+                        <td><span class="en">Well-preserved sample</span><span class="de">Gut erhaltene Probe</span></td>
+                        <td><span class="en">Diagenesis can alter original ⁸⁷Sr/⁸⁶Sr</span><span class="de">Diagenese kann das ursprüngliche ⁸⁷Sr/⁸⁶Sr verändern</span></td>
                     </tr>
                     <tr>
-                        <td>Marine origin</td>
-                        <td>Only marine carbonates record seawater Sr</td>
+                        <td><span class="en">Marine origin</span><span class="de">Meeresursprung</span></td>
+                        <td><span class="en">Only marine carbonates record seawater Sr</span><span class="de">Nur marine Karbonate zeichnen Meerwasser-Sr auf</span></td>
                     </tr>
                     <tr>
-                        <td>Steep curve gradient</td>
-                        <td>Flat portions give poor age resolution</td>
+                        <td><span class="en">Steep curve gradient</span><span class="de">Steiler Kurvengradient</span></td>
+                        <td><span class="en">Flat portions give poor age resolution</span><span class="de">Flache Teile geben schlechte Altersauflösung</span></td>
                     </tr>
                     <tr>
-                        <td>No curve reversals</td>
-                        <td>Unique age requires monotonic trend</td>
+                        <td><span class="en">No curve reversals</span><span class="de">Keine Kurvenumkehrungen</span></td>
+                        <td><span class="en">Unique age requires monotonic trend</span><span class="de">Eindeutiges Alter erfordert monotonen Trend</span></td>
                     </tr>
                 </tbody>
             </table>
 
             <div class="concept-box warning">
-                <h4>⚠️ Best and Worst Time Intervals</h4>
-                <p><strong>Good for dating (steep gradients):</strong></p>
+                <h4>⚠️ <span class="en">Best and Worst Time Intervals</span><span class="de">Beste und schlechteste Zeitintervalle</span></h4>
+                <p><strong><span class="en">Good for dating (steep gradients):</span><span class="de">Gut zum Datieren (steile Gradienten):</span></strong></p>
                 <ul style="margin-top: 5px;">
-                    <li>Cenozoic (especially Neogene): excellent resolution</li>
-                    <li>Late Cretaceous: good resolution</li>
-                    <li>Early Triassic: steep rise after PTB</li>
+                    <li><span class="en">Cenozoic (especially Neogene): excellent resolution</span><span class="de">Känozoikum (besonders Neogen): hervorragende Auflösung</span></li>
+                    <li><span class="en">Late Cretaceous: good resolution</span><span class="de">späte Kreidezeit: gute Auflösung</span></li>
+                    <li><span class="en">Early Triassic: steep rise after PTB</span><span class="de">Frühe Trias: steiler Anstieg nach PTB</span></li>
                 </ul>
-                <p style="margin-top: 10px;"><strong>Poor for dating (flat or reversing):</strong></p>
+                <p style="margin-top: 10px;"><strong><span class="en">Poor for dating (flat or reversing):</span><span class="de">Schlecht zum Datieren (flach oder umgekehrt):</span></strong></p>
                 <ul style="margin-top: 5px;">
-                    <li>Middle Jurassic: minimum, flat curve</li>
-                    <li>Cambrian: limited data, possible diagenesis</li>
+                    <li><span class="en">Middle Jurassic: minimum, flat curve</span><span class="de">Mitteljura: Minimum, flache Kurve</span></li>
+                    <li><span class="en">Cambrian: limited data, possible diagenesis</span><span class="de">Kambrium: begrenzte Daten, mögliche Diagenese</span></li>
                 </ul>
             </div>
 
-            <h3>Precision</h3>
-            <p>Under optimal conditions:</p>
+            <h3><span class="en">Precision</span><span class="de">Präzision</span></h3>
+            <p><span class="en">Under optimal conditions:</span><span class="de">Unter optimalen Bedingungen:</span></p>
             <ul style="margin-left: 20px; margin-top: 10px;">
-                <li>Cenozoic: ±0.5-1 million years</li>
-                <li>Late Mesozoic: ±1-2 million years</li>
-                <li>Paleozoic: ±2-5 million years (curve less well constrained)</li>
+                <li><span class="en">Cenozoic: ±0.5-1 million years</span><span class="de">Känozoikum: ±0,5-1 Millionen Jahre</span></li>
+                <li><span class="en">Late Mesozoic: ±1-2 million years</span><span class="de">Spätes Mesozoikum: ±1-2 Millionen Jahre</span></li>
+                <li><span class="en">Paleozoic: ±2-5 million years (curve less well constrained)</span><span class="de">Paläozoikum: ±2-5 Millionen Jahre (Kurve weniger gut begrenzt)</span></li>
             </ul>
         </section>
 
         <section class="section">
-            <h2>6. Case Study: Permo-Triassic Boundary</h2>
-            
+            <h2>6. <span class="en">Case Study: Permo-Triassic Boundary</span><span class="de">Fallstudie: Perm-Trias-Grenze</span></h2>
+
             <div class="concept-box">
-                <h4>📈 Sharp Rise Across the PTB</h4>
-                <p>⁸⁷Sr/⁸⁶Sr increases sharply from ~0.7070 to ~0.7082 across the Permo-Triassic boundary and into the Early Triassic.</p>
+                <h4>📈 <span class="en">Sharp Rise Across the PTB</span><span class="de">Scharfer Anstieg über die PTB</span></h4>
+                <p><span class="en">⁸⁷Sr/⁸⁶Sr increases sharply from ~0.7070 to ~0.7082 across the Permo-Triassic boundary and into the Early Triassic.</span><span class="de">⁸⁷Sr/⁸⁶Sr steigt scharf von ~0,7070 auf ~0,7082 über die Perm-Trias-Grenze und in die frühe Trias.</span></p>
             </div>
 
-            <h3>Traditional Interpretation (Algeo & Twitchett, 2010)</h3>
-            <p>The Sr isotope rise has been interpreted as evidence for:</p>
+            <h3><span class="en">Traditional Interpretation (Algeo & Twitchett, 2010)</span><span class="de">Traditionelle Interpretation (Algeo & Twitchett, 2010)</span></h3>
+            <p><span class="en">The Sr isotope rise has been interpreted as evidence for:</span><span class="de">Der Sr-Isotopen-Anstieg wurde als Beweis interpretiert für:</span></p>
             <ul style="margin-left: 20px; margin-top: 10px;">
-                <li>Enhanced continental silicate weathering</li>
-                <li>Negative feedback on atmospheric CO₂</li>
-                <li>Mechanism for post-extinction recovery</li>
+                <li><span class="en">Enhanced continental silicate weathering</span><span class="de">Verstärkte kontinentale Silikatverwitterung</span></li>
+                <li><span class="en">Negative feedback on atmospheric CO₂</span><span class="de">Negative Rückkopplung auf atmosphärisches CO₂</span></li>
+                <li><span class="en">Mechanism for post-extinction recovery</span><span class="de">Mechanismus für die Erholung nach dem Aussterben</span></li>
             </ul>
 
             <div class="concept-box warning">
-                <h4>⚠️ Alternative Interpretation</h4>
-                <p><strong>Question:</strong> Does increased ⁸⁷Sr/⁸⁶Sr necessarily mean increased weathering rates?</p>
-                <p style="margin-top: 10px;">The Sr isotope signal could also reflect:</p>
+                <h4>⚠️ <span class="en">Alternative Interpretation</span><span class="de">Alternative Interpretation</span></h4>
+                <p><strong><span class="en">Question:</span><span class="de">Frage:</span></strong> <span class="en">Does increased ⁸⁷Sr/⁸⁶Sr necessarily mean increased weathering rates?</span><span class="de">Bedeutet ein erhöhtes ⁸⁷Sr/⁸⁶Sr zwangsläufig erhöhte Verwitterungsraten?</span></p>
+                <p style="margin-top: 10px;"><span class="en">The Sr isotope signal could also reflect:</span><span class="de">Das Sr-Isotopensignal könnte auch widerspiegeln:</span></p>
                 <ul style="margin-top: 5px;">
-                    <li>Change in <strong>what</strong> is being weathered (more radiogenic source rocks)</li>
-                    <li>Drainage reorganization exposing different lithologies</li>
-                    <li>Does the clastic sediment record actually show enhanced weathering flux?</li>
+                    <li><span class="en">Change in <strong>what</strong> is being weathered (more radiogenic source rocks)</span><span class="de">Änderung des <strong>Was</strong> verwittert wird (mehr radiogene Quellgesteine)</span></li>
+                    <li><span class="en">Drainage reorganization exposing different lithologies</span><span class="de">Umorganisation der Drainage, die verschiedene Lithologien freilegt</span></li>
+                    <li><span class="en">Does the clastic sediment record actually show enhanced weathering flux?</span><span class="de">Zeigt die klastische Sedimentabfolge tatsächlich einen verstärkten Verwitterungsfluss?</span></li>
                 </ul>
-                <p style="margin-top: 10px;"><em>This is an active area of research — provenance changes vs. intensity changes.</em></p>
+                <p style="margin-top: 10px;"><em><span class="en">This is an active area of research — provenance changes vs. intensity changes.</span><span class="de">Dies ist ein aktives Forschungsgebiet — Provenance-Änderungen vs. Intensitätsänderungen.</span></em></p>
             </div>
         </section>
 
         <div class="key-points">
-            <h3>📌 Key Points to Remember</h3>
+            <h3>📌 <span class="en">Key Points to Remember</span><span class="de">Wichtige Punkte zum Merken</span></h3>
             <ul>
-                <li>⁸⁷Sr is radiogenic (from ⁸⁷Rb decay) — old continental rocks have high ⁸⁷Sr/⁸⁶Sr</li>
-                <li>No isotope fractionation — carbonate ⁸⁷Sr/⁸⁶Sr directly records seawater</li>
-                <li>Two end-members: continental (~0.711-0.720) vs hydrothermal/mantle (~0.703)</li>
-                <li>Modern seawater: 0.70918 (mixture of both sources)</li>
-                <li>Phanerozoic curve reflects balance between weathering and volcanism</li>
-                <li>Cenozoic rise linked to Himalayan uplift and enhanced radiogenic Sr input</li>
-                <li>Sr stratigraphy works best where curve is steep and monotonic</li>
-                <li>PTB shows sharp rise — but interpretation (weathering rate vs. source) is debated</li>
+                <li><span class="en">⁸⁷Sr is radiogenic (from ⁸⁷Rb decay) — old continental rocks have high ⁸⁷Sr/⁸⁶Sr</span><span class="de">⁸⁷Sr ist radiogen (aus ⁸⁷Rb-Zerfall) — alte Kontinentalsedimente haben hohes ⁸⁷Sr/⁸⁶Sr</span></li>
+                <li><span class="en">No isotope fractionation — carbonate ⁸⁷Sr/⁸⁶Sr directly records seawater</span><span class="de">Keine Isotopenfraktionierung — Karbonat ⁸⁷Sr/⁸⁶Sr zeichnet Meerwasser direkt auf</span></li>
+                <li><span class="en">Two end-members: continental (~0.711-0.720) vs hydrothermal/mantle (~0.703)</span><span class="de">Zwei End-Member: Kontinent (~0,711-0,720) vs. Hydrothermal/Mantel (~0,703)</span></li>
+                <li><span class="en">Modern seawater: 0.70918 (mixture of both sources)</span><span class="de">Modernes Meerwasser: 0,70918 (Mischung beider Quellen)</span></li>
+                <li><span class="en">Phanerozoic curve reflects balance between weathering and volcanism</span><span class="de">Phanerozoische Kurve spiegelt Gleichgewicht zwischen Verwitterung und Vulkanismus wider</span></li>
+                <li><span class="en">Cenozoic rise linked to Himalayan uplift and enhanced radiogenic Sr input</span><span class="de">Känozoischer Anstieg mit Himalaya-Hebung und verstärktem radiogenem Sr-Input verknüpft</span></li>
+                <li><span class="en">Sr stratigraphy works best where curve is steep and monotonic</span><span class="de">Sr-Stratigraphie funktioniert am besten, wenn die Kurve steil und monoton ist</span></li>
+                <li><span class="en">PTB shows sharp rise — but interpretation (weathering rate vs. source) is debated</span><span class="de">PTB zeigt scharfen Anstieg — aber Interpretation (Verwitterungsrate vs. Quelle) ist umstritten</span></li>
             </ul>
         </div>
 
         <section class="quiz-section" id="quizSection">
-            <h2>🧠 Test Your Understanding</h2>
-            <p style="opacity: 0.9; margin-bottom: 20px;">Answer these questions to check your comprehension of Module 5.</p>
+            <h2>🧠 <span class="en">Test Your Understanding</span><span class="de">Testen Sie Ihr Verständnis</span></h2>
+            <p style="opacity: 0.9; margin-bottom: 20px;"><span class="en">Answer these questions to check your comprehension of Module 5.</span><span class="de">Beantworten Sie diese Fragen, um Ihr Verständnis von Modul 5 zu überprüfen.</span></p>
             
             <div class="quiz-progress">
                 <div class="quiz-progress-bar" id="progressBar"></div>
@@ -495,38 +506,54 @@
             <div id="quizContainer"></div>
 
             <div id="quizResults" class="quiz-results" style="display: none;">
-                <h3>Quiz Complete!</h3>
+                <h3><span class="en">Quiz Complete!</span><span class="de">Quiz abgeschlossen!</span></h3>
                 <div class="score-circle" id="scoreCircle">0%</div>
                 <p id="scoreMessage"></p>
                 <p id="scoreDetail"></p>
-                <button class="retry-btn" onclick="restartQuiz()">Try Again</button>
+                <button class="retry-btn" onclick="restartQuiz()"><span class="en">Try Again</span><span class="de">Nochmal Versuchen</span></button>
             </div>
         </section>
 
         <div class="references">
-            <h3>📚 Key References</h3>
+            <h3>📚 <span class="en">Key References</span><span class="de">Wichtige Referenzen</span></h3>
             <ul>
-                <li>McArthur, J.M. et al. (2020). Strontium isotope stratigraphy. In: <em>The Geologic Time Scale 2020</em>. Elsevier.</li>
+                <li>McArthur, J.M. et al. (2020). <span class="en">Strontium isotope stratigraphy. In: <em>The Geologic Time Scale 2020</em>. Elsevier.</span><span class="de">Strontiumisotopen-Stratigraphie. In: <em>The Geologic Time Scale 2020</em>. Elsevier.</span></li>
                 <li>Veizer, J. et al. (1999). ⁸⁷Sr/⁸⁶Sr, δ¹³C and δ¹⁸O evolution of Phanerozoic seawater. <em>Chemical Geology</em> 161, 59-88.</li>
-                <li>Raymo, M.E. & Ruddiman, W.F. (1992). Tectonic forcing of late Cenozoic climate. <em>Nature</em> 359, 117-122.</li>
-                <li>Algeo, T.J. & Twitchett, R.J. (2010). Anomalous Early Triassic sediment fluxes due to elevated weathering rates. <em>Geology</em> 38, 1023-1026.</li>
+                <li>Raymo, M.E. & Ruddiman, W.F. (1992). <span class="en">Tectonic forcing of late Cenozoic climate. <em>Nature</em> 359, 117-122.</span><span class="de">Tektonische Zwangsführung des späten Känozoikums-Klimas. <em>Nature</em> 359, 117-122.</span></li>
+                <li>Algeo, T.J. & Twitchett, R.J. (2010). <span class="en">Anomalous Early Triassic sediment fluxes due to elevated weathering rates. <em>Geology</em> 38, 1023-1026.</span><span class="de">Anomale frühe Trias-Sedimentflüsse aufgrund erhöhter Verwitterungsraten. <em>Geology</em> 38, 1023-1026.</span></li>
             </ul>
         </div>
 
         <div class="module-nav">
-            <a href="#">← Module 4: Boron Isotopes</a>
-            <a href="#">Return to Course Home →</a>
+            <a href="#"><span class="en">← Module 4: Boron Isotopes</span><span class="de">← Modul 4: Borisotope</span></a>
+            <a href="#"><span class="en">Return to Course Home →</span><span class="de">Zurück zur Kurs-Startseite →</span></a>
         </div>
     </main>
 
     <footer class="footer">
-        <p><strong>Sedimentary Geochemistry</strong> | MSc Course</p>
+        <p><strong><span class="en">Sedimentary Geochemistry</span><span class="de">Sedimentäre Geochemie</span></strong> | <span class="en">MSc Course</span><span class="de">MSc-Kurs</span></p>
         <p>Friedrich-Alexander-Universität Erlangen-Nürnberg (FAU)</p>
         <p>PD Dr. Luca Caracciolo | GeoZentrum Nordbayern</p>
-        <p style="margin-top: 15px; opacity: 0.7;">© 2025 | For educational use only</p>
+        <p style="margin-top: 15px; opacity: 0.7;">© 2025 | <span class="en">For educational use only</span><span class="de">Nur für Unterrichtszwecke</span></p>
     </footer>
 
     <script>
+        // Language switching functionality
+        function setLanguage(lang) {
+            document.body.className = 'lang-' + lang;
+            localStorage.setItem('preferredLanguage', lang);
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+            });
+        }
+
+        // Load saved language preference on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedLang = localStorage.getItem('preferredLanguage') || 'en';
+            setLanguage(savedLang);
+            loadQuiz();
+        });
+
         const quizQuestions = [
             {
                 question: "Why does ⁸⁷Sr/⁸⁶Sr in carbonates directly reflect seawater composition without correction?",
@@ -625,32 +652,39 @@
         function loadQuiz() {
             const container = document.getElementById('quizContainer');
             container.innerHTML = '';
-            
+            const currentLang = document.body.className.includes('lang-de') ? 'de' : 'en';
+
             quizQuestions.forEach((q, index) => {
                 const qDiv = document.createElement('div');
                 qDiv.className = 'question-container' + (index === 0 ? '' : ' hidden');
                 qDiv.id = `question${index}`;
-                
+
                 let optionsHTML = '';
                 q.options.forEach((opt, optIndex) => {
                     optionsHTML += `<li onclick="selectOption(${index}, ${optIndex})" id="opt${index}_${optIndex}">${opt}</li>`;
                 });
-                
+
+                const questionNum = currentLang === 'en' ? `Question ${index + 1} of ${quizQuestions.length}` : `Frage ${index + 1} von ${quizQuestions.length}`;
+                const prevBtn = currentLang === 'en' ? '← Previous' : '← Zurück';
+                const nextBtn = index === quizQuestions.length - 1
+                    ? (currentLang === 'en' ? 'See Results' : 'Ergebnisse anzeigen')
+                    : (currentLang === 'en' ? 'Next →' : 'Weiter →');
+
                 qDiv.innerHTML = `
-                    <div class="question-number">Question ${index + 1} of ${quizQuestions.length}</div>
+                    <div class="question-number">${questionNum}</div>
                     <div class="question-text">${q.question}</div>
                     <ul class="options">${optionsHTML}</ul>
                     <div class="feedback" id="feedback${index}"></div>
                     <div class="quiz-nav">
-                        <button class="quiz-btn" onclick="prevQuestion()" ${index === 0 ? 'disabled' : ''}>← Previous</button>
+                        <button class="quiz-btn" onclick="prevQuestion()" ${index === 0 ? 'disabled' : ''}>${prevBtn}</button>
                         <button class="quiz-btn" id="nextBtn${index}" onclick="nextQuestion()" disabled>
-                            ${index === quizQuestions.length - 1 ? 'See Results' : 'Next →'}
+                            ${nextBtn}
                         </button>
                     </div>
                 `;
                 container.appendChild(qDiv);
             });
-            
+
             updateProgress();
         }
 
@@ -659,11 +693,15 @@
             answered[qIndex] = optIndex;
             const correct = quizQuestions[qIndex].correct;
             const isCorrect = optIndex === correct;
+            const currentLang = document.body.className.includes('lang-de') ? 'de' : 'en';
             document.getElementById(`opt${qIndex}_${optIndex}`).classList.add(isCorrect ? 'correct' : 'incorrect');
             if (!isCorrect) document.getElementById(`opt${qIndex}_${correct}`).classList.add('correct');
             const feedback = document.getElementById(`feedback${qIndex}`);
             feedback.className = 'feedback ' + (isCorrect ? 'correct' : 'incorrect');
-            feedback.innerHTML = `<strong>${isCorrect ? '✓ Correct!' : '✗ Incorrect'}</strong><br>${quizQuestions[qIndex].explanation}`;
+            const feedbackLabel = currentLang === 'en'
+                ? (isCorrect ? '✓ Correct!' : '✗ Incorrect')
+                : (isCorrect ? '✓ Richtig!' : '✗ Falsch');
+            feedback.innerHTML = `<strong>${feedbackLabel}</strong><br>${quizQuestions[qIndex].explanation}`;
             if (isCorrect) score++;
             document.getElementById(`nextBtn${qIndex}`).disabled = false;
             updateProgress();
@@ -694,13 +732,25 @@
             document.getElementById('quizContainer').style.display = 'none';
             document.getElementById('quizResults').style.display = 'block';
             const percentage = Math.round((score / quizQuestions.length) * 100);
+            const currentLang = document.body.className.includes('lang-de') ? 'de' : 'en';
             document.getElementById('scoreCircle').textContent = percentage + '%';
-            document.getElementById('scoreDetail').textContent = `You got ${score} out of ${quizQuestions.length} questions correct.`;
-            let message = '';
-            if (percentage >= 90) message = '🌟 Excellent! You have mastered Sr isotope geochemistry!';
-            else if (percentage >= 70) message = '👍 Good job! Review the two end-member model and applications.';
-            else if (percentage >= 50) message = '📚 Keep studying! Focus on the curve interpretation.';
-            else message = '💪 More practice needed. Re-read the module carefully.';
+
+            let detailMsg, message = '';
+            if (currentLang === 'en') {
+                detailMsg = `You got ${score} out of ${quizQuestions.length} questions correct.`;
+                if (percentage >= 90) message = '🌟 Excellent! You have mastered Sr isotope geochemistry!';
+                else if (percentage >= 70) message = '👍 Good job! Review the two end-member model and applications.';
+                else if (percentage >= 50) message = '📚 Keep studying! Focus on the curve interpretation.';
+                else message = '💪 More practice needed. Re-read the module carefully.';
+            } else {
+                detailMsg = `Sie haben ${score} von ${quizQuestions.length} Fragen richtig beantwortet.`;
+                if (percentage >= 90) message = '🌟 Ausgezeichnet! Sie haben Sr-Isotopen-Geochemie gemeistert!';
+                else if (percentage >= 70) message = '👍 Gute Arbeit! Überprüfen Sie das Zwei-End-Member-Modell und die Anwendungen.';
+                else if (percentage >= 50) message = '📚 Weiter lernen! Konzentrieren Sie sich auf die Kurveninterpretation.';
+                else message = '💪 Mehr Übung erforderlich. Lesen Sie das Modul sorgfältig durch.';
+            }
+
+            document.getElementById('scoreDetail').textContent = detailMsg;
             document.getElementById('scoreMessage').textContent = message;
         }
 
@@ -710,8 +760,6 @@
             document.getElementById('quizContainer').style.display = 'block';
             loadQuiz();
         }
-
-        document.addEventListener('DOMContentLoaded', loadQuiz);
     </script>
 </body>
 </html>
